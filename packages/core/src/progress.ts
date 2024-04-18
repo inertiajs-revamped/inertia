@@ -1,5 +1,5 @@
 import NProgress from 'nprogress'
-import { GlobalEvent } from './types'
+import type { GlobalEvent } from './types'
 
 let timeout: NodeJS.Timeout | null = null
 
@@ -15,7 +15,12 @@ function start(delay: number): void {
 
 function progress(event: GlobalEvent<'progress'>) {
   if (NProgress.isStarted() && event.detail.progress?.percentage) {
-    NProgress.set(Math.max(NProgress.status!, (event.detail.progress.percentage / 100) * 0.9))
+    NProgress.set(
+      Math.max(
+        NProgress.status!,
+        (event.detail.progress.percentage / 100) * 0.9
+      )
+    )
   }
 }
 

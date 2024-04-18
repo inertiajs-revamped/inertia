@@ -1,4 +1,4 @@
-import { AxiosProgressEvent, AxiosResponse } from 'axios'
+import type { AxiosProgressEvent, AxiosResponse } from 'axios'
 
 declare module 'axios' {
   export interface AxiosProgressEvent {
@@ -149,13 +149,18 @@ export type GlobalEventsMap = {
 
 export type GlobalEventNames = keyof GlobalEventsMap
 
-export type GlobalEvent<TEventName extends GlobalEventNames> = CustomEvent<GlobalEventDetails<TEventName>>
+export type GlobalEvent<TEventName extends GlobalEventNames> = CustomEvent<
+  GlobalEventDetails<TEventName>
+>
 
-export type GlobalEventParameters<TEventName extends GlobalEventNames> = GlobalEventsMap[TEventName]['parameters']
+export type GlobalEventParameters<TEventName extends GlobalEventNames> =
+  GlobalEventsMap[TEventName]['parameters']
 
-export type GlobalEventResult<TEventName extends GlobalEventNames> = GlobalEventsMap[TEventName]['result']
+export type GlobalEventResult<TEventName extends GlobalEventNames> =
+  GlobalEventsMap[TEventName]['result']
 
-export type GlobalEventDetails<TEventName extends GlobalEventNames> = GlobalEventsMap[TEventName]['details']
+export type GlobalEventDetails<TEventName extends GlobalEventNames> =
+  GlobalEventsMap[TEventName]['details']
 
 export type GlobalEventTrigger<TEventName extends GlobalEventNames> = (
   ...params: GlobalEventParameters<TEventName>
@@ -193,7 +198,10 @@ export type ActiveVisit = PendingVisit &
 export type VisitId = unknown
 export type Component = unknown
 
-export type InertiaAppResponse = Promise<{ head: string[]; body: string } | void>
+export type InertiaAppResponse = Promise<{
+  head: string[]
+  body: string
+} | void>
 
 declare global {
   interface DocumentEventMap {

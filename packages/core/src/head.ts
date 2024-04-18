@@ -20,26 +20,36 @@ const Renderer = {
   },
 
   isInertiaManagedElement(element: Element): boolean {
-    return element.nodeType === Node.ELEMENT_NODE && element.getAttribute('inertia') !== null
+    return (
+      element.nodeType === Node.ELEMENT_NODE &&
+      element.getAttribute('inertia') !== null
+    )
   },
 
   findMatchingElementIndex(element: Element, elements: Array<Element>): number {
     const key = element.getAttribute('inertia')
     if (key !== null) {
-      return elements.findIndex((element) => element.getAttribute('inertia') === key)
+      return elements.findIndex(
+        (element) => element.getAttribute('inertia') === key
+      )
     }
 
     return -1
   },
 
   update: debounce(function (elements: Array<string>) {
-    const sourceElements = elements.map((element) => this.buildDOMElement(element))
-    const targetElements = Array.from(document.head.childNodes).filter((element) =>
-      this.isInertiaManagedElement(element as Element),
+    const sourceElements = elements.map((element) =>
+      this.buildDOMElement(element)
+    )
+    const targetElements = Array.from(document.head.childNodes).filter(
+      (element) => this.isInertiaManagedElement(element as Element)
     )
 
     targetElements.forEach((targetElement) => {
-      const index = this.findMatchingElementIndex(targetElement as Element, sourceElements)
+      const index = this.findMatchingElementIndex(
+        targetElement as Element,
+        sourceElements
+      )
       if (index === -1) {
         targetElement?.parentNode?.removeChild(targetElement)
         return
@@ -58,7 +68,7 @@ const Renderer = {
 export default function createHeadManager(
   isServer: boolean,
   titleCallback: (title: string) => string,
-  onUpdate: (elements: string[]) => void,
+  onUpdate: (elements: string[]) => void
 ): {
   forceUpdate: () => void
   createProvider: () => {
@@ -108,7 +118,9 @@ export default function createHeadManager(
 
         if (element.indexOf('<title ') === 0) {
           const title = element.match(/(<title [^>]+>)(.*?)(<\/title>)/)
-          carry.title = title ? `${title[1]}${titleCallback(title[2])}${title[3]}` : element
+          carry.title = title
+            ? `${title[1]}${titleCallback(title[2])}${title[3]}`
+            : element
           return carry
         }
 
