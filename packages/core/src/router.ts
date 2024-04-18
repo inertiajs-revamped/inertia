@@ -469,8 +469,10 @@ export class Router {
               ? errors[errorBag]
               : {}
             : errors
-          fireErrorEvent(scopedErrors)
-          return onError(scopedErrors)
+          if (scopedErrors) {
+            fireErrorEvent(scopedErrors)
+            return onError(scopedErrors)
+          }
         }
         fireSuccessEvent(this.page)
         return onSuccess(this.page)
