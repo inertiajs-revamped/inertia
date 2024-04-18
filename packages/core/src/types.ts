@@ -1,11 +1,5 @@
 import type { AxiosProgressEvent, AxiosResponse } from 'axios'
 
-declare module 'axios' {
-  export interface AxiosProgressEvent {
-    percentage: number | undefined
-  }
-}
-
 export interface Renderer {
   buildDOMElement(tag: string): ChildNode
   isInertiaManagedElement(element: Element): boolean
@@ -80,7 +74,11 @@ export type PageHandler = ({
 
 export type PreserveStateOption = boolean | string | ((page: Page) => boolean)
 
-export type Progress = AxiosProgressEvent
+export type Progress =
+  | (AxiosProgressEvent & {
+      percentage: number | undefined
+    })
+  | undefined
 
 export type LocationVisit = {
   preserveScroll: boolean
