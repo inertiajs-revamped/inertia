@@ -138,8 +138,8 @@ export default async function createInertiaApp<
     setupProgress(progress)
   }
 
-  if (isServer) {
-    // @ts-expect-error
+  if (isServer && render) {
+    // close to despair
     const body = await render(
       createElement(
         'div',
