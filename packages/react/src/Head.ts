@@ -17,6 +17,7 @@ export type InertiaHead = FunctionComponent<InertiaHeadProps>
 
 const Head: InertiaHead = function ({ children, title }) {
   const headManager = useContext(HeadContext)
+  // @ts-expect-error
   const provider = useMemo(() => headManager.createProvider(), [headManager])
 
   useEffect(() => {
@@ -25,6 +26,7 @@ const Head: InertiaHead = function ({ children, title }) {
     }
   }, [provider])
 
+  // @ts-expect-error
   function isUnaryTag(node) {
     return (
       [
@@ -47,6 +49,7 @@ const Head: InertiaHead = function ({ children, title }) {
     )
   }
 
+  // @ts-expect-error
   function renderTagStart(node) {
     const attrs = Object.keys(node.props).reduce((carry, name) => {
       if (['head-key', 'children', 'dangerouslySetInnerHTML'].includes(name)) {
@@ -62,12 +65,15 @@ const Head: InertiaHead = function ({ children, title }) {
     return `<${node.type}${attrs}>`
   }
 
+  // @ts-expect-error
   function renderTagChildren(node) {
     return typeof node.props.children === 'string'
       ? node.props.children
-      : node.props.children.reduce((html, child) => html + renderTag(child), '')
+      : // @ts-expect-error
+        node.props.children.reduce((html, child) => html + renderTag(child), '')
   }
 
+  // @ts-expect-error
   function renderTag(node) {
     let html = renderTagStart(node)
     if (node.props.children) {
@@ -82,6 +88,7 @@ const Head: InertiaHead = function ({ children, title }) {
     return html
   }
 
+  // @ts-expect-error
   function ensureNodeHasInertiaProp(node) {
     return cloneElement(node, {
       inertia:
@@ -89,10 +96,12 @@ const Head: InertiaHead = function ({ children, title }) {
     })
   }
 
+  // @ts-expect-error
   function renderNode(node) {
     return renderTag(ensureNodeHasInertiaProp(node))
   }
 
+  // @ts-expect-error
   function renderNodes(nodes) {
     const computed = Children.toArray(nodes)
       .filter((node) => node)

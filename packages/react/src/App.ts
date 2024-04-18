@@ -4,11 +4,17 @@ import HeadContext from './HeadContext'
 import PageContext from './PageContext'
 
 export default function App({
+  // @ts-expect-error
   children,
+  // @ts-expect-error
   initialPage,
+  // @ts-expect-error
   initialComponent,
+  // @ts-expect-error
   resolveComponent,
+  // @ts-expect-error
   titleCallback,
+  // @ts-expect-error
   onHeadUpdate,
 }) {
   const [current, setCurrent] = useState({
@@ -30,6 +36,7 @@ export default function App({
       initialPage,
       resolveComponent,
       swapComponent: async ({ component, page, preserveState }) => {
+        // @ts-expect-error
         setCurrent((current) => ({
           component,
           page,
@@ -44,6 +51,7 @@ export default function App({
   if (!current.component) {
     return createElement(
       HeadContext.Provider,
+      // @ts-expect-error
       { value: headManager },
       createElement(PageContext.Provider, { value: current.page }, null)
     )
@@ -51,6 +59,7 @@ export default function App({
 
   const renderChildren =
     children ||
+    // @ts-expect-error
     (({ Component, props, key }) => {
       const child = createElement(Component, { key, ...props })
 
@@ -59,12 +68,15 @@ export default function App({
       }
 
       if (Array.isArray(Component.layout)) {
-        return Component.layout
-          .concat(child)
-          .reverse()
-          .reduce((children, Layout) =>
-            createElement(Layout, { children, ...props })
-          )
+        return (
+          Component.layout
+            .concat(child)
+            .reverse()
+            // @ts-expect-error
+            .reduce((children, Layout) =>
+              createElement(Layout, { children, ...props })
+            )
+        )
       }
 
       return child
@@ -72,6 +84,7 @@ export default function App({
 
   return createElement(
     HeadContext.Provider,
+    // @ts-expect-error
     { value: headManager },
     createElement(
       PageContext.Provider,

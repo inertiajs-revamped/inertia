@@ -104,11 +104,14 @@ export default async function createInertiaApp<
 > {
   const isServer = typeof window === 'undefined'
   const el = isServer ? null : document.getElementById(id)
+  // @ts-expect-error
   const initialPage = page || JSON.parse(el.dataset.page)
   // @ts-expect-error
   const resolveComponent = (name) =>
+    // @ts-expect-error
     Promise.resolve(resolve(name)).then((module) => module.default || module)
 
+  // @ts-expect-error
   let head = []
 
   const reactApp = await resolveComponent(initialPage.component).then(
@@ -116,12 +119,15 @@ export default async function createInertiaApp<
       return setup({
         // @ts-expect-error
         el,
+        // @ts-expect-error
         App,
+        // @ts-expect-error
         props: {
           initialPage,
           initialComponent,
           resolveComponent,
           titleCallback: title,
+          // @ts-expect-error
           onHeadUpdate: isServer ? (elements) => (head = elements) : null,
         },
       })
@@ -133,6 +139,7 @@ export default async function createInertiaApp<
   }
 
   if (isServer) {
+    // @ts-expect-error
     const body = await render(
       createElement(
         'div',
@@ -145,6 +152,7 @@ export default async function createInertiaApp<
       )
     )
 
+    // @ts-expect-error
     return { head, body }
   }
 }

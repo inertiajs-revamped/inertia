@@ -152,6 +152,7 @@ export default function useForm<TForm extends FormDataType>(
           if (isMounted.current) {
             setProcessing(false)
             setProgress(null)
+            // @ts-expect-error
             setErrors(errors)
             setHasErrors(true)
           }
