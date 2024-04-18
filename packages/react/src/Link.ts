@@ -17,7 +17,7 @@ import {
 
 const noop = () => undefined
 
-interface BaseInertiaLinkProps {
+export interface BaseInertiaLinkProps {
   as?: string
   data?: Record<string, FormDataConvertible>
   href: string
