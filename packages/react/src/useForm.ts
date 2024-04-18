@@ -84,7 +84,9 @@ export default function useForm<TForm extends FormDataType>(
   const [progress, setProgress] = useState<Progress | null>(null)
   const [wasSuccessful, setWasSuccessful] = useState(false)
   const [recentlySuccessful, setRecentlySuccessful] = useState(false)
-  let transform = (data) => data
+  const transformRef = useRef<(data: TForm) => Record<string, any>>(
+    (data) => data
+  )
 
   useEffect(() => {
     isMounted.current = true
@@ -183,9 +185,9 @@ export default function useForm<TForm extends FormDataType>(
       }
 
       if (method === 'delete') {
-        router.delete(url, { ..._options, data: transform(data) })
+        router.delete(url, { ..._options, data: transformRef.current(data) })
       } else {
-        router[method](url, transform(data), _options)
+        router[method](url, transformRef.current(data), _options)
       }
     },
     [data, setErrors]
@@ -213,7 +215,7 @@ export default function useForm<TForm extends FormDataType>(
     wasSuccessful,
     recentlySuccessful,
     transform(callback) {
-      transform = callback
+      transformRef.current = callback
     },
     setDefaults(
       fieldOrFields?: keyof TForm | Partial<TForm>,
