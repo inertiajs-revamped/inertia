@@ -144,7 +144,7 @@ const Link: ForwardRefExoticComponent<
       as,
       {
         ...props,
-        ...(as === 'a' ? { href } : {}),
+        ...(as === 'a' ? { href } : { role: 'link' }),
         ref,
         onClick: visit,
       },
