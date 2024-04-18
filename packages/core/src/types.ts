@@ -13,6 +13,14 @@ export interface Renderer {
   update: (this: Renderer, elements: string[]) => void
 }
 
+export type HeadManger = {
+  forceUpdate: () => void
+  createProvider: () => {
+    update: (elements: string[]) => void
+    disconnect: () => void
+  }
+}
+
 export type Errors = Record<string, string>
 export type ErrorBag = Record<string, Errors>
 
