@@ -1,5 +1,5 @@
 import { type IncomingMessage, createServer } from 'node:http'
-import * as process from 'node:process'
+import { exit } from 'node:process'
 import type { InertiaAppResponse, Page } from './types'
 
 type AppCallback = (page: Page) => InertiaAppResponse
@@ -20,7 +20,7 @@ export default (render: AppCallback, port?: number): void => {
 
   const routes: Record<string, RouteHandler> = {
     '/health': async () => ({ status: 'OK', timestamp: Date.now() }),
-    '/shutdown': () => process.exit(),
+    '/shutdown': () => exit(),
     '/render': async (request) =>
       render(JSON.parse(await readableToString(request))),
     '/404': async () => ({ status: 'NOT_FOUND', timestamp: Date.now() }),
