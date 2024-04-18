@@ -92,8 +92,8 @@ export default function useForm<TForm extends FormDataType>(
   }, [])
 
   const submit = useCallback(
-    (method, url, options = {}) => {
-      const _options = {
+    (method: Method, url: string, options: VisitOptions = {}) => {
+      const _options: VisitOptions = {
         ...options,
         onCancelToken: (token) => {
           cancelToken.current = token
