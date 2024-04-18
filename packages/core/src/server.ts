@@ -34,7 +34,9 @@ export default (render: AppCallback, port?: number): void => {
         'Content-Type': 'application/json',
         Server: 'Inertia.js SSR',
       })
-      response.write(JSON.stringify(await dispatchRoute(request)))
+      if (dispatchRoute) {
+        response.write(JSON.stringify(await dispatchRoute(request)))
+      }
     } catch (e) {
       console.error(e)
     }
