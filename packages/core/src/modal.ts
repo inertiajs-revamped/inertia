@@ -22,7 +22,7 @@ const modal: Modal = {
     this.modal.style.padding = '50px'
     this.modal.style.boxSizing = 'border-box'
     this.modal.style.backgroundColor = 'rgba(0, 0, 0, .6)'
-    this.modal.style.zIndex = 200000
+    this.modal.style.zIndex = '200000'
     this.modal.addEventListener('click', () => this.hide())
 
     const iframe = document.createElement('iframe')
