@@ -1,4 +1,6 @@
-export default {
+import type { Modal } from './types'
+
+const modal: Modal = {
   modal: null,
   listener: null,
 
@@ -56,3 +58,5 @@ export default {
     }
   },
 }
+
+export default modal

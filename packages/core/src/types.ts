@@ -13,6 +13,14 @@ export interface Renderer {
   update: (this: Renderer, elements: string[]) => void
 }
 
+export interface Modal {
+  modal: HTMLDivElement | null
+  listener: ((event: KeyboardEvent) => void) | null
+  show(html: Record<string, unknown> | string): void
+  hideOnEscape(event: KeyboardEvent): void
+  hide(): void
+}
+
 export type HeadManger = {
   forceUpdate: () => void
   createProvider: () => {
