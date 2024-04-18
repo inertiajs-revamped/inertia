@@ -28,7 +28,7 @@ export interface BaseInertiaLinkProps {
   preserveState?: PreserveStateOption
   replace?: boolean
   only?: string[]
-  onCancelToken?: (cancelToken: import('axios').CancelTokenSource) => void
+  onCancelToken?: { ({ cancel }: { cancel: VoidFunction }): void }
   onBefore?: () => void
   onStart?: () => void
   onProgress?: (progress: Progress) => void
