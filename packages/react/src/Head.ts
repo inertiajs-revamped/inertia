@@ -1,7 +1,7 @@
 import {
   Children,
   type FunctionComponent,
-  type ReactNode,
+  type PropsWithChildren,
   cloneElement,
   useContext,
   useEffect,
@@ -9,12 +9,11 @@ import {
 } from 'react'
 import HeadContext from './HeadContext'
 
-type InertiaHeadProps = {
+export type InertiaHeadProps = PropsWithChildren<{
   title?: string
-  children?: ReactNode
-}
+}>
 
-type InertiaHead = FunctionComponent<InertiaHeadProps>
+export type InertiaHead = FunctionComponent<InertiaHeadProps>
 
 const Head: InertiaHead = function ({ children, title }) {
   const headManager = useContext(HeadContext)
