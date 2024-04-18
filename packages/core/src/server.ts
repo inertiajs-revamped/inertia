@@ -1,11 +1,13 @@
-import { createServer, IncomingMessage } from 'http'
-import * as process from 'process'
-import { InertiaAppResponse, Page } from './types'
+import { type IncomingMessage, createServer } from 'node:http'
+import { exit } from 'node:process'
+import type { InertiaAppResponse, Page } from './types'
 
-type AppCallback = (page: Page) => InertiaAppResponse
-type RouteHandler = (request: IncomingMessage) => Promise<unknown>
+export type AppCallback = (page: Page) => InertiaAppResponse
+export type RouteHandler = (request: IncomingMessage) => Promise<unknown>
 
-const readableToString: (readable: IncomingMessage) => Promise<string> = (readable) =>
+const readableToString: (readable: IncomingMessage) => Promise<string> = (
+  readable
+) =>
   new Promise((resolve, reject) => {
     let data = ''
     readable.on('data', (chunk) => (data += chunk))
@@ -18,8 +20,9 @@ export default (render: AppCallback, port?: number): void => {
 
   const routes: Record<string, RouteHandler> = {
     '/health': async () => ({ status: 'OK', timestamp: Date.now() }),
-    '/shutdown': () => process.exit(),
-    '/render': async (request) => render(JSON.parse(await readableToString(request))),
+    '/shutdown': () => exit(),
+    '/render': async (request) =>
+      render(JSON.parse(await readableToString(request))),
     '/404': async () => ({ status: 'NOT_FOUND', timestamp: Date.now() }),
   }
 
@@ -27,8 +30,13 @@ export default (render: AppCallback, port?: number): void => {
     const dispatchRoute = routes[<string>request.url] || routes['/404']
 
     try {
-      response.writeHead(200, { 'Content-Type': 'application/json', Server: 'Inertia.js SSR' })
-      response.write(JSON.stringify(await dispatchRoute(request)))
+      response.writeHead(200, {
+        'Content-Type': 'application/json',
+        Server: 'Inertia.js SSR',
+      })
+      if (dispatchRoute) {
+        response.write(JSON.stringify(await dispatchRoute(request)))
+      }
     } catch (e) {
       console.error(e)
     }

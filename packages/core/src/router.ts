@@ -1,4 +1,4 @@
-import { AxiosResponse, default as Axios } from 'axios'
+import { default as Axios, type AxiosResponse } from 'axios'
 import debounce from './debounce'
 import {
   fireBeforeEvent,
@@ -14,7 +14,7 @@ import {
 import { hasFiles } from './files'
 import { objectToFormData } from './formData'
 import modal from './modal'
-import {
+import type {
   ActiveVisit,
   GlobalEvent,
   GlobalEventNames,
@@ -25,6 +25,7 @@ import {
   PageResolver,
   PendingVisit,
   PreserveStateOption,
+  Progress,
   RequestPayload,
   VisitId,
   VisitOptions,
@@ -70,25 +71,39 @@ export class Router {
 
   protected setNavigationType(): void {
     this.navigationType =
-      window.performance && window.performance.getEntriesByType('navigation').length > 0
-        ? (window.performance.getEntriesByType('navigation')[0] as PerformanceNavigationTiming).type
+      window.performance &&
+      window.performance.getEntriesByType('navigation').length > 0
+        ? (
+            window.performance.getEntriesByType(
+              'navigation'
+            )[0] as PerformanceNavigationTiming
+          ).type
         : 'navigate'
   }
 
   protected clearRememberedStateOnReload(): void {
-    if (this.navigationType === 'reload' && window.history.state?.rememberedState) {
+    if (
+      this.navigationType === 'reload' &&
+      window.history.state?.rememberedState
+    ) {
       delete window.history.state.rememberedState
     }
   }
 
   protected handleInitialPageVisit(page: Page): void {
     this.page.url += window.location.hash
-    this.setPage(page, { preserveState: true }).then(() => fireNavigateEvent(page))
+    this.setPage(page, { preserveState: true }).then(() =>
+      fireNavigateEvent(page)
+    )
   }
 
   protected setupEventListeners(): void {
     window.addEventListener('popstate', this.handlePopstateEvent.bind(this))
-    document.addEventListener('scroll', debounce(this.handleScrollEvent.bind(this), 100), true)
+    document.addEventListener(
+      'scroll',
+      debounce(this.handleScrollEvent.bind(this), 100),
+      true
+    )
   }
 
   protected scrollRegions(): NodeListOf<Element> {
@@ -130,7 +145,9 @@ export class Router {
     if (window.location.hash) {
       // We're using a setTimeout() here as a workaround for a bug in the React adapter where the
       // rendering isn't completing fast enough, causing the anchor link to not be scrolled to.
-      setTimeout(() => document.getElementById(window.location.hash.slice(1))?.scrollIntoView())
+      setTimeout(() =>
+        document.getElementById(window.location.hash.slice(1))?.scrollIntoView()
+      )
     }
   }
 
@@ -156,16 +173,25 @@ export class Router {
 
   protected handleBackForwardVisit(page: Page): void {
     window.history.state.version = page.version
-    this.setPage(window.history.state, { preserveScroll: true, preserveState: true }).then(() => {
+    this.setPage(window.history.state, {
+      preserveScroll: true,
+      preserveState: true,
+    }).then(() => {
       this.restoreScrollPositions()
       fireNavigateEvent(page)
     })
   }
 
-  protected locationVisit(url: URL, preserveScroll: LocationVisit['preserveScroll']): boolean | void {
+  protected locationVisit(
+    url: URL,
+    preserveScroll: LocationVisit['preserveScroll']
+  ): boolean | void {
     try {
       const locationVisit: LocationVisit = { preserveScroll }
-      window.sessionStorage.setItem('inertiaLocationVisit', JSON.stringify(locationVisit))
+      window.sessionStorage.setItem(
+        'inertiaLocationVisit',
+        JSON.stringify(locationVisit)
+      )
       window.location.href = url.href
       if (urlWithoutHash(window.location).href === urlWithoutHash(url).href) {
         window.location.reload()
@@ -184,12 +210,17 @@ export class Router {
   }
 
   protected handleLocationVisit(page: Page): void {
-    const locationVisit: LocationVisit = JSON.parse(window.sessionStorage.getItem('inertiaLocationVisit') || '')
+    const locationVisit: LocationVisit = JSON.parse(
+      window.sessionStorage.getItem('inertiaLocationVisit') || ''
+    )
     window.sessionStorage.removeItem('inertiaLocationVisit')
     page.url += window.location.hash
     page.rememberedState = window.history.state?.rememberedState ?? {}
     page.scrollRegions = window.history.state?.scrollRegions ?? []
-    this.setPage(page, { preserveScroll: locationVisit.preserveScroll, preserveState: true }).then(() => {
+    this.setPage(page, {
+      preserveScroll: locationVisit.preserveScroll,
+      preserveState: true,
+    }).then(() => {
       if (locationVisit.preserveScroll) {
         this.restoreScrollPositions()
       }
@@ -198,7 +229,11 @@ export class Router {
   }
 
   protected isLocationVisitResponse(response: AxiosResponse): boolean {
-    return !!(response && response.status === 409 && response.headers['x-inertia-location'])
+    return !!(
+      response &&
+      response.status === 409 &&
+      response.headers['x-inertia-location']
+    )
   }
 
   protected isInertiaResponse(response: AxiosResponse): boolean {
@@ -212,9 +247,17 @@ export class Router {
 
   protected cancelVisit(
     activeVisit: ActiveVisit,
-    { cancelled = false, interrupted = false }: { cancelled?: boolean; interrupted?: boolean },
+    {
+      cancelled = false,
+      interrupted = false,
+    }: { cancelled?: boolean; interrupted?: boolean }
   ): void {
-    if (activeVisit && !activeVisit.completed && !activeVisit.cancelled && !activeVisit.interrupted) {
+    if (
+      activeVisit &&
+      !activeVisit.completed &&
+      !activeVisit.cancelled &&
+      !activeVisit.interrupted
+    ) {
       activeVisit.cancelToken.abort()
       activeVisit.onCancel()
       activeVisit.completed = false
@@ -235,7 +278,10 @@ export class Router {
     }
   }
 
-  protected resolvePreserveOption(value: PreserveStateOption, page: Page): boolean | string {
+  protected resolvePreserveOption(
+    value: PreserveStateOption,
+    page: Page
+  ): boolean | string {
     if (typeof value === 'function') {
       return value(page)
     } else if (value === 'errors') {
@@ -272,7 +318,7 @@ export class Router {
       onSuccess = () => {},
       onError = () => {},
       queryStringArrayFormat = 'brackets',
-    }: VisitOptions = {},
+    }: VisitOptions = {}
   ): void {
     let url = typeof href === 'string' ? hrefToUrl(href) : href
 
@@ -281,7 +327,12 @@ export class Router {
     }
 
     if (!(data instanceof FormData)) {
-      const [_href, _data] = mergeDataIntoQueryString(method, url, data, queryStringArrayFormat)
+      const [_href, _data] = mergeDataIntoQueryString(
+        method,
+        url,
+        data,
+        queryStringArrayFormat
+      )
       url = hrefToUrl(_href)
       data = _data
     }
@@ -356,14 +407,24 @@ export class Router {
               'X-Inertia-Partial-Data': only.join(','),
             }
           : {}),
-        ...(errorBag && errorBag.length ? { 'X-Inertia-Error-Bag': errorBag } : {}),
-        ...(this.page.version ? { 'X-Inertia-Version': this.page.version } : {}),
+        ...(errorBag && errorBag.length
+          ? { 'X-Inertia-Error-Bag': errorBag }
+          : {}),
+        ...(this.page.version
+          ? { 'X-Inertia-Version': this.page.version }
+          : {}),
       },
       onUploadProgress: (progress) => {
         if (data instanceof FormData) {
-          progress.percentage = progress.progress ? Math.round(progress.progress * 100) : 0
-          fireProgressEvent(progress)
-          onProgress(progress)
+          const percentage = {
+            percentage: Math.round((progress.loaded / progress.total!) * 100),
+          }
+          const progressPercentage: Progress = {
+            ...progress,
+            ...percentage,
+          }
+          fireProgressEvent(progressPercentage)
+          onProgress(progressPercentage)
         }
       },
     })
@@ -376,25 +437,47 @@ export class Router {
         if (only.length && pageResponse.component === this.page.component) {
           pageResponse.props = { ...this.page.props, ...pageResponse.props }
         }
-        preserveScroll = this.resolvePreserveOption(preserveScroll, pageResponse) as boolean
+        preserveScroll = this.resolvePreserveOption(
+          preserveScroll,
+          pageResponse
+        ) as boolean
         preserveState = this.resolvePreserveOption(preserveState, pageResponse)
-        if (preserveState && window.history.state?.rememberedState && pageResponse.component === this.page.component) {
+        if (
+          preserveState &&
+          window.history.state?.rememberedState &&
+          pageResponse.component === this.page.component
+        ) {
           pageResponse.rememberedState = window.history.state.rememberedState
         }
         const requestUrl = url
         const responseUrl = hrefToUrl(pageResponse.url)
-        if (requestUrl.hash && !responseUrl.hash && urlWithoutHash(requestUrl).href === responseUrl.href) {
+        if (
+          requestUrl.hash &&
+          !responseUrl.hash &&
+          urlWithoutHash(requestUrl).href === responseUrl.href
+        ) {
           responseUrl.hash = requestUrl.hash
           pageResponse.url = responseUrl.href
         }
-        return this.setPage(pageResponse, { visitId, replace, preserveScroll, preserveState })
+        return this.setPage(pageResponse, {
+          visitId,
+          replace,
+          preserveScroll,
+          preserveState,
+        })
       })
       .then(() => {
         const errors = this.page.props.errors || {}
         if (Object.keys(errors).length > 0) {
-          const scopedErrors = errorBag ? (errors[errorBag] ? errors[errorBag] : {}) : errors
-          fireErrorEvent(scopedErrors)
-          return onError(scopedErrors)
+          const scopedErrors = errorBag
+            ? errors[errorBag]
+              ? errors[errorBag]
+              : {}
+            : errors
+          if (scopedErrors) {
+            fireErrorEvent(scopedErrors)
+            return onError(scopedErrors)
+          }
         }
         fireSuccessEvent(this.page)
         return onSuccess(this.page)
@@ -403,9 +486,15 @@ export class Router {
         if (this.isInertiaResponse(error.response)) {
           return this.setPage(error.response.data, { visitId })
         } else if (this.isLocationVisitResponse(error.response)) {
-          const locationUrl = hrefToUrl(error.response.headers['x-inertia-location'])
+          const locationUrl = hrefToUrl(
+            error.response.headers['x-inertia-location']
+          )
           const requestUrl = url
-          if (requestUrl.hash && !locationUrl.hash && urlWithoutHash(requestUrl).href === locationUrl.href) {
+          if (
+            requestUrl.hash &&
+            !locationUrl.hash &&
+            urlWithoutHash(requestUrl).href === locationUrl.href
+          ) {
             locationUrl.hash = requestUrl.hash
           }
           this.locationVisit(locationUrl, preserveScroll === true)
@@ -447,24 +536,26 @@ export class Router {
       replace?: boolean
       preserveScroll?: PreserveStateOption
       preserveState?: PreserveStateOption
-    } = {},
+    } = {}
   ): Promise<void> {
-    return Promise.resolve(this.resolveComponent(page.component)).then((component) => {
-      if (visitId === this.visitId) {
-        page.scrollRegions = page.scrollRegions || []
-        page.rememberedState = page.rememberedState || {}
-        replace = replace || hrefToUrl(page.url).href === window.location.href
-        replace ? this.replaceState(page) : this.pushState(page)
-        this.swapComponent({ component, page, preserveState }).then(() => {
-          if (!preserveScroll) {
-            this.resetScrollPositions()
-          }
-          if (!replace) {
-            fireNavigateEvent(page)
-          }
-        })
+    return Promise.resolve(this.resolveComponent(page.component)).then(
+      (component) => {
+        if (visitId === this.visitId) {
+          page.scrollRegions = page.scrollRegions || []
+          page.rememberedState = page.rememberedState || {}
+          replace = replace || hrefToUrl(page.url).href === window.location.href
+          replace ? this.replaceState(page) : this.pushState(page)
+          this.swapComponent({ component, page, preserveState }).then(() => {
+            if (!preserveScroll) {
+              this.resetScrollPositions()
+            }
+            if (!replace) {
+              fireNavigateEvent(page)
+            }
+          })
+        }
       }
-    })
+    )
   }
 
   protected pushState(page: Page): void {
@@ -481,15 +572,19 @@ export class Router {
     if (event.state !== null) {
       const page = event.state
       const visitId = this.createVisitId()
-      Promise.resolve(this.resolveComponent(page.component)).then((component) => {
-        if (visitId === this.visitId) {
-          this.page = page
-          this.swapComponent({ component, page, preserveState: false }).then(() => {
-            this.restoreScrollPositions()
-            fireNavigateEvent(page)
-          })
+      Promise.resolve(this.resolveComponent(page.component)).then(
+        (component) => {
+          if (visitId === this.visitId) {
+            this.page = page
+            this.swapComponent({ component, page, preserveState: false }).then(
+              () => {
+                this.restoreScrollPositions()
+                fireNavigateEvent(page)
+              }
+            )
+          }
         }
-      })
+      )
     } else {
       const url = hrefToUrl(this.page.url)
       url.hash = window.location.hash
@@ -501,20 +596,29 @@ export class Router {
   public get(
     url: URL | string,
     data: RequestPayload = {},
-    options: Exclude<VisitOptions, 'method' | 'data'> = {},
+    options: Exclude<VisitOptions, 'method' | 'data'> = {}
   ): void {
     return this.visit(url, { ...options, method: 'get', data })
   }
 
-  public reload(options: Exclude<VisitOptions, 'preserveScroll' | 'preserveState'> = {}): void {
-    return this.visit(window.location.href, { ...options, preserveScroll: true, preserveState: true })
+  public reload(
+    options: Exclude<VisitOptions, 'preserveScroll' | 'preserveState'> = {}
+  ): void {
+    return this.visit(window.location.href, {
+      ...options,
+      preserveScroll: true,
+      preserveState: true,
+    })
   }
 
-  public replace(url: URL | string, options: Exclude<VisitOptions, 'replace'> = {}): void {
+  public replace(
+    url: URL | string,
+    options: Exclude<VisitOptions, 'replace'> = {}
+  ): void {
     console.warn(
       `Inertia.replace() has been deprecated and will be removed in a future release. Please use Inertia.${
         options.method ?? 'get'
-      }() instead.`,
+      }() instead.`
     )
     return this.visit(url, { preserveState: true, ...options, replace: true })
   }
@@ -522,29 +626,51 @@ export class Router {
   public post(
     url: URL | string,
     data: RequestPayload = {},
-    options: Exclude<VisitOptions, 'method' | 'data'> = {},
+    options: Exclude<VisitOptions, 'method' | 'data'> = {}
   ): void {
-    return this.visit(url, { preserveState: true, ...options, method: 'post', data })
+    return this.visit(url, {
+      preserveState: true,
+      ...options,
+      method: 'post',
+      data,
+    })
   }
 
   public put(
     url: URL | string,
     data: RequestPayload = {},
-    options: Exclude<VisitOptions, 'method' | 'data'> = {},
+    options: Exclude<VisitOptions, 'method' | 'data'> = {}
   ): void {
-    return this.visit(url, { preserveState: true, ...options, method: 'put', data })
+    return this.visit(url, {
+      preserveState: true,
+      ...options,
+      method: 'put',
+      data,
+    })
   }
 
   public patch(
     url: URL | string,
     data: RequestPayload = {},
-    options: Exclude<VisitOptions, 'method' | 'data'> = {},
+    options: Exclude<VisitOptions, 'method' | 'data'> = {}
   ): void {
-    return this.visit(url, { preserveState: true, ...options, method: 'patch', data })
+    return this.visit(url, {
+      preserveState: true,
+      ...options,
+      method: 'patch',
+      data,
+    })
   }
 
-  public delete(url: URL | string, options: Exclude<VisitOptions, 'method'> = {}): void {
-    return this.visit(url, { preserveState: true, ...options, method: 'delete' })
+  public delete(
+    url: URL | string,
+    options: Exclude<VisitOptions, 'method'> = {}
+  ): void {
+    return this.visit(url, {
+      preserveState: true,
+      ...options,
+      method: 'delete',
+    })
   }
 
   public remember(data: unknown, key = 'default'): void {
@@ -571,7 +697,7 @@ export class Router {
 
   public on<TEventName extends GlobalEventNames>(
     type: TEventName,
-    callback: (event: GlobalEvent<TEventName>) => GlobalEventResult<TEventName>,
+    callback: (event: GlobalEvent<TEventName>) => GlobalEventResult<TEventName>
   ): VoidFunction {
     const listener = ((event: GlobalEvent<TEventName>) => {
       const response = callback(event)

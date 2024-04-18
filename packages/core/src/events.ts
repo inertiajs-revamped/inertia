@@ -1,8 +1,12 @@
-import { GlobalEventDetails, GlobalEventNames, GlobalEventTrigger } from './types'
+import type {
+  GlobalEventDetails,
+  GlobalEventNames,
+  GlobalEventTrigger,
+} from './types'
 
 function fireEvent<TEventName extends GlobalEventNames>(
   name: TEventName,
-  options: CustomEventInit<GlobalEventDetails<TEventName>>,
+  options: CustomEventInit<GlobalEventDetails<TEventName>>
 ): boolean {
   return document.dispatchEvent(new CustomEvent(`inertia:${name}`, options))
 }
@@ -15,7 +19,9 @@ export const fireErrorEvent: GlobalEventTrigger<'error'> = (errors) => {
   return fireEvent('error', { detail: { errors } })
 }
 
-export const fireExceptionEvent: GlobalEventTrigger<'exception'> = (exception) => {
+export const fireExceptionEvent: GlobalEventTrigger<'exception'> = (
+  exception
+) => {
   return fireEvent('exception', { cancelable: true, detail: { exception } })
 }
 

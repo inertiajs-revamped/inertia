@@ -1,9 +1,9 @@
-import { FormDataConvertible } from './types'
+import type { FormDataConvertible } from './types'
 
 export function objectToFormData(
   source: Record<string, FormDataConvertible>,
   form: FormData = new FormData(),
-  parentKey: string | null = null,
+  parentKey: string | null = null
 ): FormData {
   source = source || {}
 
@@ -22,7 +22,9 @@ function composeKey(parent: string | null, key: string): string {
 
 function append(form: FormData, key: string, value: FormDataConvertible): void {
   if (Array.isArray(value)) {
-    return Array.from(value.keys()).forEach((index) => append(form, composeKey(key, index.toString()), value[index]))
+    return Array.from(value.keys()).forEach((index) =>
+      append(form, composeKey(key, index.toString()), value[index])
+    )
   } else if (value instanceof Date) {
     return form.append(key, value.toISOString())
   } else if (value instanceof File) {
