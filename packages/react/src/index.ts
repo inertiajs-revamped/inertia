@@ -1,6 +1,6 @@
-import { router as Router } from '@inertiajs-revamped/core'
+import { type Router, router as _Router } from '@inertiajs-revamped/core'
 
-export const router = Router
+export const router: Router = _Router
 export { default as createInertiaApp } from './createInertiaApp'
 export { default as Head } from './Head'
 export { default as Link, type InertiaLinkProps } from './Link'
