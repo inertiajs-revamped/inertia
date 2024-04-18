@@ -79,7 +79,7 @@ export default function useForm<TForm extends FormDataType>(
     : useState({} as Partial<Record<keyof TForm, string>>)
   const [hasErrors, setHasErrors] = useState(false)
   const [processing, setProcessing] = useState(false)
-  const [progress, setProgress] = useState(null)
+  const [progress, setProgress] = useState<Progress | null>(null)
   const [wasSuccessful, setWasSuccessful] = useState(false)
   const [recentlySuccessful, setRecentlySuccessful] = useState(false)
   let transform = (data) => data
