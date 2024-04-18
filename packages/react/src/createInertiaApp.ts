@@ -106,8 +106,8 @@ export default async function createInertiaApp<
   const el = isServer ? null : document.getElementById(id)
   // @ts-expect-error
   const initialPage = page || JSON.parse(el.dataset.page)
-  // @ts-expect-error
-  const resolveComponent = (name) =>
+
+  const resolveComponent = (name: string) =>
     // @ts-expect-error
     Promise.resolve(resolve(name)).then((module) => module.default || module)
 
