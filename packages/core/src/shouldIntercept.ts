@@ -1,4 +1,6 @@
-export default function shouldIntercept(event: KeyboardEvent): boolean {
+export default function shouldIntercept(
+  event: MouseEvent | KeyboardEvent
+): boolean {
   const isLink =
     (event.currentTarget as HTMLElement).tagName.toLowerCase() === 'a'
   return !(
