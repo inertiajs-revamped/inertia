@@ -6,7 +6,6 @@
     "jsx": "react-jsx",
     "lib": ["DOM", "DOM.Iterable", "ES2020"],
     "exactOptionalPropertyTypes": false,
-    "verbatimModuleSyntax": false,
     "esModuleInterop": true
   },
   "include": ["src"],
