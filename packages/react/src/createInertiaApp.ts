@@ -111,8 +111,7 @@ export default async function createInertiaApp<
     // @ts-expect-error
     Promise.resolve(resolve(name)).then((module) => module.default || module)
 
-  // @ts-expect-error
-  let head = []
+  let head: string[] = []
 
   const reactApp = await resolveComponent(initialPage.component).then(
     (initialComponent) => {
@@ -127,8 +126,9 @@ export default async function createInertiaApp<
           initialComponent,
           resolveComponent,
           titleCallback: title,
-          // @ts-expect-error
-          onHeadUpdate: isServer ? (elements) => (head = elements) : null,
+          onHeadUpdate: isServer
+            ? (elements: string[]) => (head = elements)
+            : null,
         },
       })
     }
@@ -152,7 +152,6 @@ export default async function createInertiaApp<
       )
     )
 
-    // @ts-expect-error
     return { head, body }
   }
 }
