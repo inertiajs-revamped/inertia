@@ -56,7 +56,7 @@ export default function useForm<TForm extends FormDataType>(
   rememberKeyOrInitialValues?: string | TForm,
   maybeInitialValues?: TForm
 ): InertiaFormProps<TForm> {
-  const isMounted = useRef(null)
+  const isMounted = useRef(false)
   const rememberKey =
     typeof rememberKeyOrInitialValues === 'string'
       ? rememberKeyOrInitialValues
