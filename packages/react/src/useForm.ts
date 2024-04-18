@@ -67,7 +67,7 @@ export default function useForm<TForm extends FormDataType>(
       : rememberKeyOrInitialValues) || ({} as TForm)
   )
   const cancelToken = useRef(null)
-  const recentlySuccessfulTimeoutId = useRef(null)
+  const recentlySuccessfulTimeoutId = useRef<NodeJS.Timeout>()
   const [data, setData] = rememberKey
     ? useRemember(defaults, `${rememberKey}:data`)
     : useState(defaults)
