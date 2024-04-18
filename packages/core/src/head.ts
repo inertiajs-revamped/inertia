@@ -1,6 +1,7 @@
 import debounce from './debounce'
+import type { Renderer as _Renderer } from './types'
 
-const Renderer = {
+const Renderer: _Renderer = {
   buildDOMElement(tag: string): ChildNode {
     const template = document.createElement('template')
     template.innerHTML = tag
@@ -119,7 +120,8 @@ export default function createHeadManager(
         if (element.indexOf('<title ') === 0) {
           const title = element.match(/(<title [^>]+>)(.*?)(<\/title>)/)
           carry.title = title
-            ? `${title[1]}${titleCallback(title[2])}${title[3]}`
+            ? // @ts-expect-error
+              `${title[1]}${titleCallback(title[2])}${title[3]}`
             : element
           return carry
         }

@@ -6,6 +6,13 @@ declare module 'axios' {
   }
 }
 
+export interface Renderer {
+  buildDOMElement(tag: string): ChildNode
+  isInertiaManagedElement(element: Element): boolean
+  findMatchingElementIndex(element: Element, elements: ChildNode[]): number
+  update: (this: Renderer, elements: string[]) => void
+}
+
 export type Errors = Record<string, string>
 export type ErrorBag = Record<string, Errors>
 
