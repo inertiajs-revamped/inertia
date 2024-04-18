@@ -10,7 +10,6 @@ import {
 import {
   type AllHTMLAttributes,
   type HTMLAttributes,
-  type MouseEvent,
   createElement,
   forwardRef,
   useCallback,
@@ -24,7 +23,7 @@ interface BaseInertiaLinkProps {
   href: string
   method?: Method
   headers?: Record<string, string>
-  onClick?: (event: MouseEvent<HTMLAnchorElement>) => void
+  onClick?: (event: MouseEvent) => void
   preserveScroll?: PreserveStateOption
   preserveState?: PreserveStateOption
   replace?: boolean
@@ -72,8 +71,10 @@ const Link = forwardRef<unknown, InertiaLinkProps>(
     ref
   ) => {
     const visit = useCallback(
-      (event) => {
-        onClick(event)
+      (event: MouseEvent | KeyboardEvent) => {
+        if (event instanceof MouseEvent) {
+          onClick(event)
+        }
 
         if (shouldIntercept(event)) {
           event.preventDefault()
