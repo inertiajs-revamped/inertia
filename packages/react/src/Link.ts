@@ -9,7 +9,9 @@ import {
 } from '@inertiajs-revamped/core'
 import {
   type AllHTMLAttributes,
+  type ForwardRefExoticComponent,
   type HTMLAttributes,
+  type RefAttributes,
   createElement,
   forwardRef,
   useCallback,
@@ -43,7 +45,9 @@ export type InertiaLinkProps = BaseInertiaLinkProps &
   Omit<HTMLAttributes<HTMLElement>, keyof BaseInertiaLinkProps> &
   Omit<AllHTMLAttributes<HTMLElement>, keyof BaseInertiaLinkProps>
 
-const Link = forwardRef<unknown, InertiaLinkProps>(
+const Link: ForwardRefExoticComponent<
+  InertiaLinkProps & RefAttributes<unknown>
+> = forwardRef<unknown, InertiaLinkProps>(
   (
     {
       children,
