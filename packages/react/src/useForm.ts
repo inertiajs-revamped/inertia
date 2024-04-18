@@ -9,13 +9,15 @@ import isEqual from 'lodash.isequal'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import useRemember from './useRemember'
 
-type setDataByObject<TForm> = (data: TForm) => void
-type setDataByMethod<TForm> = (data: (previousData: TForm) => TForm) => void
-type setDataByKeyValuePair<TForm> = <K extends keyof TForm>(
+export type setDataByObject<TForm> = (data: TForm) => void
+export type setDataByMethod<TForm> = (
+  data: (previousData: TForm) => TForm
+) => void
+export type setDataByKeyValuePair<TForm> = <K extends keyof TForm>(
   key: K,
   value: TForm[K]
 ) => void
-type FormDataType = object
+export type FormDataType = object
 
 export interface InertiaFormProps<TForm extends FormDataType> {
   data: TForm
@@ -45,6 +47,7 @@ export interface InertiaFormProps<TForm extends FormDataType> {
   delete: (url: string, options?: VisitOptions) => void
   cancel: () => void
 }
+
 export default function useForm<TForm extends FormDataType>(
   initialValues?: TForm
 ): InertiaFormProps<TForm>

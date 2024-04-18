@@ -15,21 +15,22 @@ import {
 import type { renderToString } from 'react-dom/server'
 import App from './App'
 
-type ReactInstance = ReactElement
-type ReactComponent = ReactNode
+export type ReactInstance = ReactElement
+export type ReactComponent = ReactNode
 
-type HeadManagerOnUpdate = (elements: string[]) => void // TODO: When shipped, replace with: Inertia.HeadManagerOnUpdate
-type HeadManagerTitleCallback = (title: string) => string // TODO: When shipped, replace with: Inertia.HeadManagerTitleCallback
+export type HeadManagerOnUpdate = (elements: string[]) => void // TODO: When shipped, replace with: Inertia.HeadManagerOnUpdate
+export type HeadManagerTitleCallback = (title: string) => string // TODO: When shipped, replace with: Inertia.HeadManagerTitleCallback
 
-type AppType<SharedProps extends PageProps = PageProps> = FunctionComponent<
-  {
-    children?: (props: {
-      Component: ComponentType
-      key: Key
-      props: Page<SharedProps>['props']
-    }) => ReactNode
-  } & SetupOptions<unknown, SharedProps>['props']
->
+export type AppType<SharedProps extends PageProps = PageProps> =
+  FunctionComponent<
+    {
+      children?: (props: {
+        Component: ComponentType
+        key: Key
+        props: Page<SharedProps>['props']
+      }) => ReactNode
+    } & SetupOptions<unknown, SharedProps>['props']
+  >
 
 export type SetupOptions<ElementType, SharedProps extends PageProps> = {
   el: ElementType
@@ -43,13 +44,13 @@ export type SetupOptions<ElementType, SharedProps extends PageProps> = {
   }
 }
 
-type BaseInertiaAppOptions = {
+export type BaseInertiaAppOptions = {
   title?: HeadManagerTitleCallback
   resolve: PageResolver
 }
 
-type CreateInertiaAppSetupReturnType = ReactInstance | void
-type InertiaAppOptionsForCSR<SharedProps extends PageProps> =
+export type CreateInertiaAppSetupReturnType = ReactInstance | void
+export type InertiaAppOptionsForCSR<SharedProps extends PageProps> =
   BaseInertiaAppOptions & {
     id?: string
     page?: Page | string
@@ -67,8 +68,8 @@ type InertiaAppOptionsForCSR<SharedProps extends PageProps> =
     ): CreateInertiaAppSetupReturnType
   }
 
-type CreateInertiaAppSSRContent = { head: string[]; body: string }
-type InertiaAppOptionsForSSR<SharedProps extends PageProps> =
+export type CreateInertiaAppSSRContent = { head: string[]; body: string }
+export type InertiaAppOptionsForSSR<SharedProps extends PageProps> =
   BaseInertiaAppOptions & {
     id?: undefined
     page: Page | string
