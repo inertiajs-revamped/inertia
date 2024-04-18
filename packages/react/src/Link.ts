@@ -7,7 +7,14 @@ import {
   router,
   shouldIntercept,
 } from '@inertiajs-revamped/core'
-import { createElement, forwardRef, useCallback } from 'react'
+import {
+  type AllHTMLAttributes,
+  type HTMLAttributes,
+  type MouseEvent,
+  createElement,
+  forwardRef,
+  useCallback,
+} from 'react'
 
 const noop = () => undefined
 
@@ -17,7 +24,7 @@ interface BaseInertiaLinkProps {
   href: string
   method?: Method
   headers?: Record<string, string>
-  onClick?: (event: React.MouseEvent<HTMLAnchorElement>) => void
+  onClick?: (event: MouseEvent<HTMLAnchorElement>) => void
   preserveScroll?: PreserveStateOption
   preserveState?: PreserveStateOption
   replace?: boolean
@@ -34,8 +41,8 @@ interface BaseInertiaLinkProps {
 }
 
 export type InertiaLinkProps = BaseInertiaLinkProps &
-  Omit<React.HTMLAttributes<HTMLElement>, keyof BaseInertiaLinkProps> &
-  Omit<React.AllHTMLAttributes<HTMLElement>, keyof BaseInertiaLinkProps>
+  Omit<HTMLAttributes<HTMLElement>, keyof BaseInertiaLinkProps> &
+  Omit<AllHTMLAttributes<HTMLElement>, keyof BaseInertiaLinkProps>
 
 const Link = forwardRef<unknown, InertiaLinkProps>(
   (
