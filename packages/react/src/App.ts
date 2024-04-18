@@ -1,4 +1,4 @@
-import { createHeadManager, router } from '@inertiajs/core'
+import { createHeadManager, router } from '@inertiajs-revamped/core'
 import { createElement, useEffect, useMemo, useState } from 'react'
 import HeadContext from './HeadContext'
 import PageContext from './PageContext'
@@ -21,7 +21,7 @@ export default function App({
     return createHeadManager(
       typeof window === 'undefined',
       titleCallback || ((title) => title),
-      onHeadUpdate || (() => {}),
+      onHeadUpdate || (() => {})
     )
   }, [])
 
@@ -45,7 +45,7 @@ export default function App({
     return createElement(
       HeadContext.Provider,
       { value: headManager },
-      createElement(PageContext.Provider, { value: current.page }, null),
+      createElement(PageContext.Provider, { value: current.page }, null)
     )
   }
 
@@ -62,7 +62,9 @@ export default function App({
         return Component.layout
           .concat(child)
           .reverse()
-          .reduce((children, Layout) => createElement(Layout, { children, ...props }))
+          .reduce((children, Layout) =>
+            createElement(Layout, { children, ...props })
+          )
       }
 
       return child
@@ -78,8 +80,8 @@ export default function App({
         Component: current.component,
         key: current.key,
         props: current.page.props,
-      }),
-    ),
+      })
+    )
   )
 }
 

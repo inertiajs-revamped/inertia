@@ -1,4 +1,9 @@
-import React, { FunctionComponent, useContext, useEffect, useMemo } from 'react'
+import React, {
+  type FunctionComponent,
+  useContext,
+  useEffect,
+  useMemo,
+} from 'react'
 import HeadContext from './HeadContext'
 
 type InertiaHeadProps = {
@@ -77,7 +82,8 @@ const Head: InertiaHead = function ({ children, title }) {
 
   function ensureNodeHasInertiaProp(node) {
     return React.cloneElement(node, {
-      inertia: node.props['head-key'] !== undefined ? node.props['head-key'] : '',
+      inertia:
+        node.props['head-key'] !== undefined ? node.props['head-key'] : '',
     })
   }
 
@@ -86,7 +92,9 @@ const Head: InertiaHead = function ({ children, title }) {
   }
 
   function renderNodes(nodes) {
-    const computed = React.Children.toArray(nodes).filter((node) => node).map((node) => renderNode(node))
+    const computed = React.Children.toArray(nodes)
+      .filter((node) => node)
+      .map((node) => renderNode(node))
     if (title && !computed.find((tag) => tag.startsWith('<title'))) {
       computed.push(`<title inertia>${title}</title>`)
     }

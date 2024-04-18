@@ -1,12 +1,12 @@
 import {
-  FormDataConvertible,
+  type FormDataConvertible,
+  type Method,
+  type PreserveStateOption,
+  type Progress,
   mergeDataIntoQueryString,
-  Method,
-  PreserveStateOption,
-  Progress,
   router,
   shouldIntercept,
-} from '@inertiajs/core'
+} from '@inertiajs-revamped/core'
 import { createElement, forwardRef, useCallback } from 'react'
 
 const noop = () => undefined
@@ -62,7 +62,7 @@ const Link = forwardRef<unknown, InertiaLinkProps>(
       onError = noop,
       ...props
     },
-    ref,
+    ref
   ) => {
     const visit = useCallback(
       (event) => {
@@ -108,18 +108,23 @@ const Link = forwardRef<unknown, InertiaLinkProps>(
         onCancel,
         onSuccess,
         onError,
-      ],
+      ]
     )
 
     as = as.toLowerCase()
     method = method.toLowerCase() as Method
-    const [_href, _data] = mergeDataIntoQueryString(method, href || '', data, queryStringArrayFormat)
+    const [_href, _data] = mergeDataIntoQueryString(
+      method,
+      href || '',
+      data,
+      queryStringArrayFormat
+    )
     href = _href
     data = _data
 
     if (as === 'a' && method !== 'get') {
       console.warn(
-        `Creating POST/PUT/PATCH/DELETE <a> links is discouraged as it causes "Open Link in New Tab/Window" accessibility issues.\n\nPlease specify a more appropriate element using the "as" attribute. For example:\n\n<Link href="${href}" method="${method}" as="button">...</Link>`,
+        `Creating POST/PUT/PATCH/DELETE <a> links is discouraged as it causes "Open Link in New Tab/Window" accessibility issues.\n\nPlease specify a more appropriate element using the "as" attribute. For example:\n\n<Link href="${href}" method="${method}" as="button">...</Link>`
       )
     }
 
@@ -131,9 +136,9 @@ const Link = forwardRef<unknown, InertiaLinkProps>(
         ref,
         onClick: visit,
       },
-      children,
+      children
     )
-  },
+  }
 )
 Link.displayName = 'InertiaLink'
 

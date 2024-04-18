@@ -1,6 +1,18 @@
-import { Page, PageProps, PageResolver, setupProgress } from '@inertiajs/core'
-import { ComponentType, createElement, FunctionComponent, Key, ReactElement, ReactNode } from 'react'
-import { renderToString } from 'react-dom/server'
+import {
+  type Page,
+  type PageProps,
+  type PageResolver,
+  setupProgress,
+} from '@inertiajs-revamped/core'
+import {
+  type ComponentType,
+  type FunctionComponent,
+  type Key,
+  type ReactElement,
+  type ReactNode,
+  createElement,
+} from 'react'
+import type { renderToString } from 'react-dom/server'
 import App from './App'
 
 type ReactInstance = ReactElement
@@ -11,7 +23,11 @@ type HeadManagerTitleCallback = (title: string) => string // TODO: When shipped,
 
 type AppType<SharedProps extends PageProps = PageProps> = FunctionComponent<
   {
-    children?: (props: { Component: ComponentType; key: Key; props: Page<SharedProps>['props'] }) => ReactNode
+    children?: (props: {
+      Component: ComponentType
+      key: Key
+      props: Page<SharedProps>['props']
+    }) => ReactNode
   } & SetupOptions<unknown, SharedProps>['props']
 >
 
@@ -33,37 +49,47 @@ type BaseInertiaAppOptions = {
 }
 
 type CreateInertiaAppSetupReturnType = ReactInstance | void
-type InertiaAppOptionsForCSR<SharedProps extends PageProps> = BaseInertiaAppOptions & {
-  id?: string
-  page?: Page | string
-  render?: undefined
-  progress?:
-    | false
-    | {
-        delay?: number
-        color?: string
-        includeCSS?: boolean
-        showSpinner?: boolean
-      }
-  setup(options: SetupOptions<HTMLElement, SharedProps>): CreateInertiaAppSetupReturnType
-}
+type InertiaAppOptionsForCSR<SharedProps extends PageProps> =
+  BaseInertiaAppOptions & {
+    id?: string
+    page?: Page | string
+    render?: undefined
+    progress?:
+      | false
+      | {
+          delay?: number
+          color?: string
+          includeCSS?: boolean
+          showSpinner?: boolean
+        }
+    setup(
+      options: SetupOptions<HTMLElement, SharedProps>
+    ): CreateInertiaAppSetupReturnType
+  }
 
 type CreateInertiaAppSSRContent = { head: string[]; body: string }
-type InertiaAppOptionsForSSR<SharedProps extends PageProps> = BaseInertiaAppOptions & {
-  id?: undefined
-  page: Page | string
-  render: typeof renderToString
-  progress?: undefined
-  setup(options: SetupOptions<null, SharedProps>): ReactInstance
-}
+type InertiaAppOptionsForSSR<SharedProps extends PageProps> =
+  BaseInertiaAppOptions & {
+    id?: undefined
+    page: Page | string
+    render: typeof renderToString
+    progress?: undefined
+    setup(options: SetupOptions<null, SharedProps>): ReactInstance
+  }
 
-export default async function createInertiaApp<SharedProps extends PageProps = PageProps>(
-  options: InertiaAppOptionsForCSR<SharedProps>,
+export default async function createInertiaApp<
+  SharedProps extends PageProps = PageProps,
+>(
+  options: InertiaAppOptionsForCSR<SharedProps>
 ): Promise<CreateInertiaAppSetupReturnType>
-export default async function createInertiaApp<SharedProps extends PageProps = PageProps>(
-  options: InertiaAppOptionsForSSR<SharedProps>,
+export default async function createInertiaApp<
+  SharedProps extends PageProps = PageProps,
+>(
+  options: InertiaAppOptionsForSSR<SharedProps>
 ): Promise<CreateInertiaAppSSRContent>
-export default async function createInertiaApp<SharedProps extends PageProps = PageProps>({
+export default async function createInertiaApp<
+  SharedProps extends PageProps = PageProps,
+>({
   id = 'app',
   resolve,
   setup,
@@ -71,31 +97,36 @@ export default async function createInertiaApp<SharedProps extends PageProps = P
   progress = {},
   page,
   render,
-}: InertiaAppOptionsForCSR<SharedProps> | InertiaAppOptionsForSSR<SharedProps>): Promise<
+}:
+  | InertiaAppOptionsForCSR<SharedProps>
+  | InertiaAppOptionsForSSR<SharedProps>): Promise<
   CreateInertiaAppSetupReturnType | CreateInertiaAppSSRContent
 > {
   const isServer = typeof window === 'undefined'
   const el = isServer ? null : document.getElementById(id)
   const initialPage = page || JSON.parse(el.dataset.page)
   // @ts-expect-error
-  const resolveComponent = (name) => Promise.resolve(resolve(name)).then((module) => module.default || module)
+  const resolveComponent = (name) =>
+    Promise.resolve(resolve(name)).then((module) => module.default || module)
 
   let head = []
 
-  const reactApp = await resolveComponent(initialPage.component).then((initialComponent) => {
-    return setup({
-      // @ts-expect-error
-      el,
-      App,
-      props: {
-        initialPage,
-        initialComponent,
-        resolveComponent,
-        titleCallback: title,
-        onHeadUpdate: isServer ? (elements) => (head = elements) : null,
-      },
-    })
-  })
+  const reactApp = await resolveComponent(initialPage.component).then(
+    (initialComponent) => {
+      return setup({
+        // @ts-expect-error
+        el,
+        App,
+        props: {
+          initialPage,
+          initialComponent,
+          resolveComponent,
+          titleCallback: title,
+          onHeadUpdate: isServer ? (elements) => (head = elements) : null,
+        },
+      })
+    }
+  )
 
   if (!isServer && progress) {
     setupProgress(progress)
@@ -110,8 +141,8 @@ export default async function createInertiaApp<SharedProps extends PageProps = P
           'data-page': JSON.stringify(initialPage),
         },
         // @ts-expect-error
-        reactApp,
-      ),
+        reactApp
+      )
     )
 
     return { head, body }
