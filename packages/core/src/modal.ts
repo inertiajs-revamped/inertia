@@ -57,7 +57,7 @@ const modal: Modal = {
   },
 
   hideOnEscape(event: KeyboardEvent): void {
-    if (event.keyCode === 27) {
+    if (event.key === 'Escape') {
       this.hide()
     }
   },
