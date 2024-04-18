@@ -25,6 +25,7 @@ import type {
   PageResolver,
   PendingVisit,
   PreserveStateOption,
+  Progress,
   RequestPayload,
   VisitId,
   VisitOptions,
@@ -415,11 +416,15 @@ export class Router {
       },
       onUploadProgress: (progress) => {
         if (data instanceof FormData) {
-          progress.percentage = progress.progress
-            ? Math.round(progress.progress * 100)
-            : 0
-          fireProgressEvent(progress)
-          onProgress(progress)
+          const percentage = {
+            percentage: Math.round((progress.loaded / progress.total!) * 100),
+          }
+          const progressPercentage: Progress = {
+            ...progress,
+            ...percentage,
+          }
+          fireProgressEvent(progressPercentage)
+          onProgress(progressPercentage)
         }
       },
     })
