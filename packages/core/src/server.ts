@@ -2,8 +2,8 @@ import { type IncomingMessage, createServer } from 'node:http'
 import { exit } from 'node:process'
 import type { InertiaAppResponse, Page } from './types'
 
-type AppCallback = (page: Page) => InertiaAppResponse
-type RouteHandler = (request: IncomingMessage) => Promise<unknown>
+export type AppCallback = (page: Page) => InertiaAppResponse
+export type RouteHandler = (request: IncomingMessage) => Promise<unknown>
 
 const readableToString: (readable: IncomingMessage) => Promise<string> = (
   readable
