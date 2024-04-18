@@ -1,6 +1,7 @@
 import {
   Children,
   type FunctionComponent,
+  type ReactNode,
   cloneElement,
   useContext,
   useEffect,
@@ -10,7 +11,7 @@ import HeadContext from './HeadContext'
 
 type InertiaHeadProps = {
   title?: string
-  children?: React.ReactNode
+  children?: ReactNode
 }
 
 type InertiaHead = FunctionComponent<InertiaHeadProps>
