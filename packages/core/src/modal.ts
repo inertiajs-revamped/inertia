@@ -46,10 +46,14 @@ const modal: Modal = {
   },
 
   hide(): void {
-    this.modal.outerHTML = ''
+    if (this.modal != null) {
+      this.modal.outerHTML = ''
+    }
     this.modal = null
     document.body.style.overflow = 'visible'
-    document.removeEventListener('keydown', this.listener)
+    if (this.listener != null) {
+      document.removeEventListener('keydown', this.listener)
+    }
   },
 
   hideOnEscape(event: KeyboardEvent): void {
