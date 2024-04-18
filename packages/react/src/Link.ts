@@ -123,7 +123,7 @@ const Link: ForwardRefExoticComponent<
       ]
     )
 
-    as = as.toLowerCase()
+    as = typeof as === 'string' ? as.toLowerCase() : as
     method = method.toLowerCase() as Method
     const [_href, _data] = mergeDataIntoQueryString(
       method,
