@@ -1,0 +1,13 @@
+{
+  "include": ["./*.mjs"],
+  "compilerOptions": {
+    "module": "ESNext",
+    "target": "ES2022",
+    "moduleResolution": "Bundler",
+    "noEmit": true,
+    "allowJs": true,
+    "checkJs": true,
+    "lib": ["esnext"],
+    "types": ["node", "@bscotch/workspaces"]
+  }
+}

@@ -1,0 +1,107 @@
+- name: bug
+  description: Something isn't working
+  color: 'd73a4a'
+
+- name: dependencies
+  description: Pull requests that update a dependency file
+  color: '0366d6'
+
+- name: documentation
+  description: Improvements or additions to documentation
+  color: '0075ca'
+
+- name: duplicate
+  description: This issue or pull request already exists
+  color: 'cfd3d7'
+
+- name: enhancement
+  description: New feature or request
+  color: 'a2eeef'
+
+- name: good first issue
+  description: Good for newcomers
+  color: '7057ff'
+
+- name: help wanted
+  description: Extra attention is needed
+  color: '008672'
+
+- name: invalid
+  description: This doesn't seem right
+  color: 'e4e669'
+
+- name: pkg/core
+  description: Concerns the core package in the repository
+  color: 'c5def5'
+
+- name: pkg/preact
+  description: Concerns the preact package in the repository
+  color: 'c5def5'
+
+- name: pkg/react
+  description: Concerns the react package in the repository
+  color: 'c5def5'
+
+- name: pkg/svelte
+  description: Concerns the svelte package in the repository
+  color: 'c5def5'
+
+- name: pkg/vue
+  description: Concerns the vue package in the repository
+  color: 'c5def5'
+
+- name: pkg/laravel
+  description: Concerns the laravel package in the repository
+  color: 'c5def5'
+
+- name: pkg/presets
+  description: Concerns the presets package in the repository
+  color: 'c5def5'
+
+- name: "🟥 priority/critical"
+  description: Must be fixed ASAP
+  color: 'b60205'
+
+- name: "🟧 priority/high"
+  description: Stalls work on the project or its dependents
+  color: 'ff9f1c'
+
+- name: "🟩 priority/low"
+  description: Low priority and doesn't need to be rushed
+  color: 'c7d925'
+
+- name: "🟨 priority/medium"
+  description: Not blocking but should be fixed soon
+  color: 'ffcc00'
+
+- name: question
+  description: Further information is requested
+  color: 'd876e3'
+
+- name: "🚦 status/awaiting triage"
+  description: Has not been triaged & therefore, not ready for work
+  color: '333333'
+
+- name: "🚧 status/blocked"
+  description: Blocked & therefore, not ready for work
+  color: '999999'
+
+- name: "⛔️ status/wontfix"
+  description: Will not be worked on
+  color: 'eeeeee'
+
+- name: "🙅 status/discontinued"
+  description: Not suitable for work as repo is in maintenance
+  color: 'eeeeee'
+
+- name: "🏷 status/label work required"
+  description: Needs proper labelling before it can be worked on
+  color: '666666'
+
+- name: "🏁 status/ready for dev"
+  description: Ready for work
+  color: 'cccccc'
+
+- name: "🧹 status/ticket work required"
+  description: Needs more details before it can be worked on
+  color: '666666'

@@ -1,0 +1,56 @@
+{
+  "name": "@inertiajs-revamped/workspace",
+  "private": true,
+  "keywords": ["multi-root ready"],
+  "homepage": "https://inertiajs-revamped.com",
+  "bugs": {
+    "url": "https://github.com/inertiajs-revamped/inertia/issues",
+    "email": "github@jrson.me"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/inertiajs-revamped/inertia.git"
+  },
+  "license": "MIT",
+  "author": "Jörn Spangenberg <github@jrson.me> (https://jrson.me)",
+  "type": "module",
+  "scripts": {
+    "preinstall": "npx only-allow pnpm",
+    "reinstall": "pnpm run clean:modules && pnpm install",
+    "clean": "pnpm --stream -r clean",
+    "clean:modules": "node ./.scripts/clean-modules.mjs",
+    "lint": "biome lint --apply .",
+    "fmt": "biome format . --write",
+    "build": "pnpm build:core && pnpm build:react",
+    "build:core": "pnpm --filter=core build",
+    "build:preact": "pnpm --filter=preact build",
+    "build:react": "pnpm --filter=react build",
+    "build:vue": "pnpm --filter=vue build",
+    "sandbox": "pnpm build && node ./.scripts/init-sandbox.mjs",
+    "changelogs": "node ./.scripts/changelogs.mjs"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^1.7.0",
+    "@bscotch/workspaces": "^0.3.0",
+    "@preset/cli": "^0.11.2",
+    "@types/node": "^20.12.7",
+    "colorize-node": "^0.5.1",
+    "execa": "^8.0.1",
+    "husky": "^9.0.11",
+    "is-command": "^2.0.2",
+    "nano-staged": "^0.8.0",
+    "pkgroll": "^2.0.2",
+    "tsx": "^4.7.2",
+    "typescript": "^5.4.5"
+  },
+  "engines": {
+    "node": ">=21.7.2",
+    "pnpm": ">=8.15.0"
+  },
+  "nano-staged": {
+    "*.ts": "biome lint --apply .",
+    "*": "biome format . --write"
+  },
+  "packageManager": "pnpm@8.15.0",
+  "preset": "./packages/presets/preset.ts"
+}

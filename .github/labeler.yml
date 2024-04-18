@@ -1,0 +1,27 @@
+pkg/core:
+- changed-files:
+  - any-glob-to-any-file: "packages/core/**"
+
+pkg/preact:
+- changed-files:
+  - any-glob-to-any-file: "packages/preact/**"
+
+pkg/react:
+- changed-files:
+  - any-glob-to-any-file: "packages/react/**"
+
+pkg/svelte:
+- changed-files:
+  - any-glob-to-any-file: "packages/svelte/**"
+
+pkg/vue:
+- changed-files:
+  - any-glob-to-any-file: "packages/vue/**"
+
+pkg/laravel:
+- changed-files:
+  - any-glob-to-any-file: "packages/laravel/**"
+
+pkg/presets:
+- changed-files:
+  - any-glob-to-any-file: "packages/presets/**"

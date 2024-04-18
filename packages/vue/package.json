@@ -1,0 +1,67 @@
+{
+  "name": "@inertiajs-revamped/vue",
+  "version": "0.1.0",
+  "description": "The Vue adapter for Inertia.js-Revamped",
+  "homepage": "https://inertiajs-revamped.com",
+  "bugs": {
+    "url": "https://github.com/inertiajs-revamped/inertia/issues",
+    "email": "github@jrson.me"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/inertiajs-revamped/inertia.git",
+    "directory": "packages/vue"
+  },
+  "license": "MIT",
+  "type": "module",
+  "exports": {
+    ".": {
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
+      },
+      "import": {
+        "types": "./dist/index.d.mts",
+        "default": "./dist/index.mjs"
+      }
+    },
+    "./server": {
+      "require": {
+        "types": "./dist/server.d.cts",
+        "default": "./dist/server.cjs"
+      },
+      "import": {
+        "types": "./dist/server.d.mts",
+        "default": "./dist/server.mjs"
+      }
+    }
+  },
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.cts",
+  "files": ["dist"],
+  "scripts": {
+    "clean": "rm -rf dist",
+    "build": "pkgroll --target=es2020 --minify"
+  },
+  "dependencies": {
+    "@inertiajs-revamped/core": "workspace:*",
+    "@types/lodash.clonedeep": "^4.5.9",
+    "@types/lodash.isequal": "^4.5.8",
+    "lodash.clonedeep": "^4.5.0",
+    "lodash.isequal": "^4.5.0",
+    "vue": "^3.4.22"
+  },
+  "devDependencies": {
+    "@types/node": "^20.12.5"
+  },
+  "peerDependencies": {
+    "vue": "=>3.4.22"
+  },
+  "engines": {
+    "node": ">=18.12.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

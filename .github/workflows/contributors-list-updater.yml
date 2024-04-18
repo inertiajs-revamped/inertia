@@ -1,0 +1,50 @@
+name: Contributors List Updater
+
+on:
+  workflow_dispatch:
+
+  schedule:
+    - cron: "0 3 */2 * *"
+
+permissions:
+  contents: read
+
+jobs:
+  sync-contributors:
+    name: Contributors List Updater
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
+        with:
+          fetch-depth: 0
+          ref: ${{ github.event.repository.default_branch }}
+
+      - name: Update contributors list
+        uses: wow-actions/contributors-list@242b53835016268d20e79eeff6f42193c02be8c8 # v1.2.0
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          svgPath: .github/assets/CONTRIBUTORS.svg
+          round: true
+          includeBots: false
+          noCommit: true
+
+      - name: Commit & PR
+        uses: peter-evans/create-pull-request@c55203cfde3e5c11a452d352b4393e68b85b4533 # v6.0.3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          add-paths: .github/assets/CONTRIBUTORS.svg
+          commit-message: "chore: update contributors-list"
+          committer: GitHub <noreply@github.com>
+          author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
+          signoff: false
+          branch: workflow/update-contributors-list
+          base: main
+          delete-branch: true
+          title: "chore: update contributors-list"
+          body: |
+            Automated update to `.github/assets/CONTRIBUTORS.svg`

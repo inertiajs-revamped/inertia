@@ -1,0 +1,24 @@
+{
+  "name": "@inertiajs-revamped/presets",
+  "version": "0.1.0-dev",
+  "private": true,
+  "description": "Laravel presets for Inertia.js-Revamped",
+  "homepage": "https://inertiajs-revamped.com",
+  "bugs": {
+    "url": "https://github.com/inertiajs-revamped/inertia/issues",
+    "email": "github@jrson.me"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/inertiajs-revamped/inertia.git",
+    "directory": "packages/presets"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "@preset/core": "^0.11.2",
+    "@types/node": "^20.12.5"
+  },
+  "publishConfig": {
+    "access": "restricted"
+  }
+}

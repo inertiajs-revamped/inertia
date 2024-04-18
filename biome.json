@@ -1,0 +1,71 @@
+{
+  "$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
+  "formatter": {
+    "enabled": true,
+    "formatWithErrors": false,
+    "indentWidth": 2,
+    "indentStyle": "space",
+    "lineWidth": 80,
+    "ignore": [
+      "**/dist/**",
+      "**/node_modules/**",
+      "**/public/**",
+      "packages/presets/templates/**",
+      "packages/*/src/*.ts"
+    ]
+  },
+  "javascript": {
+    "formatter": {
+      "quoteStyle": "single",
+      "quoteProperties": "asNeeded",
+      "semicolons": "asNeeded",
+      "trailingComma": "es5"
+    }
+  },
+  "linter": {
+    "enabled": true,
+    "ignore": [
+      "**/dist/**",
+      "**/node_modules/**",
+      "**/public/**",
+      "packages/presets/templates/**",
+      "packages/*/src/*.ts"
+    ],
+    "rules": {
+      "recommended": true,
+      "a11y": {
+        "useKeyWithClickEvents": "off"
+      },
+      "complexity": {
+        "noBannedTypes": "off",
+        "useArrowFunction": "off",
+        "noForEach": "off",
+        "useOptionalChain": "off"
+      },
+      "correctness": {
+        "noVoidTypeReturn": "off",
+        "useExhaustiveDependencies": "off"
+      },
+      "performance": {
+        "noDelete": "off",
+        "noAccumulatingSpread": "off"
+      },
+      "suspicious": {
+        "noConfusingVoidType": "off",
+        "noAssignInExpressions": "off",
+        "noExplicitAny": "off"
+      },
+      "style": {
+        "all": false,
+        "noUselessElse": "off",
+        "useTemplate": "off",
+        "noParameterAssign": "off",
+        "useShorthandFunctionType": "off",
+        "noNonNullAssertion": "off"
+      }
+    }
+  },
+  "organizeImports": {
+    "enabled": true
+  }
+}

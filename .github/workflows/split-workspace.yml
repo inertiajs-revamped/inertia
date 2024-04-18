@@ -1,0 +1,51 @@
+name: Split Laravel Package
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'packages/laravel/**'
+    tags:
+      - '@inertiajs-revamped/laravel@*'
+
+jobs:
+  packages_split:
+    name: Split Laravel Package
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
+        with:
+          fetch-depth: 0
+
+      - if: ${{ !startsWith(github.ref, 'refs/tags/') }}
+        name: Split package repository (No Tag)
+        uses: alphpaca/monoplus-split-action@fd760005363befe5b789d37ae7108ffbc0ce054f # 2022.1-beta3
+        with:
+          package_path: 'packages/laravel'
+          personal_access_token: ${{ secrets.PAT }}
+          git_username: 'inertiajs-revamped'
+          git_email: 'inertiajs-revamped@jrson.me'
+          repository_owner: 'inertiajs-revamped'
+          repository_name: 'laravel'
+          target_branch: 'main'
+
+      - if: ${{ startsWith(github.ref, 'refs/tags/') }}
+        name: Extract tag
+        id: extract_tag
+        run: echo ::set-output name=TAG::${GITHUB_REF/refs\/tags\//}
+
+      - if: ${{ startsWith(github.ref, 'refs/tags/') }}
+        name: Create package tag
+        uses: alphpaca/monoplus-split-action@fd760005363befe5b789d37ae7108ffbc0ce054f # 2022.1-beta3
+
+        with:
+          package_path: 'packages/laravel'
+          personal_access_token: ${{ secrets.PAT }}
+          git_username: 'inertiajs-revamped'
+          git_email: 'inertiajs-revamped@jrson.me'
+          repository_owner: 'inertiajs-revamped'
+          repository_name: 'laravel'
+          tag: ${{ steps.extract_tag.outputs.TAG }}

@@ -1,0 +1,41 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:base",
+    "schedule:weekly",
+    ":gitSignOff",
+    ":dependencyDashboard",
+    ":semanticCommits",
+    ":semanticCommitTypeAll(build)",
+    ":semanticCommitScope(deps)"
+  ],
+  "timezone": "Europe/Amsterdam",
+  "enabledManagers": ["npm", "github-actions"],
+  "addLabels": ["dependencies"],
+  "rangeStrategy": "update-lockfile",
+  "automerge": true,
+  "automergeType": "pr",
+  "platformAutomerge": true,
+  "lockFileMaintenance": {
+    "enabled": true,
+    "automerge": true
+  },
+  "ignorePaths": [".github/workflows/split-workspace.yml"],
+  "packageRules": [
+    {
+      "description": "Automatically merge devDependencies updates",
+      "matchDepTypes": ["devDependencies"],
+      "matchPackagePatterns": [
+        "@biomejs/biome",
+        "@bscotch/workspaces",
+        "@preset/cli",
+        "@types/node",
+        "nano-staged",
+        "pkgroll",
+        "tsx",
+        "typescript"
+      ],
+      "automerge": true
+    }
+  ]
+}

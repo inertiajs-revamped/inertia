@@ -1,0 +1,21 @@
+{
+  "name": "@inertiajs-revamped/laravel",
+  "version": "0.1.0",
+  "private": true,
+  "description": "The Laravel adapter for Inertia.js-Revamped",
+  "homepage": "https://inertiajs-revamped.com",
+  "bugs": {
+    "url": "https://github.com/inertiajs-revamped/inertia/issues",
+    "email": "github@jrson.me"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/inertiajs-revamped/inertia.git",
+    "directory": "packages/laravel"
+  },
+  "license": "MIT",
+  "type": "module",
+  "publishConfig": {
+    "access": "restricted"
+  }
+}
