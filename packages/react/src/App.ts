@@ -20,7 +20,7 @@ export default function App({
   const [current, setCurrent] = useState({
     component: initialComponent || null,
     page: initialPage,
-    key: null,
+    key: -1,
   })
 
   const headManager = useMemo(() => {
@@ -36,7 +36,6 @@ export default function App({
       initialPage,
       resolveComponent,
       swapComponent: async ({ component, page, preserveState }) => {
-        // @ts-expect-error
         setCurrent((current) => ({
           component,
           page,
