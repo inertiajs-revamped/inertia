@@ -166,7 +166,7 @@ export default function useForm<TForm extends FormDataType>(
             return options.onCancel()
           }
         },
-        onFinish: () => {
+        onFinish: (visit) => {
           if (isMounted.current) {
             setProcessing(false)
             setProgress(null)
@@ -175,7 +175,7 @@ export default function useForm<TForm extends FormDataType>(
           cancelToken.current = null
 
           if (options.onFinish) {
-            return options.onFinish()
+            return options.onFinish(visit)
           }
         },
       }
