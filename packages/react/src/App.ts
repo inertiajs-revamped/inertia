@@ -1,27 +1,33 @@
-import { createHeadManager, router } from '@inertiajs/core'
+import { createHeadManager, router } from '@inertiajs-revamped/core'
 import { createElement, useEffect, useMemo, useState } from 'react'
 import HeadContext from './HeadContext'
 import PageContext from './PageContext'
 
 export default function App({
+  // @ts-expect-error
   children,
+  // @ts-expect-error
   initialPage,
+  // @ts-expect-error
   initialComponent,
+  // @ts-expect-error
   resolveComponent,
+  // @ts-expect-error
   titleCallback,
+  // @ts-expect-error
   onHeadUpdate,
 }) {
   const [current, setCurrent] = useState({
     component: initialComponent || null,
     page: initialPage,
-    key: null,
+    key: -1,
   })
 
   const headManager = useMemo(() => {
     return createHeadManager(
       typeof window === 'undefined',
       titleCallback || ((title) => title),
-      onHeadUpdate || (() => {}),
+      onHeadUpdate || (() => {})
     )
   }, [])
 
@@ -44,13 +50,15 @@ export default function App({
   if (!current.component) {
     return createElement(
       HeadContext.Provider,
+      // @ts-expect-error
       { value: headManager },
-      createElement(PageContext.Provider, { value: current.page }, null),
+      createElement(PageContext.Provider, { value: current.page }, null)
     )
   }
 
   const renderChildren =
     children ||
+    // @ts-expect-error
     (({ Component, props, key }) => {
       const child = createElement(Component, { key, ...props })
 
@@ -59,10 +67,15 @@ export default function App({
       }
 
       if (Array.isArray(Component.layout)) {
-        return Component.layout
-          .concat(child)
-          .reverse()
-          .reduce((children, Layout) => createElement(Layout, { children, ...props }))
+        return (
+          Component.layout
+            .concat(child)
+            .reverse()
+            // @ts-expect-error
+            .reduce((children, Layout) =>
+              createElement(Layout, { children, ...props })
+            )
+        )
       }
 
       return child
@@ -70,6 +83,7 @@ export default function App({
 
   return createElement(
     HeadContext.Provider,
+    // @ts-expect-error
     { value: headManager },
     createElement(
       PageContext.Provider,
@@ -78,8 +92,8 @@ export default function App({
         Component: current.component,
         key: current.key,
         props: current.page.props,
-      }),
-    ),
+      })
+    )
   )
 }
 

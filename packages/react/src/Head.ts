@@ -1,15 +1,23 @@
-import React, { FunctionComponent, useContext, useEffect, useMemo } from 'react'
+import {
+  Children,
+  type FunctionComponent,
+  type PropsWithChildren,
+  cloneElement,
+  useContext,
+  useEffect,
+  useMemo,
+} from 'react'
 import HeadContext from './HeadContext'
 
-type InertiaHeadProps = {
+export type InertiaHeadProps = PropsWithChildren<{
   title?: string
-  children?: React.ReactNode
-}
+}>
 
-type InertiaHead = FunctionComponent<InertiaHeadProps>
+export type InertiaHead = FunctionComponent<InertiaHeadProps>
 
 const Head: InertiaHead = function ({ children, title }) {
   const headManager = useContext(HeadContext)
+  // @ts-expect-error
   const provider = useMemo(() => headManager.createProvider(), [headManager])
 
   useEffect(() => {
@@ -18,6 +26,7 @@ const Head: InertiaHead = function ({ children, title }) {
     }
   }, [provider])
 
+  // @ts-expect-error
   function isUnaryTag(node) {
     return (
       [
@@ -40,6 +49,7 @@ const Head: InertiaHead = function ({ children, title }) {
     )
   }
 
+  // @ts-expect-error
   function renderTagStart(node) {
     const attrs = Object.keys(node.props).reduce((carry, name) => {
       if (['head-key', 'children', 'dangerouslySetInnerHTML'].includes(name)) {
@@ -55,12 +65,15 @@ const Head: InertiaHead = function ({ children, title }) {
     return `<${node.type}${attrs}>`
   }
 
+  // @ts-expect-error
   function renderTagChildren(node) {
     return typeof node.props.children === 'string'
       ? node.props.children
-      : node.props.children.reduce((html, child) => html + renderTag(child), '')
+      : // @ts-expect-error
+        node.props.children.reduce((html, child) => html + renderTag(child), '')
   }
 
+  // @ts-expect-error
   function renderTag(node) {
     let html = renderTagStart(node)
     if (node.props.children) {
@@ -75,18 +88,24 @@ const Head: InertiaHead = function ({ children, title }) {
     return html
   }
 
+  // @ts-expect-error
   function ensureNodeHasInertiaProp(node) {
-    return React.cloneElement(node, {
-      inertia: node.props['head-key'] !== undefined ? node.props['head-key'] : '',
+    return cloneElement(node, {
+      inertia:
+        node.props['head-key'] !== undefined ? node.props['head-key'] : '',
     })
   }
 
+  // @ts-expect-error
   function renderNode(node) {
     return renderTag(ensureNodeHasInertiaProp(node))
   }
 
+  // @ts-expect-error
   function renderNodes(nodes) {
-    const computed = React.Children.toArray(nodes).filter((node) => node).map((node) => renderNode(node))
+    const computed = Children.toArray(nodes)
+      .filter((node) => node)
+      .map((node) => renderNode(node))
     if (title && !computed.find((tag) => tag.startsWith('<title'))) {
       computed.push(`<title inertia>${title}</title>`)
     }
