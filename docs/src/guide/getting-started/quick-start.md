@@ -41,7 +41,7 @@ npx @preset/cli apply inertiajs-revamped/inertia --ui=vue // [!code focus]
 
 :::
 
-By default preset installs Inertia.js-Revamped, a UI framework of your choice, configures [Vite](https://vitejs.dev) with [TypeScript](https://www.typescriptlang.org/) and enables [SSR](/advanced-usage/server-side-rendering).
+By default preset installs Inertia.js-Revamped, a UI framework of your choice, configures [Vite](https://vitejs.dev) with [TypeScript](https://www.typescriptlang.org/) and enables SSR.
 
 ::: info
 
