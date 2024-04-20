@@ -15,7 +15,7 @@ export interface Modal {
   hide(): void
 }
 
-export type HeadManger = {
+export type HeadManager = {
   forceUpdate: () => void
   createProvider: () => {
     update: (elements: string[]) => void

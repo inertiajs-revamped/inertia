@@ -1,5 +1,5 @@
 import debounce from './debounce'
-import type { HeadManger, Renderer as _Renderer } from './types'
+import type { HeadManager, Renderer as _Renderer } from './types'
 
 const Renderer: _Renderer = {
   buildDOMElement(tag: string): ChildNode {
@@ -70,7 +70,7 @@ export default function createHeadManager(
   isServer: boolean,
   titleCallback: (title: string) => string,
   onUpdate: (elements: string[]) => void
-): HeadManger {
+): HeadManager {
   const states: Record<string, Array<string>> = {}
   let lastProviderId = 0
 
