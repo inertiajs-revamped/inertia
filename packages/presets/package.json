@@ -14,6 +14,7 @@
     "directory": "packages/presets"
   },
   "license": "MIT",
+  "type": "module",
   "devDependencies": {
     "@preset/core": "^0.11.2",
     "@types/node": "^20.12.5"
