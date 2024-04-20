@@ -27,7 +27,12 @@ const parsed = await parseMonorepoConventionalCommits('.', {
 await renderMonorepoConventionalCommits(
   parsed,
   (project, versions) => {
-    if (project.isRoot) return
+    if (
+      project.isRoot ||
+      project.package.name === '@inertiajs-revamped/docs' ||
+      project.package.name === '@inertiajs-revamped/presets'
+    )
+      return
     const title = `# Changelog - ${project.package.name}`
     const versionStrings = versions.map((version) => {
       const header = `## ${version.version} (${

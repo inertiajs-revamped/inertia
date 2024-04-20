@@ -7,6 +7,7 @@
     "indentStyle": "space",
     "lineWidth": 80,
     "ignore": [
+      "**/cache/**",
       "**/dist/**",
       "**/node_modules/**",
       "**/public/**",
@@ -26,6 +27,7 @@
   "linter": {
     "enabled": true,
     "ignore": [
+      "**/cache/**",
       "**/dist/**",
       "**/node_modules/**",
       "**/public/**",
