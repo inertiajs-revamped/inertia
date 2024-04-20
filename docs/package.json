@@ -1,0 +1,33 @@
+{
+  "name": "@inertiajs-revamped/docs",
+  "version": "0.1.0-dev",
+  "private": true,
+  "description": "Documentation for Inertia.js-Revamped",
+  "homepage": "https://inertiajs-revamped.com",
+  "bugs": {
+    "url": "https://github.com/inertiajs-revamped/inertia/issues",
+    "email": "github@jrson.me"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/inertiajs-revamped/inertia.git",
+    "directory": "docs"
+  },
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "clean": "rm -rf dist src/.vitepress/cache",
+    "dev": "vitepress dev src",
+    "build": "vitepress build src",
+    "preview": "vitepress preview src"
+  },
+  "devDependencies": {
+    "@types/node": "^20.12.5",
+    "vite": "^5.2.9",
+    "vitepress": "^1.1.3",
+    "vue": "^3.4.23"
+  },
+  "publishConfig": {
+    "access": "restricted"
+  }
+}
