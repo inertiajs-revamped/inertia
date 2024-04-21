@@ -41,16 +41,43 @@ export type Method = 'get' | 'post' | 'put' | 'patch' | 'delete'
 
 export type RequestPayload = Record<string, FormDataConvertible> | FormData
 
-export interface PageProps {
-  [key: string]: unknown
+export interface DefaultPageProps {
+  errors: Errors & ErrorBag
 }
+
+/**
+ * Define shared interfaces with module augmentation (React example).
+ *
+ * @see {@link https://www.typescriptlang.org/docs/handbook/declaration-merging.html#module-augmentation}
+ *
+ * @example
+ * ```typescript
+ * // inertia-react.d.ts
+ * declare module '@inertiajs-revamped/react' {
+ *   // Returned by `usePage` and received as a prop on the `PageContext.Provider` React Context (`Page<PageProps>`).
+ *   interface PageProps {
+ *     auth: {
+ *       user: string
+ *     }
+ *     versions: {
+ *       php: string
+ *       laravel: string
+ *     }
+ *   }
+ *
+ *   interface HomePageProps extends PageProps {
+ *     someProp: {
+ *       availableForHomePage: string
+ *     }
+ *   }
+ * }
+ * ```
+ */
+export interface PageProps extends DefaultPageProps {}
 
 export interface Page<SharedProps extends PageProps = PageProps> {
   component: string
-  props: PageProps &
-    SharedProps & {
-      errors: Errors & ErrorBag
-    }
+  props: SharedProps
   url: string
   version: string | null
 
