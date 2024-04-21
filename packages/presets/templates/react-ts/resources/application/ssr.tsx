@@ -1,6 +1,6 @@
 // @ts-nocheck
 import { createInertiaApp } from '@inertiajs-revamped/react'
-import { createServer } from '@inertiajs-revamped/react/server'
+import createServer from '@inertiajs-revamped/react/server'
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers'
 import { renderToString } from 'react-dom/server'
 
