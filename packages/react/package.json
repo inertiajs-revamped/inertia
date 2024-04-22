@@ -39,17 +39,18 @@
   "main": "./dist/index.cjs",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.cts",
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "clean": "rm -rf dist",
     "build": "pkgroll --target=es2020 --minify"
   },
   "dependencies": {
     "@inertiajs-revamped/core": "workspace:*",
-    "@types/lodash.isequal": "^4.5.8",
     "@types/react": "^18.2.74",
     "@types/react-dom": "^18.2.24",
-    "lodash.isequal": "^4.5.0",
+    "just-compare": "^2.3.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
