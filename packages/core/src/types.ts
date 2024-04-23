@@ -20,10 +20,13 @@ export interface Modal {
 export type HeadManager = {
   forceUpdate: () => void
   createProvider: () => {
-    update: (elements: string[]) => void
+    update: HeadManagerOnUpdate
     disconnect: () => void
   }
 }
+
+export type HeadManagerOnUpdate = (elements: string[]) => void
+export type HeadManagerTitleCallback = (title: string) => string
 
 export type Errors = Record<string, string>
 export type ErrorBag = Record<string, Errors>
