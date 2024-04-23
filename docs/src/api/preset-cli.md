@@ -48,6 +48,6 @@ npx @preset/cli apply inertiajs-revamped/inertia --ui=vue // [!code focus]
 | Option | Description |
 | -      | -           |
 | `--ui [framework]` | Prefered UI-Framework (default: `none`) (`"preact" \| "react" \| "vue"`) |
-| `--no-typesctipt`  | Disable TypeScript (use `.jsx`) (default: `false`) (`boolean`) |
+| `--no-typescript`  | Disable TypeScript (use `.jsx`) (default: `false`) (`boolean`) |
 | `--no-ssr`         | Disable SSR (default: `false`) (`boolean`) |
 | `--sandbox`        | For development [workspace](https://github.com/inertiajs-revamped/inertia) only (default: `false`) (`boolean`) |
