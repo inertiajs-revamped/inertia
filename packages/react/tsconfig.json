@@ -5,7 +5,6 @@
   "compilerOptions": {
     "jsx": "react-jsx",
     "lib": ["DOM", "DOM.Iterable", "ES2020"],
-    "exactOptionalPropertyTypes": false,
     "esModuleInterop": true
   },
   "include": ["src"],
