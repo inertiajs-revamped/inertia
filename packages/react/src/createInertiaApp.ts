@@ -17,8 +17,6 @@ import {
 import type { renderToString } from 'react-dom/server'
 import App from './App'
 
-export type ReactComponent = ReactNode
-
 export type AppType<SharedProps extends PageProps = PageProps> =
   FunctionComponent<
     {
@@ -35,7 +33,7 @@ export type SetupOptions<ElementType, SharedProps extends PageProps> = {
   App: AppType
   props: {
     initialPage: Page<SharedProps>
-    initialComponent: ReactComponent
+    initialComponent: ReactNode
     resolveComponent: PageResolver
     titleCallback?: HeadManagerTitleCallback
     onHeadUpdate?: HeadManagerOnUpdate
