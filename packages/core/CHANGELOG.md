@@ -1,9 +1,10 @@
 # Changelog - @inertiajs-revamped/core
 
-## 0.1.0 (2024-04-18)
+## 0.1.0 (2024-04-23)
 
 ### Bug Fixes
 
+- fix type definition typo ([b752ea3](https://github.com/inertiajs-revamped/inertia/commit/b752ea3))
 - add type parameter `MouseEvent` for `shouldIntercept()`, fixes error in adapter `<Link>` ([be03560](https://github.com/inertiajs-revamped/inertia/commit/be03560))
 - fix `<Router>` `onUploadProgress` to work with `Progress` type ([dc02443](https://github.com/inertiajs-revamped/inertia/commit/dc02443))
 - fix `Progress` type & omit axios declaration, fixes ts(2322) in adapter `<Link>` ([8939bdd](https://github.com/inertiajs-revamped/inertia/commit/8939bdd))
@@ -19,3 +20,14 @@
 - fix qs, process wildcard & `node` imports to use named imports ([caf3cc8](https://github.com/inertiajs-revamped/inertia/commit/caf3cc8))
 - add missing `this` type to `debounce()` callback, fixes ts(2683) ([378f140](https://github.com/inertiajs-revamped/inertia/commit/378f140))
 - ensure that all imports used only as a type use a type-only `import` ([4321e7f](https://github.com/inertiajs-revamped/inertia/commit/4321e7f))
+
+### Code Refactoring
+
+- make `PageResolver` generic, remove generic from `resolvePageComponent` ([1caf9da](https://github.com/inertiajs-revamped/inertia/commit/1caf9da))
+- move `HeadManagerOnUpdate` & `HeadManagerTitleCallback` to core ([0faa792](https://github.com/inertiajs-revamped/inertia/commit/0faa792))
+- improve `PageProps` to support module augmentation ([7e7b7dc](https://github.com/inertiajs-revamped/inertia/commit/7e7b7dc))
+
+### Features
+
+- add expand type helper ([c0ec541](https://github.com/inertiajs-revamped/inertia/commit/c0ec541))
+- add helper function `resolvePageComponent` ([8f79da7](https://github.com/inertiajs-revamped/inertia/commit/8f79da7))
