@@ -5,9 +5,7 @@
   "compilerOptions": {
     "jsx": "react-jsx",
     "jsxImportSource": "preact",
-    "lib": ["DOM", "DOM.Iterable", "ES2020"],
-    "exactOptionalPropertyTypes": false,
-    "verbatimModuleSyntax": false
+    "lib": ["DOM", "DOM.Iterable", "ES2020"]
   },
   "include": ["src"],
   "exclude": ["**/dist", "**/node_modules"]
