@@ -1,6 +1,8 @@
 // @ts-nocheck
-import { createInertiaApp } from '@inertiajs-revamped/react'
-import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers'
+import {
+  createInertiaApp,
+  resolvePageComponent,
+} from '@inertiajs-revamped/react'
 import { StrictMode } from 'react'
 import { hydrateRoot } from 'react-dom/client'
 

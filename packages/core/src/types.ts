@@ -92,7 +92,13 @@ export interface Page<SharedProps extends PageProps = PageProps> {
   rememberedState: Record<string, unknown>
 }
 
-export type PageResolver = (name: string) => Component
+/* export type PageResolver = (name: string) => Component */
+
+export type PageResolver<ModuleExportType extends Component = Component> = (
+  name: string
+) =>
+  | Promise<{ default: ModuleExportType } | ModuleExportType>
+  | ({ default: ModuleExportType } | ModuleExportType)
 
 export type PageHandler = ({
   component,
@@ -100,9 +106,11 @@ export type PageHandler = ({
   preserveState,
 }: {
   component: Component
-  page: Page
+  page: Page<any>
   preserveState: PreserveStateOption
 }) => Promise<unknown>
+
+export type Component = unknown
 
 export type PreserveStateOption = boolean | string | ((page: Page) => boolean)
 
@@ -249,7 +257,6 @@ export type ActiveVisit = PendingVisit &
   }
 
 export type VisitId = unknown
-export type Component = unknown
 
 export type InertiaAppResponse = Promise<{
   head: string[]

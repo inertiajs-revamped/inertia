@@ -8,40 +8,31 @@ import {
 } from '@inertiajs-revamped/core'
 import {
   type ComponentType,
-  type FunctionComponent,
-  type Key,
   type ReactElement,
   type ReactNode,
   createElement,
 } from 'react'
 import App from './App'
 
-export type AppType<SharedProps extends PageProps = PageProps> =
-  FunctionComponent<
-    {
-      children?: (props: {
-        Component: ComponentType
-        key: Key
-        props: Page<SharedProps>['props']
-      }) => ReactNode
-    } & SetupOptions<unknown, SharedProps>['props']
-  >
+export type InertiaComponentType<P = {}> = ComponentType<P> & {
+  layout?: ((page: ReactElement) => ReactNode) | Array<ReactNode>
+}
 
-export type SetupOptions<ElementType, SharedProps extends PageProps> = {
-  el: ElementType
-  App: AppType
+export type SetupOptions<SharedProps extends PageProps> = {
+  el: HTMLElement | null
+  App: typeof App
   props: {
     initialPage: Page<SharedProps>
-    initialComponent: ReactNode
-    resolveComponent: PageResolver
-    titleCallback?: HeadManagerTitleCallback
-    onHeadUpdate?: HeadManagerOnUpdate
+    initialComponent: InertiaComponentType
+    resolveComponent: PageResolver<InertiaComponentType>
+    titleCallback?: HeadManagerTitleCallback | undefined
+    onHeadUpdate?: HeadManagerOnUpdate | null
   }
 }
 
 export type BaseInertiaAppOptions = {
   title?: HeadManagerTitleCallback
-  resolve: PageResolver
+  resolve: PageResolver<InertiaComponentType>
 }
 
 export type CreateInertiaAppSetupReturnType = ReactElement | void
@@ -58,9 +49,7 @@ export type InertiaAppOptionsForCSR<SharedProps extends PageProps> =
           includeCSS?: boolean
           showSpinner?: boolean
         }
-    setup(
-      options: SetupOptions<HTMLElement, SharedProps>
-    ): CreateInertiaAppSetupReturnType
+    setup(options: SetupOptions<SharedProps>): CreateInertiaAppSetupReturnType
   }
 
 export type CreateInertiaAppSSRContent = { head: string[]; body: string }
@@ -70,7 +59,7 @@ export type InertiaAppOptionsForSSR<SharedProps extends PageProps> =
     page: Page | string
     render: (element: ReactNode) => string | Promise<string>
     progress?: undefined
-    setup(options: SetupOptions<null, SharedProps>): ReactElement
+    setup(options: SetupOptions<SharedProps>): ReactElement
   }
 
 export default async function createInertiaApp<
@@ -99,24 +88,26 @@ export default async function createInertiaApp<
   CreateInertiaAppSetupReturnType | CreateInertiaAppSSRContent
 > {
   const isServer = typeof window === 'undefined'
-  const el = isServer ? null : document.getElementById(id)
-  // @ts-expect-error
-  const initialPage = page || JSON.parse(el.dataset.page)
+  const el: HTMLElement | null = isServer
+    ? null
+    : <HTMLElement>document.getElementById(id)
+  const initialPage: Page<SharedProps> =
+    page || JSON.parse(el?.dataset.page as string)
 
   const resolveComponent = (name: string) =>
-    // @ts-expect-error
-    Promise.resolve(resolve(name)).then((module) => module.default || module)
+    Promise.resolve(resolve(name)).then((module) => {
+      return typeof module === 'object' && !!module && 'default' in module
+        ? module.default
+        : module
+    })
 
   let head: string[] = []
 
-  const reactApp = await resolveComponent(initialPage.component).then(
+  const ReactApp = await resolveComponent(initialPage.component).then(
     (initialComponent) => {
       return setup({
-        // @ts-expect-error
         el,
-        // @ts-expect-error
         App,
-        // @ts-expect-error
         props: {
           initialPage,
           initialComponent,
@@ -135,7 +126,6 @@ export default async function createInertiaApp<
   }
 
   if (isServer && render) {
-    // close to despair
     const body = await render(
       createElement(
         'div',
@@ -143,8 +133,8 @@ export default async function createInertiaApp<
           id,
           'data-page': JSON.stringify(initialPage),
         },
-        // @ts-expect-error
-        reactApp
+        // close to despair, but it's ok!
+        ReactApp as ReactNode
       )
     )
 
