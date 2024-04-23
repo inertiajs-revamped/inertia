@@ -1,4 +1,4 @@
-import { Head } from '@inertiajs-revamped/react'
+import { Head, withLayout } from '@inertiajs-revamped/react'
 
 import Layout from '@/views/layouts/default'
 
@@ -50,7 +50,7 @@ const Home = ({ versions }) => {
       <h3>Typescript Typings</h3>
       <p>
         Default typings can be found and extended in{' '}
-        <code>resources/types/inertia.d.ts</code>
+        <code>resources/types/inertia-react.d.ts</code>
       </p>
 
       <h3>Routes</h3>
@@ -72,6 +72,6 @@ const Home = ({ versions }) => {
   )
 }
 
-Home.layout = (page) => <Layout children={page} />
+Home.layout = withLayout(Layout)
 
 export default Home

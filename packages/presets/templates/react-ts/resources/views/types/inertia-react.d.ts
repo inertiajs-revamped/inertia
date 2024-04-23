@@ -1,6 +1,7 @@
 // @ts-nocheck
 declare module '@inertiajs-revamped/react' {
   interface PageProps {
+    // Define default shared interface with module augmentation
     auth: {
       user: string
     }
@@ -11,9 +12,14 @@ declare module '@inertiajs-revamped/react' {
   }
 
   interface HomePageProps extends PageProps {
+    // Define specific Component interface with module augmentation
     someProp: {
       availableForHomePage: string
     }
+  }
+
+  interface LayoutProps {
+    // Define shared interface with module augmentation
   }
 }
 

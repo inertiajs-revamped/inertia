@@ -1,5 +1,5 @@
 // @ts-nocheck
-import { Head } from '@inertiajs-revamped/react'
+import { Head, withLayout } from '@inertiajs-revamped/react'
 
 import Counter from '@/views/components/counter'
 import Layout from '@/views/layouts/default'
@@ -17,6 +17,6 @@ const Example = () => {
   )
 }
 
-Example.layout = (page: any) => <Layout children={page} />
+Example.layout = withLayout(Layout)
 
 export default Example
