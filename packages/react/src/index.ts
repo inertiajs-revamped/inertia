@@ -7,3 +7,30 @@ export { default as Link, type InertiaLinkProps } from './Link'
 export { default as useForm } from './useForm'
 export { default as usePage } from './usePage'
 export { default as useRemember } from './useRemember'
+
+export type {
+  ActiveVisit,
+  Component,
+  DefaultPageProps,
+  ErrorBag,
+  Errors,
+  FormDataConvertible,
+  HeadManager,
+  InertiaAppResponse,
+  LocationVisit,
+  Method,
+  Modal,
+  Page,
+  PageHandler,
+  PageProps,
+  PageResolver,
+  PendingVisit,
+  PreserveStateOption,
+  Progress,
+  Renderer,
+  RequestPayload,
+  Router,
+  Visit,
+  VisitId,
+  VisitOptions,
+} from '@inertiajs-revamped/core'
