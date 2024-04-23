@@ -1,5 +1,7 @@
 import type { AxiosProgressEvent, AxiosResponse } from 'axios'
 
+export type Expand<T> = T extends infer O ? { [K in keyof O]: O[K] } : never
+
 export interface Renderer {
   buildDOMElement(tag: string): ChildNode
   isInertiaManagedElement(element: Element): boolean
