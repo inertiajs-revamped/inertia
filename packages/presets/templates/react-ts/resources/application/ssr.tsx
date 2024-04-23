@@ -7,7 +7,7 @@ import { renderToString } from 'react-dom/server'
 createServer((page) =>
   createInertiaApp({
     page,
-    title: (title) => `${title} - Demo`,
+    title: (title) => `${title} - Starter kit`,
     render: renderToString,
     resolve: (name) =>
       resolvePageComponent(
