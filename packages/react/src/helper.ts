@@ -1,3 +1,4 @@
+import type { Expand } from '@inertiajs-revamped/core'
 /**
  * Experimental
  *
@@ -12,12 +13,14 @@ import {
   createElement,
 } from 'react'
 
-export type LayoutProps = PropsWithChildren<{
+export interface DefaultLayoutProps {
   title?: string
-}>
+}
+
+export interface LayoutProps extends PropsWithChildren<DefaultLayoutProps> {}
 
 export type WithLayout = (
-  layout: ComponentType<Omit<LayoutProps, 'children'>>,
+  layout: ComponentType<Expand<Omit<LayoutProps, 'children'>>>,
   props?: ComponentPropsWithoutRef<typeof layout>
 ) => (page: ReactElement) => ReactNode
 
