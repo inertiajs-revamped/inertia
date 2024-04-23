@@ -17,7 +17,6 @@ import {
 import type { renderToString } from 'react-dom/server'
 import App from './App'
 
-export type ReactInstance = ReactElement
 export type ReactComponent = ReactNode
 
 export type AppType<SharedProps extends PageProps = PageProps> =
@@ -48,7 +47,7 @@ export type BaseInertiaAppOptions = {
   resolve: PageResolver
 }
 
-export type CreateInertiaAppSetupReturnType = ReactInstance | void
+export type CreateInertiaAppSetupReturnType = ReactElement | void
 export type InertiaAppOptionsForCSR<SharedProps extends PageProps> =
   BaseInertiaAppOptions & {
     id?: string
@@ -74,7 +73,7 @@ export type InertiaAppOptionsForSSR<SharedProps extends PageProps> =
     page: Page | string
     render: typeof renderToString
     progress?: undefined
-    setup(options: SetupOptions<null, SharedProps>): ReactInstance
+    setup(options: SetupOptions<null, SharedProps>): ReactElement
   }
 
 export default async function createInertiaApp<
