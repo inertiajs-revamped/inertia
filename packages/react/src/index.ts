@@ -20,6 +20,8 @@ export type {
   Errors,
   FormDataConvertible,
   HeadManager,
+  HeadManagerOnUpdate,
+  HeadManagerTitleCallback,
   InertiaAppResponse,
   LocationVisit,
   Method,

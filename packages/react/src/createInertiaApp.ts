@@ -1,4 +1,6 @@
 import {
+  type HeadManagerOnUpdate,
+  type HeadManagerTitleCallback,
   type Page,
   type PageProps,
   type PageResolver,
@@ -17,9 +19,6 @@ import App from './App'
 
 export type ReactInstance = ReactElement
 export type ReactComponent = ReactNode
-
-export type HeadManagerOnUpdate = (elements: string[]) => void // TODO: When shipped, replace with: Inertia.HeadManagerOnUpdate
-export type HeadManagerTitleCallback = (title: string) => string // TODO: When shipped, replace with: Inertia.HeadManagerTitleCallback
 
 export type AppType<SharedProps extends PageProps = PageProps> =
   FunctionComponent<
