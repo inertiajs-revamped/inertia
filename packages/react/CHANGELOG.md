@@ -1,9 +1,13 @@
 # Changelog - @inertiajs-revamped/react
 
-## 0.1.0 (2024-04-18)
+## 0.1.0 (2024-04-23)
 
 ### Bug Fixes
 
+- fix the remaining type errors ([22d3cb7](https://github.com/inertiajs-revamped/inertia/commit/22d3cb7))
+- capitalize and make `PageContext` generic or `null`, force `usePage` return type explicit ([8d7ffbc](https://github.com/inertiajs-revamped/inertia/commit/8d7ffbc))
+- capitalize and make `HeadContext` generic or `null`, fixes multiple ts(2769) ([c4bd85a](https://github.com/inertiajs-revamped/inertia/commit/c4bd85a))
+- re-export all types from core package ([b88ee78](https://github.com/inertiajs-revamped/inertia/commit/b88ee78))
 - add missing type `exports` for multiple un-exported types ([33a8fa9](https://github.com/inertiajs-revamped/inertia/commit/33a8fa9))
 - check for `undefined` `render` in `createInertiaApp()`, fixes ts(2722) ([74016ed](https://github.com/inertiajs-revamped/inertia/commit/74016ed))
 - add missing `resolveComponent` type in `createInertiaApp()`, fixes ts(7006) ([fa98f18](https://github.com/inertiajs-revamped/inertia/commit/fa98f18))
@@ -30,10 +34,17 @@
 
 ### Code Refactoring
 
+- replace typeof `renderToString`, removes react-dom from `peerDependencies` ([ad65d99](https://github.com/inertiajs-revamped/inertia/commit/ad65d99))
+- replace type `ReactComponent` with `ReactNode` ([1a12eec](https://github.com/inertiajs-revamped/inertia/commit/1a12eec))
+- replace misleading type `ReactInstance` with `ReactElement` ([36e9711](https://github.com/inertiajs-revamped/inertia/commit/36e9711))
+- move `HeadManagerOnUpdate` & `HeadManagerTitleCallback` to core ([7c5c6a4](https://github.com/inertiajs-revamped/inertia/commit/7c5c6a4))
+- improve `withLayout` types to work with module augmentation ([7bbc21e](https://github.com/inertiajs-revamped/inertia/commit/7bbc21e))
 - improve & export `InertiaHeadProps` & `InertiaHead` types ([bdb1aab](https://github.com/inertiajs-revamped/inertia/commit/bdb1aab))
 - remove deprecated `useRememberedState()` ([3dcc6d0](https://github.com/inertiajs-revamped/inertia/commit/3dcc6d0))
 
 ### Features
 
+- export function `resolvePageComponent` from core ([2c729c1](https://github.com/inertiajs-revamped/inertia/commit/2c729c1))
+- add helper function `withLayout` ([9069717](https://github.com/inertiajs-revamped/inertia/commit/9069717))
 - add aria-role for non anchor `<Link>` tags (based on [inertia/pull/1762](inertiajs/inertia#1762)) ([32ade50](https://github.com/inertiajs-revamped/inertia/commit/32ade50))
 - check `as`, before convert to lowercase (based on [inertia/pull/1297](inertiajs/inertia#1297)) ([93d878f](https://github.com/inertiajs-revamped/inertia/commit/93d878f))
