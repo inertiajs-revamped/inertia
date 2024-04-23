@@ -1,9 +1,9 @@
 // @ts-nocheck
-import { Head } from '@inertiajs-revamped/react'
+import { Head, type HomePageProps } from '@inertiajs-revamped/react'
 
 import Layout from '@/views/layouts/default'
 
-const Home = ({ versions }) => {
+const Home = ({ versions }: HomePageProps) => {
   return (
     <>
       <Head title="Home" />
@@ -73,6 +73,6 @@ const Home = ({ versions }) => {
   )
 }
 
-Home.layout = (page: Page) => <Layout children={page} />
+Home.layout = (page: any) => <Layout children={page} />
 
 export default Home

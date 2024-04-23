@@ -1,7 +1,7 @@
 import { createInertiaApp } from '@inertiajs-revamped/react'
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers'
 import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
+import { hydrateRoot } from 'react-dom/client'
 
 import './app.css'
 
@@ -16,7 +16,8 @@ createInertiaApp({
       import.meta.glob('../views/pages/**/*.tsx')
     ),
   setup({ el, App, props }) {
-    createRoot(el).render(
+    hydrateRoot(
+      el,
       <StrictMode>
         <App {...props} />
       </StrictMode>

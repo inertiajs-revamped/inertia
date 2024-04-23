@@ -17,6 +17,6 @@ const Example = () => {
   )
 }
 
-Example.layout = (page: Page) => <Layout children={page} />
+Example.layout = (page: any) => <Layout children={page} />
 
 export default Example

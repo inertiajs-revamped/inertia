@@ -1,8 +1,8 @@
 export interface Options {
   /**
-   * Use for development with Inertia.js-Revamped workspace only (defaults: `false`)
+   * Choose the prefered UI-Framework for the preset installation (defaults: `undefined`)
    */
-  sandbox: boolean
+  ui: 'preact' | 'react' | 'vue' | undefined
 
   /**
    * Exclude SSR from the preset installation (defaults: `true`)
@@ -15,13 +15,14 @@ export interface Options {
   typescript: boolean
 
   /**
-   * Choose the prefered UI-Framework for the preset installation (defaults: `undefined`)
+   * Use for development with Inertia.js-Revamped workspace only (defaults: `false`)
+   * @see {@link https://github.com/inertiajs-revamped/inertia/blob/main/CONTRIBUTING.md#sandbox-environment-experimental}
    */
-  ui: 'preact' | 'react' | 'vue' | undefined
+  sandbox: boolean
 }
 
 export default definePreset<Options>({
-  name: 'inertia-js-revamped',
+  name: 'Inertia.js-Revamped',
   options: {
     sandbox: false,
     ssr: true,
@@ -35,9 +36,88 @@ export default definePreset<Options>({
       )
     }
 
+    if (options.sandbox) {
+      await installSandbox()
+    } else {
+      await installPackages({
+        title: 'install PHP dependencies',
+        for: 'php',
+        packages: ['inertiajs-revamped/laravel'],
+      })
+    }
+
     await installInertiaRevamped(options)
   },
 })
+
+async function installSandbox() {
+  await group({
+    title: 'install PHP sandbox dependencies',
+    handler: async () => {
+      await deletePaths({
+        paths: ['node_modules', 'package.json'],
+      })
+
+      await executeCommand({
+        title: 'install PHP dependencies',
+        command: 'composer',
+        arguments: ['create-project', 'laravel/laravel:^11.0', '.'],
+        ignoreExitCode: false,
+      })
+
+      await executeCommand({
+        title: 'link Laravel file storage',
+        command: 'php',
+        arguments: ['artisan', 'storage:link'],
+        ignoreExitCode: true,
+      })
+
+      await executeCommand({
+        title: 'generate Laravel application key',
+        command: 'php',
+        arguments: ['artisan', 'key:generate'],
+      })
+
+      await editFiles({
+        title: 'update Laravel composer.json',
+        files: 'composer.json',
+        operations: [
+          {
+            type: 'edit-json',
+            delete: ['repositories'],
+          },
+          {
+            type: 'edit-json',
+            merge: {
+              repositories: [
+                {
+                  type: 'path',
+                  url: '../../packages/laravel',
+                  options: { symlink: true },
+                },
+              ],
+            },
+          },
+          {
+            skipIf: (content) =>
+              content.includes('"inertiajs-revamped/laravel": "@dev"'),
+            type: 'edit-json',
+            merge: {
+              require: { 'inertiajs-revamped/laravel': '@dev' },
+            },
+          },
+        ],
+      })
+
+      await executeCommand({
+        title: 'update PHP dependencies',
+        command: 'composer',
+        arguments: ['update'],
+        ignoreExitCode: true,
+      })
+    },
+  })
+}
 
 async function installInertiaRevamped({
   sandbox,
@@ -45,81 +125,6 @@ async function installInertiaRevamped({
   typescript,
   ui,
 }: Options) {
-  if (sandbox) {
-    await group({
-      title: 'install PHP sandbox dependencies',
-      handler: async () => {
-        await deletePaths({
-          paths: ['node_modules', 'package.json'],
-        })
-
-        await executeCommand({
-          title: 'install PHP dependencies',
-          command: 'composer',
-          arguments: ['create-project', 'laravel/laravel:^11.0', '.'],
-          ignoreExitCode: false,
-        })
-
-        await executeCommand({
-          title: 'link Laravel file storage',
-          command: 'php',
-          arguments: ['artisan', 'storage:link'],
-          ignoreExitCode: true,
-        })
-
-        await executeCommand({
-          title: 'generate application key',
-          command: 'php',
-          arguments: ['artisan', 'key:generate'],
-        })
-
-        await editFiles({
-          title: 'update composer.json',
-          files: 'composer.json',
-          operations: [
-            {
-              type: 'edit-json',
-              delete: ['repositories'],
-            },
-            {
-              type: 'edit-json',
-              merge: {
-                repositories: [
-                  {
-                    type: 'path',
-                    url: '../../packages/laravel',
-                    options: { symlink: true },
-                  },
-                ],
-              },
-            },
-            {
-              skipIf: (content) =>
-                content.includes('"inertiajs-revamped/laravel": "@dev"'),
-              type: 'edit-json',
-              merge: {
-                require: { 'inertiajs-revamped/laravel': '@dev' },
-              },
-            },
-          ],
-        })
-
-        await executeCommand({
-          title: 'update PHP dependencies',
-          command: 'composer',
-          arguments: ['update'],
-          ignoreExitCode: true,
-        })
-      },
-    })
-  } else {
-    await installPackages({
-      title: 'install PHP dependencies',
-      for: 'php',
-      packages: ['inertiajs-revamped/laravel'],
-    })
-  }
-
   await group({
     title: 'install Inertia.js-Revamped scaffolding',
     handler: async () => {
@@ -129,7 +134,7 @@ async function installInertiaRevamped({
       })
 
       await extractTemplates({
-        title: 'extract templates',
+        title: 'extract Inertia.js-Revamped templates',
         from: typescript ? `${ui}-ts` : ui,
       })
 
@@ -162,6 +167,14 @@ async function installInertiaRevamped({
             position: 'after',
             match: /use Illuminate\\Foundation\\Configuration\\Middleware;/,
             lines: 'use App\\Http\\Middleware\\HandleInertiaRequests;',
+          },
+          {
+            skipIf: (content) =>
+              content.includes('HandleInertiaRequests::class,'),
+            type: 'remove-line',
+            match: /->withMiddleware\(function \(Middleware \$middleware\) {/,
+            count: 1,
+            start: 1,
           },
           {
             skipIf: (content) =>
@@ -204,21 +217,6 @@ async function installInertiaRevamped({
         ],
       })
 
-      if (ssr) {
-        await editFiles({
-          title: 'register Inertia.js-Revamped pages',
-          files: 'config/inertia.php',
-          operations: [
-            {
-              skipIf: (content) => content.includes(`'enabled' => true`),
-              type: 'update-content',
-              update: (content) =>
-                content.replace(`'enabled' => false`, `'enabled' => true`),
-            },
-          ],
-        })
-      }
-
       await editFiles({
         title: 'update route file',
         files: 'routes/web.php',
@@ -251,7 +249,20 @@ async function installInertiaRevamped({
 
       if (!ssr) {
         await editFiles({
-          title: 'clean up SSR',
+          title: 'clean up SSR config',
+          files: 'config/inertia.php',
+          operations: [
+            {
+              skipIf: (content) => content.includes("'enabled' => false"),
+              type: 'update-content',
+              update: (content) =>
+                content.replace("'enabled' => true", "'enabled' => false"),
+            },
+          ],
+        })
+
+        await editFiles({
+          title: 'clean up SSR Vite config',
           files: typescript ? 'vite.config.ts' : 'vite.config.js',
           operations: [
             {
@@ -260,6 +271,37 @@ async function installInertiaRevamped({
               start: 0,
               count: 1,
             },
+          ],
+        })
+
+        await editFiles({
+          title: 'clean up SSR templates',
+          files: typescript
+            ? 'resources/application/main.tsx'
+            : 'resources/application/main.jsx',
+          operations: [
+            {
+              skipIf: (content) =>
+                content.includes(
+                  "import { createRoot } from 'react-dom/client'"
+                ),
+              type: 'update-content',
+              update: (r) => r.replace('hydrateRoot', 'createRoot'),
+            },
+            {
+              skipIf: (content) => content.includes('createRoot('),
+              type: 'update-content',
+              update: (r) => r.replace('hydrateRoot(', 'createRoot('),
+            },
+          ],
+        })
+
+        await deletePaths({
+          title: 'clean up SSR files',
+          paths: [
+            typescript
+              ? 'resources/application/ssr.tsx'
+              : 'resources/application/ssr.jsx',
           ],
         })
       }
