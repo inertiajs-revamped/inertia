@@ -50,7 +50,6 @@ export default function App({
   if (!current.component) {
     return createElement(
       HeadContext.Provider,
-      // @ts-expect-error
       { value: headManager },
       createElement(PageContext.Provider, { value: current.page }, null)
     )
@@ -83,7 +82,6 @@ export default function App({
 
   return createElement(
     HeadContext.Provider,
-    // @ts-expect-error
     { value: headManager },
     createElement(
       PageContext.Provider,

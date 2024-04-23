@@ -17,12 +17,11 @@ export type InertiaHead = FunctionComponent<InertiaHeadProps>
 
 const Head: InertiaHead = function ({ children, title }) {
   const headManager = useContext(HeadContext)
-  // @ts-expect-error
-  const provider = useMemo(() => headManager.createProvider(), [headManager])
+  const provider = useMemo(() => headManager?.createProvider(), [headManager])
 
   useEffect(() => {
     return () => {
-      provider.disconnect()
+      provider?.disconnect()
     }
   }, [provider])
 
@@ -112,7 +111,7 @@ const Head: InertiaHead = function ({ children, title }) {
     return computed
   }
 
-  provider.update(renderNodes(children))
+  provider?.update(renderNodes(children))
 
   return null
 }
