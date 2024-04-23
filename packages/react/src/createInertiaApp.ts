@@ -14,7 +14,6 @@ import {
   type ReactNode,
   createElement,
 } from 'react'
-import type { renderToString } from 'react-dom/server'
 import App from './App'
 
 export type AppType<SharedProps extends PageProps = PageProps> =
@@ -69,7 +68,7 @@ export type InertiaAppOptionsForSSR<SharedProps extends PageProps> =
   BaseInertiaAppOptions & {
     id?: undefined
     page: Page | string
-    render: typeof renderToString
+    render: (element: ReactNode) => string | Promise<string>
     progress?: undefined
     setup(options: SetupOptions<null, SharedProps>): ReactElement
   }
