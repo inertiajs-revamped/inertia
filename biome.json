@@ -13,7 +13,7 @@
       "**/public/**",
       "sandboxes/**",
       "packages/presets/templates/**",
-      "packages/*/src/*.ts"
+      "packages/vue/src/*.ts"
     ]
   },
   "javascript": {
@@ -33,7 +33,7 @@
       "**/public/**",
       "sandboxes/**",
       "packages/presets/templates/**",
-      "packages/*/src/*.ts"
+      "packages/vue/src/*.ts"
     ],
     "rules": {
       "recommended": true,
