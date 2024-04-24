@@ -58,7 +58,7 @@ export type InertiaAppOptionsForSSR<SharedProps extends PageProps> =
   BaseInertiaAppOptions & {
     id?: undefined
     page: Page | string
-    render: (element: ComponentChildren) => string | Promise<string>
+    render: (vnode: VNode) => string | Promise<string>
     progress?: undefined
     setup(options: SetupOptions<SharedProps>): VNode
   }
