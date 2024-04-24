@@ -284,14 +284,28 @@ async function installInertiaRevamped({
               skipIf: (content) =>
                 content.includes(
                   "import { createRoot } from 'react-dom/client'"
-                ),
+                ) || ui !== 'react',
               type: 'update-content',
               update: (r) => r.replace('hydrateRoot', 'createRoot'),
             },
             {
-              skipIf: (content) => content.includes('createRoot('),
+              skipIf: (content) =>
+                content.includes("import { render } from 'preact'") ||
+                ui !== 'preact',
+              type: 'update-content',
+              update: (r) => r.replace('hydrate', 'render'),
+            },
+            {
+              skipIf: (content) =>
+                content.includes('createRoot(') || ui !== 'react',
               type: 'update-content',
               update: (r) => r.replace('hydrateRoot(', 'createRoot('),
+            },
+            {
+              skipIf: (content) =>
+                content.includes('render(') || ui !== 'preact',
+              type: 'update-content',
+              update: (r) => r.replace('hydrate(', 'render('),
             },
           ],
         })
