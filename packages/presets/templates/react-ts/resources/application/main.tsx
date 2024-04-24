@@ -20,7 +20,8 @@ createInertiaApp({
     ),
   setup({ el, App, props }) {
     hydrateRoot(
-      el,
+      // we are save here
+      el!,
       <StrictMode>
         <App {...props} />
       </StrictMode>
