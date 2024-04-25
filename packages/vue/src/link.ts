@@ -1,4 +1,5 @@
 import {
+  type FormDataConvertible,
   type Method,
   type PreserveStateOption,
   type Progress,
@@ -10,15 +11,16 @@ import { type PropType, defineComponent, h } from 'vue'
 
 export interface InertiaLinkProps {
   as?: string
-  data?: object
+  data?: Record<string, FormDataConvertible>
   href: string
   method?: Method
-  headers?: object
+  headers?: Record<string, string>
   onClick?: (event: MouseEvent) => void
   preserveScroll?: PreserveStateOption
   preserveState?: PreserveStateOption
   replace?: boolean
   only?: string[]
+  queryStringArrayFormat?: 'indices' | 'brackets'
   onCancelToken?: { ({ cancel }: { cancel: VoidFunction }): void }
   onBefore?: () => void
   onStart?: () => void
@@ -26,7 +28,7 @@ export interface InertiaLinkProps {
   onFinish?: () => void
   onCancel?: () => void
   onSuccess?: () => void
-  queryStringArrayFormat?: 'brackets' | 'indices'
+  onError?: () => void
 }
 
 const Link = defineComponent({
@@ -37,7 +39,7 @@ const Link = defineComponent({
       default: 'a',
     },
     data: {
-      type: Object,
+      type: Object as PropType<Record<string, FormDataConvertible>>,
       default: () => ({}),
     },
     href: {
@@ -46,34 +48,44 @@ const Link = defineComponent({
     },
     method: {
       type: String as PropType<Method>,
-      default: 'get',
+      default: 'get' as const,
+    },
+    headers: {
+      type: Object as PropType<Record<string, string>>,
+      default: () => ({}),
+    },
+    preserveScroll: {
+      type: Object as PropType<PreserveStateOption>,
+      default: false,
+    },
+    preserveState: {
+      type: Object as PropType<PreserveStateOption>,
+      default: null,
     },
     replace: {
       type: Boolean,
       default: false,
     },
-    preserveScroll: {
-      type: Boolean,
-      default: false,
-    },
-    preserveState: {
-      type: Boolean,
-      default: null,
-    },
     only: {
-      type: Array<string>,
+      type: Array as PropType<string[]>,
       default: () => [],
     },
-    headers: {
-      type: Object,
-      default: () => ({}),
-    },
     queryStringArrayFormat: {
-      type: String as PropType<'brackets' | 'indices'>,
+      type: String as PropType<'indices' | 'brackets'>,
       default: 'brackets',
     },
   },
-  setup(props, { slots, attrs }) {
+  emits: [
+    'before',
+    'start',
+    'progress',
+    'finish',
+    'cancel',
+    'success',
+    'error',
+    'cancel-token',
+  ],
+  setup(props, { slots, attrs, emit }) {
     return () => {
       const as =
         typeof props.as === 'string' ? props.as.toLowerCase() : props.as
@@ -103,27 +115,20 @@ const Link = defineComponent({
               router.visit(href, {
                 data: data,
                 method: method,
-                replace: props.replace,
+
+                headers: props.headers,
                 preserveScroll: props.preserveScroll,
                 preserveState: props.preserveState ?? method !== 'get',
+                replace: props.replace,
                 only: props.only,
-                headers: props.headers,
-                // @ts-expect-error
-                onCancelToken: attrs.onCancelToken || (() => ({})),
-                // @ts-expect-error
-                onBefore: attrs.onBefore || (() => ({})),
-                // @ts-expect-error
-                onStart: attrs.onStart || (() => ({})),
-                // @ts-expect-error
-                onProgress: attrs.onProgress || (() => ({})),
-                // @ts-expect-error
-                onFinish: attrs.onFinish || (() => ({})),
-                // @ts-expect-error
-                onCancel: attrs.onCancel || (() => ({})),
-                // @ts-expect-error
-                onSuccess: attrs.onSuccess || (() => ({})),
-                // @ts-expect-error
-                onError: attrs.onError || (() => ({})),
+                onCancelToken: (...args) => emit('cancel-token', ...args),
+                onBefore: (...args) => emit('before', ...args),
+                onStart: (...args) => emit('start', ...args),
+                onProgress: (...args) => emit('progress', ...args),
+                onFinish: (...args) => emit('finish', ...args),
+                onCancel: (...args) => emit('cancel', ...args),
+                onSuccess: (...args) => emit('success', ...args),
+                onError: (...args) => emit('error', ...args),
               })
             }
           },
