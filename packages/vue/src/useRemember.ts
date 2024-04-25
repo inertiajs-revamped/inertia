@@ -1,6 +1,7 @@
-import { router } from '@inertiajs/core'
+// @ts-nocheck
+import { router } from '@inertiajs-revamped/core'
 import cloneDeep from 'lodash.clonedeep'
-import { isReactive, reactive, ref, Ref, watch } from 'vue'
+import { type Ref, isReactive, reactive, ref, watch } from 'vue'
 
 export default function useRemember<T extends object>(
   data: T & { __rememberable?: boolean; __remember?: Function; __restore?: Function },

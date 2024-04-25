@@ -1,12 +1,12 @@
-import { createHeadManager, Page, PageHandler, router } from '@inertiajs/core'
-import { ComponentPublicInstance } from 'vue'
+import { type Page, type PageHandler, createHeadManager, router } from '@inertiajs-revamped/core'
+import type { ComponentPublicInstance } from 'vue'
 import useForm from './useForm'
 
 export type VuePageHandlerArgs = Parameters<PageHandler>[0] & {
   component: ComponentPublicInstance | Promise<ComponentPublicInstance>
 }
 
-declare module '@inertiajs/core' {
+declare module '@inertiajs-revamped/core' {
   export interface Router {
     form: typeof useForm
   }

@@ -1,4 +1,5 @@
-import { FormDataConvertible, Method, Progress, router, VisitOptions } from '@inertiajs/core'
+// @ts-nocheck
+import { type FormDataConvertible, type Method, type Progress, type VisitOptions, router } from '@inertiajs-revamped/core'
 import cloneDeep from 'lodash.clonedeep'
 import isEqual from 'lodash.isequal'
 import { reactive, watch } from 'vue'

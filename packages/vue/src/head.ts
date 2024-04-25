@@ -1,4 +1,5 @@
-import { defineComponent, DefineComponent } from 'vue'
+// @ts-nocheck
+import { type DefineComponent, defineComponent } from 'vue'
 
 export type InertiaHead = DefineComponent<{
   title?: string

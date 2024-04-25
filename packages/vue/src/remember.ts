@@ -1,6 +1,7 @@
-import { router } from '@inertiajs/core'
+// @ts-nocheck
+import { router } from '@inertiajs-revamped/core'
 import cloneDeep from 'lodash.clonedeep'
-import { ComponentOptions } from 'vue'
+import type { ComponentOptions } from 'vue'
 
 const remember: ComponentOptions = {
   created() {

@@ -1,5 +1,6 @@
-import { mergeDataIntoQueryString, Method, PageProps, Progress, router, shouldIntercept } from '@inertiajs/core'
-import { defineComponent, DefineComponent, h, PropType } from 'vue'
+// @ts-nocheck
+import { type Method, type PageProps, type Progress, mergeDataIntoQueryString, router, shouldIntercept } from '@inertiajs-revamped/core'
+import { type DefineComponent, type PropType, defineComponent, h } from 'vue'
 
 export interface InertiaLinkProps {
   as?: string

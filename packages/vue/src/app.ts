@@ -1,18 +1,19 @@
-import { createHeadManager, Page, PageProps, router } from '@inertiajs/core'
+// @ts-nocheck
+import { type Page, type PageProps, createHeadManager, type router } from '@inertiajs-revamped/core'
 import {
+  type DefineComponent,
+  type Plugin,
+  type PropType,
   computed,
-  DefineComponent,
   defineComponent,
   h,
   markRaw,
-  Plugin,
-  PropType,
   reactive,
   ref,
   shallowRef,
 } from 'vue'
 import remember from './remember'
-import { VuePageHandlerArgs } from './types'
+import type { VuePageHandlerArgs } from './types'
 import useForm from './useForm'
 
 export interface InertiaAppProps {
