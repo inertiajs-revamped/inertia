@@ -1,11 +1,11 @@
-# Inertia.js Revamped
+# Inertia.js-Revamped
 
 > Choose your preferred UI framework, build classic server-side rendered applications.
 
 ## Documentation
 
 > **Note:**  
-> Inertia.js Revamped is currently in alpha status and not ready for production use yet.
+> Inertia.js-Revamped is currently in alpha status and not ready for production use yet.
 
 View the docs at [inertiajs-revamped.com](https://inertiajs-revamped.com) (currently in development).
 
