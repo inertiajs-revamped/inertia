@@ -55,11 +55,11 @@ const Link = defineComponent({
       default: () => ({}),
     },
     preserveScroll: {
-      type: Object as PropType<PreserveStateOption>,
+      type: [String, Boolean, Function] as PropType<PreserveStateOption>,
       default: false,
     },
     preserveState: {
-      type: Object as PropType<PreserveStateOption>,
+      type: [String, Boolean, Function] as PropType<PreserveStateOption>,
       default: null,
     },
     replace: {
