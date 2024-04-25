@@ -1,4 +1,4 @@
-import { type Page, createHeadManager, router } from '@inertiajs-revamped/core'
+import { type HeadManager, type Page, router } from '@inertiajs-revamped/core'
 import type { DefineComponent } from 'vue'
 import useForm from './useForm'
 
@@ -15,7 +15,7 @@ declare module '@vue/runtime-core' {
   export interface ComponentCustomProperties {
     $inertia: typeof router
     $page: Page
-    $headManager: ReturnType<typeof createHeadManager>
+    $headManager: HeadManager
   }
 
   /** https://vuejs.org/api/utility-types.html#componentcustomoptions */
