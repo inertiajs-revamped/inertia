@@ -9,7 +9,6 @@ import {
   router,
 } from '@inertiajs-revamped/core'
 import {
-  type DefineComponent,
   type Plugin,
   type PropType,
   type Ref,
@@ -33,7 +32,7 @@ export interface InertiaAppProps {
   onHeadUpdate?: HeadManagerOnUpdate | null
 }
 
-const page = ref({}) as Ref<Page<PageProps>>
+const page = ref({}) as Ref<Page>
 const layout = shallowRef(null)
 
 let headManager: HeadManager | null = null
@@ -42,11 +41,11 @@ const App = defineComponent({
   name: 'Inertia',
   props: {
     initialPage: {
-      type: Object as PropType<Page<PageProps>>,
+      type: Object as PropType<Page>,
       required: true,
     },
     initialComponent: {
-      type: Object,
+      type: [Object, Function, String] as PropType<InertiaComponentType>,
       required: false,
     },
     resolveComponent: {
@@ -61,7 +60,7 @@ const App = defineComponent({
     onHeadUpdate: {
       type: Function as PropType<HeadManagerOnUpdate> | null,
       required: false,
-      default: () => () => {},
+      default: () => {},
     },
   },
   setup({
@@ -71,9 +70,7 @@ const App = defineComponent({
     titleCallback,
     onHeadUpdate,
   }) {
-    const component = ref(
-      initialComponent ? markRaw(initialComponent) : null
-    ) as Ref<DefineComponent<any, any, any> | null>
+    const component = ref(initialComponent ? markRaw(initialComponent) : null)
     page.value = initialPage
     const key = ref<number | string | undefined>(undefined)
 
@@ -85,11 +82,11 @@ const App = defineComponent({
         initialPage,
         resolveComponent,
         swapComponent: async ({
-          component: Comp,
+          component: NextComponent,
           page: NextPage,
           preserveState,
         }) => {
-          component.value = markRaw(Comp as InertiaComponentType)
+          component.value = markRaw(NextComponent as InertiaComponentType)
           page.value = NextPage
           key.value = preserveState ? key.value : Date.now()
         },
@@ -155,9 +152,11 @@ export const plugin: Plugin = {
   },
 }
 
-export function usePage<SharedProps extends PageProps>(): Page<SharedProps> {
+export function usePage<
+  SharedProps extends PageProps = PageProps,
+>(): Page<SharedProps> {
   return reactive({
-    props: computed(() => (page.value as Page<SharedProps & PageProps>).props),
+    props: computed(() => (page.value as Page<SharedProps>).props),
     url: computed(() => page.value?.url),
     component: computed(() => page.value?.component),
     version: computed(() => page.value?.version),

@@ -1,6 +1,6 @@
 import {
+  type HeadManagerTitleCallback,
   type Page,
-  type PageProps,
   type PageResolver,
   setupProgress,
 } from '@inertiajs-revamped/core'
@@ -17,7 +17,7 @@ export interface CreateInertiaAppProps {
     props: InertiaAppProps
     plugin: Plugin
   }) => void | VueApp
-  title?: (title: string) => string
+  title?: HeadManagerTitleCallback
   progress?:
     | false
     | {
@@ -45,8 +45,7 @@ export default async function createInertiaApp({
   const el: HTMLElement | null = isServer
     ? null
     : <HTMLElement>document.getElementById(id)
-  const initialPage: Page<PageProps> =
-    page || JSON.parse(el?.dataset.page as string)
+  const initialPage: Page = page || JSON.parse(el?.dataset.page as string)
 
   const resolveComponent = (name: string) =>
     Promise.resolve(resolve(name)).then((module) => {
