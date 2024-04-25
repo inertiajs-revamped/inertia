@@ -115,16 +115,19 @@ const App = defineComponent({
           }
 
           return (
-            Array.isArray(component.value.layout)
-              ? component.value.layout
-              : [component.value.layout]
+            (
+              Array.isArray(component.value.layout)
+                ? component.value.layout
+                : [component.value.layout]
+            )
+              .concat(child)
+              .reverse()
+              // @ts-expect-error
+              .reduce((child, layout) => {
+                layout.inheritAttrs = !!layout.inheritAttrs
+                return h(layout, { ...page.value.props }, () => child)
+              })
           )
-            .concat(child)
-            .reverse()
-            .reduce((child, layout) => {
-              layout.inheritAttrs = !!layout.inheritAttrs
-              return h(layout, { ...page.value.props }, () => child)
-            })
         }
 
         return child
