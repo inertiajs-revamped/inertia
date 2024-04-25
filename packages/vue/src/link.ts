@@ -6,7 +6,7 @@ import {
   router,
   shouldIntercept,
 } from '@inertiajs-revamped/core'
-import { type DefineComponent, type PropType, defineComponent, h } from 'vue'
+import { type PropType, defineComponent, h } from 'vue'
 
 export interface InertiaLinkProps {
   as?: string
@@ -29,9 +29,7 @@ export interface InertiaLinkProps {
   queryStringArrayFormat?: 'brackets' | 'indices'
 }
 
-type InertiaLink = DefineComponent<InertiaLinkProps>
-
-const Link: InertiaLink = defineComponent({
+const Link = defineComponent({
   name: 'Link',
   props: {
     as: {
