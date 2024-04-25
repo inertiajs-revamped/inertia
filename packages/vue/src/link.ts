@@ -1,4 +1,3 @@
-// @ts-nocheck
 import {
   type Method,
   type PageProps,
@@ -78,7 +77,8 @@ const Link: InertiaLink = defineComponent({
   },
   setup(props, { slots, attrs }) {
     return () => {
-      const as = props.as.toLowerCase()
+      const as =
+        typeof props.as === 'string' ? props.as.toLowerCase() : props.as
       const method = props.method.toLowerCase() as Method
       const [href, data] = mergeDataIntoQueryString(
         method,
