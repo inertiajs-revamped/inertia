@@ -13,12 +13,14 @@ declare module '@inertiajs-revamped/core' {
 }
 
 declare module '@vue/runtime-core' {
+  /** https://vuejs.org/api/utility-types.html#componentcustomproperties */
   export interface ComponentCustomProperties {
     $inertia: typeof router
     $page: Page
     $headManager: ReturnType<typeof createHeadManager>
   }
 
+  /** https://vuejs.org/api/utility-types.html#componentcustomoptions */
   export interface ComponentCustomOptions {
     remember?:
       | string
@@ -28,4 +30,10 @@ declare module '@vue/runtime-core' {
           key?: string | (() => string)
         }
   }
+
+  /**
+   * https://vuejs.org/api/utility-types.html#componentcustomprops
+   * 
+   * export interface ComponentCustomProps {}
+   */
 }
