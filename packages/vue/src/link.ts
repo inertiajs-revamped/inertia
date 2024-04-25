@@ -98,7 +98,7 @@ const Link: InertiaLink = defineComponent({
         {
           ...attrs,
           ...(as === 'a' ? { href } : { role: 'link' }),
-          onClick: (event) => {
+          onClick: (event: MouseEvent | KeyboardEvent) => {
             if (shouldIntercept(event)) {
               event.preventDefault()
 
