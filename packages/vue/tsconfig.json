@@ -5,8 +5,7 @@
   "compilerOptions": {
     "jsx": "preserve",
     "lib": ["DOM", "DOM.Iterable", "ES2020"],
-    "exactOptionalPropertyTypes": false,
-    "verbatimModuleSyntax": false
+    "exactOptionalPropertyTypes": false
   },
   "include": ["src"],
   "exclude": ["**/dist", "**/node_modules"]
