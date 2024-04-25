@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { router } from '@inertiajs-revamped/core'
 import cloneDeep from 'lodash.clonedeep'
 import type { ComponentOptions } from 'vue'
@@ -49,11 +48,14 @@ const remember: ComponentOptions = {
       if (
         this[key] !== undefined &&
         restored !== undefined &&
+        // @ts-expect-error
         restored[key] !== undefined
       ) {
         hasCallbacks(key)
-          ? this[key].__restore(restored[key])
-          : (this[key] = restored[key])
+          ? // @ts-expect-error
+            this[key].__restore(restored[key])
+          : // @ts-expect-error
+            (this[key] = restored[key])
       }
 
       this.$watch(
@@ -61,6 +63,7 @@ const remember: ComponentOptions = {
         () => {
           router.remember(
             rememberable.reduce(
+              // @ts-expect-error
               (data, key) => ({
                 ...data,
                 [key]: cloneDeep(
