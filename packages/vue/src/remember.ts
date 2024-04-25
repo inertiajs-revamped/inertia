@@ -1,6 +1,6 @@
-import { router } from '@inertiajs/core'
+import { router } from '@inertiajs-revamped/core'
 import cloneDeep from 'lodash.clonedeep'
-import { ComponentOptions } from 'vue'
+import type { ComponentOptions } from 'vue'
 
 const remember: ComponentOptions = {
   created() {
@@ -27,11 +27,15 @@ const remember: ComponentOptions = {
 
     const restored = router.restore(rememberKey)
 
-    const rememberable = this.$options.remember.data.filter((key) => {
-      return !(this[key] !== null && typeof this[key] === 'object' && this[key].__rememberable === false)
+    const rememberable = this.$options.remember.data.filter((key: string) => {
+      return !(
+        this[key] !== null &&
+        typeof this[key] === 'object' &&
+        this[key].__rememberable === false
+      )
     })
 
-    const hasCallbacks = (key) => {
+    const hasCallbacks = (key: string) => {
       return (
         this[key] !== null &&
         typeof this[key] === 'object' &&
@@ -40,9 +44,18 @@ const remember: ComponentOptions = {
       )
     }
 
-    rememberable.forEach((key) => {
-      if (this[key] !== undefined && restored !== undefined && restored[key] !== undefined) {
-        hasCallbacks(key) ? this[key].__restore(restored[key]) : (this[key] = restored[key])
+    rememberable.forEach((key: string) => {
+      if (
+        this[key] !== undefined &&
+        restored !== undefined &&
+        // @ts-expect-error
+        restored[key] !== undefined
+      ) {
+        hasCallbacks(key)
+          ? // @ts-expect-error
+            this[key].__restore(restored[key])
+          : // @ts-expect-error
+            (this[key] = restored[key])
       }
 
       this.$watch(
@@ -50,16 +63,19 @@ const remember: ComponentOptions = {
         () => {
           router.remember(
             rememberable.reduce(
+              // @ts-expect-error
               (data, key) => ({
                 ...data,
-                [key]: cloneDeep(hasCallbacks(key) ? this[key].__remember() : this[key]),
+                [key]: cloneDeep(
+                  hasCallbacks(key) ? this[key].__remember() : this[key]
+                ),
               }),
-              {},
+              {}
             ),
-            rememberKey,
+            rememberKey
           )
         },
-        { immediate: true, deep: true },
+        { immediate: true, deep: true }
       )
     })
   },

@@ -1,25 +1,27 @@
-import { createHeadManager, Page, PageHandler, router } from '@inertiajs/core'
-import { ComponentPublicInstance } from 'vue'
+import { type Page, createHeadManager, router } from '@inertiajs-revamped/core'
+import type { DefineComponent } from 'vue'
 import useForm from './useForm'
 
-export type VuePageHandlerArgs = Parameters<PageHandler>[0] & {
-  component: ComponentPublicInstance | Promise<ComponentPublicInstance>
-}
+export type InertiaComponentType<P = {}> = DefineComponent<P, any, any, any>
 
-declare module '@inertiajs/core' {
+declare module '@inertiajs-revamped/core' {
   export interface Router {
     form: typeof useForm
   }
 }
 
 declare module '@vue/runtime-core' {
+  /** https://vuejs.org/api/utility-types.html#componentcustomproperties */
   export interface ComponentCustomProperties {
     $inertia: typeof router
     $page: Page
     $headManager: ReturnType<typeof createHeadManager>
   }
 
+  /** https://vuejs.org/api/utility-types.html#componentcustomoptions */
   export interface ComponentCustomOptions {
+    // needs work
+    layout?: any
     remember?:
       | string
       | string[]
@@ -28,4 +30,10 @@ declare module '@vue/runtime-core' {
           key?: string | (() => string)
         }
   }
+
+  /**
+   * https://vuejs.org/api/utility-types.html#componentcustomprops
+   *
+   * export interface ComponentCustomProps {}
+   */
 }
