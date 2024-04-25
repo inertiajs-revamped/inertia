@@ -1,10 +1,10 @@
-import { type DefineComponent, defineComponent } from 'vue'
+import { defineComponent } from 'vue'
 
-export type InertiaHead = DefineComponent<{
+export type InertiaHeadProps = {
   title?: string
-}>
+}
 
-const Head: InertiaHead = defineComponent({
+const Head = defineComponent({
   props: {
     title: {
       type: String,
@@ -13,11 +13,11 @@ const Head: InertiaHead = defineComponent({
   },
   data() {
     return {
-      provider: this.$headManager.createProvider(),
+      provider: this.$headManager?.createProvider(),
     }
   },
   beforeUnmount() {
-    this.provider.disconnect()
+    this.provider?.disconnect()
   },
   methods: {
     // @ts-expect-error
@@ -149,7 +149,7 @@ const Head: InertiaHead = defineComponent({
     },
   },
   render() {
-    this.provider.update(
+    this.provider?.update(
       this.renderNodes(this.$slots.default ? this.$slots.default() : [])
     )
   },
