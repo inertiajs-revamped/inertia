@@ -1,5 +1,12 @@
 // @ts-nocheck
-import { type Method, type PageProps, type Progress, mergeDataIntoQueryString, router, shouldIntercept } from '@inertiajs-revamped/core'
+import {
+  type Method,
+  type PageProps,
+  type Progress,
+  mergeDataIntoQueryString,
+  router,
+  shouldIntercept,
+} from '@inertiajs-revamped/core'
 import { type DefineComponent, type PropType, defineComponent, h } from 'vue'
 
 export interface InertiaLinkProps {
@@ -73,11 +80,16 @@ const Link: InertiaLink = defineComponent({
     return () => {
       const as = props.as.toLowerCase()
       const method = props.method.toLowerCase() as Method
-      const [href, data] = mergeDataIntoQueryString(method, props.href || '', props.data, props.queryStringArrayFormat)
+      const [href, data] = mergeDataIntoQueryString(
+        method,
+        props.href || '',
+        props.data,
+        props.queryStringArrayFormat
+      )
 
       if (as === 'a' && method !== 'get') {
         console.warn(
-          `Creating POST/PUT/PATCH/DELETE <a> links is discouraged as it causes "Open Link in New Tab/Window" accessibility issues.\n\nPlease specify a more appropriate element using the "as" attribute. For example:\n\n<Link href="${href}" method="${method}" as="button">...</Link>`,
+          `Creating POST/PUT/PATCH/DELETE <a> links is discouraged as it causes "Open Link in New Tab/Window" accessibility issues.\n\nPlease specify a more appropriate element using the "as" attribute. For example:\n\n<Link href="${href}" method="${method}" as="button">...</Link>`
         )
       }
 
@@ -118,7 +130,7 @@ const Link: InertiaLink = defineComponent({
             }
           },
         },
-        slots,
+        slots
       )
     }
   },

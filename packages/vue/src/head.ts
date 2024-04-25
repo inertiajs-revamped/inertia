@@ -44,7 +44,8 @@ const Head: InertiaHead = defineComponent({
     },
     renderTagStart(node) {
       node.props = node.props || {}
-      node.props.inertia = node.props['head-key'] !== undefined ? node.props['head-key'] : ''
+      node.props.inertia =
+        node.props['head-key'] !== undefined ? node.props['head-key'] : ''
       const attrs = Object.keys(node.props).reduce((carry, name) => {
         const value = node.props[name]
         if (['key', 'head-key'].includes(name)) {
@@ -60,7 +61,10 @@ const Head: InertiaHead = defineComponent({
     renderTagChildren(node) {
       return typeof node.children === 'string'
         ? node.children
-        : node.children.reduce((html, child) => html + this.renderTag(child), '')
+        : node.children.reduce(
+            (html, child) => html + this.renderTag(child),
+            ''
+          )
     },
     isFunctionNode(node) {
       return typeof node.type === 'function'
@@ -105,14 +109,16 @@ const Head: InertiaHead = defineComponent({
         nodes
           .flatMap((node) => this.resolveNode(node))
           .map((node) => this.renderTag(node))
-          .filter((node) => node),
+          .filter((node) => node)
       )
     },
     resolveNode(node) {
       if (this.isFunctionNode(node)) {
         return this.resolveNode(node.type())
       } else if (this.isComponentNode(node)) {
-        console.warn(`Using components in the <Head> component is not supported.`)
+        console.warn(
+          `Using components in the <Head> component is not supported.`
+        )
         return []
       } else if (this.isTextNode(node) && node.children) {
         return node
@@ -126,7 +132,9 @@ const Head: InertiaHead = defineComponent({
     },
   },
   render() {
-    this.provider.update(this.renderNodes(this.$slots.default ? this.$slots.default() : []))
+    this.provider.update(
+      this.renderNodes(this.$slots.default ? this.$slots.default() : [])
+    )
   },
 })
 

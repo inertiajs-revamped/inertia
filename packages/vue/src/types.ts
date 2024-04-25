@@ -1,4 +1,9 @@
-import { type Page, type PageHandler, createHeadManager, router } from '@inertiajs-revamped/core'
+import {
+  type Page,
+  type PageHandler,
+  createHeadManager,
+  router,
+} from '@inertiajs-revamped/core'
 import type { ComponentPublicInstance } from 'vue'
 import useForm from './useForm'
 
@@ -33,7 +38,7 @@ declare module '@vue/runtime-core' {
 
   /**
    * https://vuejs.org/api/utility-types.html#componentcustomprops
-   * 
+   *
    * export interface ComponentCustomProps {}
    */
 }

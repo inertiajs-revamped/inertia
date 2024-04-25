@@ -1,5 +1,10 @@
 // @ts-nocheck
-import { type Page, type PageProps, createHeadManager, type router } from '@inertiajs-revamped/core'
+import {
+  type Page,
+  type PageProps,
+  createHeadManager,
+  type router,
+} from '@inertiajs-revamped/core'
 import {
   type DefineComponent,
   type Plugin,
@@ -19,7 +24,9 @@ import useForm from './useForm'
 export interface InertiaAppProps {
   initialPage: Page
   initialComponent?: object
-  resolveComponent?: (name: string) => DefineComponent | Promise<DefineComponent>
+  resolveComponent?: (
+    name: string
+  ) => DefineComponent | Promise<DefineComponent>
   titleCallback?: (title: string) => string
   onHeadUpdate?: (elements: string[]) => void
 }
@@ -44,7 +51,9 @@ const App: InertiaApp = defineComponent({
       required: false,
     },
     resolveComponent: {
-      type: Function as PropType<(name: string) => DefineComponent | Promise<DefineComponent>>,
+      type: Function as PropType<
+        (name: string) => DefineComponent | Promise<DefineComponent>
+      >,
       required: false,
     },
     titleCallback: {
@@ -58,7 +67,13 @@ const App: InertiaApp = defineComponent({
       default: () => () => {},
     },
   },
-  setup({ initialPage, initialComponent, resolveComponent, titleCallback, onHeadUpdate }) {
+  setup({
+    initialPage,
+    initialComponent,
+    resolveComponent,
+    titleCallback,
+    onHeadUpdate,
+  }) {
     component.value = initialComponent ? markRaw(initialComponent) : null
     page.value = initialPage
     key.value = null
@@ -99,7 +114,11 @@ const App: InertiaApp = defineComponent({
             return component.value.layout(h, child)
           }
 
-          return (Array.isArray(component.value.layout) ? component.value.layout : [component.value.layout])
+          return (
+            Array.isArray(component.value.layout)
+              ? component.value.layout
+              : [component.value.layout]
+          )
             .concat(child)
             .reverse()
             .reduce((child, layout) => {
@@ -119,9 +138,15 @@ export const plugin: Plugin = {
   install(app) {
     router.form = useForm
 
-    Object.defineProperty(app.config.globalProperties, '$inertia', { get: () => router })
-    Object.defineProperty(app.config.globalProperties, '$page', { get: () => page.value })
-    Object.defineProperty(app.config.globalProperties, '$headManager', { get: () => headManager })
+    Object.defineProperty(app.config.globalProperties, '$inertia', {
+      get: () => router,
+    })
+    Object.defineProperty(app.config.globalProperties, '$page', {
+      get: () => page.value,
+    })
+    Object.defineProperty(app.config.globalProperties, '$headManager', {
+      get: () => headManager,
+    })
 
     app.mixin(remember)
   },

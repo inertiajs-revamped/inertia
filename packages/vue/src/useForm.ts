@@ -1,10 +1,16 @@
 // @ts-nocheck
-import { type FormDataConvertible, type Method, type Progress, type VisitOptions, router } from '@inertiajs-revamped/core'
+import {
+  type FormDataConvertible,
+  type Method,
+  type Progress,
+  type VisitOptions,
+  router,
+} from '@inertiajs-revamped/core'
 import cloneDeep from 'lodash.clonedeep'
 import isEqual from 'lodash.isequal'
 import { reactive, watch } from 'vue'
 
-type FormDataType = object;
+type FormDataType = object
 
 interface InertiaFormProps<TForm extends FormDataType> {
   isDirty: boolean
@@ -32,21 +38,29 @@ interface InertiaFormProps<TForm extends FormDataType> {
   cancel(): void
 }
 
-export type InertiaForm<TForm extends FormDataType> = TForm & InertiaFormProps<TForm>
+export type InertiaForm<TForm extends FormDataType> = TForm &
+  InertiaFormProps<TForm>
 
-export default function useForm<TForm extends FormDataType>(data: TForm | (() => TForm)): InertiaForm<TForm>
+export default function useForm<TForm extends FormDataType>(
+  data: TForm | (() => TForm)
+): InertiaForm<TForm>
 export default function useForm<TForm extends FormDataType>(
   rememberKey: string,
-  data: TForm | (() => TForm),
+  data: TForm | (() => TForm)
 ): InertiaForm<TForm>
 export default function useForm<TForm extends FormDataType>(
   rememberKeyOrData: string | TForm | (() => TForm),
-  maybeData?: TForm | (() => TForm),
+  maybeData?: TForm | (() => TForm)
 ): InertiaForm<TForm> {
-  const rememberKey = typeof rememberKeyOrData === 'string' ? rememberKeyOrData : null
-  const data = typeof rememberKeyOrData === 'string' ? maybeData : rememberKeyOrData
+  const rememberKey =
+    typeof rememberKeyOrData === 'string' ? rememberKeyOrData : null
+  const data =
+    typeof rememberKeyOrData === 'string' ? maybeData : rememberKeyOrData
   const restored = rememberKey
-    ? (router.restore(rememberKey) as { data: TForm; errors: Record<keyof TForm, string> })
+    ? (router.restore(rememberKey) as {
+        data: TForm
+        errors: Record<keyof TForm, string>
+      })
     : null
   let defaults = typeof data === 'object' ? cloneDeep(data) : cloneDeep(data())
   let cancelToken = null
@@ -63,19 +77,27 @@ export default function useForm<TForm extends FormDataType>(
     wasSuccessful: false,
     recentlySuccessful: false,
     data() {
-      return (Object.keys(defaults) as Array<keyof TForm>).reduce((carry, key) => {
-        carry[key] = this[key]
-        return carry
-      }, {} as Partial<TForm>) as TForm
+      return (Object.keys(defaults) as Array<keyof TForm>).reduce(
+        (carry, key) => {
+          carry[key] = this[key]
+          return carry
+        },
+        {} as Partial<TForm>
+      ) as TForm
     },
     transform(callback) {
       transform = callback
 
       return this
     },
-    defaults(fieldOrFields?: keyof TForm | Partial<TForm>, maybeValue?: FormDataConvertible) {
+    defaults(
+      fieldOrFields?: keyof TForm | Partial<TForm>,
+      maybeValue?: FormDataConvertible
+    ) {
       if (typeof data === 'function') {
-        throw new Error('You cannot call `defaults()` when using a function to define your form data.')
+        throw new Error(
+          'You cannot call `defaults()` when using a function to define your form data.'
+        )
       }
 
       if (typeof fieldOrFields === 'undefined') {
@@ -84,14 +106,17 @@ export default function useForm<TForm extends FormDataType>(
         defaults = Object.assign(
           {},
           cloneDeep(defaults),
-          typeof fieldOrFields === 'string' ? { [fieldOrFields]: maybeValue } : fieldOrFields,
+          typeof fieldOrFields === 'string'
+            ? { [fieldOrFields]: maybeValue }
+            : fieldOrFields
         )
       }
 
       return this
     },
     reset(...fields) {
-      const resolvedData = typeof data === 'object' ? cloneDeep(defaults) : cloneDeep(data())
+      const resolvedData =
+        typeof data === 'object' ? cloneDeep(defaults) : cloneDeep(data())
       const clonedData = cloneDeep(resolvedData)
       if (fields.length === 0) {
         defaults = clonedData
@@ -107,8 +132,16 @@ export default function useForm<TForm extends FormDataType>(
 
       return this
     },
-    setError(fieldOrFields: keyof TForm | Record<keyof TForm, string>, maybeValue?: string) {
-      Object.assign(this.errors, typeof fieldOrFields === 'string' ? { [fieldOrFields]: maybeValue } : fieldOrFields)
+    setError(
+      fieldOrFields: keyof TForm | Record<keyof TForm, string>,
+      maybeValue?: string
+    ) {
+      Object.assign(
+        this.errors,
+        typeof fieldOrFields === 'string'
+          ? { [fieldOrFields]: maybeValue }
+          : fieldOrFields
+      )
 
       this.hasErrors = Object.keys(this.errors).length > 0
 
@@ -118,9 +151,11 @@ export default function useForm<TForm extends FormDataType>(
       this.errors = Object.keys(this.errors).reduce(
         (carry, field) => ({
           ...carry,
-          ...(fields.length > 0 && !fields.includes(field) ? { [field]: this.errors[field] } : {}),
+          ...(fields.length > 0 && !fields.includes(field)
+            ? { [field]: this.errors[field] }
+            : {}),
         }),
-        {},
+        {}
       )
 
       this.hasErrors = Object.keys(this.errors).length > 0
@@ -167,9 +202,14 @@ export default function useForm<TForm extends FormDataType>(
           this.clearErrors()
           this.wasSuccessful = true
           this.recentlySuccessful = true
-          recentlySuccessfulTimeoutId = setTimeout(() => (this.recentlySuccessful = false), 2000)
+          recentlySuccessfulTimeoutId = setTimeout(
+            () => (this.recentlySuccessful = false),
+            2000
+          )
 
-          const onSuccess = options.onSuccess ? await options.onSuccess(page) : null
+          const onSuccess = options.onSuccess
+            ? await options.onSuccess(page)
+            : null
           defaults = cloneDeep(this.data())
           this.isDirty = false
           return onSuccess
@@ -246,7 +286,7 @@ export default function useForm<TForm extends FormDataType>(
         router.remember(cloneDeep(newValue.__remember()), rememberKey)
       }
     },
-    { immediate: true, deep: true },
+    { immediate: true, deep: true }
   )
 
   return form

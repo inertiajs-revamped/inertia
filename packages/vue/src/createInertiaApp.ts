@@ -1,12 +1,25 @@
 // @ts-nocheck
 import { type Page, setupProgress } from '@inertiajs-revamped/core'
-import { type DefineComponent, type Plugin, type App as VueApp, createSSRApp, h } from 'vue'
+import {
+  type DefineComponent,
+  type Plugin,
+  type App as VueApp,
+  createSSRApp,
+  h,
+} from 'vue'
 import App, { type InertiaApp, type InertiaAppProps, plugin } from './app'
 
 interface CreateInertiaAppProps {
   id?: string
-  resolve: (name: string) => DefineComponent | Promise<DefineComponent> | { default: DefineComponent }
-  setup: (props: { el: Element; App: InertiaApp; props: InertiaAppProps; plugin: Plugin }) => void | VueApp
+  resolve: (
+    name: string
+  ) => DefineComponent | Promise<DefineComponent> | { default: DefineComponent }
+  setup: (props: {
+    el: Element
+    App: InertiaApp
+    props: InertiaAppProps
+    plugin: Plugin
+  }) => void | VueApp
   title?: (title: string) => string
   progress?:
     | false
@@ -32,24 +45,27 @@ export default async function createInertiaApp({
   const isServer = typeof window === 'undefined'
   const el = isServer ? null : document.getElementById(id)
   const initialPage = page || JSON.parse(el.dataset.page)
-  const resolveComponent = (name) => Promise.resolve(resolve(name)).then((module) => module.default || module)
+  const resolveComponent = (name) =>
+    Promise.resolve(resolve(name)).then((module) => module.default || module)
 
   let head = []
 
-  const vueApp = await resolveComponent(initialPage.component).then((initialComponent) => {
-    return setup({
-      el,
-      App,
-      props: {
-        initialPage,
-        initialComponent,
-        resolveComponent,
-        titleCallback: title,
-        onHeadUpdate: isServer ? (elements) => (head = elements) : null,
-      },
-      plugin,
-    })
-  })
+  const vueApp = await resolveComponent(initialPage.component).then(
+    (initialComponent) => {
+      return setup({
+        el,
+        App,
+        props: {
+          initialPage,
+          initialComponent,
+          resolveComponent,
+          titleCallback: title,
+          onHeadUpdate: isServer ? (elements) => (head = elements) : null,
+        },
+        plugin,
+      })
+    }
+  )
 
   if (!isServer && progress) {
     setupProgress(progress)
@@ -64,7 +80,7 @@ export default async function createInertiaApp({
             'data-page': JSON.stringify(initialPage),
             innerHTML: vueApp ? render(vueApp) : '',
           }),
-      }),
+      })
     )
 
     return { head, body }
