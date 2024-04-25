@@ -29,7 +29,8 @@
     "build:react": "pnpm --filter=react build",
     "build:vue": "pnpm --filter=vue build",
     "sandbox": "pnpm build && node ./.scripts/init-sandbox.mjs",
-    "changelogs": "node ./.scripts/changelogs.mjs"
+    "changelogs": "node ./.scripts/changelogs.mjs",
+    "prepare": "husky"
   },
   "devDependencies": {
     "@biomejs/biome": "^1.7.0",

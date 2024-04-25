@@ -12,8 +12,7 @@
       "**/node_modules/**",
       "**/public/**",
       "sandboxes/**",
-      "packages/presets/templates/**",
-      "packages/vue/src/*.ts"
+      "packages/presets/templates/**"
     ]
   },
   "javascript": {
@@ -32,8 +31,7 @@
       "**/node_modules/**",
       "**/public/**",
       "sandboxes/**",
-      "packages/presets/templates/**",
-      "packages/vue/src/*.ts"
+      "packages/presets/templates/**"
     ],
     "rules": {
       "recommended": true,
