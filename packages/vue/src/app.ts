@@ -1,10 +1,10 @@
-// @ts-nocheck
 import {
   type HeadManager,
   type HeadManagerOnUpdate,
   type HeadManagerTitleCallback,
   type Page,
   type PageProps,
+  type PageResolver,
   createHeadManager,
   router,
 } from '@inertiajs-revamped/core'
@@ -12,6 +12,7 @@ import {
   type DefineComponent,
   type Plugin,
   type PropType,
+  type Ref,
   computed,
   defineComponent,
   h,
@@ -21,33 +22,27 @@ import {
   shallowRef,
 } from 'vue'
 import remember from './remember'
-import type { VuePageHandlerArgs } from './types'
+import type { InertiaComponentType } from './types'
 import useForm from './useForm'
 
 export interface InertiaAppProps {
   initialPage: Page
   initialComponent?: object
-  resolveComponent?: (
-    name: string
-  ) => DefineComponent | Promise<DefineComponent>
+  resolveComponent: PageResolver<InertiaComponentType>
   titleCallback?: HeadManagerTitleCallback
   onHeadUpdate?: HeadManagerOnUpdate | null
 }
 
-export type InertiaApp = DefineComponent<InertiaAppProps>
-
-const component = ref(null)
-const page = ref<Page<any>>(null)
+const page = ref({}) as Ref<Page<PageProps>>
 const layout = shallowRef(null)
-const key = ref(null)
 
 let headManager: HeadManager | null = null
 
-const App: InertiaApp = defineComponent({
+const App = defineComponent({
   name: 'Inertia',
   props: {
     initialPage: {
-      type: Object as PropType<Page>,
+      type: Object as PropType<Page<PageProps>>,
       required: true,
     },
     initialComponent: {
@@ -55,15 +50,13 @@ const App: InertiaApp = defineComponent({
       required: false,
     },
     resolveComponent: {
-      type: Function as PropType<
-        (name: string) => DefineComponent | Promise<DefineComponent>
-      >,
-      required: false,
+      type: Function as PropType<PageResolver<InertiaComponentType>>,
+      required: true,
     },
     titleCallback: {
       type: Function as PropType<HeadManagerTitleCallback>,
       required: false,
-      default: (title: string) => title,
+      default: ((title) => title) as HeadManagerTitleCallback,
     },
     onHeadUpdate: {
       type: Function as PropType<HeadManagerOnUpdate> | null,
@@ -78,9 +71,11 @@ const App: InertiaApp = defineComponent({
     titleCallback,
     onHeadUpdate,
   }) {
-    component.value = initialComponent ? markRaw(initialComponent) : null
+    const component = ref(
+      initialComponent ? markRaw(initialComponent) : null
+    ) as Ref<DefineComponent<any, any, any> | null>
     page.value = initialPage
-    key.value = null
+    const key = ref<number | string | undefined>(undefined)
 
     const isServer = typeof window === 'undefined'
     headManager = createHeadManager(isServer, titleCallback, onHeadUpdate)
@@ -89,14 +84,18 @@ const App: InertiaApp = defineComponent({
       router.init({
         initialPage,
         resolveComponent,
-        swapComponent: async (args: VuePageHandlerArgs) => {
-          component.value = markRaw(args.component)
-          page.value = args.page
-          key.value = args.preserveState ? key.value : Date.now()
+        swapComponent: async ({
+          component: Comp,
+          page: NextPage,
+          preserveState,
+        }) => {
+          component.value = markRaw(Comp as InertiaComponentType)
+          page.value = NextPage
+          key.value = preserveState ? key.value : Date.now()
         },
       })
 
-      router.on('navigate', () => headManager.forceUpdate())
+      router.on('navigate', () => headManager?.forceUpdate())
     }
 
     return () => {
@@ -158,7 +157,7 @@ export const plugin: Plugin = {
 
 export function usePage<SharedProps extends PageProps>(): Page<SharedProps> {
   return reactive({
-    props: computed(() => page.value?.props),
+    props: computed(() => (page.value as Page<SharedProps & PageProps>).props),
     url: computed(() => page.value?.url),
     component: computed(() => page.value?.component),
     version: computed(() => page.value?.version),
