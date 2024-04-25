@@ -1,6 +1,6 @@
 # Changelog - @inertiajs-revamped/core
 
-## v0.1.0 - unreleased
+## v0.0.1 - unreleased
 
 - Initial release based on [@inertiajs/core](https://github.com/inertiajs/inertia) (v1.0.15)
 
@@ -32,13 +32,13 @@
 
 # Changelog - @inertiajs-revamped/laravel
 
-## v0.1.0 - unreleased
+## v0.0.1 - unreleased
 
 - Initial release based on [@inertiajs/inertia-laravel](https://github.com/inertiajs/inertia-laravel) (v1.0.0)
 
 # Changelog - @inertiajs-revamped/react
 
-## v0.1.0 - unreleased
+## v0.0.1 - unreleased
 
 - Initial release based on [@inertiajs/react](https://github.com/inertiajs/inertia) (v1.0.15)
 
@@ -68,7 +68,7 @@
 
 # Changelog - @inertiajs-revamped/vue
 
-## v0.1.0 - unreleased
+## v0.0.1 - unreleased
 
 - Initial release based on [@inertiajs/vue](https://github.com/inertiajs/inertia) (v1.0.15)
 
