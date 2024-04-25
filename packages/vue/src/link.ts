@@ -1,6 +1,6 @@
 import {
   type Method,
-  type PageProps,
+  type PreserveStateOption,
   type Progress,
   mergeDataIntoQueryString,
   router,
@@ -15,8 +15,8 @@ export interface InertiaLinkProps {
   method?: Method
   headers?: object
   onClick?: (event: MouseEvent) => void
-  preserveScroll?: boolean | ((props: PageProps) => boolean)
-  preserveState?: boolean | ((props: PageProps) => boolean) | null
+  preserveScroll?: PreserveStateOption
+  preserveState?: PreserveStateOption
   replace?: boolean
   only?: string[]
   onCancelToken?: { ({ cancel }: { cancel: VoidFunction }): void }
