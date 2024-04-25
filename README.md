@@ -1,36 +1,17 @@
-# Inertia.js-Revamped
+# Inertia.js Revamped
 
-> A framework for creating server-driven single page apps
-
-## Introduction
-
-### Overview
-
-The article [Server-side apps with client-side rendering](https://reinink.ca/articles/server-side-apps-with-client-side-rendering), which Jonathan Reinink published on his blog in 2019 looked very promising as an alternative to [spatie/laravel-server-side-rendering](https://github.com/spatie/laravel-server-side-rendering).  
-When [Inertia.js](https://inertiajs.com/) was subsequently released, it looked like the next rising star.
-
-However, due to the lack of development, unanswered issues and rejected pull requests at [Inertia.js](https://github.com/inertiajs/inertia), we decided to continue developing a fork under the name `Inertia.js-Revamped`.
-
-### Current Roadmap
-
-Application Related:
-
-* __Improve TypeScript support__ - Provide better type definitions for IDE and autocomplete
-* __Improve application performance__ - Optimize the application performance and reduce required dependencies
-* __Expand the test suites__ - Add test suites for better code control
-
-Community Related:
-
-* __Improve user & developer experience__ - Optimize the docs, examples, starter kits, workspace- and user-tools continuously
-* __Collaborate with community members__ - Issue prioritization will be based on community feedback, please [share your thoughts](https://github.com/inertiajs-revamped/inertia/issues)
+> Choose your preferred UI framework, build classic server-side rendered applications.
 
 ## Documentation
 
-View the docs (currently in development) at [inertiajs-revamped.com](https://inertiajs-revamped.com).
+> **Note:**  
+> Inertia.js Revamped is currently in alpha status and not ready for production use yet.
+
+View the docs at [inertiajs-revamped.com](https://inertiajs-revamped.com) (currently in development).
 
 ## Changelog
 
-Temporary changelogs for the forked/migrated packages can be found in the root [CHANGELOG.md](https://github.com/inertiajs-revamped/inertia/tree/main/CHANGELOG.md).
+Temporary changelogs for the forked/migrated packages can be found in the root [CHANGELOG.md](https://github.com/inertiajs-revamped/inertia/tree/main/CHANGELOG.md). See the `CHANGELOG.md` from the [packages](https://github.com/inertiajs-revamped/inertia/tree/main/packages) for a full list of changes.
 
 ## Contributing
 
