@@ -7,6 +7,8 @@ export * from './types'
 export { default as useForm, type InertiaForm } from './useForm'
 export { default as useRemember } from './useRemember'
 
+export { resolvePageComponent } from '@inertiajs-revamped/core'
+
 export type {
   ActiveVisit,
   Component,
