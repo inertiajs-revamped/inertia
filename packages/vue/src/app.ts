@@ -1,9 +1,12 @@
 // @ts-nocheck
 import {
+  type HeadManager,
+  type HeadManagerOnUpdate,
+  type HeadManagerTitleCallback,
   type Page,
   type PageProps,
   createHeadManager,
-  type router,
+  router,
 } from '@inertiajs-revamped/core'
 import {
   type DefineComponent,
@@ -27,8 +30,8 @@ export interface InertiaAppProps {
   resolveComponent?: (
     name: string
   ) => DefineComponent | Promise<DefineComponent>
-  titleCallback?: (title: string) => string
-  onHeadUpdate?: (elements: string[]) => void
+  titleCallback?: HeadManagerTitleCallback
+  onHeadUpdate?: HeadManagerOnUpdate | null
 }
 
 export type InertiaApp = DefineComponent<InertiaAppProps>
@@ -37,7 +40,8 @@ const component = ref(null)
 const page = ref<Page<any>>(null)
 const layout = shallowRef(null)
 const key = ref(null)
-let headManager = null
+
+let headManager: HeadManager | null = null
 
 const App: InertiaApp = defineComponent({
   name: 'Inertia',
@@ -57,12 +61,12 @@ const App: InertiaApp = defineComponent({
       required: false,
     },
     titleCallback: {
-      type: Function as PropType<(title: string) => string>,
+      type: Function as PropType<HeadManagerTitleCallback>,
       required: false,
-      default: (title) => title,
+      default: (title: string) => title,
     },
     onHeadUpdate: {
-      type: Function as PropType<(elements: string[]) => void>,
+      type: Function as PropType<HeadManagerOnUpdate> | null,
       required: false,
       default: () => () => {},
     },
