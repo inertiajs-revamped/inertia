@@ -21,6 +21,7 @@ node_modules/
 
 # Build directories
 dist/
+cache/
 
 # Sandboxes directory
 sandboxes/
