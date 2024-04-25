@@ -1,12 +1,23 @@
-import { Page, setupProgress } from '@inertiajs/core'
-import { App as VueApp, createSSRApp, DefineComponent, h, Plugin } from 'vue'
-import App, { InertiaApp, InertiaAppProps, plugin } from './app'
+import {
+  type HeadManagerTitleCallback,
+  type Page,
+  type PageResolver,
+  setupProgress,
+} from '@inertiajs-revamped/core'
+import { type Plugin, type App as VueApp, createSSRApp, h } from 'vue'
+import App, { type InertiaAppProps, plugin } from './app'
+import type { InertiaComponentType } from './types'
 
-interface CreateInertiaAppProps {
+export interface CreateInertiaAppProps {
   id?: string
-  resolve: (name: string) => DefineComponent | Promise<DefineComponent> | { default: DefineComponent }
-  setup: (props: { el: Element; App: InertiaApp; props: InertiaAppProps; plugin: Plugin }) => void | VueApp
-  title?: (title: string) => string
+  resolve: PageResolver<InertiaComponentType>
+  setup: (props: {
+    el: HTMLElement | null
+    App: typeof App
+    props: InertiaAppProps
+    plugin: Plugin
+  }) => void | VueApp
+  title?: HeadManagerTitleCallback
   progress?:
     | false
     | {
@@ -27,34 +38,46 @@ export default async function createInertiaApp({
   progress = {},
   page,
   render,
-}: CreateInertiaAppProps): Promise<{ head: string[]; body: string }> {
+}: CreateInertiaAppProps): Promise<
+  { head: string[]; body: string } | undefined
+> {
   const isServer = typeof window === 'undefined'
-  const el = isServer ? null : document.getElementById(id)
-  const initialPage = page || JSON.parse(el.dataset.page)
-  const resolveComponent = (name) => Promise.resolve(resolve(name)).then((module) => module.default || module)
+  const el: HTMLElement | null = isServer
+    ? null
+    : <HTMLElement>document.getElementById(id)
+  const initialPage: Page = page || JSON.parse(el?.dataset.page as string)
 
-  let head = []
-
-  const vueApp = await resolveComponent(initialPage.component).then((initialComponent) => {
-    return setup({
-      el,
-      App,
-      props: {
-        initialPage,
-        initialComponent,
-        resolveComponent,
-        titleCallback: title,
-        onHeadUpdate: isServer ? (elements) => (head = elements) : null,
-      },
-      plugin,
+  const resolveComponent = (name: string) =>
+    Promise.resolve(resolve(name)).then((module) => {
+      return typeof module === 'object' && !!module && 'default' in module
+        ? module.default
+        : module
     })
-  })
+
+  let head: string[] = []
+
+  const vueApp = await resolveComponent(initialPage.component).then(
+    (initialComponent) => {
+      return setup({
+        el,
+        App,
+        props: {
+          initialPage,
+          initialComponent,
+          resolveComponent,
+          titleCallback: title,
+          onHeadUpdate: isServer ? (elements) => (head = elements) : null,
+        },
+        plugin,
+      })
+    }
+  )
 
   if (!isServer && progress) {
     setupProgress(progress)
   }
 
-  if (isServer) {
+  if (isServer && render) {
     const body = await render(
       createSSRApp({
         render: () =>
@@ -63,7 +86,7 @@ export default async function createInertiaApp({
             'data-page': JSON.stringify(initialPage),
             innerHTML: vueApp ? render(vueApp) : '',
           }),
-      }),
+      })
     )
 
     return { head, body }

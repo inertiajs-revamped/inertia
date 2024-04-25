@@ -1,30 +1,37 @@
-import { mergeDataIntoQueryString, Method, PageProps, Progress, router, shouldIntercept } from '@inertiajs/core'
-import { defineComponent, DefineComponent, h, PropType } from 'vue'
+import {
+  type FormDataConvertible,
+  type Method,
+  type PreserveStateOption,
+  type Progress,
+  mergeDataIntoQueryString,
+  router,
+  shouldIntercept,
+} from '@inertiajs-revamped/core'
+import { type PropType, defineComponent, h } from 'vue'
 
 export interface InertiaLinkProps {
   as?: string
-  data?: object
+  data?: Record<string, FormDataConvertible>
   href: string
   method?: Method
-  headers?: object
+  headers?: Record<string, string>
   onClick?: (event: MouseEvent) => void
-  preserveScroll?: boolean | ((props: PageProps) => boolean)
-  preserveState?: boolean | ((props: PageProps) => boolean) | null
+  preserveScroll?: PreserveStateOption
+  preserveState?: PreserveStateOption
   replace?: boolean
   only?: string[]
-  onCancelToken?: (cancelToken: import('axios').CancelTokenSource) => void
+  queryStringArrayFormat?: 'indices' | 'brackets'
+  onCancelToken?: { ({ cancel }: { cancel: VoidFunction }): void }
   onBefore?: () => void
   onStart?: () => void
   onProgress?: (progress: Progress) => void
   onFinish?: () => void
   onCancel?: () => void
   onSuccess?: () => void
-  queryStringArrayFormat?: 'brackets' | 'indices'
+  onError?: () => void
 }
 
-type InertiaLink = DefineComponent<InertiaLinkProps>
-
-const Link: InertiaLink = defineComponent({
+const Link = defineComponent({
   name: 'Link',
   props: {
     as: {
@@ -32,7 +39,7 @@ const Link: InertiaLink = defineComponent({
       default: 'a',
     },
     data: {
-      type: Object,
+      type: Object as PropType<Record<string, FormDataConvertible>>,
       default: () => ({}),
     },
     href: {
@@ -41,42 +48,58 @@ const Link: InertiaLink = defineComponent({
     },
     method: {
       type: String as PropType<Method>,
-      default: 'get',
+      default: 'get' as const,
+    },
+    headers: {
+      type: Object as PropType<Record<string, string>>,
+      default: () => ({}),
+    },
+    preserveScroll: {
+      type: Object as PropType<PreserveStateOption>,
+      default: false,
+    },
+    preserveState: {
+      type: Object as PropType<PreserveStateOption>,
+      default: null,
     },
     replace: {
       type: Boolean,
       default: false,
     },
-    preserveScroll: {
-      type: Boolean,
-      default: false,
-    },
-    preserveState: {
-      type: Boolean,
-      default: null,
-    },
     only: {
-      type: Array<string>,
+      type: Array as PropType<string[]>,
       default: () => [],
     },
-    headers: {
-      type: Object,
-      default: () => ({}),
-    },
     queryStringArrayFormat: {
-      type: String as PropType<'brackets' | 'indices'>,
+      type: String as PropType<'indices' | 'brackets'>,
       default: 'brackets',
     },
   },
-  setup(props, { slots, attrs }) {
+  emits: [
+    'before',
+    'start',
+    'progress',
+    'finish',
+    'cancel',
+    'success',
+    'error',
+    'cancel-token',
+  ],
+  setup(props, { slots, attrs, emit }) {
     return () => {
-      const as = props.as.toLowerCase()
+      const as =
+        typeof props.as === 'string' ? props.as.toLowerCase() : props.as
       const method = props.method.toLowerCase() as Method
-      const [href, data] = mergeDataIntoQueryString(method, props.href || '', props.data, props.queryStringArrayFormat)
+      const [href, data] = mergeDataIntoQueryString(
+        method,
+        props.href || '',
+        props.data,
+        props.queryStringArrayFormat
+      )
 
       if (as === 'a' && method !== 'get') {
         console.warn(
-          `Creating POST/PUT/PATCH/DELETE <a> links is discouraged as it causes "Open Link in New Tab/Window" accessibility issues.\n\nPlease specify a more appropriate element using the "as" attribute. For example:\n\n<Link href="${href}" method="${method}" as="button">...</Link>`,
+          `Creating POST/PUT/PATCH/DELETE <a> links is discouraged as it causes "Open Link in New Tab/Window" accessibility issues. Please specify a more appropriate element using the "as" attribute. For example: <Link href="${href}" method="${method}" as="button">...</Link>`
         )
       }
 
@@ -84,40 +107,33 @@ const Link: InertiaLink = defineComponent({
         props.as,
         {
           ...attrs,
-          ...(as === 'a' ? { href } : {}),
-          onClick: (event) => {
+          ...(as === 'a' ? { href } : { role: 'link' }),
+          onClick: (event: MouseEvent | KeyboardEvent) => {
             if (shouldIntercept(event)) {
               event.preventDefault()
 
               router.visit(href, {
                 data: data,
                 method: method,
-                replace: props.replace,
+
+                headers: props.headers,
                 preserveScroll: props.preserveScroll,
                 preserveState: props.preserveState ?? method !== 'get',
+                replace: props.replace,
                 only: props.only,
-                headers: props.headers,
-                // @ts-expect-error
-                onCancelToken: attrs.onCancelToken || (() => ({})),
-                // @ts-expect-error
-                onBefore: attrs.onBefore || (() => ({})),
-                // @ts-expect-error
-                onStart: attrs.onStart || (() => ({})),
-                // @ts-expect-error
-                onProgress: attrs.onProgress || (() => ({})),
-                // @ts-expect-error
-                onFinish: attrs.onFinish || (() => ({})),
-                // @ts-expect-error
-                onCancel: attrs.onCancel || (() => ({})),
-                // @ts-expect-error
-                onSuccess: attrs.onSuccess || (() => ({})),
-                // @ts-expect-error
-                onError: attrs.onError || (() => ({})),
+                onCancelToken: (...args) => emit('cancel-token', ...args),
+                onBefore: (...args) => emit('before', ...args),
+                onStart: (...args) => emit('start', ...args),
+                onProgress: (...args) => emit('progress', ...args),
+                onFinish: (...args) => emit('finish', ...args),
+                onCancel: (...args) => emit('cancel', ...args),
+                onSuccess: (...args) => emit('success', ...args),
+                onError: (...args) => emit('error', ...args),
               })
             }
           },
         },
-        slots,
+        slots
       )
     }
   },
