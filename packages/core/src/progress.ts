@@ -40,7 +40,6 @@ function finish(event: GlobalEvent<'finish'>) {
 
 function injectCSS(color: string): void {
   const element = document.createElement('style')
-  element.type = 'text/css'
   element.textContent = `
     #nprogress {
       pointer-events: none;
