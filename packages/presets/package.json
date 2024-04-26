@@ -1,6 +1,6 @@
 {
   "name": "@inertiajs-revamped/presets",
-  "version": "0.1.0-dev",
+  "version": "0.0.1-dev",
   "private": true,
   "description": "Laravel presets for Inertia.js-Revamped",
   "homepage": "https://inertiajs-revamped.com",

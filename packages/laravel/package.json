@@ -1,6 +1,6 @@
 {
   "name": "@inertiajs-revamped/laravel",
-  "version": "0.1.0",
+  "version": "0.0.1",
   "private": true,
   "description": "The Laravel adapter for Inertia.js-Revamped",
   "homepage": "https://inertiajs-revamped.com",
