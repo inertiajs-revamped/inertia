@@ -1,6 +1,6 @@
 # Changelog - @inertiajs-revamped/react
 
-## 0.1.0 (2024-04-23)
+## 0.0.1 (2024-04-26)
 
 ### Bug Fixes
 
@@ -34,6 +34,8 @@
 
 ### Code Refactoring
 
+- export `createProgress` from adapters, excludes progress from bundle by default ([d224363](https://github.com/inertiajs-revamped/inertia/commit/d224363))
+- export `default as createServer` to avoid forcing `allowSyntheticDefaultImports` flag ([7f6544c](https://github.com/inertiajs-revamped/inertia/commit/7f6544c))
 - replace typeof `renderToString`, removes react-dom from `peerDependencies` ([ad65d99](https://github.com/inertiajs-revamped/inertia/commit/ad65d99))
 - replace type `ReactComponent` with `ReactNode` ([1a12eec](https://github.com/inertiajs-revamped/inertia/commit/1a12eec))
 - replace misleading type `ReactInstance` with `ReactElement` ([36e9711](https://github.com/inertiajs-revamped/inertia/commit/36e9711))

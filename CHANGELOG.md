@@ -36,6 +36,12 @@
 
 - Initial release based on [@inertiajs/inertia-laravel](https://github.com/inertiajs/inertia-laravel) (v1.0.0)
 
+# Changelog - @inertiajs-revamped/preact
+
+## v0.0.1 - unreleased
+
+- Initial release based on [@inertiajs-revamped/react](https://github.com/inertiajs-revamped/inertia) (v0.0.1)
+
 # Changelog - @inertiajs-revamped/react
 
 ## v0.0.1 - unreleased

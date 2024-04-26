@@ -1,9 +1,13 @@
 # Changelog - @inertiajs-revamped/core
 
-## 0.1.0 (2024-04-23)
+## 0.0.1 (2024-04-26)
 
 ### Bug Fixes
 
+- remove deprecated `element.type` in progress `injectCSS` ([eb6c5d4](https://github.com/inertiajs-revamped/inertia/commit/eb6c5d4))
+- use `Omit` instead of `Exclude` in router types (based on [inertia/pull/1857](https://github.com/inertiajs/inertia/pull/1857)) ([f77d5e0](https://github.com/inertiajs-revamped/inertia/commit/f77d5e0))
+- return early when using `router.on()` during ssr (based on [inertia/pull/1715](https://github.com/inertiajs/inertia/pull/1715)) ([7b8ae05](https://github.com/inertiajs-revamped/inertia/commit/7b8ae05))
+- fix doubling hash in react `StrictMode` (based on [inertia/pull/1728](https://github.com/inertiajs/inertia/pull/1728)) ([ebcba61](https://github.com/inertiajs-revamped/inertia/commit/ebcba61))
 - fix type definition typo ([b752ea3](https://github.com/inertiajs-revamped/inertia/commit/b752ea3))
 - add type parameter `MouseEvent` for `shouldIntercept()`, fixes error in adapter `<Link>` ([be03560](https://github.com/inertiajs-revamped/inertia/commit/be03560))
 - fix `<Router>` `onUploadProgress` to work with `Progress` type ([dc02443](https://github.com/inertiajs-revamped/inertia/commit/dc02443))
@@ -23,6 +27,7 @@
 
 ### Code Refactoring
 
+- improve & export `progress` as standalone, excludes progress from bundle by default ([6e53be7](https://github.com/inertiajs-revamped/inertia/commit/6e53be7))
 - make `PageResolver` generic, remove generic from `resolvePageComponent` ([1caf9da](https://github.com/inertiajs-revamped/inertia/commit/1caf9da))
 - move `HeadManagerOnUpdate` & `HeadManagerTitleCallback` to core ([0faa792](https://github.com/inertiajs-revamped/inertia/commit/0faa792))
 - improve `PageProps` to support module augmentation ([7e7b7dc](https://github.com/inertiajs-revamped/inertia/commit/7e7b7dc))

@@ -1,6 +1,6 @@
 # Changelog - @inertiajs-revamped/laravel
 
-## 0.1.0 (2024-04-18)
+## 0.0.1 (2024-04-18)
 
 ### Code Refactoring
 

@@ -1,9 +1,11 @@
 # Changelog - @inertiajs-revamped/vue
 
-## 0.1.0 (2024-04-25)
+## 0.0.1 (2024-04-26)
 
 ### Bug Fixes
 
+- check for `null`, remove invalid type assignments for head ([79a9e30](https://github.com/inertiajs-revamped/inertia/commit/79a9e30))
+- fix wrong `preserveScroll` types in link.ts ([7836ba4](https://github.com/inertiajs-revamped/inertia/commit/7836ba4))
 - fix all type errors in link.ts ([cd6d756](https://github.com/inertiajs-revamped/inertia/commit/cd6d756))
 - use `PreserveStateOption` from core package ([9df6050](https://github.com/inertiajs-revamped/inertia/commit/9df6050))
 - remove invalid type assignments for link ([ef503f2](https://github.com/inertiajs-revamped/inertia/commit/ef503f2))
@@ -23,6 +25,9 @@
 
 ### Code Refactoring
 
+- export `createProgress` from adapters, excludes progress from bundle by default ([42c9479](https://github.com/inertiajs-revamped/inertia/commit/42c9479))
+- export `default as createServer` to avoid forcing `allowSyntheticDefaultImports` flag ([f0ea6f5](https://github.com/inertiajs-revamped/inertia/commit/f0ea6f5))
+- replace return type of `headManager` with `HeadManager` type ([105f343](https://github.com/inertiajs-revamped/inertia/commit/105f343))
 - add `InertiaComponentType` type ([52a1bfc](https://github.com/inertiajs-revamped/inertia/commit/52a1bfc))
 - replace inline types with types from core package ([dfef9b3](https://github.com/inertiajs-revamped/inertia/commit/dfef9b3))
 - restructure exports ([0b03808](https://github.com/inertiajs-revamped/inertia/commit/0b03808))
