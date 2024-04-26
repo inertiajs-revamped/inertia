@@ -58,7 +58,6 @@
       },
       "style": {
         "all": false,
-        "noUselessElse": "off",
         "noNonNullAssertion": "off"
       }
     }
