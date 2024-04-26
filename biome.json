@@ -41,8 +41,7 @@
       "complexity": {
         "noBannedTypes": "off",
         "useArrowFunction": "off",
-        "noForEach": "off",
-        "useOptionalChain": "off"
+        "noForEach": "off"
       },
       "correctness": {
         "noVoidTypeReturn": "off",

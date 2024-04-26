@@ -410,9 +410,7 @@ export class Router {
               'X-Inertia-Partial-Data': only.join(','),
             }
           : {}),
-        ...(errorBag && errorBag.length
-          ? { 'X-Inertia-Error-Bag': errorBag }
-          : {}),
+        ...(errorBag?.length ? { 'X-Inertia-Error-Bag': errorBag } : {}),
         ...(this.page.version
           ? { 'X-Inertia-Version': this.page.version }
           : {}),
