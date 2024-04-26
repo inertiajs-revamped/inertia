@@ -1,6 +1,6 @@
 # @inertiajs-revamped/core
 
-> A framework for creating server-driven single page apps
+> Choose your preferred UI framework, build classic server-side rendered applications.
 
 ## Documentation
 
