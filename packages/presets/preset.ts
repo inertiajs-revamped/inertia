@@ -135,6 +135,7 @@ async function installInertiaRevamped({
 
       await extractTemplates({
         title: 'extract Inertia.js-Revamped templates',
+        templates: sandbox ? 'templates' : 'packages/presets/templates',
         from: typescript ? `${ui}-ts` : ui,
       })
 
