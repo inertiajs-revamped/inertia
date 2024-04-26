@@ -2,7 +2,7 @@ import {
   createInertiaApp,
   resolvePageComponent,
 } from '@inertiajs-revamped/preact'
-import createServer from '@inertiajs-revamped/preact/server'
+import { createServer } from '@inertiajs-revamped/preact/server'
 import renderToString from 'preact-render-to-string'
 
 createServer((page) =>

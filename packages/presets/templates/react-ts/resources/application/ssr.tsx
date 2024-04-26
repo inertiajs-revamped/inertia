@@ -3,7 +3,7 @@ import {
   createInertiaApp,
   resolvePageComponent,
 } from '@inertiajs-revamped/react'
-import createServer from '@inertiajs-revamped/react/server'
+import { createServer } from '@inertiajs-revamped/react/server'
 import { renderToString } from 'react-dom/server'
 
 createServer((page) =>
