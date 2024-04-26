@@ -3,14 +3,16 @@ import {
   createInertiaApp,
   resolvePageComponent,
 } from '@inertiajs-revamped/preact'
+import { createProgress } from '@inertiajs-revamped/preact/progress'
 import { hydrate } from 'preact'
 
 import './app.css'
 
 createInertiaApp({
-  progress: {
-    delay: 250,
-  },
+  progress: () =>
+    createProgress({
+      delay: 250,
+    }),
   title: (title) => `${title} - Starter kit`,
   resolve: (name) =>
     resolvePageComponent(
