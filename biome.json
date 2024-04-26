@@ -59,7 +59,6 @@
       "style": {
         "all": false,
         "noUselessElse": "off",
-        "useTemplate": "off",
         "noParameterAssign": "off",
         "useShorthandFunctionType": "off",
         "noNonNullAssertion": "off"
