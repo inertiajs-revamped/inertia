@@ -25,6 +25,16 @@
         "default": "./dist/index.mjs"
       }
     },
+    "./progress": {
+      "require": {
+        "types": "./dist/progress.d.cts",
+        "default": "./dist/progress.cjs"
+      },
+      "import": {
+        "types": "./dist/progress.d.mts",
+        "default": "./dist/progress.mjs"
+      }
+    },
     "./server": {
       "require": {
         "types": "./dist/server.d.cts",

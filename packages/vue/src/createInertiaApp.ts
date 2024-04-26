@@ -1,8 +1,8 @@
-import {
-  type HeadManagerTitleCallback,
-  type Page,
-  type PageResolver,
-  setupProgress,
+import type {
+  HeadManagerTitleCallback,
+  Page,
+  PageResolver,
+  ProgressCallback,
 } from '@inertiajs-revamped/core'
 import { type Plugin, type App as VueApp, createSSRApp, h } from 'vue'
 import App, { type InertiaAppProps, plugin } from './app'
@@ -18,14 +18,7 @@ export interface CreateInertiaAppProps {
     plugin: Plugin
   }) => void | VueApp
   title?: HeadManagerTitleCallback
-  progress?:
-    | false
-    | {
-        delay?: number
-        color?: string
-        includeCSS?: boolean
-        showSpinner?: boolean
-      }
+  progress?: ProgressCallback
   page?: Page
   render?: (app: VueApp) => Promise<string>
 }
@@ -35,7 +28,7 @@ export default async function createInertiaApp({
   resolve,
   setup,
   title,
-  progress = {},
+  progress,
   page,
   render,
 }: CreateInertiaAppProps): Promise<
@@ -74,7 +67,7 @@ export default async function createInertiaApp({
   )
 
   if (!isServer && progress) {
-    setupProgress(progress)
+    progress()
   }
 
   if (isServer && render) {

@@ -1,10 +1,10 @@
-import {
-  type HeadManagerOnUpdate,
-  type HeadManagerTitleCallback,
-  type Page,
-  type PageProps,
-  type PageResolver,
-  setupProgress,
+import type {
+  HeadManagerOnUpdate,
+  HeadManagerTitleCallback,
+  Page,
+  PageProps,
+  PageResolver,
+  ProgressCallback,
 } from '@inertiajs-revamped/core'
 import {
   type ComponentType,
@@ -41,14 +41,7 @@ export type InertiaAppOptionsForCSR<SharedProps extends PageProps> =
     id?: string
     page?: Page | string
     render?: undefined
-    progress?:
-      | false
-      | {
-          delay?: number
-          color?: string
-          includeCSS?: boolean
-          showSpinner?: boolean
-        }
+    progress?: ProgressCallback
     setup(options: SetupOptions<SharedProps>): CreateInertiaAppSetupReturnType
   }
 
@@ -79,7 +72,7 @@ export default async function createInertiaApp<
   resolve,
   setup,
   title,
-  progress = {},
+  progress,
   page,
   render,
 }:
@@ -122,7 +115,7 @@ export default async function createInertiaApp<
   )
 
   if (!isServer && progress) {
-    setupProgress(progress)
+    progress()
   }
 
   if (isServer && render) {

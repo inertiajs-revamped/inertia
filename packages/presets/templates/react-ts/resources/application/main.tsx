@@ -3,15 +3,17 @@ import {
   createInertiaApp,
   resolvePageComponent,
 } from '@inertiajs-revamped/react'
+import { createProgress } from '@inertiajs-revamped/react/progress'
 import { StrictMode } from 'react'
 import { hydrateRoot } from 'react-dom/client'
 
 import './app.css'
 
 createInertiaApp({
-  progress: {
-    delay: 250,
-  },
+  progress: () =>
+    createProgress({
+      delay: 250,
+    }),
   title: (title) => `${title} - Starter kit`,
   resolve: (name) =>
     resolvePageComponent(
