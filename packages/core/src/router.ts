@@ -599,13 +599,13 @@ export class Router {
   public get(
     url: URL | string,
     data: RequestPayload = {},
-    options: Exclude<VisitOptions, 'method' | 'data'> = {}
+    options: Omit<VisitOptions, 'method' | 'data'> = {}
   ): void {
     return this.visit(url, { ...options, method: 'get', data })
   }
 
   public reload(
-    options: Exclude<VisitOptions, 'preserveScroll' | 'preserveState'> = {}
+    options: Omit<VisitOptions, 'preserveScroll' | 'preserveState'> = {}
   ): void {
     return this.visit(window.location.href, {
       ...options,
@@ -616,7 +616,7 @@ export class Router {
 
   public replace(
     url: URL | string,
-    options: Exclude<VisitOptions, 'replace'> = {}
+    options: Omit<VisitOptions, 'replace'> = {}
   ): void {
     console.warn(
       `Inertia.replace() has been deprecated and will be removed in a future release. Please use Inertia.${
@@ -629,7 +629,7 @@ export class Router {
   public post(
     url: URL | string,
     data: RequestPayload = {},
-    options: Exclude<VisitOptions, 'method' | 'data'> = {}
+    options: Omit<VisitOptions, 'method' | 'data'> = {}
   ): void {
     return this.visit(url, {
       preserveState: true,
@@ -642,7 +642,7 @@ export class Router {
   public put(
     url: URL | string,
     data: RequestPayload = {},
-    options: Exclude<VisitOptions, 'method' | 'data'> = {}
+    options: Omit<VisitOptions, 'method' | 'data'> = {}
   ): void {
     return this.visit(url, {
       preserveState: true,
@@ -655,7 +655,7 @@ export class Router {
   public patch(
     url: URL | string,
     data: RequestPayload = {},
-    options: Exclude<VisitOptions, 'method' | 'data'> = {}
+    options: Omit<VisitOptions, 'method' | 'data'> = {}
   ): void {
     return this.visit(url, {
       preserveState: true,
@@ -667,7 +667,7 @@ export class Router {
 
   public delete(
     url: URL | string,
-    options: Exclude<VisitOptions, 'method'> = {}
+    options: Omit<VisitOptions, 'method'> = {}
   ): void {
     return this.visit(url, {
       preserveState: true,
