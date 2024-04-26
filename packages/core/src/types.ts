@@ -120,6 +120,15 @@ export type Progress =
     })
   | undefined
 
+export type ProgressOptions = {
+  delay: number
+  color: string
+  includeCSS: boolean
+  showSpinner: boolean
+}
+
+export type ProgressCallback = (options?: Partial<ProgressOptions>) => void
+
 export type LocationVisit = {
   preserveScroll: boolean
 }
