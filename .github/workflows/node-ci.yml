@@ -9,7 +9,7 @@ on:
       - 'packages/*/src/*.ts'
       - '**/package.json'
       - 'pnpm-lock.yaml'
-      - '.github/workflows/*.yml'
+      - '.github/workflows/node-ci.yml'
 
   push:
     branches: [main]
@@ -17,7 +17,7 @@ on:
       - 'packages/*/src/*.ts'
       - '**/package.json'
       - 'pnpm-lock.yaml'
-      - '.github/workflows/*.yml'
+      - '.github/workflows/node-ci.yml'
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
