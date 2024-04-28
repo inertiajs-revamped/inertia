@@ -391,6 +391,44 @@ async function installInertiaRevamped({
             },
           ],
         })
+
+        if (ssr) {
+          await editFiles({
+            title: 'add development features',
+            files: typescript
+              ? 'resources/application/main.tsx'
+              : 'resources/application/main.jsx',
+            operations: [
+              {
+                skipIf: (content) =>
+                  content.includes('{ createRoot, hydrateRoot }') ||
+                  ui !== 'react',
+                type: 'update-content',
+                update: (r) =>
+                  r.replace('{ hydrateRoot }', '{ createRoot, hydrateRoot }'),
+              },
+              {
+                skipIf: (content) =>
+                  content.includes('if(import.meta.env.DEV) {') ||
+                  ui !== 'react',
+                type: 'add-line',
+                position: 'before',
+                match: /hydrateRoot\(/,
+                indent: 4,
+                lines: [
+                  'if (import.meta.env.DEV) {',
+                  '  createRoot(el!).render(',
+                  '    <StrictMode>',
+                  '      <App {...props} />',
+                  '    </StrictMode>',
+                  '  )',
+                  '  return',
+                  '}',
+                ],
+              },
+            ],
+          })
+        }
       }
     },
   })
