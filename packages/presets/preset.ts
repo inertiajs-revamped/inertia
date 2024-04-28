@@ -34,6 +34,11 @@ export default definePreset<Options>({
   options: {
     sandbox: false,
   },
+  postInstall: ({ hl }) => [
+    `Run the development server with ${hl('npm run dev')}`,
+    `Edit your entry points in ${hl('resources/application')}`,
+    `Edit your layouts and pages in ${hl('resources/views')}`,
+  ],
   handler: async ({ options, prompts }) => {
     const opts = {} as Options
 
