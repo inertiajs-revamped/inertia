@@ -54,7 +54,7 @@ export default definePreset<Options>({
         packageManager: options.packageManager || prompts.packageManager,
         ui: options.ui || prompts.ui,
         typescript: !!(options.typescript || prompts.variant === 'ts'),
-        ssr: !!(options.ssr || prompts.ssr === 'enable'),
+        ssr: !!(options.ssr || prompts.ssr === 'enabled'),
         sandbox: false,
       }) satisfies Options
 
@@ -134,11 +134,11 @@ async function initialPrompts(options: Options) {
   if (typeof options.ssr === 'undefined') {
     await prompt({
       title: 'Choose whether to enable/disable SSR',
-      name: 'variant',
+      name: 'ssr',
       text: '(Press <up> / <down> to select, <return> to confirm)',
       choices: [
-        { title: 'Enable SSR', value: 'enable' },
-        { title: 'Disable SSR', value: 'disable' },
+        { title: 'Enable SSR', value: 'enabled' },
+        { title: 'Disable SSR', value: 'disabled' },
       ],
       initial: 0,
     })
@@ -425,7 +425,7 @@ async function installInertiaRevamped({
       await installPackages({
         title: 'install Node.js devDependencies',
         for: 'node',
-        ...(sandbox && { packageManager: 'pnpm' }),
+        ...(sandbox && { packageManager }),
         packages: [
           // default
           sandbox
@@ -467,7 +467,7 @@ async function installInertiaRevamped({
       await installPackages({
         title: 'install dependencies',
         for: 'node',
-        ...(sandbox && { packageManager: 'pnpm' }),
+        ...(sandbox && { packageManager }),
         install: ['axios'],
       })
     },
