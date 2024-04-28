@@ -31,7 +31,7 @@ async function init() {
     )
 
     const uiFramework = await selectPrompt({
-      question: `${colorize.bold('Select a UI Framework:')} `,
+      question: `${colorize.bold('Choose your UI framework:')} `,
       options: ['Preact', 'React', 'Vue'],
       pointer: symbols.pointer,
     })
@@ -39,10 +39,24 @@ async function init() {
     process.stdout.write(
       `\n${colorize.green(
         symbols.success
-      )} Selected Framework: ${uiFramework} ...\n\n`
+      )} Selected UI framework: ${uiFramework} ...\n\n`
     )
 
     const ui = uiFramework.toLowerCase()
+
+    const variant = await selectPrompt({
+      question: `${colorize.bold('Choose your variant:')} `,
+      options: ['TypeScript', 'JavaScript'],
+      pointer: symbols.pointer,
+    })
+
+    const typescript = variant === 'TypeScript'
+
+    process.stdout.write(
+      `\n${colorize.green(symbols.success)} Selected variant: ${
+        typescript ? 'TypeScript' : 'JavaScript'
+      } ...\n\n`
+    )
 
     await createFolder(`./sandboxes/${ui}`)
 
@@ -63,8 +77,9 @@ async function init() {
         'preset',
         'apply',
         resolve(root, 'packages', 'presets'),
-        '--sandbox=true',
+        '--sandbox',
         `--ui=${ui}`,
+        `${!typescript ? '--no-typescript' : ''}`,
       ],
       { env: { FORCE_COLOR: 'true' } }
     ).stdout?.pipe(process.stdout)

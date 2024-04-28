@@ -1,44 +1,63 @@
+const packageManager = ['NPM', 'PNPM', 'Yarn', 'Bun'] as const
+const ui = ['Preact', 'React', 'Vue'] as const
+
 export interface Options {
   /**
-   * Choose the prefered UI-Framework for the preset installation (defaults: `undefined`)
+   * Choose your package manager (default: `undefined`)
    */
-  ui: 'preact' | 'react' | 'vue' | undefined
+  packageManager?: Lowercase<(typeof packageManager)[number]>
 
   /**
-   * Exclude SSR from the preset installation (defaults: `true`)
+   * Choose your prefered UI-Framework (default: `undefined`)
    */
-  ssr: boolean
+  ui?: Lowercase<(typeof ui)[number]>
 
   /**
-   * Exclude TypeScript from the preset installation (defaults: `true`)
+   * Choose whether to use TypeScript or JavaScript (default: `true`)
    */
-  typescript: boolean
+  typescript?: boolean
 
   /**
-   * Use for development with Inertia.js-Revamped workspace only (defaults: `false`)
+   * Choose whether to enable/disable SSR (default: `true`)
+   */
+  ssr?: boolean
+
+  /**
+   * Use for development with Inertia.js-Revamped workspace only (default: `false`)
    * @see {@link https://github.com/inertiajs-revamped/inertia/blob/main/CONTRIBUTING.md#sandbox-environment-experimental}
    */
-  sandbox: boolean
+  sandbox?: boolean
 }
 
 export default definePreset<Options>({
   name: 'Inertia.js-Revamped',
   options: {
     sandbox: false,
-    ssr: true,
-    typescript: true,
-    ui: undefined,
   },
-  handler: async ({ options }) => {
-    if (!options.ui) {
-      throw new Error(
-        'Please provide a value for the required `ui` flag: `--ui preact|react|vue`'
-      )
-    }
+  handler: async ({ options, prompts }) => {
+    const opts = {} as Options
 
     if (options.sandbox) {
+      Object.assign(opts, {
+        packageManager: options.packageManager || 'pnpm',
+        ui: options.ui || 'react',
+        typescript: options.typescript || true,
+        ssr: options.ssr || true,
+        sandbox: true,
+      }) satisfies Options
+
       await installSandbox()
     } else {
+      await initialPrompts(options)
+
+      Object.assign(opts, {
+        packageManager: options.packageManager || prompts.packageManager,
+        ui: options.ui || prompts.ui,
+        typescript: !!(options.typescript || prompts.variant === 'ts'),
+        ssr: !!(options.ssr || prompts.ssr === 'enable'),
+        sandbox: false,
+      }) satisfies Options
+
       await installPackages({
         title: 'install PHP dependencies',
         for: 'php',
@@ -46,90 +65,98 @@ export default definePreset<Options>({
       })
     }
 
-    await installInertiaRevamped(options)
+    if (!opts.packageManager) {
+      throw new Error(
+        'You must specify a package manager (e.g., "npm", "yarn", "pnpm", or "bun").'
+      )
+    }
+
+    if (!opts.ui) {
+      throw new Error(
+        'You must specify a UI framework (e.g., "preact", "react", or "vue").'
+      )
+    }
+
+    if (typeof opts.typescript === 'undefined') {
+      throw new Error(
+        'Please choose whether you want to use TypeScript or JavaScript.'
+      )
+    }
+
+    if (typeof opts.ssr === 'undefined') {
+      throw new Error(
+        'Please choose whether to enable or disable Server-Side Rendering (SSR).'
+      )
+    }
+
+    await installInertiaRevamped(opts)
   },
 })
 
-async function installSandbox() {
-  await group({
-    title: 'install PHP sandbox dependencies',
-    handler: async () => {
-      await deletePaths({
-        paths: ['node_modules', 'package.json'],
-      })
+async function initialPrompts(options: Options) {
+  if (typeof options.packageManager === 'undefined') {
+    await prompt({
+      title: 'Choose your package manager',
+      name: 'packageManager',
+      text: '(Press <up> / <down> to select, <return> to confirm)',
+      choices: packageManager.map((manager) => {
+        return { title: manager, value: manager.toLowerCase() }
+      }),
+      initial: 0,
+    })
+  }
 
-      await executeCommand({
-        title: 'install PHP dependencies',
-        command: 'composer',
-        arguments: ['create-project', 'laravel/laravel:^11.0', '.'],
-        ignoreExitCode: false,
-      })
+  if (typeof options.ui === 'undefined') {
+    await prompt({
+      title: 'Choose your UI framework',
+      name: 'ui',
+      text: '(Press <up> / <down> to select, <return> to confirm)',
+      choices: ui.map((framework) => {
+        return { title: framework, value: framework.toLowerCase() }
+      }),
+      initial: 0,
+    })
+  }
 
-      await executeCommand({
-        title: 'link Laravel file storage',
-        command: 'php',
-        arguments: ['artisan', 'storage:link'],
-        ignoreExitCode: true,
-      })
+  if (typeof options.typescript === 'undefined') {
+    await prompt({
+      title: 'Choose your variant',
+      name: 'variant',
+      text: '(Press <up> / <down> to select, <return> to confirm)',
+      choices: [
+        { title: 'TypeScript', value: 'ts' },
+        { title: 'JavaScript', value: 'js' },
+      ],
+      initial: 0,
+    })
+  }
 
-      await executeCommand({
-        title: 'generate Laravel application key',
-        command: 'php',
-        arguments: ['artisan', 'key:generate'],
-      })
-
-      await editFiles({
-        title: 'update Laravel composer.json',
-        files: 'composer.json',
-        operations: [
-          {
-            type: 'edit-json',
-            delete: ['repositories'],
-          },
-          {
-            type: 'edit-json',
-            merge: {
-              repositories: [
-                {
-                  type: 'path',
-                  url: '../../packages/laravel',
-                  options: { symlink: true },
-                },
-              ],
-            },
-          },
-          {
-            skipIf: (content) =>
-              content.includes('"inertiajs-revamped/laravel": "@dev"'),
-            type: 'edit-json',
-            merge: {
-              require: { 'inertiajs-revamped/laravel': '@dev' },
-            },
-          },
-        ],
-      })
-
-      await executeCommand({
-        title: 'update PHP dependencies',
-        command: 'composer',
-        arguments: ['update'],
-        ignoreExitCode: true,
-      })
-    },
-  })
+  if (typeof options.ssr === 'undefined') {
+    await prompt({
+      title: 'Choose whether to enable/disable SSR',
+      name: 'variant',
+      text: '(Press <up> / <down> to select, <return> to confirm)',
+      choices: [
+        { title: 'Enable SSR', value: 'enable' },
+        { title: 'Disable SSR', value: 'disable' },
+      ],
+      initial: 0,
+    })
+  }
 }
 
 async function installInertiaRevamped({
-  sandbox,
-  ssr,
-  typescript,
+  packageManager,
   ui,
+  typescript,
+  ssr,
+  sandbox,
 }: Options) {
   await group({
     title: 'install Inertia.js-Revamped scaffolding',
     handler: async () => {
       await deletePaths({
-        title: 'remove some default files & folders',
+        title: 'remove default files & folders',
         paths: ['resources', 'vite.config.js'],
       })
 
@@ -219,7 +246,7 @@ async function installInertiaRevamped({
       })
 
       await editFiles({
-        title: 'update route file',
+        title: 'update Inertia.js-Revamped routes',
         files: 'routes/web.php',
         operations: [
           {
@@ -247,10 +274,15 @@ async function installInertiaRevamped({
           },
         ],
       })
+    },
+  })
 
+  await group({
+    title: 'cleaning up files & content',
+    handler: async () => {
       if (!ssr) {
         await editFiles({
-          title: 'clean up SSR config',
+          title: 'cleaning up SSR config',
           files: 'config/inertia.php',
           operations: [
             {
@@ -263,7 +295,7 @@ async function installInertiaRevamped({
         })
 
         await editFiles({
-          title: 'clean up SSR Vite config',
+          title: 'cleaning up Vite config',
           files: typescript ? 'vite.config.ts' : 'vite.config.js',
           operations: [
             {
@@ -276,7 +308,7 @@ async function installInertiaRevamped({
         })
 
         await editFiles({
-          title: 'clean up SSR templates',
+          title: 'cleaning up SSR templates',
           files: typescript
             ? 'resources/application/main.tsx'
             : 'resources/application/main.jsx',
@@ -312,7 +344,7 @@ async function installInertiaRevamped({
         })
 
         await deletePaths({
-          title: 'clean up SSR files',
+          title: 'cleaning up SSR files',
           paths: [
             typescript
               ? 'resources/application/ssr.tsx'
@@ -328,7 +360,7 @@ async function installInertiaRevamped({
         })
 
         await editFiles({
-          title: 'clean up TypeScript files',
+          title: 'cleaning up TypeScript files',
           files: ['resources/**/*.{ts,tsx}', 'vite.config.ts'],
           operations: [
             {
@@ -437,6 +469,75 @@ async function installInertiaRevamped({
         for: 'node',
         ...(sandbox && { packageManager: 'pnpm' }),
         install: ['axios'],
+      })
+    },
+  })
+}
+
+async function installSandbox() {
+  await group({
+    title: 'install PHP sandbox dependencies',
+    handler: async () => {
+      await deletePaths({
+        paths: ['node_modules', 'package.json'],
+      })
+
+      await executeCommand({
+        title: 'install PHP dependencies',
+        command: 'composer',
+        arguments: ['create-project', 'laravel/laravel:^11.0', '.'],
+        ignoreExitCode: false,
+      })
+
+      await executeCommand({
+        title: 'link Laravel file storage',
+        command: 'php',
+        arguments: ['artisan', 'storage:link'],
+        ignoreExitCode: true,
+      })
+
+      await executeCommand({
+        title: 'generate Laravel application key',
+        command: 'php',
+        arguments: ['artisan', 'key:generate'],
+      })
+
+      await editFiles({
+        title: 'update Laravel composer.json',
+        files: 'composer.json',
+        operations: [
+          {
+            type: 'edit-json',
+            delete: ['repositories'],
+          },
+          {
+            type: 'edit-json',
+            merge: {
+              repositories: [
+                {
+                  type: 'path',
+                  url: '../../packages/laravel',
+                  options: { symlink: true },
+                },
+              ],
+            },
+          },
+          {
+            skipIf: (content) =>
+              content.includes('"inertiajs-revamped/laravel": "@dev"'),
+            type: 'edit-json',
+            merge: {
+              require: { 'inertiajs-revamped/laravel': '@dev' },
+            },
+          },
+        ],
+      })
+
+      await executeCommand({
+        title: 'update PHP dependencies',
+        command: 'composer',
+        arguments: ['update'],
+        ignoreExitCode: true,
       })
     },
   })
