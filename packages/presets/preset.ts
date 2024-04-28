@@ -64,7 +64,7 @@ export default definePreset<Options>({
       }) satisfies Options
 
       await installPackages({
-        title: 'install PHP dependencies',
+        title: 'Installing PHP dependencies with Composer',
         for: 'php',
         packages: ['inertiajs-revamped/laravel'],
       })
@@ -138,7 +138,7 @@ async function initialPrompts(options: Options) {
 
   if (typeof options.ssr === 'undefined') {
     await prompt({
-      title: 'Choose whether to enable/disable SSR',
+      title: 'Choose to enable/disable SSR',
       name: 'ssr',
       text: '(Press <up> / <down> to select, <return> to confirm)',
       choices: [
@@ -158,21 +158,21 @@ async function installInertiaRevamped({
   sandbox,
 }: Options) {
   await group({
-    title: 'install Inertia.js-Revamped scaffolding',
+    title: 'Installing Inertia.js-Revamped Scaffolding',
     handler: async () => {
       await deletePaths({
-        title: 'remove default files & folders',
+        title: 'Cleaning Up Default Files & Content',
         paths: ['resources', 'vite.config.js'],
       })
 
       await extractTemplates({
-        title: 'extract Inertia.js-Revamped templates',
+        title: 'Extracting Inertia.js-Revamped Templates',
         templates: sandbox ? 'templates' : 'packages/presets/templates',
         from: typescript ? `${ui}-ts` : ui,
       })
 
       await executeCommand({
-        title: 'publish Inertia.js-Revamped configuration',
+        title: 'Publishing Inertia.js-Revamped Configuration',
         command: 'php',
         arguments: [
           'artisan',
@@ -182,13 +182,13 @@ async function installInertiaRevamped({
       })
 
       await executeCommand({
-        title: 'publish Inertia.js-Revamped middleware',
+        title: 'Publishing Inertia.js-Revamped Middleware',
         command: 'php',
         arguments: ['artisan', 'inertia:middleware'],
       })
 
       await editFiles({
-        title: 'register Inertia.js-Revamped middleware',
+        title: 'Registering Inertia.js-Revamped Middleware',
         files: 'bootstrap/app.php',
         operations: [
           {
@@ -226,7 +226,7 @@ async function installInertiaRevamped({
       })
 
       await editFiles({
-        title: 'update Inertia.js-Revamped middleware',
+        title: 'Updating Inertia.js-Revamped Middleware',
         files: 'app/Http/Middleware/HandleInertiaRequests.php',
         operations: [
           {
@@ -251,7 +251,7 @@ async function installInertiaRevamped({
       })
 
       await editFiles({
-        title: 'update Inertia.js-Revamped routes',
+        title: 'Updating Inertia.js-Revamped Routes',
         files: 'routes/web.php',
         operations: [
           {
@@ -283,11 +283,11 @@ async function installInertiaRevamped({
   })
 
   await group({
-    title: 'cleaning up files & content',
+    title: 'Cleaning Up Files & Content',
     handler: async () => {
       if (!ssr) {
         await editFiles({
-          title: 'cleaning up SSR config',
+          title: 'Cleaning Up SSR Config',
           files: 'config/inertia.php',
           operations: [
             {
@@ -300,7 +300,7 @@ async function installInertiaRevamped({
         })
 
         await editFiles({
-          title: 'cleaning up Vite config',
+          title: 'Cleaning Up Vite-Config',
           files: typescript ? 'vite.config.ts' : 'vite.config.js',
           operations: [
             {
@@ -313,7 +313,7 @@ async function installInertiaRevamped({
         })
 
         await editFiles({
-          title: 'cleaning up SSR templates',
+          title: 'Cleaning Up SSR Templates',
           files: typescript
             ? 'resources/application/main.tsx'
             : 'resources/application/main.jsx',
@@ -349,7 +349,7 @@ async function installInertiaRevamped({
         })
 
         await deletePaths({
-          title: 'cleaning up SSR files',
+          title: 'Cleaning Up SSR Files',
           paths: [
             typescript
               ? 'resources/application/ssr.tsx'
@@ -360,12 +360,13 @@ async function installInertiaRevamped({
 
       if (typescript) {
         await renamePaths({
+          title: 'Renaming tsconfig.json',
           paths: '_tsconfig.json',
           transformer: ({ base }) => `${base.slice(1)}`,
         })
 
         await editFiles({
-          title: 'cleaning up TypeScript files',
+          title: 'Cleaning Up TypeScript Files',
           files: ['resources/**/*.{ts,tsx}', 'vite.config.ts'],
           operations: [
             {
@@ -380,7 +381,7 @@ async function installInertiaRevamped({
 
       if (sandbox) {
         await editFiles({
-          title: 'update package.json',
+          title: 'Updating package.json',
           files: 'package.json',
           operations: [
             {
@@ -394,7 +395,7 @@ async function installInertiaRevamped({
 
         if (ssr) {
           await editFiles({
-            title: 'add development features',
+            title: 'Adding Development Features',
             files: typescript
               ? 'resources/application/main.tsx'
               : 'resources/application/main.jsx',
@@ -434,10 +435,10 @@ async function installInertiaRevamped({
   })
 
   await group({
-    title: 'install Node.js dependencies',
+    title: 'Installing Node.js Dependencies',
     handler: async () => {
       await editFiles({
-        title: 'update package.json',
+        title: 'Updating package.json Dependencies',
         files: 'package.json',
         operations: [
           { type: 'edit-json', delete: ['scripts', 'devDependencies'] },
@@ -466,7 +467,7 @@ async function installInertiaRevamped({
       })
 
       await installPackages({
-        title: 'install Node.js devDependencies',
+        title: 'Installing Node.js devDependencies',
         for: 'node',
         ...(sandbox && { packageManager }),
         packages: [
@@ -508,7 +509,7 @@ async function installInertiaRevamped({
       })
 
       await installPackages({
-        title: 'install dependencies',
+        title: 'Installing Node.js Dependencies',
         for: 'node',
         ...(sandbox && { packageManager }),
         install: ['axios'],
@@ -519,34 +520,34 @@ async function installInertiaRevamped({
 
 async function installSandbox() {
   await group({
-    title: 'install PHP sandbox dependencies',
+    title: 'Installing PHP Sandbox Dependencies',
     handler: async () => {
       await deletePaths({
         paths: ['node_modules', 'package.json'],
       })
 
       await executeCommand({
-        title: 'install PHP dependencies',
+        title: 'Installing PHP Dependencies',
         command: 'composer',
         arguments: ['create-project', 'laravel/laravel:^11.0', '.'],
         ignoreExitCode: false,
       })
 
       await executeCommand({
-        title: 'link Laravel file storage',
+        title: 'Linking Laravel File Storage',
         command: 'php',
         arguments: ['artisan', 'storage:link'],
         ignoreExitCode: true,
       })
 
       await executeCommand({
-        title: 'generate Laravel application key',
+        title: 'Generating Laravel Application Key',
         command: 'php',
         arguments: ['artisan', 'key:generate'],
       })
 
       await editFiles({
-        title: 'update Laravel composer.json',
+        title: 'Updating Laravel composer.json',
         files: 'composer.json',
         operations: [
           {
@@ -577,7 +578,7 @@ async function installSandbox() {
       })
 
       await executeCommand({
-        title: 'update PHP dependencies',
+        title: 'Updating PHP dependencies with Composer',
         command: 'composer',
         arguments: ['update'],
         ignoreExitCode: true,
