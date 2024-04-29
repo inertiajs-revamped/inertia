@@ -16,7 +16,7 @@
   "license": "MIT",
   "type": "module",
   "devDependencies": {
-    "@preset/core": "^0.11.2",
+    "@preset/core": "^0.11.3",
     "@types/node": "^20.12.7"
   },
   "publishConfig": {
