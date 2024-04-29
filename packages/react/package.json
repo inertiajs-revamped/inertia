@@ -57,14 +57,14 @@
   "dependencies": {
     "@inertiajs-revamped/core": "workspace:*",
     "@types/lodash.isequal": "^4.5.8",
-    "@types/react": "^18.2.74",
-    "@types/react-dom": "^18.2.24",
+    "@types/react": "^18.3.1",
+    "@types/react-dom": "^18.3.0",
     "lodash.isequal": "^4.5.0",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
   },
   "devDependencies": {
-    "@types/node": "^20.12.5"
+    "@types/node": "^20.12.7"
   },
   "peerDependencies": {
     "react": "=>18.2.0"

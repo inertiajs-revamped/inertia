@@ -33,7 +33,7 @@
     "prepare": "husky"
   },
   "devDependencies": {
-    "@biomejs/biome": "^1.7.0",
+    "@biomejs/biome": "^1.7.1",
     "@bscotch/workspaces": "^0.3.0",
     "@preset/cli": "^0.11.2",
     "@types/node": "^20.12.7",
@@ -43,7 +43,7 @@
     "is-command": "^2.0.2",
     "nano-staged": "^0.8.0",
     "pkgroll": "^2.0.2",
-    "tsx": "^4.7.2",
+    "tsx": "^4.7.3",
     "typescript": "^5.4.5"
   },
   "engines": {

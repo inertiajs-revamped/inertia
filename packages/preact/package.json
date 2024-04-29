@@ -61,7 +61,7 @@
     "preact": "^10.20.2"
   },
   "devDependencies": {
-    "@types/node": "^20.12.5"
+    "@types/node": "^20.12.7"
   },
   "peerDependencies": {
     "preact": "=>10.20.2"
