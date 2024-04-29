@@ -12,7 +12,7 @@
   "timezone": "Europe/Amsterdam",
   "enabledManagers": ["npm", "github-actions"],
   "addLabels": ["dependencies"],
-  "rangeStrategy": "update-lockfile",
+  "rangeStrategy": "bump",
   "automerge": true,
   "automergeType": "pr",
   "platformAutomerge": true,
