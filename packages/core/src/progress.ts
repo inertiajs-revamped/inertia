@@ -1,7 +1,7 @@
 import NProgress from 'nprogress'
 import type { GlobalEvent, ProgressOptions } from './types'
 
-export default function createProgress(options?: Partial<ProgressOptions>) {
+export function createProgress(options?: Partial<ProgressOptions>) {
   const opts: ProgressOptions = {
     delay: 250,
     color: '#29d',

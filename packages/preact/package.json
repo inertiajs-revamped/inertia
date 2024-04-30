@@ -49,6 +49,12 @@
   "main": "./dist/index.cjs",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.cts",
+  "typesVersions": {
+    "*": {
+      "progress": ["./dist/progress.d.mts"],
+      "server": ["./dist/server.d.mts"]
+    }
+  },
   "files": ["dist"],
   "scripts": {
     "clean": "rm -rf dist",

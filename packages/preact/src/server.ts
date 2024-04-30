@@ -1,1 +1,1 @@
-export { default as createServer } from '@inertiajs-revamped/core/server'
+export { createServer } from '@inertiajs-revamped/core/server'
