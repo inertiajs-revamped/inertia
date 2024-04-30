@@ -1,4 +1,7 @@
-import { type IncomingMessage, createServer } from 'node:http'
+import {
+  type IncomingMessage,
+  createServer as createNodeServer,
+} from 'node:http'
 import { exit } from 'node:process'
 import type { InertiaAppResponse, Page } from './types'
 
@@ -15,7 +18,7 @@ const readableToString: (readable: IncomingMessage) => Promise<string> = (
     readable.on('error', (err) => reject(err))
   })
 
-export default (render: AppCallback, port?: number): void => {
+export const createServer = (render: AppCallback, port?: number): void => {
   const _port = port || 13714
 
   const routes: Record<string, RouteHandler> = {
@@ -26,7 +29,7 @@ export default (render: AppCallback, port?: number): void => {
     '/404': async () => ({ status: 'NOT_FOUND', timestamp: Date.now() }),
   }
 
-  createServer(async (request, response) => {
+  createNodeServer(async (request, response) => {
     const dispatchRoute = routes[<string>request.url] || routes['/404']
 
     try {
