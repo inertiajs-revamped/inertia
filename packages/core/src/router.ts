@@ -11,8 +11,7 @@ import {
   fireStartEvent,
   fireSuccessEvent,
 } from './events'
-import { hasFiles } from './files'
-import { objectToFormData } from './formData'
+import { hasFiles, objectToFormData } from './form-data'
 import modal from './modal'
 import type {
   ActiveVisit,
