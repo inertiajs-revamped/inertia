@@ -3,3 +3,4 @@ packages:
   - 'packages/*'
   - '!packages/laravel/'
   - 'sandboxes/*'
+  - 'tests/*'
