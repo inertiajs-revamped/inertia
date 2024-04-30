@@ -1,1 +1,1 @@
-export { default as createProgress } from '@inertiajs-revamped/core/progress'
+export { createProgress } from '@inertiajs-revamped/core/progress'
