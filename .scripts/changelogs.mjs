@@ -24,6 +24,18 @@ const parsed = await parseMonorepoConventionalCommits('.', {
   ],
 })
 
+const sortOrder = [
+  'Features',
+  'Code Refactoring',
+  'Bug Fixes',
+  'Reverts',
+  'Builds',
+  'Performance Improvements',
+  'Styles',
+  'Documentation',
+  'Tests',
+]
+
 await renderMonorepoConventionalCommits(
   parsed,
   (project, versions) => {
@@ -38,7 +50,9 @@ await renderMonorepoConventionalCommits(
       const header = `## ${version.version} (${
         version.date.toISOString().split('T')[0]
       })`
-      const groups = Object.keys(version.groups).sort()
+      const groups = Object.keys(version.groups).sort(
+        (a, b) => sortOrder.indexOf(a) - sortOrder.indexOf(b)
+      )
       const sections = groups.map((group) => {
         const changes = version.groups[group]
         const commits = changes
