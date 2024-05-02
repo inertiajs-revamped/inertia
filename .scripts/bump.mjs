@@ -10,9 +10,6 @@ import {
   symbols,
   writeJson,
 } from './utils.mjs'
-const require = createRequire(import.meta.url)
-
-const root = process.cwd()
 
 async function bump() {
   await clearConsole().then(async () => {
@@ -49,6 +46,7 @@ async function bump() {
       package: { name, version },
       relativePath,
       absolutePath,
+      logs,
     } = pkg[0]
 
     if (!version) {
@@ -57,6 +55,12 @@ async function bump() {
 
     if (!relativePath) {
       throw new Error(`Could not resolve relativePath for package ${name}`)
+    }
+
+    if (logs.length === 0) {
+      throw new Error(
+        `Nothing has changed since last release for package ${name}`
+      )
     }
 
     const prerelease = semver.prerelease(version)
@@ -73,7 +77,7 @@ async function bump() {
       (i) =>
         `${i}: ${name} (${semver.inc(
           version,
-          // @ts-expect-error
+          // @ts-expect-error it is `semver.ReleaseType[]`
           i,
           preId
         )})`
