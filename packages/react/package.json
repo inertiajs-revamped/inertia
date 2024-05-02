@@ -1,6 +1,6 @@
 {
   "name": "@inertiajs-revamped/react",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "The React adapter for Inertia.js-Revamped",
   "homepage": "https://inertiajs-revamped.com",
   "bugs": {
