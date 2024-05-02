@@ -63,7 +63,7 @@
     "@vue/runtime-core": "^3.4.26"
   },
   "peerDependencies": {
-    "vue": "=>3.4.26"
+    "vue": ">=3.4.26"
   },
   "engines": {
     "node": ">=18.12.0"
