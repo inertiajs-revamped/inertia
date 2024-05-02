@@ -53,8 +53,8 @@
     "vitest": "^1.5.3"
   },
   "engines": {
-    "node": "^21.7.2",
-    "pnpm": "^9.0.6"
+    "node": ">=21.7.2",
+    "pnpm": ">=9.0.6"
   },
   "nano-staged": {
     "*.ts": "biome lint --apply .",
