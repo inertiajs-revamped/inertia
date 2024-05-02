@@ -59,7 +59,7 @@
     "vue": "^3.4.25"
   },
   "devDependencies": {
-    "@types/node": "^20.12.7",
+    "@types/node": "^20.12.8",
     "@vue/runtime-core": "^3.4.25"
   },
   "peerDependencies": {
