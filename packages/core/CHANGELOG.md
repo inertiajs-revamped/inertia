@@ -1,6 +1,36 @@
 # Changelog - @inertiajs-revamped/core
 
+## 0.0.2 (2024-05-02)
+
+### Code Refactoring
+
+- replace default with named export in progress.ts ([d57449d](https://github.com/inertiajs-revamped/inertia/commit/d57449d))
+- replace default with named export in server.ts ([9af36a0](https://github.com/inertiajs-revamped/inertia/commit/9af36a0))
+- export `debounce`, `hasFiles` & `objectToFormData` ([d235e8f](https://github.com/inertiajs-revamped/inertia/commit/d235e8f))
+
+### Bug Fixes
+
+- fix `peerDependencies` version ([94b9dec](https://github.com/inertiajs-revamped/inertia/commit/94b9dec))
+- address history back button security issue (based on [inertia/pull/1784](https://github.com/inertiajs/inertia/pull/1784)) ([acb2f47](https://github.com/inertiajs-revamped/inertia/commit/acb2f47))
+- fix type exports ([65de44e](https://github.com/inertiajs-revamped/inertia/commit/65de44e))
+
+### Builds
+
+- update dependency @types/node to ^20.12.8 ([2d1a120](https://github.com/inertiajs-revamped/inertia/commit/2d1a120))
+
 ## 0.0.1 (2024-04-26)
+
+### Features
+
+- add expand type helper ([c0ec541](https://github.com/inertiajs-revamped/inertia/commit/c0ec541))
+- add helper function `resolvePageComponent` ([8f79da7](https://github.com/inertiajs-revamped/inertia/commit/8f79da7))
+
+### Code Refactoring
+
+- improve & export `progress` as standalone, excludes progress from bundle by default ([6e53be7](https://github.com/inertiajs-revamped/inertia/commit/6e53be7))
+- make `PageResolver` generic, remove generic from `resolvePageComponent` ([1caf9da](https://github.com/inertiajs-revamped/inertia/commit/1caf9da))
+- move `HeadManagerOnUpdate` & `HeadManagerTitleCallback` to core ([0faa792](https://github.com/inertiajs-revamped/inertia/commit/0faa792))
+- improve `PageProps` to support module augmentation ([7e7b7dc](https://github.com/inertiajs-revamped/inertia/commit/7e7b7dc))
 
 ### Bug Fixes
 
@@ -24,15 +54,3 @@
 - fix qs, process wildcard & `node` imports to use named imports ([caf3cc8](https://github.com/inertiajs-revamped/inertia/commit/caf3cc8))
 - add missing `this` type to `debounce()` callback, fixes ts(2683) ([378f140](https://github.com/inertiajs-revamped/inertia/commit/378f140))
 - ensure that all imports used only as a type use a type-only `import` ([4321e7f](https://github.com/inertiajs-revamped/inertia/commit/4321e7f))
-
-### Code Refactoring
-
-- improve & export `progress` as standalone, excludes progress from bundle by default ([6e53be7](https://github.com/inertiajs-revamped/inertia/commit/6e53be7))
-- make `PageResolver` generic, remove generic from `resolvePageComponent` ([1caf9da](https://github.com/inertiajs-revamped/inertia/commit/1caf9da))
-- move `HeadManagerOnUpdate` & `HeadManagerTitleCallback` to core ([0faa792](https://github.com/inertiajs-revamped/inertia/commit/0faa792))
-- improve `PageProps` to support module augmentation ([7e7b7dc](https://github.com/inertiajs-revamped/inertia/commit/7e7b7dc))
-
-### Features
-
-- add expand type helper ([c0ec541](https://github.com/inertiajs-revamped/inertia/commit/c0ec541))
-- add helper function `resolvePageComponent` ([8f79da7](https://github.com/inertiajs-revamped/inertia/commit/8f79da7))

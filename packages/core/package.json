@@ -1,6 +1,6 @@
 {
   "name": "@inertiajs-revamped/core",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A framework for creating server-driven single page apps",
   "homepage": "https://inertiajs-revamped.com",
   "bugs": {
