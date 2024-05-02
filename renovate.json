@@ -23,6 +23,13 @@
   "ignorePaths": [".github/workflows/split-workspace.yml"],
   "packageRules": [
     {
+      "description": "Don't bump engines field in package.json",
+      "matchPackageNames": ["node"],
+      "matchManagers": ["npm"],
+      "matchDepTypes": ["engines"],
+      "enabled": false
+    },
+    {
       "description": "Automatically merge devDependencies updates",
       "matchDepTypes": ["devDependencies"],
       "matchPackagePatterns": [
