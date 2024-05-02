@@ -41,8 +41,9 @@ await renderMonorepoConventionalCommits(
   (project, versions) => {
     if (
       project.isRoot ||
-      project.package.name === '@inertiajs-revamped/docs' ||
-      project.package.name === '@inertiajs-revamped/presets'
+      project.package.name.endsWith('docs') ||
+      project.package.name.endsWith('presets') ||
+      project.package.name.endsWith('test')
     )
       return
     const title = `# Changelog - ${project.package.name}`
@@ -63,9 +64,11 @@ await renderMonorepoConventionalCommits(
           .join('\n')
         return `### ${group}\n\n${commits}`
       })
-      return `${header}\n\n${sections.join('\n\n')}`
+      return `${header}${
+        sections.length !== 0 ? `\n\n${sections.join('\n\n')}` : `\n`
+      }`
     })
-    return `${title}\n\n${versionStrings.join('\n\n')}`
+    return `${title}\n\n${versionStrings.join('\n\n')}\n`
   },
   { filename: 'CHANGELOG.md' }
 )
