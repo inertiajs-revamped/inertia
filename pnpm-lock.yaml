@@ -60,7 +60,7 @@ importers:
         specifier: ^1.1.4
         version: 1.1.4(@algolia/client-search@4.23.3)(@types/node@20.12.8)(@types/react@18.3.1)(axios@1.6.8)(nprogress@0.2.0)(postcss@8.4.38)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(search-insights@2.13.0)(typescript@5.4.5)
       vue:
-        specifier: ^3.4.25
+        specifier: ^3.4.26
         version: 3.4.26(typescript@5.4.5)
 
   packages/core:
@@ -162,14 +162,14 @@ importers:
         specifier: ^4.5.0
         version: 4.5.0
       vue:
-        specifier: ^3.4.25
+        specifier: ^3.4.26
         version: 3.4.26(typescript@5.4.5)
     devDependencies:
       '@types/node':
         specifier: ^20.12.8
         version: 20.12.8
       '@vue/runtime-core':
-        specifier: ^3.4.25
+        specifier: ^3.4.26
         version: 3.4.26
 
   tests/core:
