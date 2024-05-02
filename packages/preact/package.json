@@ -70,7 +70,7 @@
     "@types/node": "^20.12.8"
   },
   "peerDependencies": {
-    "preact": "=>10.20.2"
+    "preact": ">=10.20.2"
   },
   "engines": {
     "node": ">=18.12.0"
