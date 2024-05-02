@@ -1,9 +1,28 @@
 # Changelog - @inertiajs-revamped/vue
 
-## 0.0.1 (2024-04-26)
+## 0.0.2 (2024-05-02)
+
+### Features
+
+- add aria-role for non anchor `<Link>` tags (based on [inertia/pull/1762](inertiajs/inertia#1762)) ([67c251b](https://github.com/inertiajs-revamped/inertia/commit/67c251b))
+- check `as`, before convert to lowercase (based on [inertia/pull/1297](inertiajs/inertia#1297)) ([87b6d12](https://github.com/inertiajs-revamped/inertia/commit/87b6d12))
+- export function `resolvePageComponent` from core ([bf52de5](https://github.com/inertiajs-revamped/inertia/commit/bf52de5))
+
+### Code Refactoring
+
+- replace default with named export in progress.ts ([094c62a](https://github.com/inertiajs-revamped/inertia/commit/094c62a))
+- replace default with named export in server.ts ([8e3942e](https://github.com/inertiajs-revamped/inertia/commit/8e3942e))
+- export `createProgress` from adapters, excludes progress from bundle by default ([42c9479](https://github.com/inertiajs-revamped/inertia/commit/42c9479))
+- export `default as createServer` to avoid forcing `allowSyntheticDefaultImports` flag ([f0ea6f5](https://github.com/inertiajs-revamped/inertia/commit/f0ea6f5))
+- replace return type of `headManager` with `HeadManager` type ([105f343](https://github.com/inertiajs-revamped/inertia/commit/105f343))
+- add `InertiaComponentType` type ([52a1bfc](https://github.com/inertiajs-revamped/inertia/commit/52a1bfc))
+- replace inline types with types from core package ([dfef9b3](https://github.com/inertiajs-revamped/inertia/commit/dfef9b3))
+- restructure exports ([0b03808](https://github.com/inertiajs-revamped/inertia/commit/0b03808))
 
 ### Bug Fixes
 
+- fix `peerDependencies` version ([1ea65a6](https://github.com/inertiajs-revamped/inertia/commit/1ea65a6))
+- fix type exports ([fd75385](https://github.com/inertiajs-revamped/inertia/commit/fd75385))
 - check for `null`, remove invalid type assignments for head ([79a9e30](https://github.com/inertiajs-revamped/inertia/commit/79a9e30))
 - fix wrong `preserveScroll` types in link.ts ([7836ba4](https://github.com/inertiajs-revamped/inertia/commit/7836ba4))
 - fix all type errors in link.ts ([cd6d756](https://github.com/inertiajs-revamped/inertia/commit/cd6d756))
@@ -21,19 +40,6 @@
 
 ### Builds
 
+- update vue monorepo to ^3.4.26 (`@vue/runtime-core`, `vue`) ([4ed9205](https://github.com/inertiajs-revamped/inertia/commit/4ed9205))
+- update dependency @types/node to ^20.12.8 ([2d1a120](https://github.com/inertiajs-revamped/inertia/commit/2d1a120))
 - add @vue/runtime-core to `devDependencies` ([37025d9](https://github.com/inertiajs-revamped/inertia/commit/37025d9))
-
-### Code Refactoring
-
-- export `createProgress` from adapters, excludes progress from bundle by default ([42c9479](https://github.com/inertiajs-revamped/inertia/commit/42c9479))
-- export `default as createServer` to avoid forcing `allowSyntheticDefaultImports` flag ([f0ea6f5](https://github.com/inertiajs-revamped/inertia/commit/f0ea6f5))
-- replace return type of `headManager` with `HeadManager` type ([105f343](https://github.com/inertiajs-revamped/inertia/commit/105f343))
-- add `InertiaComponentType` type ([52a1bfc](https://github.com/inertiajs-revamped/inertia/commit/52a1bfc))
-- replace inline types with types from core package ([dfef9b3](https://github.com/inertiajs-revamped/inertia/commit/dfef9b3))
-- restructure exports ([0b03808](https://github.com/inertiajs-revamped/inertia/commit/0b03808))
-
-### Features
-
-- add aria-role for non anchor `<Link>` tags (based on [inertia/pull/1762](inertiajs/inertia#1762)) ([67c251b](https://github.com/inertiajs-revamped/inertia/commit/67c251b))
-- check `as`, before convert to lowercase (based on [inertia/pull/1297](inertiajs/inertia#1297)) ([87b6d12](https://github.com/inertiajs-revamped/inertia/commit/87b6d12))
-- export function `resolvePageComponent` from core ([bf52de5](https://github.com/inertiajs-revamped/inertia/commit/bf52de5))
