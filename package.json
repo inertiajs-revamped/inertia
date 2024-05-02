@@ -45,7 +45,7 @@
     "is-command": "^2.0.2",
     "nano-staged": "^0.8.0",
     "pkgroll": "^2.0.2",
-    "tsx": "^4.7.3",
+    "tsx": "^4.8.2",
     "typescript": "^5.4.5",
     "vitest": "^1.5.2"
   },
