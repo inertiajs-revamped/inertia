@@ -23,7 +23,7 @@
   },
   "devDependencies": {
     "@types/node": "^20.12.7",
-    "vite": "^5.2.10",
+    "vite": "^5.2.11",
     "vitepress": "^1.1.4",
     "vue": "^3.4.25"
   },
