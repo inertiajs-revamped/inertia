@@ -14,19 +14,24 @@ const rl = createInterface({
  * @returns {Promise<string>}
  */
 export async function selectPrompt({ question, options, pointer }) {
-  if (question === undefined) throw new Error('No question was specified.')
-  if (options === undefined) throw new Error('No options were specified.')
-  if (pointer === undefined) throw new Error('No pointer was specified.')
+  if (!question) throw new Error('No question was specified.')
+  if (!options) throw new Error('No options were specified.')
+  if (!pointer) throw new Error('No pointer was specified.')
 
+  let cursorLocs = {
+    x: 0,
+    y: 0,
+  }
   let selectIndex = 0
   let selectedOption = undefined
+  let optionsLength = options.length
 
   const createSelect = () => {
-    process.stdout.moveCursor(0, -(options.length - 1))
+    process.stdout.moveCursor(0, -cursorLocs.y)
     process.stdout.cursorTo(0)
     process.stdout.clearScreenDown()
 
-    for (let opt = 0; opt < options.length; opt++) {
+    for (let opt = 0; opt < optionsLength; opt++) {
       const option =
         opt === selectIndex
           ? `${colorize.cyan(pointer)} ${colorize.cyan(
@@ -34,29 +39,34 @@ export async function selectPrompt({ question, options, pointer }) {
             )}`
           : `  ${options[opt]}`
       process.stdout.write(
-        `  ${option}\x1b[0m${opt !== options.length - 1 ? '\n' : ''}`
+        `  ${option}\x1b[0m${opt !== optionsLength - 1 ? '\n' : ''}`
       )
+      cursorLocs.y = opt + 1
     }
+
     process.stdout.write('\x1B[?25l')
   }
 
   return new Promise((resolve, reject) => {
-    console.log(
+    process.stdout.write(
       `${colorize.green('?')} ${question}${colorize.gray(
         '... (Press <up> / <down> to select, <return> to confirm)'
       )}\n\n`
     )
 
     emitKeypressEvents(process.stdin)
+
     if (process.stdin.isTTY) {
       process.stdin.setRawMode(true)
       process.stdin.resume()
       process.stdin.on('keypress', function handler(_, { name, ctrl }) {
-        if (name === 'down' && selectIndex < options.length - 1) {
+        if (name === 'down' && selectIndex < optionsLength - 1) {
           ++selectIndex
+          --cursorLocs.y
           createSelect()
         } else if (name === 'up' && selectIndex > 0) {
           --selectIndex
+          --cursorLocs.y
           createSelect()
         }
 
@@ -65,6 +75,7 @@ export async function selectPrompt({ question, options, pointer }) {
           process.stdin.setRawMode(false)
           process.stdin.pause()
           process.stdout.write('\x1B[?25h')
+          process.stdout.write('\n')
           selectedOption = options[selectIndex]
           if (!options.includes(selectedOption))
             throw new Error('The selected option does not exist.')
@@ -72,12 +83,12 @@ export async function selectPrompt({ question, options, pointer }) {
         }
 
         if (name === 'escape' || (name === 'c' && ctrl)) {
-          console.log('process.end')
           rl.close()
           process.stdin.removeListener('keypress', handler)
           process.stdin.setRawMode(false)
           process.stdin.pause()
           process.stdout.write('\x1B[?25h')
+          reject('canceled')
         }
       })
       createSelect()
@@ -93,6 +104,7 @@ export const symbols = {
 export const notifications = {
   info: colorize.bgBlue(' INFO '),
   fail: colorize.bgRed(' FAIL '),
+  bump: colorize.bgGreen(' BUMPED '),
 }
 
 /**

@@ -4,6 +4,7 @@
     "module": "ESNext",
     "target": "ES2022",
     "moduleResolution": "Bundler",
+    "resolveJsonModule": true,
     "noEmit": true,
     "allowJs": true,
     "checkJs": true,

@@ -32,6 +32,7 @@
     "test:run": "NODE_OPTIONS=\"--no-deprecation\" vitest run",
     "sandbox": "pnpm build && node ./.scripts/init-sandbox.mjs",
     "changelogs": "node ./.scripts/changelogs.mjs",
+    "bump": "node --disable-warning=ExperimentalWarning ./.scripts/bump.mjs",
     "prepare": "husky"
   },
   "devDependencies": {
@@ -39,12 +40,14 @@
     "@bscotch/workspaces": "^0.3.0",
     "@preset/cli": "^0.11.3",
     "@types/node": "^20.12.8",
+    "@types/semver": "^7.5.8",
     "colorize-node": "^0.5.1",
     "execa": "^8.0.1",
     "husky": "^9.0.11",
     "is-command": "^2.0.2",
     "nano-staged": "^0.8.0",
     "pkgroll": "^2.0.2",
+    "semver": "^7.6.0",
     "tsx": "^4.8.2",
     "typescript": "^5.4.5",
     "vitest": "^1.5.3"
