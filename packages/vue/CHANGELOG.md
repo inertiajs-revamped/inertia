@@ -1,5 +1,11 @@
 # Changelog - @inertiajs-revamped/vue
 
+## 0.0.3 (2024-05-04)
+
+### Bug Fixes
+
+- add missing progress exports ([d914a3f](https://github.com/inertiajs-revamped/inertia/commit/d914a3f))
+
 ## 0.0.2 (2024-05-02)
 
 ### Features
