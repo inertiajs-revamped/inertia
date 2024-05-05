@@ -21,33 +21,62 @@ When using automatic setup, Inertia.js-Revamped has a few requirements:
 
 To install Inertia.js-Revamped in a fresh Laravel application, run the commands:
 
+```sh [composer]
+composer create-project laravel/laravel <project-name>
+cd <project-name>
+```
+
 ::: code-group
 
-``` [Preact]
-composer create-project laravel/laravel <project-name>
-cd <project-name>
-npx @preset/cli apply inertiajs-revamped/inertia --ui=preact // [!code focus]
+```sh [npm]
+npx @preset/cli apply inertiajs-revamped/inertia
 ```
 
-``` [React]
-composer create-project laravel/laravel <project-name>
-cd <project-name>
-npx @preset/cli apply inertiajs-revamped/inertia --ui=react // [!code focus]
+```sh [pnpm]
+pnpm dlx @preset/cli apply inertiajs-revamped/inertia
 ```
 
-``` [Vue]
-composer create-project laravel/laravel <project-name>
-cd <project-name>
-npx @preset/cli apply inertiajs-revamped/inertia --ui=vue // [!code focus]
+```sh [yarn]
+yarn add @preset/cli apply inertiajs-revamped/inertia
+```
+
+```sh [bun]
+bunx @preset/cli apply inertiajs-revamped/inertia
 ```
 
 :::
+
+This command will install and execute Inertia.js-Revamped `@preset/cli`. You will be presented with prompts for several optional features such as TypeScript and SSR support:
+
+```sh
+ OK  Applied Inertia.js-Revamped.
+
+  ✓  Executed action: Choose your package manager › pnpm
+  ✓  Executed action: Choose your UI framework › react
+  ✓  Executed action: Choose your variant › ts
+  ✓  Executed action: Choose to enable/disable SSR › enabled
+  ✓  Executed action: Installing PHP dependencies with Composer (php)
+  ✓  Executed action: Installing Inertia.js-Revamped Scaffolding (7 actions)
+  ✓  Executed action: Cleaning Up Files & Content (2 actions)
+  ✓  Executed action: Installing Node.js Dependencies (3 actions)
+
+ Presets  1 applied
+ Actions  20 executed
+ Duration  14.85s
+
+ NEXT STEPS
+
+  ➜  Run the development server with npm run dev
+  ➜  Edit your entry points in resources/application
+  ➜  Edit your layouts and pages in resources/views
+```
 
 ## Options
 
 | Option | Description |
 | -      | -           |
-| `--ui [framework]` | Prefered UI-Framework (default: `none`) (`"preact" \| "react" \| "vue"`) |
+| `--packageManager [manager]` | Package manager (default: `npm`) (`"npm" \| "pnpm" \| "yarn" \| "bun"`) |
+| `--ui [framework]` | UI-Framework (default: `none`) (`"preact" \| "react" \| "vue"`) |
 | `--no-typescript`  | Disable TypeScript (use `.jsx`) (default: `false`) (`boolean`) |
 | `--no-ssr`         | Disable SSR (default: `false`) (`boolean`) |
 | `--sandbox`        | For development [workspace](https://github.com/inertiajs-revamped/inertia) only (default: `false`) (`boolean`) |

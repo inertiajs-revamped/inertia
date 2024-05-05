@@ -52,15 +52,11 @@ export default defineConfig({
           {
             text: 'Useful links',
             items: [
-              { text: 'Repository', link: `${defaultConfig.github.repo}` },
               {
                 text: 'Discord ',
                 link: defaultConfig.discord,
               },
-              {
-                text: 'Preset ',
-                link: `${defaultConfig.github.repo}/blob/main/packages/presets/CHANGELOG.md`,
-              },
+              { text: 'Repository', link: `${defaultConfig.github.repo}` },
             ],
           },
         ],
@@ -80,6 +76,10 @@ export default defineConfig({
             {
               text: 'Core Concepts',
               link: '/guide/getting-started/core-concepts',
+            },
+            {
+              text: 'Migration',
+              link: '/guide/getting-started/migration',
             },
           ],
         },
@@ -115,5 +115,8 @@ export default defineConfig({
       message: `Released under the <a href="${defaultConfig.github.repo}/blob/main/LICENSE">MIT License</a>.`,
       copyright: `Copyright © ${currentYear} <a href="${defaultConfig.docs}">Inertia.js-Revamped</a> & Contributors.`,
     },
+  },
+  sitemap: {
+    hostname: 'https://inertiajs-revamped.com',
   },
 })

@@ -2,11 +2,14 @@
 
 The recommended way of scaffolding a new Inertia.js-Revamped project is via automatic setup using our [@preset/cli](https://preset.dev) starter-kits.
 
-::: info
-Inertia.js-Revamped is currently in `alpha` status and not ready for production use yet.
-:::
+> [!IMPORTANT]
+> Inertia.js-Revamped is currently in `alpha` status and not ready for production use yet.
 
-## Requirements
+## UI Frameworks
+
+<Frameworks />
+
+## Prerequisites
 
 When using automatic setup, Inertia.js-Revamped has a few requirements:
 
@@ -15,40 +18,62 @@ When using automatic setup, Inertia.js-Revamped has a few requirements:
 * [Composer](https://getcomposer.org/) >= 2.4.4
 * [Laravel](https://laravel.com/) >= 9.x
 
-## Automatic setup using `@preset/cli`
+## Scaffolding a new project
 
 To install Inertia.js-Revamped in a fresh Laravel application, run the commands:
 
+```sh [composer]
+composer create-project laravel/laravel <project-name>
+cd <project-name>
+```
+
 ::: code-group
 
-``` [Preact]
-composer create-project laravel/laravel <project-name>
-cd <project-name>
-npx @preset/cli apply inertiajs-revamped/inertia --ui=preact // [!code focus]
+```sh [npm]
+npx @preset/cli apply inertiajs-revamped/inertia
 ```
 
-``` [React]
-composer create-project laravel/laravel <project-name>
-cd <project-name>
-npx @preset/cli apply inertiajs-revamped/inertia --ui=react // [!code focus]
+```sh [pnpm]
+pnpm dlx @preset/cli apply inertiajs-revamped/inertia
 ```
 
-``` [Vue]
-composer create-project laravel/laravel <project-name>
-cd <project-name>
-npx @preset/cli apply inertiajs-revamped/inertia --ui=vue // [!code focus]
+```sh [yarn]
+yarn add @preset/cli apply inertiajs-revamped/inertia
+```
+
+```sh [bun]
+bunx @preset/cli apply inertiajs-revamped/inertia
 ```
 
 :::
 
-By default preset installs Inertia.js-Revamped, a UI framework of your choice, configures [Vite](https://vitejs.dev) with [TypeScript](https://www.typescriptlang.org/) and enables SSR.
+This command will install and execute Inertia.js-Revamped `@preset/cli`. You will be presented with prompts for several optional features such as TypeScript and SSR support:
 
-::: info
+```sh
+ OK  Applied Inertia.js-Revamped.
 
-* TypeScript variant can be disabled by passing the `--no-typescript` flag.
-* SSR can be disabled by passing the `--no-ssr` flag.
+  ✓  Executed action: Choose your package manager › pnpm
+  ✓  Executed action: Choose your UI framework › react
+  ✓  Executed action: Choose your variant › ts
+  ✓  Executed action: Choose to enable/disable SSR › enabled
+  ✓  Executed action: Installing PHP dependencies with Composer (php)
+  ✓  Executed action: Installing Inertia.js-Revamped Scaffolding (7 actions)
+  ✓  Executed action: Cleaning Up Files & Content (2 actions)
+  ✓  Executed action: Installing Node.js Dependencies (3 actions)
 
-:::
+ Presets  1 applied
+ Actions  20 executed
+ Duration  14.85s
+
+ NEXT STEPS
+
+  ➜  Run the development server with npm run dev
+  ➜  Edit your entry points in resources/application
+  ➜  Edit your layouts and pages in resources/views
+```
+
+> [!TIP]
+> You can also directly specify `options` as command line arguments. Learn more about the [API](/api/preset-cli#options).
 
 ## Usage
 
