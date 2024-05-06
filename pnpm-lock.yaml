@@ -45,7 +45,7 @@ importers:
         specifier: ^7.6.0
         version: 7.6.0
       tsx:
-        specifier: ^4.8.2
+        specifier: ^4.9.2
         version: 4.9.2
       typescript:
         specifier: ^5.4.5
