@@ -5,7 +5,7 @@ import type {
   ProgressCallback,
 } from '@inertiajs-revamped/core'
 import { type Plugin, type App as VueApp, createSSRApp, h } from 'vue'
-import App, { type InertiaAppProps, plugin } from './app'
+import App, { plugin } from './app'
 import type { InertiaComponentType } from './types'
 
 export interface CreateInertiaAppProps {
@@ -14,7 +14,7 @@ export interface CreateInertiaAppProps {
   setup: (props: {
     el: HTMLElement | null
     App: typeof App
-    props: InertiaAppProps
+    props: InstanceType<typeof App>['$props']
     plugin: Plugin
   }) => void | VueApp
   title?: HeadManagerTitleCallback

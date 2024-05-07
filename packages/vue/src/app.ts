@@ -24,14 +24,6 @@ import remember from './remember'
 import type { InertiaComponentType } from './types'
 import useForm from './useForm'
 
-export interface InertiaAppProps {
-  initialPage: Page
-  initialComponent?: object
-  resolveComponent: PageResolver<InertiaComponentType>
-  titleCallback?: HeadManagerTitleCallback
-  onHeadUpdate?: HeadManagerOnUpdate | null
-}
-
 const page = ref({}) as Ref<Page>
 const layout = shallowRef(null)
 
@@ -58,7 +50,10 @@ const App = defineComponent({
       default: ((title) => title) as HeadManagerTitleCallback,
     },
     onHeadUpdate: {
-      type: Function as PropType<HeadManagerOnUpdate> | null,
+      type: [
+        Function,
+        null,
+      ] as unknown as Object as PropType<HeadManagerOnUpdate | null>,
       required: false,
       default: () => {},
     },
@@ -75,7 +70,11 @@ const App = defineComponent({
     const key = ref<number | string | undefined>(undefined)
 
     const isServer = typeof window === 'undefined'
-    headManager = createHeadManager(isServer, titleCallback, onHeadUpdate)
+    headManager = createHeadManager(
+      isServer,
+      titleCallback,
+      onHeadUpdate ? onHeadUpdate : () => {}
+    )
 
     if (!isServer) {
       router.init({
