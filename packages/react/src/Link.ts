@@ -75,10 +75,8 @@ const Link: ForwardRefExoticComponent<
     ref
   ) => {
     const visit = useCallback(
-      (event: MouseEvent | KeyboardEvent) => {
-        if (event instanceof MouseEvent) {
-          onClick(event)
-        }
+      (event: MouseEvent) => {
+        onClick(event)
 
         if (shouldIntercept(event)) {
           event.preventDefault()
