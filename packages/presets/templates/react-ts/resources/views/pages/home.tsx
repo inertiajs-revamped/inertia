@@ -16,7 +16,7 @@ const Home = ({ versions }: HomePageProps) => {
       <h2>Conventions</h2>
       <p>
         The preset is using{' '}
-        <a href="https://laravel-vite.dev/guide/extra-topics/inertia.html#conventions">
+        <a href="https://github.com/innocenzi/laravel-vite/blob/main/docs/src/guide/extra-topics/inertia.md#conventions">
           Laravel Vite conventions
         </a>{' '}
         for a consistent and organized architecture:
