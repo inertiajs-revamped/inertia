@@ -1,11 +1,6 @@
 {
   "$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
-  "formatter": {
-    "enabled": true,
-    "formatWithErrors": false,
-    "indentWidth": 2,
-    "indentStyle": "space",
-    "lineWidth": 80,
+  "files": {
     "ignore": [
       "**/cache/**",
       "**/dist/**",
@@ -14,6 +9,13 @@
       "sandboxes/**",
       "packages/presets/templates/**"
     ]
+  },
+  "formatter": {
+    "enabled": true,
+    "formatWithErrors": false,
+    "indentWidth": 2,
+    "indentStyle": "space",
+    "lineWidth": 80
   },
   "javascript": {
     "formatter": {
@@ -25,14 +27,6 @@
   },
   "linter": {
     "enabled": true,
-    "ignore": [
-      "**/cache/**",
-      "**/dist/**",
-      "**/node_modules/**",
-      "**/public/**",
-      "sandboxes/**",
-      "packages/presets/templates/**"
-    ],
     "rules": {
       "recommended": true,
       "complexity": {
