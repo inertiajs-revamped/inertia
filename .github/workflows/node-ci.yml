@@ -17,6 +17,7 @@ concurrency:
   cancel-in-progress: true
 
 env:
+  NPM_VERSION: '21.7.2'
   # renovate: datasource=npm depName=pnpm versioning=npm
   PNPM_VERSION: '9.1.0'
 
@@ -40,7 +41,7 @@ jobs:
             [
               "**/CHANGELOG.md",
               "**/LICENSE",
-              "**README.md",
+              "**/README.md",
             ]
           paths: |-
             [
@@ -51,8 +52,8 @@ jobs:
             ]
           skip_after_successful_duplicate: false
 
-  ci:
-    name: Test and Lint
+  node-ci:
+    name: Build & Test
     needs: skip-check
     if: ${{ needs.skip-check.outputs.should_skip != 'true' }}
     runs-on: ubuntu-latest
@@ -72,7 +73,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@60edb5dd545a775178f52524783378180af0d1f8 # v4.0.2
         with:
-          node-version: '21.7.2'
+          node-version: ${{ env.NPM_VERSION }}
           cache: 'pnpm'
 
       - name: Install dependencies
