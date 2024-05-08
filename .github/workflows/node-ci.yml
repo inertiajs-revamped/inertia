@@ -1,4 +1,4 @@
-name: Node.js CI
+name: Build Workflow
 
 on:
   workflow_dispatch:
@@ -37,7 +37,14 @@ jobs:
         uses: fkirc/skip-duplicate-actions@f75f66ce1886f00957d99748a42c724f4330bdcf # v5.3.1
         with:
           do_not_skip: '["schedule", "workflow_dispatch"]'
-          paths_ignore: '["**/CHANGELOG.md", "**/LICENSE", "**/README.md"]'
+          paths_ignore: |-
+            [
+              "**/CHANGELOG.md",
+              "**/LICENSE",
+              "**/README.md",
+              "packages/laravel",
+              "packages/presets"
+            ]
           paths: |-
             [
               ".github/workflows/node-ci.yml",
@@ -48,7 +55,7 @@ jobs:
           skip_after_successful_duplicate: false
 
   node-ci:
-    name: Build & Test
+    name: Node.js CI
     needs: skip-check
     if: ${{ needs.skip-check.outputs.should_skip != 'true' }}
     runs-on: ubuntu-latest
@@ -79,3 +86,4 @@ jobs:
 
       - name: Run test
         run: pnpm run test:run
+        if: always()
