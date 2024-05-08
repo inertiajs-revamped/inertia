@@ -10,7 +10,6 @@ import Frameworks from './components/Frameworks.vue'
 export default {
   extends: DefaultTheme,
   enhanceApp({ app }) {
-    // register your custom global components
     app.component('Framework', Framework)
     app.component('Frameworks', Frameworks)
     app.component('BaseIcon', BaseIcon)

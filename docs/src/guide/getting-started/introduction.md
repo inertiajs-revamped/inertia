@@ -43,7 +43,7 @@ See the `CHANGELOG.md` from the [packages](https://github.com/inertiajs-revamped
 
 ## Community
 
-If you have a question or need additional help, please consider to join our [Discord](https://discord.gg/Hn5bDDvTKX) or start a discussion at [Github](https://github.com/inertiajs-revamped/inertia/discussions).
+If you have a question or need additional help, please consider to join our [Discord](https://discord.gg/Hn5bDDvTKX) or start a discussion at [GitHub](https://github.com/inertiajs-revamped/inertia/discussions).
 
 ## Credits
 

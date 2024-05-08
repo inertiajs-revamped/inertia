@@ -1,31 +1,23 @@
 import { defineConfig } from 'vitepress'
 import { version } from '../../../packages/core/package.json'
+import { defaultConfig } from './constants'
+import { headConfig } from './head'
+import { sidebarConfig } from './sidebar'
 
-const defaultConfig = {
-  docs: 'https://inertiajs-revamped.com',
-  discord: 'https://discord.gg/Hn5bDDvTKX',
-  github: {
-    org: 'https://github.com/inertiajs-revamped',
-    repo: 'https://github.com/inertiajs-revamped/inertia',
-  },
-}
-
-const currentYear = new Date().getFullYear()
+const isProduction = process.env.NODE_ENV === 'production'
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
   lang: 'en-US',
-  title: 'Inertia.js-Revamped',
-  description: 'Build classic server-side rendered applications',
-
+  title: defaultConfig.title,
+  description: defaultConfig.description,
+  outDir: '../dist',
   appearance: true,
   lastUpdated: true,
   cleanUrls: true,
-
-  outDir: '../dist',
-
+  head: headConfig,
   themeConfig: {
-    // https://vitepress.dev/reference/default-theme-config
+    sidebar: sidebarConfig,
     nav: [
       {
         text: 'Guide',
@@ -40,11 +32,11 @@ export default defineConfig({
             text: `v${version}`,
             items: [
               {
-                text: 'Release Notes ',
+                text: 'Release Notes',
                 link: `${defaultConfig.github.repo}/releases`,
               },
               {
-                text: 'Contributing ',
+                text: 'Contributing',
                 link: `${defaultConfig.github.repo}/blob/main/CONTRIBUTING.md`,
               },
             ],
@@ -53,7 +45,7 @@ export default defineConfig({
             text: 'Useful links',
             items: [
               {
-                text: 'Discord ',
+                text: 'Discord',
                 link: defaultConfig.discord,
               },
               { text: 'Repository', link: `${defaultConfig.github.repo}` },
@@ -62,61 +54,24 @@ export default defineConfig({
         ],
       },
     ],
-
-    sidebar: {
-      '/guide/': [
-        {
-          text: 'Getting started',
-          items: [
-            {
-              text: 'Introduction',
-              link: '/guide/getting-started/introduction',
-            },
-            { text: 'Quick Start', link: '/guide/getting-started/quick-start' },
-            {
-              text: 'Core Concepts',
-              link: '/guide/getting-started/core-concepts',
-            },
-            {
-              text: 'Migration',
-              link: '/guide/getting-started/migration',
-            },
-          ],
-        },
-      ],
-      '/api/': [
-        {
-          text: 'API Reference',
-          items: [
-            {
-              text: 'Overview',
-              link: '/api/',
-            },
-            {
-              text: 'Preset CLI',
-              link: '/api/preset-cli',
-            },
-          ],
-        },
-      ],
-    },
-
     socialLinks: [
       { icon: 'discord', link: defaultConfig.discord },
       { icon: 'github', link: defaultConfig.github.repo },
     ],
-
     editLink: {
-      pattern: `${defaultConfig.github.repo}/tree/main/packages/docs/:path`,
+      pattern: `${defaultConfig.github.repo}/tree/main/docs/:path`,
       text: 'Edit this page on GitHub',
     },
-
     footer: {
       message: `Released under the <a href="${defaultConfig.github.repo}/blob/main/LICENSE">MIT License</a>.`,
-      copyright: `Copyright © ${currentYear} <a href="${defaultConfig.docs}">Inertia.js-Revamped</a> & Contributors.`,
+      copyright: `Copyright © ${new Date().getFullYear()} <a href="${
+        defaultConfig.url
+      }">${defaultConfig.title}</a> & Contributors.`,
     },
   },
-  sitemap: {
-    hostname: 'https://inertiajs-revamped.com',
-  },
+  ...(isProduction && {
+    sitemap: {
+      hostname: 'https://inertiajs-revamped.com',
+    },
+  }),
 })
