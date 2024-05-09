@@ -1,4 +1,4 @@
-import debounce from './debounce'
+import { debounce } from './debounce'
 import type {
   HeadManager,
   HeadManagerOnUpdate,
@@ -71,7 +71,7 @@ const Renderer: _Renderer = {
   }, 1),
 }
 
-export default function createHeadManager(
+export function createHeadManager(
   isServer: boolean,
   titleCallback: HeadManagerTitleCallback,
   onUpdate: HeadManagerOnUpdate

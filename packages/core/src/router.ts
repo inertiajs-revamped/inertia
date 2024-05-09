@@ -1,5 +1,5 @@
 import { default as Axios, type AxiosResponse } from 'axios'
-import debounce from './debounce'
+import { debounce } from './debounce'
 import {
   fireBeforeEvent,
   fireErrorEvent,
@@ -12,7 +12,7 @@ import {
   fireSuccessEvent,
 } from './events'
 import { hasFiles, objectToFormData } from './form-data'
-import modal from './modal'
+import { modal } from './modal'
 import type {
   ActiveVisit,
   GlobalEvent,
