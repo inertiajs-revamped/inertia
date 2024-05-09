@@ -68,6 +68,11 @@ export default defineConfig({
         defaultConfig.url
       }">${defaultConfig.title}</a> & Contributors.`,
     },
+    ...(isProduction && {
+      search: {
+        provider: 'local',
+      },
+    }),
   },
   ...(isProduction && {
     sitemap: {
