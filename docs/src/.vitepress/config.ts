@@ -79,4 +79,10 @@ export default defineConfig({
       hostname: 'https://inertiajs-revamped.com',
     },
   }),
+  vite: {
+    build: {
+      minify: 'terser',
+      chunkSizeWarningLimit: Infinity,
+    },
+  },
 })
