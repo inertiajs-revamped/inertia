@@ -8,7 +8,7 @@ To offer the best user experience we use [@preset/cli](https://preset.dev) to sc
 
 They are hosted on our GitHub [repository](https://github.com/inertiajs-revamped/inertia) and can be applied by providing an additional command line argument `--ui` using `npx`.
 
-## Requirements
+## Prerequisites
 
 When using automatic setup, Inertia.js-Revamped has a few requirements:
 

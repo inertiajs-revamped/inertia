@@ -11,12 +11,72 @@ export const sidebarConfig = {
         },
         { text: 'Quick Start', link: '/guide/getting-started/quick-start' },
         {
-          text: 'Core Concepts',
-          link: '/guide/getting-started/core-concepts',
+          text: 'Demo Application',
+          link: '/guide/getting-started/demo-application',
         },
         {
-          text: 'Migration',
+          text: 'Migration Guide',
           link: '/guide/getting-started/migration',
+        },
+      ],
+    },
+    {
+      text: 'Integrations',
+      items: [
+        {
+          text: 'Laravel',
+          collapsed: true,
+          items: [
+            {
+              text: 'Installation',
+              link: '/guide/integrations/laravel/installation',
+            },
+          ],
+        },
+      ],
+    },
+    {
+      text: 'UI Frameworks',
+      items: [
+        {
+          text: 'Preact',
+          collapsed: true,
+          items: [
+            {
+              text: 'Installation',
+              link: '/guide/ui-frameworks/preact/installation',
+            },
+          ],
+        },
+        {
+          text: 'React',
+          collapsed: true,
+          items: [
+            {
+              text: 'Installation',
+              link: '/guide/ui-frameworks/react/installation',
+            },
+          ],
+        },
+        {
+          text: 'Vue',
+          collapsed: true,
+          items: [
+            {
+              text: 'Installation',
+              link: '/guide/ui-frameworks/vue/installation',
+            },
+          ],
+        },
+      ],
+    },
+    {
+      text: 'Basics',
+      collapsed: true,
+      items: [
+        {
+          text: 'Project Structure',
+          link: '/guide/basics/project-structure',
         },
       ],
     },

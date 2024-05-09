@@ -5,9 +5,10 @@ The recommended way of scaffolding a new Inertia.js-Revamped project is via auto
 > [!IMPORTANT]
 > Inertia.js-Revamped is currently in `alpha` status and not ready for production use yet.
 
-## UI Frameworks
+---
 
-<Frameworks />
+> [!TIP] Prefer to install Inertia.js-Revamped manually?
+> Read our step-by-step manual [installation guide](/guide/integrations/laravel/installation) instead.
 
 ## Prerequisites
 
@@ -20,7 +21,7 @@ When using automatic setup, Inertia.js-Revamped has a few requirements:
 
 ## Scaffolding a new project
 
-To install Inertia.js-Revamped in a fresh Laravel application, run the commands:
+To install Inertia.js-Revamped in a [fresh Laravel](https://laravel.com/docs/11.x/installation) application, run the commands:
 
 ```sh [composer]
 composer create-project laravel/laravel <project-name>
@@ -109,8 +110,8 @@ npm run preview
 
 ## What's next?
 
-* To learn about a projects structure, read more about the [core concepts](/guide/getting-started/core-concepts).
-* To learn more about the our starter-kits read [Preset CLI](/api/preset-cli).
+* To learn about our [project structure](/guide/basics/project-structure) convention, read the basics.
+* To learn more about our starter kits, read [Preset CLI](/api/preset-cli).
 
 ::: tip
 
