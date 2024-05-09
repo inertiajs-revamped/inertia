@@ -80,7 +80,7 @@ This command will install and execute Inertia.js-Revamped `@preset/cli`. You wil
 
 ### Serving Laravel
 
-To learn more about how to serve your Laravel application, read the Laravel [installation](https://laravel.com/docs/4.2/quick#installation) docs.
+To learn more about how to serve your Laravel application, read Laravel [installation](https://laravel.com/docs/4.2/quick#installation).
 
 > Typically, you may use a web server such as Apache or Nginx to serve your Laravel applications. If you ... would like to use PHP's built-in development server, you may use the serve Artisan command:
 
@@ -125,7 +125,7 @@ VITE v5.2.9  ready in 1487 ms
 
 ### Deploy
 
-To learn more about how to deploy your application, read the Laravel [deployment](https://laravel.com/docs/11.x/deployment) docs.
+To learn more about how to deploy your application, read Laravel [deployment](https://laravel.com/docs/11.x/deployment).
 
 ### Bundle with Vite
 
