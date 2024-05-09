@@ -1,3 +1,7 @@
+---
+next: 'Laravel - Installation'
+---
+
 # Migration
 
 ## Note regarding migration Guide

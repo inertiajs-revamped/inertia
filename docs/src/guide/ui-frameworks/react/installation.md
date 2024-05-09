@@ -1,3 +1,7 @@
+---
+next: 'Vue - Installation'
+---
+
 # React Client-side Setup
 
 This document will guide you through the installation of the [React](https://react.dev/) framework adapter.

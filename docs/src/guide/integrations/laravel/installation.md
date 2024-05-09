@@ -1,3 +1,7 @@
+---
+next: 'Preact - Installation'
+---
+
 # Laravel Server-side Setup
 
 > [!NOTE]

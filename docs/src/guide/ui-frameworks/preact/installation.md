@@ -1,3 +1,7 @@
+---
+next: 'React - Installation'
+---
+
 # Preact Client-side Setup
 
 This document will guide you through the installation of the [Preact](https://preactjs.com/) framework adapter.
