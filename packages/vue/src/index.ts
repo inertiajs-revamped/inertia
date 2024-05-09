@@ -2,8 +2,7 @@ export { router } from '@inertiajs-revamped/core'
 
 export { createInertiaApp } from './createInertiaApp'
 export { Head, type InertiaHeadProps } from './head'
-/** todo: refactor types */
-export { Link, type InertiaLinkProps } from './link'
+export { Link, type BaseInertiaLinkProps } from './link'
 
 export { useForm, type InertiaFormProps } from './useForm'
 export { usePage } from './app'

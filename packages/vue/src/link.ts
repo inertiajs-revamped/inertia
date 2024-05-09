@@ -2,34 +2,13 @@ import {
   type FormDataConvertible,
   type Method,
   type PreserveStateOption,
-  type Progress,
   mergeDataIntoQueryString,
   router,
   shouldIntercept,
 } from '@inertiajs-revamped/core'
 import { type PropType, defineComponent, h } from 'vue'
 
-export interface InertiaLinkProps {
-  as?: string
-  data?: Record<string, FormDataConvertible>
-  href: string
-  method?: Method
-  headers?: Record<string, string>
-  onClick?: (event: MouseEvent) => void
-  preserveScroll?: PreserveStateOption
-  preserveState?: PreserveStateOption
-  replace?: boolean
-  only?: string[]
-  queryStringArrayFormat?: 'indices' | 'brackets'
-  onCancelToken?: { ({ cancel }: { cancel: VoidFunction }): void }
-  onBefore?: () => void
-  onStart?: () => void
-  onProgress?: (progress: Progress) => void
-  onFinish?: () => void
-  onCancel?: () => void
-  onSuccess?: () => void
-  onError?: () => void
-}
+export type BaseInertiaLinkProps = InstanceType<typeof Link>['$props']
 
 export const Link = defineComponent({
   name: 'Link',
