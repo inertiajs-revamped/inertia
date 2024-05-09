@@ -7,7 +7,7 @@ import {
 } from '@inertiajs-revamped/core'
 import isEqual from 'lodash.isequal'
 import { useCallback, useEffect, useRef, useState } from 'preact/hooks'
-import useRemember from './useRemember'
+import { useRemember } from './useRemember'
 
 export type setDataByObject<TForm> = (data: TForm) => void
 export type setDataByMethod<TForm> = (
@@ -48,14 +48,14 @@ export interface InertiaFormProps<TForm extends FormDataType> {
   cancel: () => void
 }
 
-export default function useForm<TForm extends FormDataType>(
+export function useForm<TForm extends FormDataType>(
   initialValues?: TForm
 ): InertiaFormProps<TForm>
-export default function useForm<TForm extends FormDataType>(
+export function useForm<TForm extends FormDataType>(
   rememberKey: string,
   initialValues?: TForm
 ): InertiaFormProps<TForm>
-export default function useForm<TForm extends FormDataType>(
+export function useForm<TForm extends FormDataType>(
   rememberKeyOrInitialValues?: string | TForm,
   maybeInitialValues?: TForm
 ): InertiaFormProps<TForm> {

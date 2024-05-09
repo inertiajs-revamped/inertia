@@ -4,7 +4,7 @@ import {
   cloneElement,
 } from 'preact'
 import { useContext, useEffect, useMemo } from 'preact/hooks'
-import HeadContext from './HeadContext'
+import { HeadContext } from './HeadContext'
 
 export type InertiaHeadProps = {
   title?: string
@@ -13,7 +13,7 @@ export type InertiaHeadProps = {
 
 export type InertiaHead = FunctionComponent<InertiaHeadProps>
 
-const Head: InertiaHead = function ({ children, title }) {
+export const Head: InertiaHead = function ({ children, title }) {
   const headManager = useContext(HeadContext)
   const provider = useMemo(() => headManager?.createProvider(), [headManager])
 
@@ -113,4 +113,3 @@ const Head: InertiaHead = function ({ children, title }) {
 
   return null
 }
-export default Head

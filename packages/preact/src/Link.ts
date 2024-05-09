@@ -7,8 +7,8 @@ import {
   router,
   shouldIntercept,
 } from '@inertiajs-revamped/core'
-import { type JSX, h } from 'preact'
-import { forwardRef } from 'preact/compat'
+import { type FunctionalComponent, type JSX, type Ref, h } from 'preact'
+import { type PropsWithoutRef, forwardRef } from 'preact/compat'
 import { useCallback } from 'preact/hooks'
 
 declare module 'preact' {
@@ -46,7 +46,11 @@ export interface BaseInertiaLinkProps {
 export type InertiaLinkProps = BaseInertiaLinkProps &
   Omit<JSX.HTMLAttributes<HTMLElement>, keyof BaseInertiaLinkProps>
 
-const Link = forwardRef<unknown, InertiaLinkProps>(
+const Link: FunctionalComponent<
+  PropsWithoutRef<InertiaLinkProps> & {
+    ref?: Ref<unknown>
+  }
+> = forwardRef<unknown, InertiaLinkProps>(
   (
     {
       children,
@@ -149,6 +153,7 @@ const Link = forwardRef<unknown, InertiaLinkProps>(
     )
   }
 )
+
 Link.displayName = 'InertiaLink'
 
-export default Link
+export { Link }

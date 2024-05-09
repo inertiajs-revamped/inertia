@@ -24,7 +24,5 @@ export type WithLayout = (
   props?: ComponentProps<typeof layout>
 ) => (page: VNode) => ComponentChildren
 
-const withLayout: WithLayout = (Layout, props) => (page) =>
+export const withLayout: WithLayout = (Layout, props) => (page) =>
   createElement(Layout, { ...props }, page)
-
-export default withLayout
