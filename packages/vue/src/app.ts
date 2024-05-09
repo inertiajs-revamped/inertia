@@ -20,16 +20,16 @@ import {
   ref,
   shallowRef,
 } from 'vue'
-import remember from './remember'
+import { remember } from './remember'
 import type { InertiaComponentType } from './types'
-import useForm from './useForm'
+import { useForm } from './useForm'
 
 const page = ref({}) as Ref<Page>
 const layout = shallowRef(null)
 
 let headManager: HeadManager | null = null
 
-const App = defineComponent({
+export const App = defineComponent({
   name: 'Inertia',
   props: {
     initialPage: {
@@ -131,7 +131,6 @@ const App = defineComponent({
     }
   },
 })
-export default App
 
 export const plugin: Plugin = {
   install(app) {

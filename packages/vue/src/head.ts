@@ -1,10 +1,8 @@
 import { defineComponent } from 'vue'
 
-export type InertiaHeadProps = {
-  title?: string
-}
+export type InertiaHeadProps = InstanceType<typeof Head>['$props']
 
-const Head = defineComponent({
+export const Head = defineComponent({
   props: {
     title: {
       type: String,
@@ -154,5 +152,3 @@ const Head = defineComponent({
     )
   },
 })
-
-export default Head
