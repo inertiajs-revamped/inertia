@@ -1,10 +1,17 @@
 import {
+  type HeadManager,
   type Page,
   type PageProps,
   createHeadManager,
   router,
 } from '@inertiajs-revamped/core'
-import { type ComponentChildren, type Key, h } from 'preact'
+import {
+  type Attributes,
+  type ComponentChildren,
+  type Key,
+  type VNode,
+  h,
+} from 'preact'
 import { useEffect, useMemo, useState } from 'preact/hooks'
 import { HeadContext } from './HeadContext'
 import { PageContext } from './PageContext'
@@ -23,7 +30,12 @@ export function App<SharedProps extends PageProps = PageProps>({
     props: Page<SharedProps>['props']
     key: Key
   }) => ComponentChildren
-} & SetupOptions<SharedProps>['props']) {
+} & SetupOptions<SharedProps>['props']): VNode<
+  Attributes & {
+    value: HeadManager | null
+    children?: ComponentChildren
+  }
+> {
   const [current, setCurrent] = useState({
     component: initialComponent || null,
     page: initialPage,
