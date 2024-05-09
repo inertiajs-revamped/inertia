@@ -4,4 +4,4 @@ import { createContext } from 'preact'
 const PageContext = createContext<Page<PageProps> | null>(null)
 PageContext.displayName = 'InertiaPageContext'
 
-export default PageContext
+export { PageContext }

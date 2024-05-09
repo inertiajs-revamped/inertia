@@ -149,6 +149,7 @@ const Link = forwardRef<unknown, InertiaLinkProps>(
     )
   }
 )
+
 Link.displayName = 'InertiaLink'
 
-export default Link
+export { Link }
