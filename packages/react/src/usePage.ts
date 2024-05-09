@@ -1,8 +1,8 @@
 import type { Page, PageProps } from '@inertiajs-revamped/core'
 import { useContext } from 'react'
-import PageContext from './PageContext'
+import { PageContext } from './PageContext'
 
-export default function usePage<
+export function usePage<
   SharedProps extends PageProps = PageProps,
 >(): Page<SharedProps> {
   // @ts-expect-error Satisfy TS if branch on line below
