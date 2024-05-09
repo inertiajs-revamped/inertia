@@ -1,7 +1,7 @@
 import { router } from '@inertiajs-revamped/core'
 import { type Dispatch, type SetStateAction, useEffect, useState } from 'react'
 
-export default function useRemember<State>(
+export function useRemember<State>(
   initialState: State,
   key?: string
 ): [State, Dispatch<SetStateAction<State>>] {

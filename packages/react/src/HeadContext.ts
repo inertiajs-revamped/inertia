@@ -4,4 +4,4 @@ import { createContext } from 'react'
 const HeadContext = createContext<HeadManager | null>(null)
 HeadContext.displayName = 'InertiaHeadContext'
 
-export default HeadContext
+export { HeadContext }

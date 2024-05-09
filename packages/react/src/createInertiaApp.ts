@@ -12,7 +12,7 @@ import {
   type ReactNode,
   createElement,
 } from 'react'
-import App from './App'
+import { App } from './App'
 
 export type InertiaComponentType<P = {}> = ComponentType<P> & {
   layout?: ((page: ReactElement) => ReactNode) | Array<ReactNode>
@@ -55,17 +55,17 @@ export type InertiaAppOptionsForSSR<SharedProps extends PageProps> =
     setup(options: SetupOptions<SharedProps>): ReactElement
   }
 
-export default async function createInertiaApp<
+export async function createInertiaApp<
   SharedProps extends PageProps = PageProps,
 >(
   options: InertiaAppOptionsForCSR<SharedProps>
 ): Promise<CreateInertiaAppSetupReturnType>
-export default async function createInertiaApp<
+export async function createInertiaApp<
   SharedProps extends PageProps = PageProps,
 >(
   options: InertiaAppOptionsForSSR<SharedProps>
 ): Promise<CreateInertiaAppSSRContent>
-export default async function createInertiaApp<
+export async function createInertiaApp<
   SharedProps extends PageProps = PageProps,
 >({
   id = 'app',

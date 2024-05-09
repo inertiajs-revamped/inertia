@@ -150,6 +150,7 @@ const Link: ForwardRefExoticComponent<
     )
   }
 )
+
 Link.displayName = 'InertiaLink'
 
-export default Link
+export { Link }

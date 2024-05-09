@@ -24,7 +24,5 @@ export type WithLayout = (
   props?: ComponentPropsWithoutRef<typeof layout>
 ) => (page: ReactElement) => ReactNode
 
-const withLayout: WithLayout = (Layout, props) => (page) =>
+export const withLayout: WithLayout = (Layout, props) => (page) =>
   createElement(Layout, { ...props }, page)
-
-export default withLayout

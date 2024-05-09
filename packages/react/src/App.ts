@@ -15,11 +15,11 @@ import {
   useMemo,
   useState,
 } from 'react'
-import HeadContext from './HeadContext'
-import PageContext from './PageContext'
+import { HeadContext } from './HeadContext'
+import { PageContext } from './PageContext'
 import type { InertiaComponentType, SetupOptions } from './createInertiaApp'
 
-export default function App<SharedProps extends PageProps = PageProps>({
+export function App<SharedProps extends PageProps = PageProps>({
   children,
   initialPage,
   initialComponent,
