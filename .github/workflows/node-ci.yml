@@ -49,6 +49,7 @@ jobs:
             [
               ".github/workflows/node-ci.yml",
               "packages/**",
+              "tests/**",
               "package.json",
               "pnpm-lock.yaml"
             ]
