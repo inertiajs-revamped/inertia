@@ -78,11 +78,44 @@ This command will install and execute Inertia.js-Revamped `@preset/cli`. You wil
 
 ## Usage
 
-Run the [Vite dev server](https://vitejs.dev/config/server-options.html) with the command:
+### Serving Laravel
+
+To learn more about how to serve your Laravel application, read the Laravel [installation](https://laravel.com/docs/4.2/quick#installation) docs.
+
+> Typically, you may use a web server such as Apache or Nginx to serve your Laravel applications. If you ... would like to use PHP's built-in development server, you may use the serve Artisan command:
 
 ```sh
-npm run dev
+php artisan serve
+```
 
+> By default the HTTP-server will listen to port 8000.
+
+### Start the development server
+
+Run the [Vite dev server](https://vitejs.dev/config/server-options.html) with the command:
+
+::: code-group
+
+```sh [npm]
+npm run dev
+```
+
+```sh [pnpm]
+pnpm run dev
+```
+
+```sh [yarn]
+yarn run dev
+```
+
+```sh [bun]
+bun run dev
+```
+
+:::
+
+```sh
+# outputs
 VITE v5.2.9  ready in 1487 ms
 
 ➜  Local:   http://localhost:5173/
@@ -90,22 +123,46 @@ VITE v5.2.9  ready in 1487 ms
 ➜  press h to show help
 ```
 
+### Deploy
+
+To learn more about how to deploy your application, read the Laravel [deployment](https://laravel.com/docs/11.x/deployment) docs.
+
+### Bundle with Vite
+
 Build the app with production-ready assets with the command:
 
-```sh
-npm run build
+::: code-group
 
+```sh [npm]
+npm run build:prod
+```
+
+```sh [pnpm]
+pnpm run build:prod
+```
+
+```sh [yarn]
+yarn run build:prod
+```
+
+```sh [bun]
+bun run build:prod
+```
+
+:::
+
+```sh
+# outputs
 vite v5.2.9 building for production...
 ✓ 4 modules transformed.
 ```
 
-Locally preview the production build with the command:
+### Server-side Rendering (SSR)
+
+Server-side rendering uses [Node.js](https://nodejs.org/en/) to render your pages in a background process; therefore, Node must be available on your server for server-side rendering to function properly.
 
 ```sh
-npm run preview
-
-➜  Local:   http://localhost:4173/
-➜  Network: use --host to expose
+php artisan inertia:start-ssr
 ```
 
 ## What's next?
