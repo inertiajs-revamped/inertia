@@ -1,6 +1,6 @@
 import { type HeadManager, type Page, router } from '@inertiajs-revamped/core'
 import type { DefineComponent } from 'vue'
-import useForm from './useForm'
+import { useForm } from './useForm'
 
 export type InertiaComponentType<P = {}> = DefineComponent<P, any, any, any>
 

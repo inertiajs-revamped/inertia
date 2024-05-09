@@ -5,7 +5,7 @@ import type {
   ProgressCallback,
 } from '@inertiajs-revamped/core'
 import { type Plugin, type App as VueApp, createSSRApp, h } from 'vue'
-import App, { plugin } from './app'
+import { App, plugin } from './app'
 import type { InertiaComponentType } from './types'
 
 export interface CreateInertiaAppProps {
@@ -23,7 +23,7 @@ export interface CreateInertiaAppProps {
   render?: (app: VueApp) => Promise<string>
 }
 
-export default async function createInertiaApp({
+export async function createInertiaApp({
   id = 'app',
   resolve,
   setup,

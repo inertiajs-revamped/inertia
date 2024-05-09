@@ -10,9 +10,9 @@ import cloneDeep from 'lodash.clonedeep'
 import isEqual from 'lodash.isequal'
 import { reactive, watch } from 'vue'
 
-type FormDataType = object
+export type FormDataType = object
 
-interface InertiaFormProps<TForm extends FormDataType> {
+export interface InertiaFormProps<TForm extends FormDataType> {
   isDirty: boolean
   errors: Partial<Record<keyof TForm, string>>
   hasErrors: boolean
@@ -41,14 +41,14 @@ interface InertiaFormProps<TForm extends FormDataType> {
 export type InertiaForm<TForm extends FormDataType> = TForm &
   InertiaFormProps<TForm>
 
-export default function useForm<TForm extends FormDataType>(
+export function useForm<TForm extends FormDataType>(
   data: TForm | (() => TForm)
 ): InertiaForm<TForm>
-export default function useForm<TForm extends FormDataType>(
+export function useForm<TForm extends FormDataType>(
   rememberKey: string,
   data: TForm | (() => TForm)
 ): InertiaForm<TForm>
-export default function useForm<TForm extends FormDataType>(
+export function useForm<TForm extends FormDataType>(
   rememberKeyOrData: string | TForm | (() => TForm),
   maybeData?: TForm | (() => TForm)
 ): InertiaForm<TForm> {

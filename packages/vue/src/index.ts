@@ -1,11 +1,13 @@
 export { router } from '@inertiajs-revamped/core'
 
-export { default as createInertiaApp } from './createInertiaApp'
-export { default as Head } from './head'
-export { default as Link, type InertiaLinkProps } from './link'
-export { default as useForm, type InertiaForm } from './useForm'
+export { createInertiaApp } from './createInertiaApp'
+export { Head, type InertiaHeadProps } from './head'
+/** todo: refactor types */
+export { Link, type InertiaLinkProps } from './link'
+
+export { useForm, type InertiaFormProps } from './useForm'
 export { usePage } from './app'
-export { default as useRemember } from './useRemember'
+export { useRemember } from './useRemember'
 
 export { resolvePageComponent } from '@inertiajs-revamped/core'
 

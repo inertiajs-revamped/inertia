@@ -2,7 +2,7 @@ import { router } from '@inertiajs-revamped/core'
 import cloneDeep from 'lodash.clonedeep'
 import type { ComponentOptions } from 'vue'
 
-const remember: ComponentOptions = {
+export const remember: ComponentOptions = {
   created() {
     if (!this.$options.remember) {
       return
@@ -80,5 +80,3 @@ const remember: ComponentOptions = {
     })
   },
 }
-
-export default remember

@@ -31,7 +31,7 @@ export interface InertiaLinkProps {
   onError?: () => void
 }
 
-const Link = defineComponent({
+export const Link = defineComponent({
   name: 'Link',
   props: {
     as: {
@@ -138,5 +138,3 @@ const Link = defineComponent({
     }
   },
 })
-
-export default Link

@@ -4,7 +4,7 @@ export type InertiaHeadProps = {
   title?: string
 }
 
-const Head = defineComponent({
+export const Head = defineComponent({
   props: {
     title: {
       type: String,
@@ -154,5 +154,3 @@ const Head = defineComponent({
     )
   },
 })
-
-export default Head
