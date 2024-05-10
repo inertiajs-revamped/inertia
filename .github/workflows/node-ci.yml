@@ -42,8 +42,8 @@ jobs:
               "**/CHANGELOG.md",
               "**/LICENSE",
               "**/README.md",
-              "packages/laravel",
-              "packages/presets"
+              "packages/laravel/**",
+              "packages/presets/**"
             ]
           paths: |-
             [
