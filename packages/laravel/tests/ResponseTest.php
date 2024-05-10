@@ -101,8 +101,7 @@ class ResponseTest extends TestCase
         $callable = static function () use ($users) {
             $page = new LengthAwarePaginator($users->take(2), $users->count(), 2);
 
-            return new class($page, JsonResource::class) extends ResourceCollection
-            {
+            return new class ($page, JsonResource::class) extends ResourceCollection {
             };
         };
 
@@ -157,8 +156,7 @@ class ResponseTest extends TestCase
 
             // nested array with ResourceCollection to resolve
             return [
-                'users' => new class($page, JsonResource::class) extends ResourceCollection
-                {
+                'users' => new class ($page, JsonResource::class) extends ResourceCollection {
                 },
             ];
         };

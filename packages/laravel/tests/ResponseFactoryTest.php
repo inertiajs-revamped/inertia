@@ -90,8 +90,8 @@ class ResponseFactoryTest extends TestCase
     public function test_location_response_for_non_inertia_requests_using_redirect_response_with_existing_session_and_request_properties(): void
     {
         $redirect = new RedirectResponse('https://inertiajs.com');
-        $redirect->setSession($session = new Store('test', new NullSessionHandler));
-        $redirect->setRequest($request = new HttpRequest);
+        $redirect->setSession($session = new Store('test', new NullSessionHandler()));
+        $redirect->setRequest($request = new HttpRequest());
         /** @var HttpRequest */
         $response = (new ResponseFactory())->location($redirect);
 
@@ -166,8 +166,7 @@ class ResponseFactoryTest extends TestCase
         Route::middleware([StartSession::class, ExampleMiddleware::class])->get('/', function () {
             Inertia::share('foo', 'bar');
 
-            return Inertia::render('User/Edit', new class() implements Arrayable
-            {
+            return Inertia::render('User/Edit', new class () implements Arrayable {
                 public function toArray()
                 {
                     return [

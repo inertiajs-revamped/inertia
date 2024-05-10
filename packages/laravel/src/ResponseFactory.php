@@ -6,9 +6,9 @@ use Closure;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Request;
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Traits\Macroable;
 use Illuminate\Contracts\Support\Arrayable;
-use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Response as BaseResponse;
 use Symfony\Component\HttpFoundation\Response as SymfonyResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse as SymfonyRedirect;
@@ -33,7 +33,6 @@ class ResponseFactory
 
     /**
      * @param string|array|Arrayable $key
-     * @param mixed                  $value
      */
     public function share($key, $value = null): void
     {
@@ -46,12 +45,7 @@ class ResponseFactory
         }
     }
 
-    /**
-     * @param mixed $default
-     *
-     * @return mixed
-     */
-    public function getShared(string $key = null, $default = null)
+    public function getShared(?string $key = null, $default = null)
     {
         if ($key) {
             return Arr::get($this->sharedProps, $key, $default);

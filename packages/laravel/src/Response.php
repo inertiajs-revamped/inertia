@@ -4,10 +4,10 @@ namespace Inertia;
 
 use Closure;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\App;
-use Illuminate\Support\Str;
 use GuzzleHttp\Promise\PromiseInterface;
 use Illuminate\Support\Traits\Macroable;
 use Illuminate\Contracts\Support\Arrayable;
@@ -39,7 +39,6 @@ class Response implements Responsable
 
     /**
      * @param string|array $key
-     * @param mixed        $value
      *
      * @return $this
      */
@@ -56,7 +55,6 @@ class Response implements Responsable
 
     /**
      * @param string|array $key
-     * @param mixed        $value
      *
      * @return $this
      */
@@ -81,7 +79,7 @@ class Response implements Responsable
     /**
      * Create an HTTP response that represents the object.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param Request $request
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
