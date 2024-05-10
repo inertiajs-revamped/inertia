@@ -92,6 +92,7 @@ class ResponseFactoryTest extends TestCase
         $redirect = new RedirectResponse('https://inertiajs.com');
         $redirect->setSession($session = new Store('test', new NullSessionHandler));
         $redirect->setRequest($request = new HttpRequest);
+        /** @var HttpRequest */
         $response = (new ResponseFactory())->location($redirect);
 
         $this->assertInstanceOf(RedirectResponse::class, $response);
@@ -165,7 +166,8 @@ class ResponseFactoryTest extends TestCase
         Route::middleware([StartSession::class, ExampleMiddleware::class])->get('/', function () {
             Inertia::share('foo', 'bar');
 
-            return Inertia::render('User/Edit', new class() implements Arrayable {
+            return Inertia::render('User/Edit', new class() implements Arrayable
+            {
                 public function toArray()
                 {
                     return [
