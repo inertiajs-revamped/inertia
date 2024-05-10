@@ -15,6 +15,7 @@ use Illuminate\Http\Response as BaseResponse;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Http\Resources\Json\ResourceCollection;
+use stdClass;
 
 class ResponseTest extends TestCase
 {
@@ -35,7 +36,8 @@ class ResponseTest extends TestCase
         $user = ['name' => 'Jonathan'];
         $response = new Response('User/Edit', ['user' => $user], 'app', '123');
         $response = $response->toResponse($request);
-        $view = $response->getOriginalContent();
+        $view = $response instanceof BaseResponse
+            ? $response->getOriginalContent() : new \stdClass();
         $page = $view->getData()['page'];
 
         $this->assertInstanceOf(BaseResponse::class, $response);
@@ -56,7 +58,8 @@ class ResponseTest extends TestCase
         $user = (object) ['name' => 'Jonathan'];
         $response = new Response('User/Edit', ['user' => $user], 'app', '123');
         $response = $response->toResponse($request);
-        $page = $response->getData();
+        $page = $response instanceof BaseResponse
+            ? $response->getData() : new \stdClass();
 
         $this->assertInstanceOf(JsonResponse::class, $response);
         $this->assertSame('User/Edit', $page->component);
@@ -74,7 +77,8 @@ class ResponseTest extends TestCase
 
         $response = new Response('User/Edit', ['user' => $resource], 'app', '123');
         $response = $response->toResponse($request);
-        $page = $response->getData();
+        $page = $response instanceof BaseResponse
+            ? $response->getData() : new \stdClass();
 
         $this->assertInstanceOf(JsonResponse::class, $response);
         $this->assertSame('User/Edit', $page->component);
@@ -97,13 +101,15 @@ class ResponseTest extends TestCase
         $callable = static function () use ($users) {
             $page = new LengthAwarePaginator($users->take(2), $users->count(), 2);
 
-            return new class($page, JsonResource::class) extends ResourceCollection {
+            return new class($page, JsonResource::class) extends ResourceCollection
+            {
             };
         };
 
         $response = new Response('User/Index', ['users' => $callable], 'app', '123');
         $response = $response->toResponse($request);
-        $page = $response->getData();
+        $page = $response instanceof BaseResponse
+            ? $response->getData() : new \stdClass();
 
         $expected = [
             'data' => $users->take(2),
@@ -151,13 +157,16 @@ class ResponseTest extends TestCase
 
             // nested array with ResourceCollection to resolve
             return [
-                'users' => new class($page, JsonResource::class) extends ResourceCollection {},
+                'users' => new class($page, JsonResource::class) extends ResourceCollection
+                {
+                },
             ];
         };
 
         $response = new Response('User/Index', ['something' => $callable], 'app', '123');
         $response = $response->toResponse($request);
-        $page = $response->getData();
+        $page = $response instanceof BaseResponse
+            ? $response->getData() : new \stdClass();
 
         $expected = [
             'users' => [
@@ -200,7 +209,8 @@ class ResponseTest extends TestCase
 
         $response = new Response('User/Edit', ['user' => $resource], 'app', '123');
         $response = $response->toResponse($request);
-        $page = $response->getData();
+        $page = $response instanceof BaseResponse
+            ? $response->getData() : new \stdClass();
 
         $this->assertInstanceOf(JsonResponse::class, $response);
         $this->assertSame('User/Edit', $page->component);
@@ -216,14 +226,16 @@ class ResponseTest extends TestCase
 
         $user = (object) ['name' => 'Jonathan'];
 
-        $promise = Mockery::mock('GuzzleHttp\Promise\PromiseInterface')
-            ->shouldReceive('wait')
+        /** @var GuzzleHttp\Promise\PromiseInterface */
+        $promise = Mockery::mock('GuzzleHttp\Promise\PromiseInterface');
+        $promise = $promise->shouldReceive('wait')
             ->andReturn($user)
             ->mock();
 
         $response = new Response('User/Edit', ['user' => $promise], 'app', '123');
         $response = $response->toResponse($request);
-        $page = $response->getData();
+        $page = $response instanceof BaseResponse
+            ? $response->getData() : new \stdClass();
 
         $this->assertInstanceOf(JsonResponse::class, $response);
         $this->assertSame('User/Edit', $page->component);
@@ -242,7 +254,8 @@ class ResponseTest extends TestCase
         $user = (object) ['name' => 'Jonathan'];
         $response = new Response('User/Edit', ['user' => $user, 'partial' => 'partial-data'], 'app', '123');
         $response = $response->toResponse($request);
-        $page = $response->getData();
+        $page = $response instanceof BaseResponse
+            ? $response->getData() : new \stdClass();
 
         $props = get_object_vars($page->props);
 
@@ -266,7 +279,8 @@ class ResponseTest extends TestCase
 
         $response = new Response('Users', ['users' => [], 'lazy' => $lazyProp], 'app', '123');
         $response = $response->toResponse($request);
-        $page = $response->getData();
+        $page = $response instanceof BaseResponse
+            ? $response->getData() : new \stdClass();
 
         $this->assertSame([], $page->props->users);
         $this->assertFalse(property_exists($page->props, 'lazy'));
@@ -285,7 +299,8 @@ class ResponseTest extends TestCase
 
         $response = new Response('Users', ['users' => [], 'lazy' => $lazyProp], 'app', '123');
         $response = $response->toResponse($request);
-        $page = $response->getData();
+        $page = $response instanceof BaseResponse
+            ? $response->getData() : new \stdClass();
 
         $this->assertFalse(property_exists($page->props, 'users'));
         $this->assertSame('A lazy value', $page->props->lazy);
@@ -310,7 +325,8 @@ class ResponseTest extends TestCase
 
         $response = new Response('User/Edit', $props, 'app', '123');
         $response = $response->toResponse($request);
-        $page = $response->getData(true);
+        $page = $response instanceof BaseResponse
+            ? $response->getData(true) : new \stdClass();
 
         $user = $page['props']['auth']['user'];
         $this->assertSame('Jonathan Reinink', $user['name']);
@@ -337,7 +353,8 @@ class ResponseTest extends TestCase
 
         $response = new Response('User/Edit', $props, 'app', '123');
         $response = $response->toResponse($request);
-        $page = $response->getData(true);
+        $page = $response instanceof BaseResponse
+            ? $response->getData(true) : new \stdClass();
 
         $auth = $page['props']['auth'];
         $this->assertSame('Jonathan Reinink', $auth['user']['name']);
@@ -354,7 +371,8 @@ class ResponseTest extends TestCase
 
         $response = new Response('User/Edit', ['resource' => $resource], 'app', '123');
         $response = $response->toResponse($request);
-        $page = $response->getData(true);
+        $page = $response instanceof BaseResponse
+            ? $response->getData(true) : new \stdClass();
 
         $this->assertSame(
             ["\x00*\x00_invalid_key" => 'for object'],
@@ -377,7 +395,8 @@ class ResponseTest extends TestCase
         $user = ['name' => 'Jonathan'];
         $response = new Response('User/Edit', ['user' => $user], 'app', '123');
         $response = $response->toResponse($request);
-        $view = $response->getOriginalContent();
+        $view = $response instanceof BaseResponse
+            ? $response->getOriginalContent() : new \stdClass();
         $page = $view->getData()['page'];
 
         $this->assertInstanceOf(BaseResponse::class, $response);
@@ -396,7 +415,8 @@ class ResponseTest extends TestCase
 
         $response = new Response('Product/Show', []);
         $response = $response->toResponse($request);
-        $page = $response->getData();
+        $page = $response instanceof BaseResponse
+            ? $response->getData() : new \stdClass();
 
         $this->assertSame('/subpath/product/123', $page->url);
     }
