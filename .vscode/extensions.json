@@ -1,3 +1,8 @@
 {
-  "recommendations": ["biomejs.biome", "DavidAnson.vscode-markdownlint"]
+  "recommendations": [
+    "biomejs.biome",
+    "bmewburn.vscode-intelephense-client",
+    "junstyle.php-cs-fixer",
+    "DavidAnson.vscode-markdownlint"
+  ]
 }
