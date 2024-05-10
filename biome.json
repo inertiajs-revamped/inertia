@@ -4,6 +4,7 @@
     "ignore": [
       "**/cache/**",
       "**/dist/**",
+      "**/vendor/**",
       "**/node_modules/**",
       "**/public/**",
       "sandboxes/**",
