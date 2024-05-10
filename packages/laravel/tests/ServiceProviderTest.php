@@ -26,6 +26,7 @@ class ServiceProviderTest extends TestCase
 
     public function test_route_macro_is_registered(): void
     {
+        /** @var \Illuminate\Routing\Route */
         $route = Route::inertia('/', 'User/Edit', ['user' => ['name' => 'Jonathan']]);
         $routes = Route::getRoutes();
 
