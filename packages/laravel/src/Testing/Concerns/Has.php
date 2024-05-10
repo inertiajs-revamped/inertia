@@ -63,6 +63,7 @@ trait Has
         }
 
         if (is_callable($value)) {
+            /** @var \Closure $value */
             $this->scope($key, $value);
         } elseif (! is_null($value)) {
             $this->count($key, $value);

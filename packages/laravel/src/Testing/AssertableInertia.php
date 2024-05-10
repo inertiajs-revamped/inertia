@@ -8,6 +8,9 @@ use PHPUnit\Framework\Assert as PHPUnit;
 use PHPUnit\Framework\AssertionFailedError;
 use Illuminate\Testing\Fluent\AssertableJson;
 
+/**
+ * @mixin \Illuminate\Testing\TestResponse
+ */
 class AssertableInertia extends AssertableJson
 {
     /** @var string */
