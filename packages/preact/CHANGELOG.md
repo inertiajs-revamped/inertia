@@ -1,5 +1,21 @@
 # Changelog - @inertiajs-revamped/preact
 
+## 0.0.3 (2024-05-11)
+
+### Code Refactoring
+
+- replace `default` with named exports ([6445559](https://github.com/inertiajs-revamped/inertia/commit/6445559))
+
+### Bug Fixes
+
+- add type annotation to explicitly specify the type of `Link` & `App`, omits default-wildcard imports from d.ts bundle ([0017660](https://github.com/inertiajs-revamped/inertia/commit/0017660))
+- fix `Link.onClick` event not fired ([b0123b6](https://github.com/inertiajs-revamped/inertia/commit/b0123b6))
+
+### Builds
+
+- update dependency @types/node to ^20.12.11 ([96686b8](https://github.com/inertiajs-revamped/inertia/commit/96686b8))
+- update dependency preact to >=10.21.0 ([f5fba01](https://github.com/inertiajs-revamped/inertia/commit/f5fba01))
+
 ## 0.0.2 (2024-05-02)
 
 ### Code Refactoring

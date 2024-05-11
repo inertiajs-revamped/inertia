@@ -1,5 +1,21 @@
 # Changelog - @inertiajs-revamped/vue
 
+## 0.0.4 (2024-05-11)
+
+### Code Refactoring
+
+- replace `default` with named exports ([bef108b](https://github.com/inertiajs-revamped/inertia/commit/bef108b))
+
+### Bug Fixes
+
+- infer prop types from `InstanceType`, add missing exports, closes #39 ([ea52af0](https://github.com/inertiajs-revamped/inertia/commit/ea52af0))
+- fix setup `props` type error ([3fb081a](https://github.com/inertiajs-revamped/inertia/commit/3fb081a))
+
+### Builds
+
+- update vue monorepo to ^3.4.27 ([6a900cb](https://github.com/inertiajs-revamped/inertia/commit/6a900cb))
+- update dependency @types/node to ^20.12.11 ([96686b8](https://github.com/inertiajs-revamped/inertia/commit/96686b8))
+
 ## 0.0.3 (2024-05-04)
 
 ### Bug Fixes

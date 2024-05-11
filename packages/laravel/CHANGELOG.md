@@ -1,5 +1,25 @@
 # Changelog - @inertiajs-revamped/laravel
 
+## 0.0.2 (2024-05-10)
+
+### Code Refactoring
+
+- improve directory structure ([af18ac8](https://github.com/inertiajs-revamped/inertia/commit/af18ac8))
+
+### Bug Fixes
+
+- add `$request->inertia()` ide helper, based on [inertia-laravel/pull/496](https://github.com/inertiajs/inertia-laravel/pull/496) ([a68f2e4](https://github.com/inertiajs-revamped/inertia/commit/a68f2e4))
+
+### Builds
+
+- drop unsupported testbench & phpunit versions ([e5829ad](https://github.com/inertiajs-revamped/inertia/commit/e5829ad))
+- update dependency mockery/mockery to v1.6.11 ([cfaa11b](https://github.com/inertiajs-revamped/inertia/commit/cfaa11b))
+- update dependency phpunit/phpunit to v10.5 ([5bd2ab6](https://github.com/inertiajs-revamped/inertia/commit/5bd2ab6))
+
+### Tests
+
+- fix type errors in response test ([ae37878](https://github.com/inertiajs-revamped/inertia/commit/ae37878))
+
 ## 0.0.1 (2024-04-18)
 
 ### Code Refactoring

@@ -1,5 +1,21 @@
 # Changelog - @inertiajs-revamped/react
 
+## 0.0.3 (2024-05-11)
+
+### Code Refactoring
+
+- replace `default` with named exports ([fa860ed](https://github.com/inertiajs-revamped/inertia/commit/fa860ed))
+
+### Bug Fixes
+
+- fix `Link.onClick` event not fired ([29d158d](https://github.com/inertiajs-revamped/inertia/commit/29d158d))
+
+### Builds
+
+- update dependency @types/react to ^18.3.2 ([05c4a66](https://github.com/inertiajs-revamped/inertia/commit/05c4a66))
+- update dependency @types/node to ^20.12.11 ([96686b8](https://github.com/inertiajs-revamped/inertia/commit/96686b8))
+- update dependency react to >=18.3.1 ([be55995](https://github.com/inertiajs-revamped/inertia/commit/be55995))
+
 ## 0.0.2 (2024-05-02)
 
 ### Code Refactoring

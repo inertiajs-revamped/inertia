@@ -1,5 +1,15 @@
 # Changelog - @inertiajs-revamped/core
 
+## 0.0.3 (2024-05-11)
+
+### Code Refactoring
+
+- replace `default` with named exports ([73fba92](https://github.com/inertiajs-revamped/inertia/commit/73fba92))
+
+### Builds
+
+- update dependency @types/node to ^20.12.11 ([96686b8](https://github.com/inertiajs-revamped/inertia/commit/96686b8))
+
 ## 0.0.2 (2024-05-02)
 
 ### Code Refactoring
