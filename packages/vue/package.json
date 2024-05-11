@@ -66,14 +66,14 @@
     "@types/lodash.isequal": "^4.5.8",
     "lodash.clonedeep": "^4.5.0",
     "lodash.isequal": "^4.5.0",
-    "vue": "^3.4.26"
+    "vue": "^3.4.27"
   },
   "devDependencies": {
     "@types/node": "^20.12.11",
-    "@vue/runtime-core": "^3.4.26"
+    "@vue/runtime-core": "^3.4.27"
   },
   "peerDependencies": {
-    "vue": ">=3.4.26"
+    "vue": ">=3.4.27"
   },
   "engines": {
     "node": ">=18.12.0"
