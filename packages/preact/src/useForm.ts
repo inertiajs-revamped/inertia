@@ -5,7 +5,7 @@ import {
   type VisitOptions,
   router,
 } from '@inertiajs-revamped/core'
-import isEqual from 'lodash.isequal'
+import { deepEqual } from 'fast-equals'
 import { useCallback, useEffect, useRef, useState } from 'preact/hooks'
 import { useRemember } from './useRemember'
 
@@ -211,7 +211,7 @@ export function useForm<TForm extends FormDataType>(
         setData(keyOrData as TForm)
       }
     },
-    isDirty: !isEqual(data, defaults),
+    isDirty: !deepEqual(data, defaults),
     errors,
     hasErrors,
     processing,
