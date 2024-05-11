@@ -7,7 +7,7 @@ import {
   getStructuredClone,
   router,
 } from '@inertiajs-revamped/core'
-import isEqual from 'lodash.isequal'
+import { deepEqual } from 'fast-equals'
 import { reactive, watch } from 'vue'
 
 export type FormDataType = object
@@ -286,7 +286,7 @@ export function useForm<TForm extends FormDataType>(
   watch(
     form,
     (newValue) => {
-      form.isDirty = !isEqual(form.data(), defaults)
+      form.isDirty = !deepEqual(form.data(), defaults)
       if (rememberKey) {
         router.remember(getStructuredClone(newValue.__remember()), rememberKey)
       }

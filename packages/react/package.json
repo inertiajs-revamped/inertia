@@ -62,10 +62,9 @@
   },
   "dependencies": {
     "@inertiajs-revamped/core": "workspace:*",
-    "@types/lodash.isequal": "^4.5.8",
     "@types/react": "^18.3.2",
     "@types/react-dom": "^18.3.0",
-    "lodash.isequal": "^4.5.0",
+    "fast-equals": "^5.0.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1"
   },

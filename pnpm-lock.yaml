@@ -102,12 +102,9 @@ importers:
       '@inertiajs-revamped/core':
         specifier: workspace:*
         version: link:../core
-      '@types/lodash.isequal':
-        specifier: ^4.5.8
-        version: 4.5.8
-      lodash.isequal:
-        specifier: ^4.5.0
-        version: 4.5.0
+      fast-equals:
+        specifier: ^5.0.1
+        version: 5.0.1
       preact:
         specifier: ^10.21.0
         version: 10.21.0
@@ -130,18 +127,15 @@ importers:
       '@inertiajs-revamped/core':
         specifier: workspace:*
         version: link:../core
-      '@types/lodash.isequal':
-        specifier: ^4.5.8
-        version: 4.5.8
       '@types/react':
         specifier: ^18.3.2
         version: 18.3.2
       '@types/react-dom':
         specifier: ^18.3.0
         version: 18.3.0
-      lodash.isequal:
-        specifier: ^4.5.0
-        version: 4.5.0
+      fast-equals:
+        specifier: ^5.0.1
+        version: 5.0.1
       react:
         specifier: ^18.3.1
         version: 18.3.1
@@ -158,12 +152,9 @@ importers:
       '@inertiajs-revamped/core':
         specifier: workspace:*
         version: link:../core
-      '@types/lodash.isequal':
-        specifier: ^4.5.8
-        version: 4.5.8
-      lodash.isequal:
-        specifier: ^4.5.0
-        version: 4.5.0
+      fast-equals:
+        specifier: ^5.0.1
+        version: 5.0.1
       vue:
         specifier: ^3.4.27
         version: 3.4.27(typescript@5.4.5)
@@ -734,12 +725,6 @@ packages:
   '@types/linkify-it@5.0.0':
     resolution: {integrity: sha512-sVDA58zAw4eWAffKOaQH5/5j3XeayukzDk+ewSsnv3p4yJEZHCCzMDiZM8e0OUrRvmpGZ85jf4yDHkHsgBNr9Q==}
 
-  '@types/lodash.isequal@4.5.8':
-    resolution: {integrity: sha512-uput6pg4E/tj2LGxCZo9+y27JNyB2OZuuI/T5F+ylVDYuqICLG2/ktjxx0v6GvVntAf8TvEzeQLcV0ffRirXuA==}
-
-  '@types/lodash@4.17.1':
-    resolution: {integrity: sha512-X+2qazGS3jxLAIz5JDXDzglAF3KpijdhFxlf/V1+hEsOUc+HnWi81L/uv/EvGuV90WY+7mPGFCUDGfQC3Gj95Q==}
-
   '@types/markdown-it@14.1.1':
     resolution: {integrity: sha512-4NpsnpYl2Gt1ljyBGrKMxFYAYvpqbnnkgP/i/g+NLpjEUa3obn1XJCur9YbEXKDAkaXqsR1LbDnGEJ0MmKFxfg==}
 
@@ -1144,6 +1129,10 @@ packages:
     resolution: {integrity: sha512-VyhnebXciFV2DESc+p6B+y0LjSm0krU4OgJN44qFAhBY0TJ+1V61tYD2+wHusZ6F9n5K+vl8k0sTy7PEfV4qpg==}
     engines: {node: '>=16.17'}
 
+  fast-equals@5.0.1:
+    resolution: {integrity: sha512-WF1Wi8PwwSY7/6Kx0vKXtw8RwuSGoM1bvDaJbu7MxDlR1vovZjIAKrnzyrThgAjm6JDTu0fVgWXDlMGspodfoQ==}
+    engines: {node: '>=6.0.0'}
+
   fast-glob@3.3.2:
     resolution: {integrity: sha512-oX2ruAFQwf/Orj8m737Y5adxDQO0LAB7/S5MnxCdTNDd4p6BsyIVsv9JQsATbTSq8KHRpLwIHbVlUNatxd+1Ow==}
     engines: {node: '>=8.6.0'}
@@ -1449,9 +1438,6 @@ packages:
   local-pkg@0.5.0:
     resolution: {integrity: sha512-ok6z3qlYyCDS4ZEU27HaU6x/xZa9Whf8jD4ptH5UZTQYZVYeb9bnZ3ojVhiJNLiXK1Hfc0GNbLXcmZ5plLDDBg==}
     engines: {node: '>=14'}
-
-  lodash.isequal@4.5.0:
-    resolution: {integrity: sha512-pDo3lu8Jhfjqls6GkMgpahsF9kCyayhgykjyLMNFTKWrpVdAQtYyB4muAMWozBB4ig/dtWAmsMxLEI8wuz+DYQ==}
 
   log-update@6.0.0:
     resolution: {integrity: sha512-niTvB4gqvtof056rRIrTZvjNYE4rCUzO6X/X+kYjd7WFxXeJ0NwEFnRxX6ehkvv3jTwrXnNdtAak5XYZuIyPFw==}
@@ -2600,12 +2586,6 @@ snapshots:
 
   '@types/linkify-it@5.0.0': {}
 
-  '@types/lodash.isequal@4.5.8':
-    dependencies:
-      '@types/lodash': 4.17.1
-
-  '@types/lodash@4.17.1': {}
-
   '@types/markdown-it@14.1.1':
     dependencies:
       '@types/linkify-it': 5.0.0
@@ -3055,6 +3035,8 @@ snapshots:
       signal-exit: 4.1.0
       strip-final-newline: 3.0.0
 
+  fast-equals@5.0.1: {}
+
   fast-glob@3.3.2:
     dependencies:
       '@nodelib/fs.stat': 2.0.5
@@ -3354,8 +3336,6 @@ snapshots:
     dependencies:
       mlly: 1.7.0
       pkg-types: 1.1.0
-
-  lodash.isequal@4.5.0: {}
 
   log-update@6.0.0:
     dependencies:
