@@ -1,5 +1,4 @@
-import { router } from '@inertiajs-revamped/core'
-import cloneDeep from 'lodash.clonedeep'
+import { getStructuredClone, router } from '@inertiajs-revamped/core'
 import type { ComponentOptions } from 'vue'
 
 export const remember: ComponentOptions = {
@@ -66,7 +65,7 @@ export const remember: ComponentOptions = {
               // @ts-expect-error
               (data, key) => ({
                 ...data,
-                [key]: cloneDeep(
+                [key]: getStructuredClone(
                   hasCallbacks(key) ? this[key].__remember() : this[key]
                 ),
               }),

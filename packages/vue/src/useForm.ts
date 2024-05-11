@@ -4,9 +4,9 @@ import {
   type Method,
   type Progress,
   type VisitOptions,
+  getStructuredClone,
   router,
 } from '@inertiajs-revamped/core'
-import cloneDeep from 'lodash.clonedeep'
 import isEqual from 'lodash.isequal'
 import { reactive, watch } from 'vue'
 
@@ -62,13 +62,16 @@ export function useForm<TForm extends FormDataType>(
         errors: Record<keyof TForm, string>
       })
     : null
-  let defaults = typeof data === 'object' ? cloneDeep(data) : cloneDeep(data())
+  let defaults =
+    typeof data === 'object'
+      ? getStructuredClone(data)
+      : getStructuredClone(data())
   let cancelToken = null
   let recentlySuccessfulTimeoutId = null
   let transform = (data) => data
 
   const form = reactive({
-    ...(restored ? restored.data : cloneDeep(defaults)),
+    ...(restored ? restored.data : getStructuredClone(defaults)),
     isDirty: false,
     errors: restored ? restored.errors : {},
     hasErrors: false,
@@ -105,7 +108,7 @@ export function useForm<TForm extends FormDataType>(
       } else {
         defaults = Object.assign(
           {},
-          cloneDeep(defaults),
+          getStructuredClone(defaults),
           typeof fieldOrFields === 'string'
             ? { [fieldOrFields]: maybeValue }
             : fieldOrFields
@@ -116,8 +119,10 @@ export function useForm<TForm extends FormDataType>(
     },
     reset(...fields) {
       const resolvedData =
-        typeof data === 'object' ? cloneDeep(defaults) : cloneDeep(data())
-      const clonedData = cloneDeep(resolvedData)
+        typeof data === 'object'
+          ? getStructuredClone(defaults)
+          : getStructuredClone(data())
+      const clonedData = getStructuredClone(resolvedData)
       if (fields.length === 0) {
         defaults = clonedData
         Object.assign(this, resolvedData)
@@ -210,7 +215,7 @@ export function useForm<TForm extends FormDataType>(
           const onSuccess = options.onSuccess
             ? await options.onSuccess(page)
             : null
-          defaults = cloneDeep(this.data())
+          defaults = getStructuredClone(this.data())
           this.isDirty = false
           return onSuccess
         },
@@ -283,7 +288,7 @@ export function useForm<TForm extends FormDataType>(
     (newValue) => {
       form.isDirty = !isEqual(form.data(), defaults)
       if (rememberKey) {
-        router.remember(cloneDeep(newValue.__remember()), rememberKey)
+        router.remember(getStructuredClone(newValue.__remember()), rememberKey)
       }
     },
     { immediate: true, deep: true }
