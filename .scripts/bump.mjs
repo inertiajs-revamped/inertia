@@ -1,5 +1,4 @@
 #!/usr/bin/env node
-import { createRequire } from 'node:module'
 import { listRepoManifests } from '@bscotch/workspaces'
 import { colorize } from 'colorize-node'
 import semver from 'semver'
@@ -41,6 +40,8 @@ async function bump() {
       (pkg) =>
         pkg.package.private !== true && pkg.package.name === selectedPackage
     )
+
+    if (!pkg[0]) return
 
     const {
       package: { name, version },

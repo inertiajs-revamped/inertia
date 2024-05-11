@@ -57,7 +57,7 @@ await renderMonorepoConventionalCommits(
       const sections = groups.map((group) => {
         const changes = version.groups[group]
         const commits = changes
-          .map((commit) => {
+          ?.map((commit) => {
             const shortHash = commit.log.hash.slice(0, 7)
             return `- ${commit.variables.description} ([${shortHash}](https://github.com/inertiajs-revamped/inertia/commit/${shortHash}))`
           })

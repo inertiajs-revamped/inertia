@@ -4,10 +4,15 @@
     "module": "ESNext",
     "target": "ES2022",
     "moduleResolution": "Bundler",
-    "resolveJsonModule": true,
     "noEmit": true,
     "allowJs": true,
     "checkJs": true,
+    "strict": true,
+    "exactOptionalPropertyTypes": true,
+    "noUnusedLocals": true,
+    "noUncheckedIndexedAccess": true,
+    "resolveJsonModule": true,
+    "verbatimModuleSyntax": true,
     "lib": ["esnext"],
     "types": ["node", "@bscotch/workspaces"]
   }

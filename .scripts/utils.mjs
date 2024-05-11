@@ -77,9 +77,14 @@ export async function selectPrompt({ question, options, pointer }) {
           process.stdout.write('\x1B[?25h')
           process.stdout.write('\n')
           selectedOption = options[selectIndex]
-          if (!options.includes(selectedOption))
-            throw new Error('The selected option does not exist.')
-          resolve(selectedOption)
+
+          if (selectedOption) {
+            if (!options.includes(selectedOption)) {
+              throw new Error('The selected option does not exist.')
+            }
+
+            resolve(selectedOption)
+          }
         }
 
         if (name === 'escape' || (name === 'c' && ctrl)) {
