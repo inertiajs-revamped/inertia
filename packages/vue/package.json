@@ -62,9 +62,7 @@
   },
   "dependencies": {
     "@inertiajs-revamped/core": "workspace:*",
-    "@types/lodash.clonedeep": "^4.5.9",
     "@types/lodash.isequal": "^4.5.8",
-    "lodash.clonedeep": "^4.5.0",
     "lodash.isequal": "^4.5.0",
     "vue": "^3.4.27"
   },

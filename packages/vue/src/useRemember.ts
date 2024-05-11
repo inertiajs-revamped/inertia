@@ -1,5 +1,4 @@
-import { router } from '@inertiajs-revamped/core'
-import cloneDeep from 'lodash.clonedeep'
+import { getStructuredClone, router } from '@inertiajs-revamped/core'
 import { type Ref, isReactive, reactive, ref, watch } from 'vue'
 
 export function useRemember<T extends object>(
@@ -35,7 +34,7 @@ export function useRemember<T extends object>(
     remembered,
     (newValue) => {
       router.remember(
-        cloneDeep(hasCallbacks ? data.__remember?.() : newValue),
+        getStructuredClone(hasCallbacks ? data.__remember?.() : newValue),
         key
       )
     },
