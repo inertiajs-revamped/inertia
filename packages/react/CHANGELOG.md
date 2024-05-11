@@ -2,6 +2,22 @@
 
 ## 0.0.2 (2024-05-02)
 
+### Code Refactoring
+
+- replace default with named export in progress.ts ([04ef2bc](https://github.com/inertiajs-revamped/inertia/commit/04ef2bc))
+- replace default with named export in server.ts ([dbe7eac](https://github.com/inertiajs-revamped/inertia/commit/dbe7eac))
+
+### Bug Fixes
+
+- fix `peerDependencies` version ([7449bfa](https://github.com/inertiajs-revamped/inertia/commit/7449bfa))
+- fix type exports ([08af4f3](https://github.com/inertiajs-revamped/inertia/commit/08af4f3))
+
+### Builds
+
+- update dependency @types/node to ^20.12.8 ([2d1a120](https://github.com/inertiajs-revamped/inertia/commit/2d1a120))
+
+## 0.0.1 (2024-04-26)
+
 ### Features
 
 - export function `resolvePageComponent` from core ([2c729c1](https://github.com/inertiajs-revamped/inertia/commit/2c729c1))
@@ -11,8 +27,6 @@
 
 ### Code Refactoring
 
-- replace default with named export in progress.ts ([04ef2bc](https://github.com/inertiajs-revamped/inertia/commit/04ef2bc))
-- replace default with named export in server.ts ([dbe7eac](https://github.com/inertiajs-revamped/inertia/commit/dbe7eac))
 - export `createProgress` from adapters, excludes progress from bundle by default ([d224363](https://github.com/inertiajs-revamped/inertia/commit/d224363))
 - export `default as createServer` to avoid forcing `allowSyntheticDefaultImports` flag ([7f6544c](https://github.com/inertiajs-revamped/inertia/commit/7f6544c))
 - replace typeof `renderToString`, removes react-dom from `peerDependencies` ([ad65d99](https://github.com/inertiajs-revamped/inertia/commit/ad65d99))
@@ -25,8 +39,6 @@
 
 ### Bug Fixes
 
-- fix `peerDependencies` version ([7449bfa](https://github.com/inertiajs-revamped/inertia/commit/7449bfa))
-- fix type exports ([08af4f3](https://github.com/inertiajs-revamped/inertia/commit/08af4f3))
 - fix the remaining type errors ([22d3cb7](https://github.com/inertiajs-revamped/inertia/commit/22d3cb7))
 - capitalize and make `PageContext` generic or `null`, force `usePage` return type explicit ([8d7ffbc](https://github.com/inertiajs-revamped/inertia/commit/8d7ffbc))
 - capitalize and make `HeadContext` generic or `null`, fixes multiple ts(2769) ([c4bd85a](https://github.com/inertiajs-revamped/inertia/commit/c4bd85a))
@@ -54,7 +66,3 @@
 - replace default `React` imports with named imports in link.ts ([0899a77](https://github.com/inertiajs-revamped/inertia/commit/0899a77))
 - replace default `React` import with named in head.ts ([b46e225](https://github.com/inertiajs-revamped/inertia/commit/b46e225))
 - ensure that all imports used only as a type use a type-only `import` ([6ae2d05](https://github.com/inertiajs-revamped/inertia/commit/6ae2d05))
-
-### Builds
-
-- update dependency @types/node to ^20.12.8 ([2d1a120](https://github.com/inertiajs-revamped/inertia/commit/2d1a120))
