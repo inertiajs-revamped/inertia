@@ -1,6 +1,6 @@
 {
   "name": "@inertiajs-revamped/preact",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "The Preact adapter for Inertia.js-Revamped",
   "homepage": "https://inertiajs-revamped.com",
   "bugs": {
