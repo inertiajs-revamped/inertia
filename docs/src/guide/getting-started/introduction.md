@@ -38,8 +38,8 @@ Community related:
 
 ### Recent changes
 
-Temporary changelogs for the forked/migrated packages can be found in the root [CHANGELOG.md](https://github.com/inertiajs-revamped/inertia/tree/main/CHANGELOG.md).
-See the `CHANGELOG.md` from the [packages](https://github.com/inertiajs-revamped/inertia/tree/main/packages) for a full list of changes.
+* See [migration guide](http://127.0.0.1:5173/guide/getting-started/migration) for the initial package changelogs from the forked/migrated packages.
+* See the `CHANGELOG.md` from the [packages](https://github.com/inertiajs-revamped/inertia/tree/main/packages) for a full list of changes.
 
 ## Community
 
