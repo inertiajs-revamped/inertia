@@ -49,21 +49,36 @@ jobs:
           skip_after_successful_duplicate: false
 
   php-ci:
-    name: PHP ${{ matrix.php-versions }} CI ${{ matrix.operating-system }}
     needs: skip-check
     if: ${{ needs.skip-check.outputs.should_skip != 'true' }}
     defaults:
       run:
         working-directory: ./packages/laravel
-    runs-on: ${{ matrix.operating-system }}
+    runs-on: ${{ matrix.os }}
     strategy:
+      fail-fast: true
       matrix:
-        operating-system: [ubuntu-latest]
-        php-versions: ['8.1', '8.2', '8.3']
-        prefer: ['prefer-lowest', 'prefer-stable']
+        os: [ ubuntu-latest ]
+        php: ['8.1', '8.2', '8.3']
+        laravel: [9.*, 10.*, 11.*]
+        stability: ['prefer-stable']
+        include:
+          - laravel: 9.*
+            testbench: ^7.0
+          - laravel: 10.*
+            testbench: ^8.0
+          - laravel: 11.*
+            testbench: ^9.0
+        exclude:
+          - laravel: 10.*
+            php: 8.0
+          - laravel: 11.*
+            php: 8.1
     permissions:
       contents: write
     timeout-minutes: 45
+
+    name: PHP${{ matrix.php }} - LARAVEL${{ matrix.laravel }} - ${{ matrix.stability }} - ${{ matrix.os }}
 
     steps:
       - name: Checkout code
@@ -72,7 +87,7 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@c665c7a15b5295c2488ac8a87af9cb806cd72198 # 20.30.4
         with:
-          php-version: ${{ matrix.php-versions }}
+          php-version: ${{ matrix.php }}
           extensions: dom, curl, libxml, mbstring, zip
           ini-values: error_reporting=E_ALL
           tools: composer:v2
@@ -86,14 +101,18 @@ jobs:
         uses: actions/cache@0c45773b623bea8c8e75f6c82b208c3cf94ea4f9 # 4.0.2
         with:
           path: ${{ steps.composer-cache.outputs.dir }}
-          key: ${{ runner.os }}-composer-${{ matrix.prefer }}-${{ hashFiles('**/composer.lock') }}
-          restore-keys: ${{ runner.os }}-composer-${{ matrix.prefer }}-
+          key: ${{ runner.os }}-composer-${{ matrix.stability }}-${{ hashFiles('**/composer.lock') }}
+          restore-keys: ${{ runner.os }}-composer-${{ matrix.stability }}-
       
-      - name: Validate lockfile
-        run: composer validate --no-check-all
-
+      - name: Setup problem matchers
+        run: |
+          echo "::add-matcher::${{ runner.tool_cache }}/php.json"
+          echo "::add-matcher::${{ runner.tool_cache }}/phpunit.json"
+          
       - name: Install dependencies
-        run: composer install --prefer-dist --no-progress --optimize-autoloader
+        run: |
+          composer require "laravel/framework:${{ matrix.laravel }}" "orchestra/testbench:${{ matrix.testbench }}" --no-interaction --no-update
+          composer update --${{ matrix.stability }} --prefer-dist --no-interaction
 
       - name: Run test
         run: vendor/bin/phpunit
