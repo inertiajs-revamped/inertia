@@ -52,6 +52,9 @@ jobs:
     name: PHP ${{ matrix.php-versions }} CI ${{ matrix.operating-system }}
     needs: skip-check
     if: ${{ needs.skip-check.outputs.should_skip != 'true' }}
+    defaults:
+      run:
+        working-directory: ./packages/laravel
     runs-on: ${{ matrix.operating-system }}
     strategy:
       matrix:
