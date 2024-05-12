@@ -4,6 +4,16 @@ import { defineProject } from 'vitest/config'
 
 export default defineProject({
   test: {
+    isolate: false,
+    mockReset: true,
+    restoreMocks: true,
+    unstubGlobals: true,
     environment: 'jsdom',
+    pool: 'threads',
+    poolOptions: {
+      threads: {
+        singleThread: true,
+      },
+    },
   },
 })
