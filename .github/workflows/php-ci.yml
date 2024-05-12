@@ -1,4 +1,4 @@
-name: Build Workflow
+name: Laravel Adapter
 
 on:
   workflow_dispatch:

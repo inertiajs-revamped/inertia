@@ -1,4 +1,4 @@
-name: Build Workflow
+name: Node.js Adapter
 
 on:
   workflow_dispatch:
