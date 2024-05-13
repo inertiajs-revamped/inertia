@@ -17,7 +17,7 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  NPM_VERSION: 21.8.0
+  NPM_VERSION: 21.7.2
 
 jobs:
   skip-check:
