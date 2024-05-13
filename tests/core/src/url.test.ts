@@ -6,16 +6,20 @@ import {
   urlWithoutHash,
 } from '@inertiajs-revamped/core'
 
-const mockUrlWithHash = new URL('https://example.org/foo#bar')
-const mockUrlWithoutHash = new URL('https://example.org/foo')
-const mockUrlWithQuery = new URL('https://example.org/foo?param=value')
-const mockUrlWithEmptyHash = new URL('https://example.org/foo#')
-const mockUrlWithHashAndQuery = new URL(
-  'https://example.org/foo?param=value#bar'
-)
-const mockLocation = { href: 'https://example.org/foo#bar' } as Location
-
 describe('url.ts', () => {
+  const params = {
+    key1: 'value1',
+    key2: ['value2a', 'value2b'],
+  }
+  const mockUrlWithHash = new URL('https://example.org/foo#bar')
+  const mockUrlWithoutHash = new URL('https://example.org/foo')
+  const mockUrlWithQuery = new URL('https://example.org/foo?param=value')
+  const mockUrlWithEmptyHash = new URL('https://example.org/foo#')
+  const mockUrlWithHashAndQuery = new URL(
+    'https://example.org/foo?param=value#bar'
+  )
+  const mockLocation = { href: 'https://example.org/foo#bar' } as Location
+
   describe('hrefToUrl', () => {
     it('converts string to URL', () => {
       const result = hrefToUrl('https://example.org/foo#bar')
@@ -45,13 +49,36 @@ describe('url.ts', () => {
   })
 
   describe('mergeDataIntoQueryString', () => {
-    it('merges data into query string', () => {
-      const result = mergeDataIntoQueryString('get', 'home', {
-        foo: 'bar',
-        baz: 'buz',
-      })
+    it('merges data into query string with brackets array format', () => {
+      const result = mergeDataIntoQueryString('get', 'home', params, 'brackets')
+      expect(result).toEqual([
+        'home?key1=value1&key2[]=value2a&key2[]=value2b',
+        {},
+      ])
+    })
 
-      expect(result).toEqual(['home?foo=bar&baz=buz', {}])
+    // does not exist yet
+    /* it('merges data into query string with unnamed array format', () => {
+      const result = mergeDataIntoQueryString('get', 'home', params, 'unnamed')
+      expect(result).toEqual(['home?key1=value1&[]=value2a&[]=value2b', {}])
+    }) */
+
+    it('merges data into query string with indices array format', () => {
+      const result = mergeDataIntoQueryString('get', 'home', params, 'indices')
+      expect(result).toEqual([
+        'home?key1=value1&key2[0]=value2a&key2[1]=value2b',
+        {},
+      ])
+    })
+
+    it('merges data into query string with indices array format', () => {
+      const result = mergeDataIntoQueryString('get', 'home', params, 'repeat')
+      expect(result).toEqual(['home?key1=value1&key2=value2a&key2=value2b', {}])
+    })
+
+    it('merges data into query string with comma array format', () => {
+      const result = mergeDataIntoQueryString('get', 'home', params, 'comma')
+      expect(result).toEqual(['home?key1=value1&key2=value2a,value2b', {}])
     })
   })
 
