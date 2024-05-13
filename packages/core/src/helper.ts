@@ -1,4 +1,5 @@
 /** https://github.com/laravel/vite-plugin/blob/1.x/src/inertia-helpers/index.ts */
+import { isArray } from './utils'
 
 /**
  * The goal here is to still provide `resolvePageComponent` to the user, but without the need of specifying
@@ -17,7 +18,7 @@ export async function resolvePageComponent(
   path: string | string[],
   pages: Record<string, Promise<any> | (() => Promise<any>)>
 ): Promise<any> | never {
-  for (const p of Array.isArray(path) ? path : [path]) {
+  for (const p of isArray(path) ? path : [path]) {
     const page = pages[p]
 
     if (typeof page === 'undefined') {

@@ -5,7 +5,13 @@ export { hasFiles, objectToFormData } from './form-data'
 export { createHeadManager } from './head'
 export { resolvePageComponent } from './helper'
 export { shouldIntercept } from './shouldIntercept'
-export { hrefToUrl, mergeDataIntoQueryString, urlWithoutHash } from './url'
+export {
+  hrefToUrl,
+  mergeDataIntoQueryString,
+  objectToUrlParams,
+  urlParamsToObject,
+  urlWithoutHash,
+} from './url'
 export { getStructuredClone } from './utils'
 
 export type { Router }

@@ -2,6 +2,13 @@ import type { AxiosProgressEvent, AxiosResponse } from 'axios'
 
 export type Expand<T> = T extends infer O ? { [K in keyof O]: O[K] } : never
 
+export type ArrayFormat =
+  | 'brackets'
+  | 'indices'
+  | 'repeat'
+  | 'comma'
+  | 'unnamed'
+
 export interface Renderer {
   buildDOMElement(tag: string): ChildNode
   isInertiaManagedElement(element: Element): boolean

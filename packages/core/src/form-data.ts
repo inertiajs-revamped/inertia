@@ -1,4 +1,5 @@
 import type { FormDataConvertible, RequestPayload } from './types'
+import { isArray } from './utils'
 
 export function hasFiles(data: RequestPayload | FormDataConvertible): boolean {
   return (
@@ -34,7 +35,7 @@ function composeKey(parent: string | null, key: string): string {
 }
 
 function append(form: FormData, key: string, value: FormDataConvertible): void {
-  if (Array.isArray(value)) {
+  if (isArray(value)) {
     Array.from(value.keys()).forEach((index) =>
       append(form, composeKey(key, index.toString()), value[index])
     )
