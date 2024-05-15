@@ -2,6 +2,17 @@
   "name": "@inertiajs-revamped/core",
   "version": "0.0.4",
   "description": "A framework for creating server-driven single page apps",
+  "keywords": [
+    "inertia",
+    "inertiajs",
+    "inertiajs-revamped",
+    "laravel",
+    "preact",
+    "react",
+    "spa",
+    "ssr",
+    "vue"
+  ],
   "homepage": "https://inertiajs-revamped.com",
   "bugs": {
     "url": "https://github.com/inertiajs-revamped/inertia/issues",
