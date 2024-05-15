@@ -1,5 +1,11 @@
 # Changelog - @inertiajs-revamped/laravel
 
+## 0.0.3 (2024-05-12)
+
+### Bug Fixes
+
+- restore phpunit v9.5.8 compability ([4e21e8e](https://github.com/inertiajs-revamped/inertia/commit/4e21e8e))
+
 ## 0.0.2 (2024-05-10)
 
 ### Code Refactoring

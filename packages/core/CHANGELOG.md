@@ -1,5 +1,15 @@
 # Changelog - @inertiajs-revamped/core
 
+## 0.0.4 (2024-05-13)
+
+### Features
+
+- add structured-clone as deepclone replacement ([87ba19c](https://github.com/inertiajs-revamped/inertia/commit/87ba19c))
+
+### Tests
+
+- add `mergeDataIntoQueryString` test cases ([a731577](https://github.com/inertiajs-revamped/inertia/commit/a731577))
+
 ## 0.0.3 (2024-05-11)
 
 ### Code Refactoring

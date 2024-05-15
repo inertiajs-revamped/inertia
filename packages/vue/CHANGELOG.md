@@ -1,5 +1,16 @@
 # Changelog - @inertiajs-revamped/vue
 
+## 0.0.5 (2024-05-11)
+
+### Code Refactoring
+
+- replace lodash.isequal with fast-equals ([6717177](https://github.com/inertiajs-revamped/inertia/commit/6717177))
+- replace lodash.clonedeep with structured-clone ([ead17d5](https://github.com/inertiajs-revamped/inertia/commit/ead17d5))
+
+### Builds
+
+- remove lodash.clonedeep ([5982948](https://github.com/inertiajs-revamped/inertia/commit/5982948))
+
 ## 0.0.4 (2024-05-11)
 
 ### Code Refactoring

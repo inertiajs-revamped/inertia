@@ -1,5 +1,15 @@
 # Changelog - @inertiajs-revamped/preact
 
+## 0.0.4 (2024-05-15)
+
+### Features
+
+- allow set processing to be set on react adaptors ([fe8e2c7](https://github.com/inertiajs-revamped/inertia/commit/fe8e2c7))
+
+### Code Refactoring
+
+- replace lodash.isequal with fast-equals ([6717177](https://github.com/inertiajs-revamped/inertia/commit/6717177))
+
 ## 0.0.3 (2024-05-11)
 
 ### Code Refactoring
