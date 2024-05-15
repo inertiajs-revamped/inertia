@@ -25,6 +25,7 @@ export interface InertiaFormProps<TForm extends FormDataType> {
   errors: Partial<Record<keyof TForm, string>>
   hasErrors: boolean
   processing: boolean
+  setProcessing: (processing: boolean) => void
   progress: Progress | null
   wasSuccessful: boolean
   recentlySuccessful: boolean
@@ -215,6 +216,7 @@ export function useForm<TForm extends FormDataType>(
     errors,
     hasErrors,
     processing,
+    setProcessing,
     progress,
     wasSuccessful,
     recentlySuccessful,
