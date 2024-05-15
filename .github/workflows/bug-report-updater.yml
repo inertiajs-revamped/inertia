@@ -34,7 +34,7 @@ jobs:
           registry: github
           semver: ">=9.0"
           form: .github/ISSUE_TEMPLATE/bug_report.yml
-          commit_message: "chore(): update laravel version in bug report template"
+          commit_message: "chore: update laravel version in bug report template"
           dry_run: no-push
 
       - name: Update Node version
@@ -45,13 +45,13 @@ jobs:
           package: node
           semver: ">=18.12.0"
           form: .github/ISSUE_TEMPLATE/bug_report.yml
-          commit_message: "chore(): update node version in bug report template"
+          commit_message: "chore: update node version in bug report template"
           dry_run: no-push
 
       - name: Commit & PR
         uses: peter-evans/create-pull-request@6d6857d36972b65feb161a90e484f2984215f83e # v6.0.5
         with:
-          commit-message: "chore(): update bug report template [skip ci]"
+          commit-message: "chore: update bug report template"
           add-paths: .github/ISSUE_TEMPLATE/bug_report.yml
           committer: GitHub <noreply@github.com>
           author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
@@ -59,6 +59,6 @@ jobs:
           branch: workflow/update-bug-report-template
           base: main
           delete-branch: true
-          title: "chore(): update bug report template"
+          title: "chore: update bug report template"
           body: |
             Automated update to `.github/ISSUE_TEMPLATE/bug_report.yml`
