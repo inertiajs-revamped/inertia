@@ -2,6 +2,15 @@
   "name": "@inertiajs-revamped/preact",
   "version": "0.0.4",
   "description": "The Preact adapter for Inertia.js-Revamped",
+  "keywords": [
+    "inertia",
+    "inertiajs",
+    "inertiajs-revamped",
+    "laravel",
+    "preact",
+    "spa",
+    "ssr"
+  ],
   "homepage": "https://inertiajs-revamped.com",
   "bugs": {
     "url": "https://github.com/inertiajs-revamped/inertia/issues",
