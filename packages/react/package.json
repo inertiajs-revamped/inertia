@@ -2,6 +2,15 @@
   "name": "@inertiajs-revamped/react",
   "version": "0.0.4",
   "description": "The React adapter for Inertia.js-Revamped",
+  "keywords": [
+    "inertia",
+    "inertiajs",
+    "inertiajs-revamped",
+    "laravel",
+    "react",
+    "spa",
+    "ssr"
+  ],
   "homepage": "https://inertiajs-revamped.com",
   "bugs": {
     "url": "https://github.com/inertiajs-revamped/inertia/issues",
