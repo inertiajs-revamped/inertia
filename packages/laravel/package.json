@@ -3,6 +3,17 @@
   "version": "0.0.3",
   "private": false,
   "description": "The Laravel adapter for Inertia.js-Revamped",
+  "keywords": [
+    "inertia",
+    "inertiajs",
+    "inertiajs-revamped",
+    "laravel",
+    "preact",
+    "react",
+    "spa",
+    "ssr",
+    "vue"
+  ],
   "homepage": "https://inertiajs-revamped.com",
   "bugs": {
     "url": "https://github.com/inertiajs-revamped/inertia/issues",

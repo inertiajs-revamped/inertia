@@ -1,16 +1,19 @@
 {
   "name": "inertiajs-revamped/laravel",
   "type": "library",
-  "description": "The Laravel adapter for Inertia.js.",
-  "keywords": ["laravel", "inertia", "inertiajs-revamped"],
-  "license": "MIT",
-  "authors": [
-    {
-      "name": "Jonathan Reinink",
-      "email": "jonathan@reinink.ca",
-      "homepage": "https://reinink.ca"
-    }
+  "description": "The Laravel adapter for Inertia.js-Revamped",
+  "keywords": [
+    "inertia",
+    "inertiajs",
+    "inertiajs-revamped",
+    "laravel",
+    "preact",
+    "react",
+    "spa",
+    "ssr",
+    "vue"
   ],
+  "license": "MIT",
   "autoload": {
     "psr-4": {
       "Inertia\\": "src"
@@ -25,14 +28,15 @@
   "require": {
     "php": "~8.1.0|~8.2.0|~8.3.0",
     "ext-json": "*",
-    "laravel/framework": "^9.0|^10.0|^11.0"
+    "laravel/framework": "^9.0|^10.0|^11.0",
+    "symfony/console": "^6.0|^7.0"
   },
   "require-dev": {
-    "roave/security-advisories": "dev-master",
+    "friendsofphp/php-cs-fixer": "^3.56",
+    "mockery/mockery": "^1.4.4",
     "orchestra/testbench": "^7.0|^8.0|^9.0",
-    "mockery/mockery": "^1.6.11",
     "phpunit/phpunit": "^9.5.8|^10.4",
-    "friendsofphp/php-cs-fixer": "^3.56"
+    "roave/security-advisories": "dev-master"
   },
   "suggest": {
     "ext-pcntl": "Recommended when running the Inertia SSR server via the `inertia:start-ssr` artisan command."
@@ -44,6 +48,9 @@
     "branch-alias": {
       "dev-master": "1.x-dev"
     }
+  },
+  "config": {
+    "sort-packages": true
   },
   "minimum-stability": "dev",
   "prefer-stable": true

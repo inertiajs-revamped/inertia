@@ -4,7 +4,9 @@ namespace Inertia\Commands;
 
 use Illuminate\Console\GeneratorCommand;
 use Symfony\Component\Console\Input\InputOption;
+use Symfony\Component\Console\Attribute\AsCommand;
 
+#[AsCommand(name: 'inertia:middleware')]
 class CreateMiddleware extends GeneratorCommand
 {
     /**

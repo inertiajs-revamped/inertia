@@ -28,7 +28,7 @@ class ExampleMiddleware extends Middleware
     /**
      * Determines the current asset version.
      *
-     * @see https://inertiajs.com/asset-versioning
+     * @see https://inertiajs-revamped.com/guide/integrations/laravel/asset-versioning
      */
     public function version(Request $request): ?string
     {
@@ -38,7 +38,7 @@ class ExampleMiddleware extends Middleware
     /**
      * Defines the props that are shared by default.
      *
-     * @see https://inertiajs.com/shared-data
+     * @see https://inertiajs-revamped.com/guide/integrations/laravel/shared-data
      */
     public function share(Request $request): array
     {

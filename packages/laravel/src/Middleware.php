@@ -12,7 +12,7 @@ class Middleware
     /**
      * The root template that's loaded on the first page visit.
      *
-     * @see https://inertiajs.com/server-side-setup#root-template
+     * @see https://inertiajs-revamped.com/guide/integrations/laravel/installation#create-app-blade-php
      *
      * @var string
      */
@@ -21,7 +21,7 @@ class Middleware
     /**
      * Determines the current asset version.
      *
-     * @see https://inertiajs.com/asset-versioning
+     * @see https://inertiajs-revamped.com/guide/integrations/laravel/asset-versioning
      *
      * @return string|null
      */
@@ -45,7 +45,7 @@ class Middleware
     /**
      * Defines the props that are shared by default.
      *
-     * @see https://inertiajs.com/shared-data
+     * @see https://inertiajs-revamped.com/guide/integrations/laravel/shared-data
      *
      * @return array
      */
@@ -61,7 +61,7 @@ class Middleware
     /**
      * Sets the root template that's loaded on the first page visit.
      *
-     * @see https://inertiajs.com/server-side-setup#root-template
+     * @see https://inertiajs-revamped.com/guide/integrations/laravel/installation#create-app-blade-php
      *
      * @return string
      */
