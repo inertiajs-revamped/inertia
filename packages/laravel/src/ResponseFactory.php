@@ -3,6 +3,7 @@
 namespace Inertia;
 
 use Closure;
+use Inertia\Support\Header;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Request;
@@ -104,7 +105,7 @@ class ResponseFactory
     public function location($url): SymfonyResponse
     {
         if (Request::inertia()) {
-            return BaseResponse::make('', 409, ['X-Inertia-Location' => $url instanceof SymfonyRedirect ? $url->getTargetUrl() : $url]);
+            return BaseResponse::make('', 409, [Header::LOCATION => $url instanceof SymfonyRedirect ? $url->getTargetUrl() : $url]);
         }
 
         return $url instanceof SymfonyRedirect ? $url : Redirect::away($url);
