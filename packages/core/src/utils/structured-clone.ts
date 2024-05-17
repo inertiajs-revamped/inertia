@@ -6,10 +6,9 @@
  * @param input T
  * @returns T
  */
-export function getStructuredClone<T>(input: T) {
-  if (!window.structuredClone) {
-    return JSON.parse(JSON.stringify(input)) as T
+export function getStructuredClone<T>(input: T): T {
+  if (typeof window.structuredClone !== 'undefined') {
+    return window.structuredClone(input)
   }
-
-  return window.structuredClone(input)
+  return JSON.parse(JSON.stringify(input))
 }
