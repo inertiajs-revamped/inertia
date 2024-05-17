@@ -4,6 +4,7 @@ namespace Inertia;
 
 use LogicException;
 use Inertia\Ssr\Gateway;
+use Inertia\Support\Header;
 use ReflectionException;
 use Illuminate\Http\Request;
 use Inertia\Ssr\HttpGateway;
@@ -73,7 +74,7 @@ class ServiceProvider extends BaseServiceProvider
     {
         Request::macro('inertia', function () {
             /** @var \Illuminate\Http\Request $this */
-            return (bool) $this->header('X-Inertia');
+            return (bool) $this->header(Header::INERTIA);
         });
     }
 

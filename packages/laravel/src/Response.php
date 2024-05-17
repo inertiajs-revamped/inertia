@@ -3,13 +3,13 @@
 namespace Inertia;
 
 use Closure;
+use Inertia\Support\Header;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\App;
 use GuzzleHttp\Promise\PromiseInterface;
-use Illuminate\Support\Stringable;
 use Illuminate\Support\Traits\Macroable;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Responsable;
@@ -23,6 +23,7 @@ class Response implements Responsable
 
     protected $component;
     protected $props;
+    protected $persisted;
     protected $rootView;
     protected $version;
     protected $viewData = [];
@@ -30,10 +31,11 @@ class Response implements Responsable
     /**
      * @param array|Arrayable $props
      */
-    public function __construct(string $component, $props, string $rootView = 'app', string $version = '')
+    public function __construct(string $component, array $props, string $rootView = 'app', string $version = '', array $persisted = [])
     {
         $this->component = $component;
         $this->props = $props instanceof Arrayable ? $props->toArray() : $props;
+        $this->persisted = $persisted;
         $this->rootView = $rootView;
         $this->version = $version;
     }
@@ -94,7 +96,7 @@ class Response implements Responsable
                 return ! ($prop instanceof LazyProp);
             });
 
-        $props = $this->resolvePropertyInstances($props, $request);
+        $props = $this->resolveProperties($request, $this->props);
 
         $page = [
             'component' => $this->component,
@@ -103,17 +105,85 @@ class Response implements Responsable
             'version' => $this->version,
         ];
 
-        if ($request->header('X-Inertia')) {
-            return new JsonResponse($page, 200, ['X-Inertia' => 'true']);
+        if ($request->header(Header::INERTIA)) {
+            return new JsonResponse($page, 200, [Header::INERTIA => 'true']);
         }
 
         return ResponseFactory::view($this->rootView, $this->viewData + ['page' => $page]);
     }
 
     /**
+     * Resolve the properites for the response.
+     */
+    public function resolveProperties(Request $request, array $props): array
+    {
+        $isPartial = $request->header(Header::PARTIAL_COMPONENT) === $this->component;
+
+        if(!$isPartial) {
+            $props = array_filter($this->props, static function ($prop) {
+                return ! ($prop instanceof LazyProp);
+            });
+        }
+
+        $props = $this->resolveArrayableProperties($props, $request);
+
+        if($isPartial && $request->hasHeader(Header::PARTIAL_ONLY)) {
+            $props = $this->resolveOnly($request, $props);
+        }
+
+        $props = $this->resolvePropertyInstances($props, $request);
+
+        return $props;
+    }
+
+    /**
+     * Resolve all arrayables properties into an array.
+     */
+    public function resolveArrayableProperties(array $props, Request $request, bool $unpackDotProps = true): array
+    {
+        foreach ($props as $key => $value) {
+            if ($value instanceof Arrayable) {
+                $value = $value->toArray();
+            }
+
+            if (is_array($value)) {
+                $value = $this->resolveArrayableProperties($value, $request, false);
+            }
+
+            if ($unpackDotProps && str_contains($key, '.')) {
+                Arr::set($props, $key, $value);
+                unset($props[$key]);
+            } else {
+                $props[$key] = $value;
+            }
+        }
+
+        return $props;
+    }
+
+    /**
+     * Resolve the `only` partial request props.
+     */
+    public function resolveOnly(Request $request, array $props): array
+    {
+        $only = array_merge(
+            array_filter(explode(',', $request->header(Header::PARTIAL_ONLY, ''))),
+            $this->persisted
+        );
+
+        $value = [];
+
+        foreach($only as $key) {
+            Arr::set($value, $key, data_get($props, $key));
+        }
+
+        return $value;
+    }
+
+    /**
      * Resolve all necessary class instances in the given props.
      */
-    public function resolvePropertyInstances(array $props, Request $request, bool $unpackDotProps = true): array
+    public function resolvePropertyInstances(array $props, Request $request): array
     {
         foreach ($props as $key => $value) {
             if ($value instanceof Closure) {
@@ -139,15 +209,10 @@ class Response implements Responsable
             }
 
             if (is_array($value)) {
-                $value = $this->resolvePropertyInstances($value, $request, false);
+                $value = $this->resolvePropertyInstances($value, $request);
             }
 
-            if ($unpackDotProps && str_contains($key, '.')) {
-                Arr::set($props, $key, $value);
-                unset($props[$key]);
-            } else {
-                $props[$key] = $value;
-            }
+            $props[$key] = $value;
         }
 
         return $props;
