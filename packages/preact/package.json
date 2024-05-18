@@ -72,13 +72,13 @@
   "dependencies": {
     "@inertiajs-revamped/core": "workspace:*",
     "fast-equals": "^5.0.1",
-    "preact": "^10.21.0"
+    "preact": "^10.22.0"
   },
   "devDependencies": {
     "@types/node": "^20.12.11"
   },
   "peerDependencies": {
-    "preact": ">=10.21.0"
+    "preact": ">=10.22.0"
   },
   "engines": {
     "node": ">=18.12.0"
