@@ -39,8 +39,8 @@ importers:
         specifier: ^0.8.0
         version: 0.8.0
       pkgroll:
-        specifier: ^2.0.2
-        version: 2.0.2(typescript@5.4.5)
+        specifier: ^2.1.0
+        version: 2.1.0(typescript@5.4.5)
       semver:
         specifier: ^7.6.2
         version: 7.6.2
@@ -1640,8 +1640,8 @@ packages:
   pkg-types@1.1.1:
     resolution: {integrity: sha512-ko14TjmDuQJ14zsotODv7dBlwxKhUKQEhuhmbqo1uCi9BB0Z2alo/wAXg6q1dTR5TyuqYyWhjtfe/Tsh+X28jQ==}
 
-  pkgroll@2.0.2:
-    resolution: {integrity: sha512-gRQ293zs67H2nN/CKwdLnlxCKpE5qi5rJwVvDUqep8qOLs57PlTl3MAXmLlFztwI2Iv6mP9k5BSlhBjzFJmerg==}
+  pkgroll@2.1.0:
+    resolution: {integrity: sha512-oOOPiRVNB2oe/VnYaZsApPeiAAOWnkh5gMsnqeYFUgT1sHuCTpdQ0F1o5Xn880ZiYFuIX/D/+Oywe9MaR/3SeA==}
     engines: {node: '>=18'}
     hasBin: true
     peerDependencies:
@@ -3563,7 +3563,7 @@ snapshots:
       mlly: 1.7.0
       pathe: 1.1.2
 
-  pkgroll@2.0.2(typescript@5.4.5):
+  pkgroll@2.1.0(typescript@5.4.5):
     dependencies:
       '@rollup/plugin-alias': 5.1.0(rollup@4.17.2)
       '@rollup/plugin-commonjs': 25.0.7(rollup@4.17.2)
