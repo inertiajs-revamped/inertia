@@ -15,7 +15,13 @@ async function bump() {
     const packages = await listRepoManifests('packages')
 
     const publicPackages = packages
-      .filter((pkg) => pkg.package.private !== true)
+      .filter(
+        (pkg) =>
+          pkg.package.private !== true &&
+          // filter packages with no changes
+          Array.isArray(pkg.logs) &&
+          pkg.logs.length !== 0
+      )
       .map((pkg) => pkg.package.name)
 
     process.stdout.write(
