@@ -12,8 +12,8 @@ createServer((page) =>
     render: renderToString,
     resolve: (name) =>
       resolvePageComponent(
-        `../views/pages/${name}.tsx`,
-        import.meta.glob('../views/pages/**/*.tsx')
+        `../pages/${name}.tsx`,
+        import.meta.glob('../pages/**/*.tsx')
       ),
     setup: ({ App, props }) => <App {...props} />,
   })

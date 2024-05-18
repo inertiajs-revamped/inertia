@@ -10,8 +10,8 @@ createServer((page) =>
     render: renderToString,
     resolve: (name) =>
       resolvePageComponent(
-        `../views/pages/${name}.vue`,
-        import.meta.glob('../views/pages/**/*.vue')
+        `../pages/${name}.vue`,
+        import.meta.glob('../pages/**/*.vue')
       ),
     setup({ App, props, plugin }) {
       return createSSRApp({

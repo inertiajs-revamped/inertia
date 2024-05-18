@@ -11,12 +11,12 @@
     "verbatimModuleSyntax": true,
     "allowSyntheticDefaultImports": true,
     "lib": ["DOM", "DOM.Iterable", "ESNext"],
-    "types": ["vite/client"],
+    "types": ["node", "vite/client"],
     "baseUrl": ".",
     "paths": {
       "@/*": ["resources/*"]
     }
   },
   "include": ["resources/**/*"],
-  "exclude": ["public/**/*", "node_modules", "vendor"]
+  "exclude": ["public", "node_modules", "vendor"]
 }

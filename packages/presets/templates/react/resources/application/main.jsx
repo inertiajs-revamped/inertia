@@ -9,22 +9,23 @@ import { hydrateRoot } from 'react-dom/client'
 import './app.css'
 
 createInertiaApp({
-  progress: () =>
-    createProgress({
-      delay: 250,
-    }),
   title: (title) => `${title} - Starter kit`,
   resolve: (name) =>
     resolvePageComponent(
-      `../views/pages/${name}.tsx`,
-      import.meta.glob('../views/pages/**/*.tsx')
+      `../pages/${name}.tsx`,
+      import.meta.glob('../pages/**/*.tsx')
     ),
   setup({ el, App, props }) {
     hydrateRoot(
+      // we are save here
       el,
       <StrictMode>
         <App {...props} />
       </StrictMode>
     )
   },
+  progress: () =>
+    createProgress({
+      delay: 250,
+    }),
 })

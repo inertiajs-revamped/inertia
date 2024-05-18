@@ -8,17 +8,17 @@ import { hydrate } from 'preact'
 import './app.css'
 
 createInertiaApp({
-  progress: () =>
-    createProgress({
-      delay: 250,
-    }),
   title: (title) => `${title} - Starter kit`,
   resolve: (name) =>
     resolvePageComponent(
-      `../views/pages/${name}.tsx`,
-      import.meta.glob('../views/pages/**/*.tsx')
+      `../pages/${name}.tsx`,
+      import.meta.glob('../pages/**/*.tsx')
     ),
   setup({ el, App, props }) {
     hydrate(<App {...props} />, el)
   },
+  progress: () =>
+    createProgress({
+      delay: 250,
+    }),
 })
