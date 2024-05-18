@@ -51,19 +51,19 @@ import { createProgress } from '@inertiajs-revamped/preact/progress'
 import { hydrate } from 'preact'
 
 createInertiaApp({
-  progress: () =>
-    createProgress({
-      delay: 250,
-    }),
   title: (title) => `${title} - Starter kit`,
   resolve: (name) =>
     resolvePageComponent(
-      `../views/pages/${name}.tsx`,
-      import.meta.glob('../views/pages/**/*.tsx')
+      `../pages/${name}.tsx`,
+      import.meta.glob('../pages/**/*.tsx')
     ),
   setup({ el, App, props }) {
     hydrate(<App {...props} />, el!)
   },
+  progress: () =>
+    createProgress({
+      delay: 250,
+    }),
 })
 ```
 
@@ -82,8 +82,8 @@ createServer((page) =>
     render: renderToString,
     resolve: (name) =>
       resolvePageComponent(
-        `../views/pages/${name}.tsx`,
-        import.meta.glob('../views/pages/**/*.tsx')
+        `../pages/${name}.tsx`,
+        import.meta.glob('../pages/**/*.tsx')
       ),
     setup: ({ App, props }) => <App {...props} />,
   })

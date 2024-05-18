@@ -70,7 +70,7 @@ This command will install and execute Inertia.js-Revamped `@preset/cli`. You wil
 
   ➜  Run the development server with npm run dev
   ➜  Edit your entry points in resources/application
-  ➜  Edit your layouts and pages in resources/views
+  ➜  Edit your pages in resources/pages
 ```
 
 > [!TIP]

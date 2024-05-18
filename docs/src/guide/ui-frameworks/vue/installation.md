@@ -44,21 +44,21 @@ import { createProgress } from '@inertiajs-revamped/vue/progress'
 import { createApp, h } from 'vue'
 
 createInertiaApp({
-  progress: () =>
-    createProgress({
-      delay: 250,
-    }),
   title: (title) => `${title} - Starter kit`,
   resolve: (name) =>
     resolvePageComponent(
-      `../views/pages/${name}.vue`,
-      import.meta.glob('../views/pages/**/*.vue')
+      `../pages/${name}.vue`,
+      import.meta.glob('../pages/**/*.vue')
     ),
   setup({ el, App, props, plugin }) {
     createApp({ render: () => h(App, props) })
       .use(plugin)
       .mount(el!)
   },
+  progress: () =>
+    createProgress({
+      delay: 250,
+    }),
 })
 ```
 
@@ -75,8 +75,8 @@ createServer((page) =>
     render: renderToString,
     resolve: (name) =>
       resolvePageComponent(
-        `../views/pages/${name}.vue`,
-        import.meta.glob('../views/pages/**/*.vue')
+        `../pages/${name}.vue`,
+        import.meta.glob('../pages/**/*.vue')
       ),
     setup({ App, props, plugin }) {
       return createSSRApp({
