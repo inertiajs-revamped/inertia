@@ -49,6 +49,10 @@ export const Link = defineComponent({
       type: Array as PropType<string[]>,
       default: () => [],
     },
+    except: {
+      type: Array as PropType<string[]>,
+      default: () => [],
+    },
     queryStringArrayFormat: {
       type: String as PropType<'indices' | 'brackets'>,
       default: 'brackets',
@@ -100,6 +104,7 @@ export const Link = defineComponent({
                 preserveState: props.preserveState ?? method !== 'get',
                 replace: props.replace,
                 only: props.only,
+                except: props.except,
                 onCancelToken: (...args) => emit('cancel-token', ...args),
                 onBefore: (...args) => emit('before', ...args),
                 onStart: (...args) => emit('start', ...args),
