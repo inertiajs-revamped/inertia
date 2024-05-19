@@ -44,6 +44,22 @@ async function init() {
 
     const ui = uiFramework.toLowerCase()
 
+    let template
+
+    if (ui !== 'preact') {
+      template = await selectPrompt({
+        question: `${colorize.bold('Choose your template:')} `,
+        options: ['default', 'breeze'],
+        pointer: symbols.pointer,
+      })
+
+      process.stdout.write(
+        `\n${colorize.green(
+          symbols.success
+        )} Selected template: ${template} ...\n\n`
+      )
+    }
+
     const variant = await selectPrompt({
       question: `${colorize.bold('Choose your variant:')} `,
       options: ['TypeScript', 'JavaScript'],
@@ -79,6 +95,7 @@ async function init() {
         resolve(root, 'packages', 'presets'),
         '--sandbox',
         `--ui=${ui}`,
+        `--template=${template ?? 'breeze'}`,
         `${!typescript ? '--no-typescript' : ''}`,
       ],
       { env: { FORCE_COLOR: 'true' } }
