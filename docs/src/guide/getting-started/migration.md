@@ -4,7 +4,7 @@ next: 'Laravel - Installation'
 
 # Migration
 
-## Note regarding migration Guide
+## Note
 
 > [!IMPORTANT]
 > Due to significant upcoming changes planned for the underlying adapters, creating a detailed migration guide at this time wouldn't be very helpful.
@@ -12,6 +12,88 @@ next: 'Laravel - Installation'
 > We understand this might be inconvenient, but rest assured we'll provide a comprehensive migration guide once the adapters updates are finalized.
 >
 > Thank you for your patience!
+
+## Package Imports
+
+::: code-group
+
+```ts [react]
+// app.tsx -> main.tsx
+import { createInertiaApp } from '@inertiajs/react' // [!code --]
+import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers' // [!code --]
+import { createInertiaApp, resolvePageComponent } from '@inertiajs-revamped/react' // [!code ++]
+import { createProgress } from '@inertiajs-revamped/react/progress' // [!code ++]
+
+progress: { // [!code --]
+  color: '#4B5563', // [!code --]
+} // [!code --]
+progress: () => // [!code ++]
+  createProgress({ // [!code ++]
+    color: '#4B5563', // [!code ++]
+  }) // [!code ++]
+
+// ssr.tsx <-> ssr.tsx
+import { createInertiaApp } from '@inertiajs/react' // [!code --]
+import createServer from '@inertiajs/react/server' // [!code --]
+import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers' // [!code --]
+import { createInertiaApp, resolvePageComponent } from '@inertiajs-revamped/react' // [!code ++]
+import { createServer } from '@inertiajs-revamped/react/server' // [!code ++]
+
+import { usePage } from '@inertiajs/react' // [!code --]
+import { usePage } from '@inertiajs-revamped/react' // [!code ++]
+
+import { useForm } from '@inertiajs/react' // [!code --]
+import { useForm } from '@inertiajs-revamped/react' // [!code ++]
+
+import { useRemember } from '@inertiajs/react' // [!code --]
+import { useRemember } from '@inertiajs-revamped/react' // [!code ++]
+
+import { Head } from '@inertiajs/react' // [!code --]
+import { Head } from '@inertiajs-revamped/react' // [!code ++]
+
+import { Link } from '@inertiajs/react' // [!code --]
+import { Link } from '@inertiajs-revamped/react' // [!code ++]
+```
+
+```ts [vue]
+// app.ts -> main.ts
+import { createInertiaApp } from '@inertiajs/vue' // [!code --]
+import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers' // [!code --]
+import { createInertiaApp, resolvePageComponent } from '@inertiajs-revamped/vue' // [!code ++]
+import { createProgress } from '@inertiajs-revamped/vue/progress' // [!code ++]
+
+progress: { // [!code --]
+  color: '#4B5563', // [!code --]
+} // [!code --]
+progress: () => // [!code ++]
+  createProgress({ // [!code ++]
+    color: '#4B5563', // [!code ++]
+  }) // [!code ++]
+
+// ssr.ts <-> ssr.ts
+import { createInertiaApp } from '@inertiajs/vue' // [!code --]
+import createServer from '@inertiajs/vue/server' // [!code --]
+import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers' // [!code --]
+import { createInertiaApp, resolvePageComponent } from '@inertiajs-revamped/vue' // [!code ++]
+import { createServer } from '@inertiajs-revamped/vue/server' // [!code ++]
+
+import { usePage } from '@inertiajs/vue' // [!code --]
+import { usePage } from '@inertiajs-revamped/vue' // [!code ++]
+
+import { useForm } from '@inertiajs/vue' // [!code --]
+import { useForm } from '@inertiajs-revamped/vue' // [!code ++]
+
+import { useRemember } from '@inertiajs/vue' // [!code --]
+import { useRemember } from '@inertiajs-revamped/vue' // [!code ++]
+
+import { Head } from '@inertiajs/vue' // [!code --]
+import { Head } from '@inertiajs-revamped/vue' // [!code ++]
+
+import { Link } from '@inertiajs/vue' // [!code --]
+import { Link } from '@inertiajs-revamped/vue' // [!code ++]
+```
+
+:::
 
 ## Changelogs
 
