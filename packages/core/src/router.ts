@@ -322,6 +322,7 @@ export class Router {
       preserveScroll = false,
       preserveState = false,
       only = [],
+      except = [],
       headers = {},
       errorBag = '',
       forceFormData = false,
@@ -361,6 +362,7 @@ export class Router {
       preserveScroll,
       preserveState,
       only,
+      except,
       headers,
       errorBag,
       forceFormData,
@@ -406,6 +408,8 @@ export class Router {
     fireStartEvent(visit)
     onStart(visit)
 
+    const isPartial = !!(only.length || except.length)
+
     Axios({
       method,
       url: urlWithoutHash(url).href,
@@ -417,10 +421,19 @@ export class Router {
         Accept: 'text/html, application/xhtml+xml',
         'X-Requested-With': 'XMLHttpRequest',
         'X-Inertia': true,
-        ...(only.length
+        ...(isPartial
           ? {
               'X-Inertia-Partial-Component': this.page.component,
+            }
+          : {}),
+        ...(only.length
+          ? {
               'X-Inertia-Partial-Data': only.join(','),
+            }
+          : {}),
+        ...(except.length
+          ? {
+              'X-Inertia-Partial-Except': except.join(','),
             }
           : {}),
         ...(errorBag?.length ? { 'X-Inertia-Error-Bag': errorBag } : {}),
@@ -448,7 +461,7 @@ export class Router {
         }
 
         const pageResponse: Page = response.data
-        if (only.length && pageResponse.component === this.page.component) {
+        if (isPartial && pageResponse.component === this.page.component) {
           pageResponse.props = { ...this.page.props, ...pageResponse.props }
         }
         preserveScroll = this.resolvePreserveOption(
