@@ -26,6 +26,8 @@ composer create-project laravel/laravel <project-name>
 cd <project-name>
 ```
 
+Choose [laravel/breeze](https://github.com/laravel/breeze) (modified fork) or our `default` template as starter template.
+
 ::: code-group
 
 ```sh [npm]
@@ -53,6 +55,7 @@ This command will install and execute Inertia.js-Revamped `@preset/cli`. You wil
 
   ✓  Executed action: Choose your package manager › pnpm
   ✓  Executed action: Choose your UI framework › react
+  ✓  Executed action: Choose your starter template › breeze
   ✓  Executed action: Choose your variant › ts
   ✓  Executed action: Choose to enable/disable SSR › enabled
   ✓  Executed action: Installing PHP dependencies with Composer (php)
@@ -61,8 +64,8 @@ This command will install and execute Inertia.js-Revamped `@preset/cli`. You wil
   ✓  Executed action: Installing Node.js Dependencies (3 actions)
 
  Presets  1 applied
- Actions  20 executed
- Duration  14.85s
+ Actions  21 executed
+ Duration  13.94s
 
  NEXT STEPS
 
