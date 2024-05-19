@@ -15,7 +15,7 @@ const form = useForm({
 })
 
 const submit = () => {
-  form.post('forgot-password')
+  form.post('/forgot-password')
 }
 </script>
 

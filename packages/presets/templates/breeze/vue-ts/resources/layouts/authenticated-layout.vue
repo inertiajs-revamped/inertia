@@ -4,8 +4,10 @@ import DropdownLink from '@/components/dropdown-link.vue'
 import Dropdown from '@/components/dropdown.vue'
 import NavLink from '@/components/nav-link.vue'
 import ResponsiveNavLink from '@/components/responsive-nav-link.vue'
-import { Link } from '@inertiajs-revamped/vue'
+import { Link, usePage } from '@inertiajs-revamped/vue'
 import { ref } from 'vue'
+
+const url = usePage().url
 
 const showingNavigationDropdown = ref(false)
 </script>
@@ -27,7 +29,7 @@ const showingNavigationDropdown = ref(false)
 
               <!-- Navigation Links -->
               <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                <NavLink href="/dashboard">
+                <NavLink href="/dashboard" :active="url === '/dasboard'">
                   Dashboard
                 </NavLink>
               </div>
@@ -85,7 +87,7 @@ const showingNavigationDropdown = ref(false)
         <!-- Responsive Navigation Menu -->
         <div :class="{ block: showingNavigationDropdown, hidden: !showingNavigationDropdown }" class="sm:hidden">
           <div class="pt-2 pb-3 space-y-1">
-            <ResponsiveNavLink href="/dashboard">
+            <ResponsiveNavLink href="/dashboard" :active="url === '/dasboard'">
               Dashboard
             </ResponsiveNavLink>
           </div>

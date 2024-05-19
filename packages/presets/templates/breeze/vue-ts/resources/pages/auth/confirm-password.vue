@@ -11,7 +11,7 @@ const form = useForm({
 })
 
 const submit = () => {
-  form.post('password.confirm', {
+  form.post('/confirm-password', {
     onFinish: () => {
       form.reset()
     },

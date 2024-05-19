@@ -275,9 +275,9 @@ async function installBreeze({
       })
 
       await executeCommand({
-        title: 'Publishing Inertia.js-Revamped Configuration',
+        title: 'Publishing Inertia.js-Revamped Middleware',
         command: 'php',
-        arguments: ['artisan', 'install:api', '--force', '--no-interaction'],
+        arguments: ['artisan', 'inertia:middleware'],
       })
 
       await executeCommand({
@@ -287,6 +287,56 @@ async function installBreeze({
           'artisan',
           'vendor:publish',
           '--provider=Inertia\\ServiceProvider',
+        ],
+      })
+
+      await editFiles({
+        title: 'Registering Inertia.js-Revamped Middleware',
+        files: 'bootstrap/app.php',
+        operations: [
+          {
+            skipIf: (content) =>
+              content.includes(
+                'use App\\Http\\Middleware\\HandleInertiaRequests;'
+              ),
+            type: 'add-line',
+            position: 'after',
+            match: /use Illuminate\\Foundation\\Application;/,
+            lines: 'use App\\Http\\Middleware\\HandleInertiaRequests;',
+          },
+          {
+            skipIf: (content) =>
+              content.includes(
+                'use Illuminate\\Http\\Middleware\\AddLinkHeadersForPreloadedAssets;'
+              ),
+            type: 'add-line',
+            position: 'after',
+            match: /use Illuminate\\Foundation\\Configuration\\Middleware;/,
+            lines:
+              'use Illuminate\\Http\\Middleware\\AddLinkHeadersForPreloadedAssets;',
+          },
+          {
+            skipIf: (content) =>
+              content.includes('HandleInertiaRequests::class,'),
+            type: 'remove-line',
+            match: /->withMiddleware\(function \(Middleware \$middleware\) {/,
+            count: 1,
+            start: 1,
+          },
+          {
+            skipIf: (content) =>
+              content.includes('HandleInertiaRequests::class,'),
+            type: 'add-line',
+            position: 'after',
+            match: /->withMiddleware\(function \(Middleware \$middleware\) {/,
+            indent: '        ',
+            lines: [
+              '$middleware->web(append: [',
+              '    HandleInertiaRequests::class,',
+              '    AddLinkHeadersForPreloadedAssets::class,',
+              ']);',
+            ],
+          },
         ],
       })
 

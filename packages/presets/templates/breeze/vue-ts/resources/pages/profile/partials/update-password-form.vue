@@ -16,7 +16,7 @@ const form = useForm({
 })
 
 const updatePassword = () => {
-  form.put('password', {
+  form.put('/password', {
     preserveScroll: true,
     onSuccess: () => {
       form.reset()

@@ -11,7 +11,7 @@ const props = defineProps<{
 const form = useForm({})
 
 const submit = () => {
-  form.post('email/verification-notification')
+  form.post('/email/verification-notification')
 }
 
 const verificationLinkSent = computed(
