@@ -7,6 +7,7 @@ export interface Options {
    */
   packageManager?: Lowercase<(typeof packageManager)[number]>
 
+  template?: 'breeze' | 'default'
   /**
    * Choose your prefered UI-Framework (default: `undefined`)
    */
@@ -32,6 +33,7 @@ export interface Options {
 export default definePreset<Options>({
   name: 'Inertia.js-Revamped',
   options: {
+    template: 'default',
     sandbox: false,
   },
   postInstall: ({ hl }) => [
@@ -44,20 +46,22 @@ export default definePreset<Options>({
 
     if (options.sandbox) {
       Object.assign(opts, {
-        packageManager: options.packageManager || 'pnpm',
-        ui: options.ui || 'react',
-        typescript: options.typescript || true,
-        ssr: options.ssr || true,
+        packageManager: options.packageManager ?? 'pnpm',
+        template: options.template ?? 'breeze',
+        ui: options.ui ?? 'react',
+        typescript: options.typescript ?? true,
+        ssr: options.ssr ?? true,
         sandbox: true,
       }) satisfies Options
 
       await installSandbox()
     } else {
-      await initialPrompts(options)
+      await initialPrompts({ options, prompts })
 
       Object.assign(opts, {
-        packageManager: options.packageManager || prompts.packageManager,
-        ui: options.ui || prompts.ui,
+        packageManager: options.packageManager ?? prompts.packageManager,
+        template: options.template ?? (prompts.template || 'default'),
+        ui: options.ui ?? prompts.ui,
         typescript: !!(options.typescript || prompts.variant === 'ts'),
         ssr: !!(options.ssr || prompts.ssr === 'enabled'),
         sandbox: false,
@@ -82,6 +86,12 @@ export default definePreset<Options>({
       )
     }
 
+    if (!opts.template) {
+      throw new Error(
+        'You must specify a template (e.g., "breeze", or "default").'
+      )
+    }
+
     if (typeof opts.typescript === 'undefined') {
       throw new Error(
         'Please choose whether you want to use TypeScript or JavaScript.'
@@ -94,11 +104,18 @@ export default definePreset<Options>({
       )
     }
 
-    await installInertiaRevamped(opts)
+    if (opts.template === 'breeze') {
+      await installBreeze(opts)
+    } else {
+      await installInertiaRevamped(opts)
+    }
   },
 })
 
-async function initialPrompts(options: Options) {
+async function initialPrompts({
+  options,
+  prompts,
+}: { options: Options; prompts: Record<string, string | undefined> }) {
   if (typeof options.packageManager === 'undefined') {
     await prompt({
       title: 'Choose your package manager',
@@ -119,6 +136,22 @@ async function initialPrompts(options: Options) {
       choices: ui.map((framework) => {
         return { title: framework, value: framework.toLowerCase() }
       }),
+      initial: 0,
+    })
+  }
+
+  if (
+    typeof options.template === 'undefined' ||
+    (options.ui !== 'preact' && prompts.ui !== 'preact')
+  ) {
+    await prompt({
+      title: 'Choose your starter template',
+      name: 'template',
+      text: '(Press <up> / <down> to select, <return> to confirm)',
+      choices: [
+        { title: 'Default', value: 'default' },
+        { title: 'Breeze', value: 'breeze' },
+      ],
       initial: 0,
     })
   }
@@ -150,8 +183,146 @@ async function initialPrompts(options: Options) {
   }
 }
 
+async function installSandbox() {
+  await group({
+    title: 'Installing PHP Sandbox Dependencies',
+    handler: async () => {
+      await deletePaths({
+        paths: ['node_modules', 'package.json'],
+      })
+
+      await executeCommand({
+        title: 'Installing PHP Dependencies',
+        command: 'composer',
+        arguments: ['create-project', 'laravel/laravel:^11.0', '.'],
+        ignoreExitCode: false,
+      })
+
+      await executeCommand({
+        title: 'Linking Laravel File Storage',
+        command: 'php',
+        arguments: ['artisan', 'storage:link'],
+        ignoreExitCode: true,
+      })
+
+      await executeCommand({
+        title: 'Generating Laravel Application Key',
+        command: 'php',
+        arguments: ['artisan', 'key:generate'],
+      })
+
+      await editFiles({
+        title: 'Updating Laravel composer.json',
+        files: 'composer.json',
+        operations: [
+          {
+            type: 'edit-json',
+            delete: ['repositories'],
+          },
+          {
+            type: 'edit-json',
+            merge: {
+              repositories: [
+                {
+                  type: 'path',
+                  url: '../../packages/laravel',
+                  options: { symlink: true },
+                },
+              ],
+            },
+          },
+          {
+            skipIf: (content) =>
+              content.includes('"inertiajs-revamped/laravel": "@dev"'),
+            type: 'edit-json',
+            merge: {
+              require: { 'inertiajs-revamped/laravel': '@dev' },
+            },
+          },
+        ],
+      })
+
+      await executeCommand({
+        title: 'Updating PHP dependencies with Composer',
+        command: 'composer',
+        arguments: ['update'],
+        ignoreExitCode: true,
+      })
+    },
+  })
+}
+
+async function installBreeze({
+  packageManager,
+  template,
+  ui,
+  typescript,
+  sandbox,
+  ssr,
+}: Options) {
+  await group({
+    title: 'Installing Breeze Scaffolding',
+    handler: async () => {
+      await deletePaths({
+        title: 'Cleaning Up Default Files & Content',
+        paths: ['resources', 'vite.config.js'],
+      })
+
+      await installPackages({
+        title: 'Installing PHP dependencies with Composer',
+        for: 'php',
+        packages: ['laravel/sanctum:^4.0'],
+      })
+
+      await executeCommand({
+        title: 'Publishing Inertia.js-Revamped Configuration',
+        command: 'php',
+        arguments: ['artisan', 'install:api', '--force', '--no-interaction'],
+      })
+
+      await executeCommand({
+        title: 'Publishing Inertia.js-Revamped Configuration',
+        command: 'php',
+        arguments: [
+          'artisan',
+          'vendor:publish',
+          '--provider=Inertia\\ServiceProvider',
+        ],
+      })
+
+      await extractTemplates({
+        title: 'Extracting Breeze/base Templates',
+        templates: sandbox
+          ? 'templates/breeze'
+          : 'packages/presets/templates/breeze',
+        from: 'base',
+      })
+
+      await extractTemplates({
+        title: `Extracting Breeze/${ui} Templates`,
+        templates: sandbox
+          ? 'templates/breeze'
+          : 'packages/presets/templates/breeze',
+        from: typescript ? `${ui}-ts` : ui,
+      })
+
+      await cleanUp({ ui, typescript, ssr, sandbox })
+
+      await installNodeDependencies({
+        packageManager,
+        template,
+        ui,
+        typescript,
+        ssr,
+        sandbox,
+      })
+    },
+  })
+}
+
 async function installInertiaRevamped({
   packageManager,
+  template,
   ui,
   typescript,
   ssr,
@@ -167,8 +338,16 @@ async function installInertiaRevamped({
 
       await extractTemplates({
         title: 'Extracting Inertia.js-Revamped Templates',
-        templates: sandbox ? 'templates' : 'packages/presets/templates',
+        templates: sandbox
+          ? 'templates/default'
+          : 'packages/presets/templates/default',
         from: typescript ? `${ui}-ts` : ui,
+      })
+
+      await executeCommand({
+        title: 'Publishing Inertia.js-Revamped Middleware',
+        command: 'php',
+        arguments: ['artisan', 'inertia:middleware'],
       })
 
       await executeCommand({
@@ -179,12 +358,6 @@ async function installInertiaRevamped({
           'vendor:publish',
           '--provider=Inertia\\ServiceProvider',
         ],
-      })
-
-      await executeCommand({
-        title: 'Publishing Inertia.js-Revamped Middleware',
-        command: 'php',
-        arguments: ['artisan', 'inertia:middleware'],
       })
 
       await editFiles({
@@ -282,6 +455,114 @@ async function installInertiaRevamped({
     },
   })
 
+  await cleanUp({ ui, typescript, ssr, sandbox })
+
+  await installNodeDependencies({
+    packageManager,
+    template,
+    ui,
+    typescript,
+    ssr,
+    sandbox,
+  })
+}
+
+async function installNodeDependencies({
+  packageManager,
+  template,
+  ui,
+  typescript,
+  ssr,
+  sandbox,
+}: Options) {
+  await group({
+    title: 'Installing Node.js Dependencies',
+    handler: async () => {
+      await editFiles({
+        title: 'Updating package.json Dependencies',
+        files: 'package.json',
+        operations: [
+          { type: 'edit-json', delete: ['scripts', 'devDependencies'] },
+          {
+            type: 'edit-json',
+            merge: {
+              scripts: {
+                dev: 'vite',
+                build: 'vite build',
+                ...(ssr && { 'build:ssr': 'vite build --ssr' }),
+                ...(ssr && { 'build:prod': 'vite build && vite build --ssr' }),
+                ...(ssr && {
+                  preview: 'npm run build:prod && node bootstrap/ssr/ssr.mjs',
+                }),
+                clean: 'rm -rf public/build bootstrap/ssr',
+                ...(sandbox && {
+                  'sandbox:init': `preset apply ../../packages/presets --dev true --ui ${ui}`,
+                }),
+                ...(sandbox && {
+                  'bundle-size': 'npx vite-bundle-visualizer',
+                }),
+              },
+            },
+          },
+        ],
+      })
+
+      await installPackages({
+        title: 'Installing Node.js devDependencies',
+        for: 'node',
+        ...(sandbox && { packageManager }),
+        packages: [
+          // default
+          sandbox
+            ? `@inertiajs-revamped/${ui}@workspace:*`
+            : `@inertiajs-revamped/${ui}`,
+          template === 'breeze' ? '@tailwindcss/forms' : '',
+          typescript ? '@types/node' : '',
+          template === 'breeze' ? 'autoprefixer' : '',
+          'laravel-vite-plugin',
+          'postcss',
+          template === 'breeze' ? 'tailwindcss' : '',
+          typescript ? 'typescript' : '',
+          'vite',
+          // preact
+          ...(ui === 'preact'
+            ? [
+                '@babel/core',
+                '@babel/plugin-transform-react-jsx',
+                '@preact/preset-vite',
+                'preact',
+                ssr ? 'preact-render-to-string' : '',
+              ]
+            : []),
+          // react
+          ...(ui === 'react'
+            ? [
+                typescript ? '@types/react' : '',
+                typescript ? '@types/react-dom' : '',
+                '@vitejs/plugin-react',
+                'react',
+                'react-dom',
+              ]
+            : []),
+          // vue
+          ...(ui === 'vue'
+            ? ['@vitejs/plugin-vue', ssr ? '@vue/server-renderer' : '', 'vue']
+            : []),
+        ],
+        dev: true,
+      })
+
+      await installPackages({
+        title: 'Installing Node.js Dependencies',
+        for: 'node',
+        ...(sandbox && { packageManager }),
+        install: ['axios'],
+      })
+    },
+  })
+}
+
+async function cleanUp({ ui, typescript, ssr, sandbox }: Options) {
   await group({
     title: 'Cleaning Up Files & Content',
     handler: async () => {
@@ -431,158 +712,6 @@ async function installInertiaRevamped({
           })
         }
       }
-    },
-  })
-
-  await group({
-    title: 'Installing Node.js Dependencies',
-    handler: async () => {
-      await editFiles({
-        title: 'Updating package.json Dependencies',
-        files: 'package.json',
-        operations: [
-          { type: 'edit-json', delete: ['scripts', 'devDependencies'] },
-          {
-            type: 'edit-json',
-            merge: {
-              scripts: {
-                dev: 'vite',
-                build: 'vite build',
-                ...(ssr && { 'build:ssr': 'vite build --ssr' }),
-                ...(ssr && { 'build:prod': 'vite build && vite build --ssr' }),
-                ...(ssr && {
-                  preview: 'npm run build:prod && node bootstrap/ssr/ssr.mjs',
-                }),
-                clean: 'rm -rf public/build bootstrap/ssr',
-                ...(sandbox && {
-                  'sandbox:init': `preset apply ../../packages/presets --dev true --ui ${ui}`,
-                }),
-                ...(sandbox && {
-                  'bundle-size': 'npx vite-bundle-visualizer',
-                }),
-              },
-            },
-          },
-        ],
-      })
-
-      await installPackages({
-        title: 'Installing Node.js devDependencies',
-        for: 'node',
-        ...(sandbox && { packageManager }),
-        packages: [
-          // default
-          sandbox
-            ? `@inertiajs-revamped/${ui}@workspace:*`
-            : `@inertiajs-revamped/${ui}`,
-          typescript ? '@types/node' : '',
-          'laravel-vite-plugin',
-          'postcss',
-          typescript ? 'typescript' : '',
-          'vite',
-          // preact
-          ...(ui === 'preact'
-            ? [
-                '@babel/core',
-                '@babel/plugin-transform-react-jsx',
-                '@preact/preset-vite',
-                'preact',
-                ssr ? 'preact-render-to-string' : '',
-              ]
-            : []),
-          // react
-          ...(ui === 'react'
-            ? [
-                typescript ? '@types/react' : '',
-                typescript ? '@types/react-dom' : '',
-                '@vitejs/plugin-react',
-                'react',
-                'react-dom',
-              ]
-            : []),
-          // vue
-          ...(ui === 'vue'
-            ? ['@vitejs/plugin-vue', ssr ? '@vue/server-renderer' : '', 'vue']
-            : []),
-        ],
-        dev: true,
-      })
-
-      await installPackages({
-        title: 'Installing Node.js Dependencies',
-        for: 'node',
-        ...(sandbox && { packageManager }),
-        install: ['axios'],
-      })
-    },
-  })
-}
-
-async function installSandbox() {
-  await group({
-    title: 'Installing PHP Sandbox Dependencies',
-    handler: async () => {
-      await deletePaths({
-        paths: ['node_modules', 'package.json'],
-      })
-
-      await executeCommand({
-        title: 'Installing PHP Dependencies',
-        command: 'composer',
-        arguments: ['create-project', 'laravel/laravel:^11.0', '.'],
-        ignoreExitCode: false,
-      })
-
-      await executeCommand({
-        title: 'Linking Laravel File Storage',
-        command: 'php',
-        arguments: ['artisan', 'storage:link'],
-        ignoreExitCode: true,
-      })
-
-      await executeCommand({
-        title: 'Generating Laravel Application Key',
-        command: 'php',
-        arguments: ['artisan', 'key:generate'],
-      })
-
-      await editFiles({
-        title: 'Updating Laravel composer.json',
-        files: 'composer.json',
-        operations: [
-          {
-            type: 'edit-json',
-            delete: ['repositories'],
-          },
-          {
-            type: 'edit-json',
-            merge: {
-              repositories: [
-                {
-                  type: 'path',
-                  url: '../../packages/laravel',
-                  options: { symlink: true },
-                },
-              ],
-            },
-          },
-          {
-            skipIf: (content) =>
-              content.includes('"inertiajs-revamped/laravel": "@dev"'),
-            type: 'edit-json',
-            merge: {
-              require: { 'inertiajs-revamped/laravel': '@dev' },
-            },
-          },
-        ],
-      })
-
-      await executeCommand({
-        title: 'Updating PHP dependencies with Composer',
-        command: 'composer',
-        arguments: ['update'],
-        ignoreExitCode: true,
-      })
     },
   })
 }
