@@ -1,5 +1,15 @@
 # Changelog - @inertiajs-revamped/vue
 
+## 0.0.6 (2024-05-19)
+
+### Features
+
+- exclude properties from partial responses, based on (inertia PR 1876) ([9e8d903](https://github.com/inertiajs-revamped/inertia/commit/9e8d903))
+
+### Builds
+
+- update dependency @types/node to ^20.12.12 ([e3c265f](https://github.com/inertiajs-revamped/inertia/commit/e3c265f))
+
 ## 0.0.5 (2024-05-11)
 
 ### Code Refactoring

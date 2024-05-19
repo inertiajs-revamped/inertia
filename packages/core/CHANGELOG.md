@@ -1,5 +1,20 @@
 # Changelog - @inertiajs-revamped/core
 
+## 0.0.5 (2024-05-19)
+
+### Features
+
+- deepmerge properties, based on (inertia PR 1877) ([5021110](https://github.com/inertiajs-revamped/inertia/commit/5021110))
+- exclude properties from partial responses, based on (inertia PR 1876) ([356b5e3](https://github.com/inertiajs-revamped/inertia/commit/356b5e3))
+
+### Bug Fixes
+
+- add window check to prevent ssr error ([66a19cc](https://github.com/inertiajs-revamped/inertia/commit/66a19cc))
+
+### Builds
+
+- update dependency @types/node to ^20.12.12 ([e3c265f](https://github.com/inertiajs-revamped/inertia/commit/e3c265f))
+
 ## 0.0.4 (2024-05-13)
 
 ### Features

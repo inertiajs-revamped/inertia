@@ -1,5 +1,29 @@
 # Changelog - @inertiajs-revamped/laravel
 
+## 0.0.4 (2024-05-17)
+
+### Features
+
+- persistent properties, based on (inertia-laravel PR 621) ([d6e71d2](https://github.com/inertiajs-revamped/inertia/commit/d6e71d2))
+- support dot notation in partial requests, based on (inertia-laravel PR 620) ([cdc761f](https://github.com/inertiajs-revamped/inertia/commit/cdc761f))
+- add env variables for ssr options, based on (inertia-laravel PR 624) ([377297b](https://github.com/inertiajs-revamped/inertia/commit/377297b))
+
+### Code Refactoring
+
+- drop svelte support for now ([513ce61](https://github.com/inertiajs-revamped/inertia/commit/513ce61))
+
+### Bug Fixes
+
+- add symfony/console 6.0 support ([ec7ba0d](https://github.com/inertiajs-revamped/inertia/commit/ec7ba0d))
+- fix unexpected json resource serialization, based on (inertia-laravel PR 619) ([5f57f8a](https://github.com/inertiajs-revamped/inertia/commit/5f57f8a))
+- ensure query string not url encoded, based on (inertia-laravel PR 598) ([6b94bb5](https://github.com/inertiajs-revamped/inertia/commit/6b94bb5))
+- make commands lazy, based on (inertia-laravel PR 601) ([b2ff0df](https://github.com/inertiajs-revamped/inertia/commit/b2ff0df))
+- fix mockery version ([70be88e](https://github.com/inertiajs-revamped/inertia/commit/70be88e))
+
+### Builds
+
+- add dependency symfony/console ([2cde480](https://github.com/inertiajs-revamped/inertia/commit/2cde480))
+
 ## 0.0.3 (2024-05-12)
 
 ### Bug Fixes

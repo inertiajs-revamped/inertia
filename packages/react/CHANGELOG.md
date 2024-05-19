@@ -1,5 +1,15 @@
 # Changelog - @inertiajs-revamped/react
 
+## 0.0.5 (2024-05-19)
+
+### Features
+
+- exclude properties from partial responses, based on (inertia PR 1876) ([69bbd5d](https://github.com/inertiajs-revamped/inertia/commit/69bbd5d))
+
+### Builds
+
+- update dependency @types/node to ^20.12.12 ([e3c265f](https://github.com/inertiajs-revamped/inertia/commit/e3c265f))
+
 ## 0.0.4 (2024-05-15)
 
 ### Features
