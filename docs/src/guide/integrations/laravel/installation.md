@@ -27,15 +27,19 @@ php artisan inertia:middleware
 
 Once the middleware has been published, append the `HandleInertiaRequests` middleware to the web middleware group in your application's `bootstrap/app.php` file.
 
-```php
-use App\Http\Middleware\HandleInertiaRequests;
+::: code-group
+
+```php [bootstrap/app.php]
+use App\Http\Middleware\HandleInertiaRequests; // [!code ++]
 
 ->withMiddleware(function (Middleware $middleware) {
-  $middleware->web(append: [
-    HandleInertiaRequests::class,
-  ]);
+  $middleware->web(append: [ // [!code ++]
+    HandleInertiaRequests::class, // [!code ++]
+  ]); // [!code ++]
 })
 ```
+
+:::
 
 ### Publish Config
 
@@ -47,7 +51,9 @@ php artisan vendor:publish --provider="Inertia\ServiceProvider"
 
 Proceed to delete `resources/views`, and create `resources/views/app.blade.php`.
 
-```blade
+::: code-group
+
+```blade [resources/views/app.blade.php]
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
   <head>
@@ -62,3 +68,5 @@ Proceed to delete `resources/views`, and create `resources/views/app.blade.php`.
   </body>
 </html>
 ```
+
+:::
