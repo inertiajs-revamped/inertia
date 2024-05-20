@@ -59,13 +59,11 @@ This command will install and execute Inertia.js-Revamped `@preset/cli`. You wil
   ✓  Executed action: Choose your variant › ts
   ✓  Executed action: Choose to enable/disable SSR › enabled
   ✓  Executed action: Installing PHP dependencies with Composer (php)
-  ✓  Executed action: Installing Inertia.js-Revamped Scaffolding (7 actions)
-  ✓  Executed action: Cleaning Up Files & Content (2 actions)
-  ✓  Executed action: Installing Node.js Dependencies (3 actions)
+  ✓  Executed action: Installing Breeze Scaffolding (14 actions)
 
  Presets  1 applied
  Actions  21 executed
- Duration  13.94s
+ Duration  24.32s
 
  NEXT STEPS
 
