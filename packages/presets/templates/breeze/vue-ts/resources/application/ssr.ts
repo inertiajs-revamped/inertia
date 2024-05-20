@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { createInertiaApp, resolvePageComponent } from '@inertiajs-revamped/vue'
 import { createServer } from '@inertiajs-revamped/vue/server'
 import { renderToString } from '@vue/server-renderer'
