@@ -1,4 +1,5 @@
 const packageManager = ['NPM', 'PNPM', 'Yarn', 'Bun'] as const
+const templates = ['default', 'breeze']
 const ui = ['Preact', 'React', 'Vue'] as const
 
 export interface Options {
@@ -7,7 +8,11 @@ export interface Options {
    */
   packageManager?: Lowercase<(typeof packageManager)[number]>
 
-  template?: 'breeze' | 'default'
+  /**
+   * Choose your template (default: `undefined`)
+   */
+  template?: Lowercase<(typeof templates)[number]>
+
   /**
    * Choose your prefered UI-Framework (default: `undefined`)
    */
@@ -33,7 +38,6 @@ export interface Options {
 export default definePreset<Options>({
   name: 'Inertia.js-Revamped',
   options: {
-    template: 'default',
     sandbox: false,
   },
   postInstall: ({ hl }) => [
@@ -46,11 +50,11 @@ export default definePreset<Options>({
 
     if (options.sandbox) {
       Object.assign(opts, {
-        packageManager: options.packageManager ?? 'pnpm',
-        template: options.template ?? 'breeze',
-        ui: options.ui ?? 'react',
+        packageManager: options.packageManager || 'pnpm',
+        template: options.template || 'breeze',
+        ui: options.ui || 'react',
         typescript: options.typescript ?? true,
-        ssr: options.ssr ?? true,
+        ssr: options.ssr || true,
         sandbox: true,
       }) satisfies Options
 
@@ -60,8 +64,8 @@ export default definePreset<Options>({
 
       Object.assign(opts, {
         packageManager: options.packageManager ?? prompts.packageManager,
-        template: options.template ?? (prompts.template || 'default'),
-        ui: options.ui ?? prompts.ui,
+        template: options.template || prompts.template,
+        ui: options.ui || prompts.ui,
         typescript: !!(options.typescript || prompts.variant === 'ts'),
         ssr: !!(options.ssr || prompts.ssr === 'enabled'),
         sandbox: false,
@@ -76,19 +80,19 @@ export default definePreset<Options>({
 
     if (!opts.packageManager) {
       throw new Error(
-        'You must specify a package manager (e.g., "npm", "yarn", "pnpm", or "bun").'
+        'You must specify a package manager (e.g. "npm", "yarn", "pnpm", or "bun").'
       )
     }
 
     if (!opts.ui) {
       throw new Error(
-        'You must specify a UI framework (e.g., "preact", "react", or "vue").'
+        'You must specify a UI framework (e.g. "preact", "react", or "vue").'
       )
     }
 
     if (!opts.template) {
       throw new Error(
-        'You must specify a template (e.g., "breeze", or "default").'
+        'You must specify a template (e.g. "default", or "breeze").'
       )
     }
 
@@ -149,8 +153,8 @@ async function initialPrompts({
       name: 'template',
       text: '(Press <up> / <down> to select, <return> to confirm)',
       choices: [
-        { title: 'Default', value: 'default' },
-        { title: 'Breeze', value: 'breeze' },
+        { title: 'default', value: 'default' },
+        { title: 'breeze', value: 'breeze' },
       ],
       initial: 0,
     })
