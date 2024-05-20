@@ -567,6 +567,7 @@ async function installNodeDependencies({
         ...(sandbox && { packageManager }),
         packages: [
           // default
+          template === 'breeze' ? '@headlessui/react' : '',
           sandbox
             ? `@inertiajs-revamped/${ui}@workspace:*`
             : `@inertiajs-revamped/${ui}`,
