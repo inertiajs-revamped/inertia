@@ -703,7 +703,11 @@ async function cleanUp({ ui, typescript, ssr, sandbox }: Options) {
 
         await editFiles({
           title: 'Cleaning Up TypeScript Files',
-          files: ['resources/**/*.{ts,tsx}', 'vite.config.ts'],
+          files: [
+            'resources/**/*.{ts,tsx}',
+            'tailwind.config.ts',
+            'vite.config.ts',
+          ],
           operations: [
             {
               type: 'remove-line',
