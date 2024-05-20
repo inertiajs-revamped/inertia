@@ -80,6 +80,28 @@ export const sidebarConfig = {
         },
       ],
     },
+    {
+      text: 'Hooks',
+      collapsed: true,
+      items: [
+        {
+          text: 'usePage',
+          link: '/guide/ui-frameworks/react/hooks/use-page',
+        },
+        {
+          text: 'useForm',
+          link: '/guide/ui-frameworks/react/hooks/use-form',
+        },
+        {
+          text: 'useRemember',
+          link: '/guide/ui-frameworks/react/hooks/use-remember',
+        },
+        {
+          text: 'withLayout',
+          link: '/guide/ui-frameworks/react/hooks/with-layout',
+        },
+      ],
+    },
   ],
   '/api/': [
     {

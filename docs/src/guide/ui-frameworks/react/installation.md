@@ -2,11 +2,15 @@
 next: 'Vue - Installation'
 ---
 
+<script setup>
+import { version } from '../../../../../packages/react/package.json'
+</script>
+
 # React Client-side Setup
 
 This document will guide you through the installation of the [React](https://react.dev/) framework adapter.
 
-> [!INFO] @inertiajs-revamped/react <Badge type="info" text="v0.0.2" />
+> [!INFO] @inertiajs-revamped/react <Badge type="info">v{{ version }}</Badge>
 
 ## Install Dependencies
 

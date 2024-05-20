@@ -2,11 +2,15 @@
 next: 'React - Installation'
 ---
 
+<script setup>
+import { version } from '../../../../../packages/preact/package.json'
+</script>
+
 # Preact Client-side Setup
 
 This document will guide you through the installation of the [Preact](https://preactjs.com/) framework adapter.
 
-> [!INFO] @inertiajs-revamped/preact <Badge type="info" text="v0.0.2" />
+> [!INFO] @inertiajs-revamped/preact <Badge type="info">v{{ version }}</Badge>
 
 ## Install Dependencies
 

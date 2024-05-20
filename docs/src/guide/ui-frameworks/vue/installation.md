@@ -1,8 +1,12 @@
+<script setup>
+import { version } from '../../../../../packages/vue/package.json'
+</script>
+
 # Vue Client-side Setup
 
 This document will guide you through the installation of the [Vue](https://vuejs.org/) framework adapter.
 
-> [!INFO] @inertiajs-revamped/vue <Badge type="info" text="v0.0.3" />
+> [!INFO] @inertiajs-revamped/vue <Badge type="info">v{{ version }}</Badge>
 
 ## Install Dependencies
 
