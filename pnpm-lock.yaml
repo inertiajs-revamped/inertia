@@ -24,8 +24,8 @@ importers:
         specifier: ^7.5.8
         version: 7.5.8
       colorize-node:
-        specifier: ^0.5.1
-        version: 0.5.1
+        specifier: ^0.5.2
+        version: 0.5.2
       execa:
         specifier: ^9.1.0
         version: 9.1.0
@@ -991,9 +991,9 @@ packages:
     resolution: {integrity: sha512-VGtlMu3x/4DOtIUwEkRezxUZ2lBacNJCHash0N0WeZDBS+7Ux1dm3XWAgWYxLJFMMdOeXMHXorshEFhbMSGelg==}
     engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
 
-  colorize-node@0.5.1:
-    resolution: {integrity: sha512-NEiJgkr1bRpy7ZNiDGN3vYRSMwVHrgaRSYZPOIYDA5VpFXyp0o3ZH+ZuW5lLQ0O7d5Xooqcg7djXIfdtx6U4nw==}
-    engines: {node: '>=18.12.0', pnpm: '>=8.12.0'}
+  colorize-node@0.5.2:
+    resolution: {integrity: sha512-iYTPFQx1tTN5OcPc3+6CP4Ijv/zTPElAgyS9B3F0ii/TKZ9Zo7x/ipY0QInMKzugbO9QbLQWi3UHmQqGHwXdkw==}
+    engines: {node: '>=18.12.0'}
 
   combined-stream@1.0.8:
     resolution: {integrity: sha512-FQN4MRfuJeHf7cBbBMJFXhKSDq+2kAArBlmRBvcvFE5BB1HZKXtSFASDhdlz9zOYwxh8lDdnvmMOe/+5cdoEdg==}
@@ -1333,6 +1333,7 @@ packages:
 
   inflight@1.0.6:
     resolution: {integrity: sha512-k92I/b08q4wvFscXCLvqfsHCrjrF7yiXsQuIVvVE7N82W3+aqpzuUdBbfhWcy/FZR3/4IgflMgKLOsvPDrGCJA==}
+    deprecated: This module is not supported, and leaks memory. Do not use it. Check out lru-cache if you want a good and tested way to coalesce async requests by a key value, which is much more comprehensive and powerful.
 
   inherits@2.0.4:
     resolution: {integrity: sha512-k/vGaX4/Yla3WzyMCvTQOXYeIHvqOKtnqBduzTHpzpQZzAskKMhZ2K+EnBiSM9zGSoIFeMpXKxa4dYeZIQqewQ==}
@@ -2940,7 +2941,7 @@ snapshots:
     dependencies:
       restore-cursor: 4.0.0
 
-  colorize-node@0.5.1: {}
+  colorize-node@0.5.2: {}
 
   combined-stream@1.0.8:
     dependencies:
