@@ -24,8 +24,8 @@ importers:
         specifier: ^7.5.8
         version: 7.5.8
       colorize-node:
-        specifier: ^0.5.2
-        version: 0.5.2
+        specifier: ^1.0.0
+        version: 1.0.0
       execa:
         specifier: ^9.1.0
         version: 9.1.0
@@ -991,8 +991,8 @@ packages:
     resolution: {integrity: sha512-VGtlMu3x/4DOtIUwEkRezxUZ2lBacNJCHash0N0WeZDBS+7Ux1dm3XWAgWYxLJFMMdOeXMHXorshEFhbMSGelg==}
     engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
 
-  colorize-node@0.5.2:
-    resolution: {integrity: sha512-iYTPFQx1tTN5OcPc3+6CP4Ijv/zTPElAgyS9B3F0ii/TKZ9Zo7x/ipY0QInMKzugbO9QbLQWi3UHmQqGHwXdkw==}
+  colorize-node@1.0.0:
+    resolution: {integrity: sha512-pY/I4w8insHsUbzu3++GxNE3e4ybhCfk+y2lRw95u6cB596p8NDbrhItMBmIxU3K1KZcztyz8AQ0fqd53nIZyw==}
     engines: {node: '>=18.12.0'}
 
   combined-stream@1.0.8:
@@ -2945,7 +2945,7 @@ snapshots:
     dependencies:
       restore-cursor: 4.0.0
 
-  colorize-node@0.5.2: {}
+  colorize-node@1.0.0: {}
 
   combined-stream@1.0.8:
     dependencies:
