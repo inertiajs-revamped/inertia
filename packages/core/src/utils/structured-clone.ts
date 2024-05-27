@@ -7,8 +7,10 @@
  * @returns T
  */
 export function getStructuredClone<T>(input: T): T {
-  if (typeof window.structuredClone !== 'undefined') {
-    return window.structuredClone(input)
+  if (typeof window !== 'undefined') {
+    if (typeof window.structuredClone !== 'undefined') {
+      return window.structuredClone(input)
+    }
   }
   return JSON.parse(JSON.stringify(input))
 }
