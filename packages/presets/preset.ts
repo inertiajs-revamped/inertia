@@ -394,6 +394,7 @@ async function installPingCRM({
           'database/database.sqlite',
           'public/favicon.ico',
           'resources',
+          'tests',
           'vite.config.js',
         ],
       })
