@@ -60,7 +60,7 @@ const auth = usePage().props.auth
                     :href="`/users/${auth.user.id}/edit`">My Profile</Link>
                   <Link class="block px-6 py-2 hover:text-white hover:bg-indigo-500" href="/users">Manage Users</Link>
                   <Link class="block px-6 py-2 w-full text-left hover:text-white hover:bg-indigo-500" href="/logout"
-                    method="delete" as="button">Logout</Link>
+                    method="post" as="button">Logout</Link>
                 </div>
               </template>
             </Dropdown>

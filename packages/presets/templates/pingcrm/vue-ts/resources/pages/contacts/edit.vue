@@ -4,18 +4,24 @@ import SelectInput from '@/components/select-input.vue'
 import TextInput from '@/components/text-input.vue'
 import TrashedMessage from '@/components/trashed-message.vue'
 import Layout from '@/layouts/layout.vue'
-import { Head, Link, router, useForm } from '@inertiajs-revamped/vue'
+import {
+  Head,
+  Link,
+  type PageProps,
+  router,
+  useForm,
+} from '@inertiajs-revamped/vue'
 import type { PropType } from 'vue'
 
 defineOptions({ layout: Layout })
 
 const props = defineProps({
   contact: {
-    type: Object as PropType<App.Models.Contact>,
+    type: Object as PropType<PageProps['contact']>,
     required: true,
   },
   organizations: {
-    type: Array as PropType<App.Models.Organization[]>,
+    type: Array as PropType<PageProps['organizations']>,
     required: true,
   },
 })

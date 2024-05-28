@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Contracts\Filesystem\Filesystem;
 use Illuminate\Http\Request;
-use League\Glide\Responses\SymfonyResponseFactory;
 use League\Glide\ServerFactory;
+use Illuminate\Contracts\Filesystem\Filesystem;
+use League\Glide\Responses\SymfonyResponseFactory;
 
 class ImagesController extends Controller
 {

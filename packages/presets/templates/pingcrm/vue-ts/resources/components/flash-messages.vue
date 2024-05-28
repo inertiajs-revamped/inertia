@@ -10,7 +10,7 @@ watch(
   () => {
     show.value = true
   },
-  { deep: true },
+  { deep: true }
 )
 </script>
 

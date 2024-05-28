@@ -11,6 +11,11 @@ declare module '@inertiajs-revamped/vue' {
     active: boolean
   }
 
+  interface ModelPagination<Model> {
+    data: Model[]
+    links: PaginationLink[]
+  }
+
   interface PageProps {
     auth: {
       user: App.Models.User
@@ -20,21 +25,12 @@ declare module '@inertiajs-revamped/vue' {
       error: string | null
       success: string | null
     }
-    contacts: {
-      data: App.Models.Contact[]
-      links: PaginationLink[]
-    }
     contact: App.Models.Contact
-    organizations: {
-      data: App.Models.Organization[]
-      links: PaginationLink[]
-    }
     organization: App.Models.Organization
-    users: {
-      data: App.Models.User[]
-      links: PaginationLink[]
-    }
-    user: App.Models.User
+    user: App.Models.User & { photo: string | null }
+    contacts: App.Models.Contact[]
+    organizations: App.Models.Organization[]
+    users: (App.Models.User & { photo: string | null })[]
     versions: {
       php: string
       laravel: string

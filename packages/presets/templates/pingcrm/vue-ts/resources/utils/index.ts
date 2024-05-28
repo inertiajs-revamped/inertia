@@ -1,3 +1,4 @@
+// @ts-nocheck
 // replaced lodash.pickBy https://stackoverflow.com/a/58186870/6597226
 export const pickBy = (obj: object, predicate = (v: unknown) => v) =>
   Object.entries(obj)

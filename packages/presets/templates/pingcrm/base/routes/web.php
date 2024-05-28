@@ -1,8 +1,6 @@
 <?php
 
-use Inertia\Inertia;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Foundation\Application;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\ImagesController;
 use App\Http\Controllers\ReportsController;
@@ -53,7 +51,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/reports', [ReportsController::class, 'index'])->name('reports');
 
     // Images
-    Route::get('/img', [ImagesController::class, 'show'])->where('path', '.*')->name('image');
+    Route::get('/img/{path}', [ImagesController::class, 'show'])->where('path', '.*')->name('image');
 });
 
 require __DIR__.'/auth.php';

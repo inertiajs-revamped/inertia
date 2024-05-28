@@ -4,18 +4,24 @@ import Pagination from '@/components/pagination.vue'
 import SearchFilter from '@/components/search-filter.vue'
 import Layout from '@/layouts/layout.vue'
 import { pickBy, throttle } from '@/utils'
-import { type Filters, Head, Link, type ModelPagination, router } from '@inertiajs-revamped/vue'
+import {
+  Head,
+  Link,
+  type ModelPagination,
+  type PageProps,
+  router,
+} from '@inertiajs-revamped/vue'
 import { type PropType, ref, watch } from 'vue'
 
 defineOptions({ layout: Layout })
 
 const props = defineProps({
   filters: {
-    type: Object as PropType<Filters>,
+    type: Object as PropType<PageProps['filters']>,
     required: true,
   },
   organizations: {
-    type: Object as PropType<ModelPagination<App.Models.Organization>>,
+    type: Object as PropType<ModelPagination<PageProps['organization']>>,
     required: true,
   },
 })
@@ -30,7 +36,7 @@ watch(
   throttle(() => {
     router.get('/organizations', pickBy(form.value), { preserveState: true })
   }, 150),
-  { deep: true },
+  { deep: true }
 )
 
 const reset = () => {

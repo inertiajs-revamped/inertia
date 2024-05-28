@@ -15,15 +15,22 @@ const emit = defineEmits(['update:modelValue'])
 
 const fileRef = ref<HTMLInputElement | null>(null)
 
-watch(() => props.modelValue, (value) => {
-  if (!value) {
-    fileRef.value!.value = ''
+watch(
+  () => props.modelValue,
+  (value) => {
+    if (!value) {
+      fileRef.value!.value = ''
+    }
   }
-})
+)
 
 const filesize = (size: number) => {
   var i = Math.floor(Math.log(size) / Math.log(1024))
-  return (size / Math.pow(1024, i)).toFixed(2) + ' ' + ['B', 'kB', 'MB', 'GB', 'TB'][i]
+  return (
+    (size / Math.pow(1024, i)).toFixed(2) +
+    ' ' +
+    ['B', 'kB', 'MB', 'GB', 'TB'][i]
+  )
 }
 
 const browse = () => {

@@ -11,7 +11,9 @@ const props = defineProps({
   },
   error: String,
   label: String,
-  modelValue: [String, Number, Boolean] as PropType<string | number | boolean | null>,
+  modelValue: [String, Number, Boolean] as PropType<
+    string | number | boolean | null
+  >,
 })
 
 const emit = defineEmits(['update:modelValue'])

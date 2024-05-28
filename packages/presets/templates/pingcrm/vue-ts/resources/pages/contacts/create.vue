@@ -3,14 +3,14 @@ import LoadingButton from '@/components/loading-button.vue'
 import SelectInput from '@/components/select-input.vue'
 import TextInput from '@/components/text-input.vue'
 import Layout from '@/layouts/layout.vue'
-import { Head, Link, useForm } from '@inertiajs-revamped/vue'
+import { Head, Link, type PageProps, useForm } from '@inertiajs-revamped/vue'
 import type { PropType } from 'vue'
 
 defineOptions({ layout: Layout })
 
 defineProps({
   organizations: {
-    type: Array as PropType<App.Models.Organization[]>,
+    type: Array as PropType<PageProps['organizations']>,
     required: true,
   },
 })

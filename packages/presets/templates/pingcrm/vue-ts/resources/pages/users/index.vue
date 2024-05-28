@@ -3,18 +3,18 @@ import Icon from '@/components/icon.vue'
 import SearchFilter from '@/components/search-filter.vue'
 import Layout from '@/layouts/layout.vue'
 import { pickBy, throttle } from '@/utils'
-import { type Filters, Head, Link, router } from '@inertiajs-revamped/vue'
+import { Head, Link, type PageProps, router } from '@inertiajs-revamped/vue'
 import { type PropType, ref, watch } from 'vue'
 
 defineOptions({ layout: Layout })
 
 const props = defineProps({
   filters: {
-    type: Object as PropType<Filters>,
+    type: Object as PropType<PageProps['filters']>,
     required: true,
   },
   users: {
-    type: Array as PropType<(App.Models.User & { photo: string | null })[]>,
+    type: Object as PropType<PageProps['users']>,
     required: true,
   },
 })
@@ -30,7 +30,7 @@ watch(
   throttle(() => {
     router.get('/users', pickBy(form.value), { preserveState: true })
   }, 150),
-  { deep: true },
+  { deep: true }
 )
 
 const reset = () => {

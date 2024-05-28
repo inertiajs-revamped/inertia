@@ -438,6 +438,12 @@ async function installPingCRM({
             update: (r) =>
               r.replace('CACHE_STORE=database', 'CACHE_STORE=file'),
           },
+          {
+            skipIf: (content) => content.includes('QUEUE_CONNECTION=sync'),
+            type: 'update-content',
+            update: (r) =>
+              r.replace('QUEUE_CONNECTION=database', 'QUEUE_CONNECTION=sync'),
+          },
         ],
       })
 

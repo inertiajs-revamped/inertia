@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { nanoid } from 'nanoid'
-import { type PropType, ref } from 'vue';
+import { type PropType, ref } from 'vue'
 
 defineOptions({
   inheritAttrs: false,
