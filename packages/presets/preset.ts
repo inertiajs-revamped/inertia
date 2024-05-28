@@ -674,6 +674,7 @@ async function installNodeDependencies({
           typescript ? '@types/node' : '',
           template === 'breeze' || template === 'pingcrm' ? 'autoprefixer' : '',
           'laravel-vite-plugin',
+          template === 'pingcrm' ? 'nanoid' : '',
           'postcss',
           template === 'pingcrm' ? 'postcss-import' : '',
           template === 'breeze' || template === 'pingcrm' ? 'tailwindcss' : '',
