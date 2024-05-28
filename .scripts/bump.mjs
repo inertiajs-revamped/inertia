@@ -1,6 +1,8 @@
 #!/usr/bin/env node
+import { dirname, join } from 'node:path'
 import { listRepoManifests } from '@bscotch/workspaces'
 import { colorize } from 'colorize-node'
+import { execa } from 'execa'
 import semver from 'semver'
 import {
   clearConsole,
@@ -12,7 +14,52 @@ import {
 
 async function bump() {
   await clearConsole().then(async () => {
+    const { stdout: beforeChanges } = await execa`git diff`
+    const { stdout: beforeUntrackedFile } =
+      await execa`git ls-files --others --exclude-standard`
+
+    if (beforeChanges || beforeUntrackedFile) {
+      console.warn('Please commit your change before publish.\n')
+      process.exit()
+    }
+
+    let latestTag
+
+    const { stdout: tag, stderr } = await execa`git describe --tags --abbrev=0`
+
+    if (stderr) {
+      console.error('error')
+      return
+    } else {
+      latestTag = formatStdout(tag)
+    }
+
     const packages = await listRepoManifests('packages')
+
+    const pkgs = await Promise.all(
+      packages.map(async (pkg) => {
+        const relativePath = dirname(pkg.relativePath)
+        const { stdout: hasChanges } =
+          await execa`git diff ${latestTag} -- ${join(
+            relativePath,
+            'src'
+          )} ${join(relativePath, 'package.json')}`
+
+        if (hasChanges) {
+          return {
+            path: relativePath,
+            name: pkg.package.name,
+            version: pkg.package.version,
+            pkg,
+          }
+        }
+      })
+    )
+
+    if (!pkgs.length) {
+      console.warn('No packages have changed since last release.\n')
+      process.exit()
+    }
 
     const publicPackages = packages
       .filter(
@@ -122,6 +169,13 @@ async function bump() {
       )}\n`
     )
   })
+}
+
+/**
+ * @param {string} stdout
+ */
+export function formatStdout(stdout) {
+  return stdout.trim().replace('\n', '')
 }
 
 bump().catch((err) => {
