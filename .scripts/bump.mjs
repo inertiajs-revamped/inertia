@@ -36,40 +36,14 @@ async function bump() {
 
     const packages = await listRepoManifests('packages')
 
-    const pkgs = await Promise.all(
-      packages.map(async (pkg) => {
-        const relativePath = dirname(pkg.relativePath)
-        const { stdout: hasChanges } =
-          await execa`git diff ${latestTag} -- ${join(
-            relativePath,
-            'src'
-          )} ${join(relativePath, 'package.json')}`
+    const changedPackages = await getChangedPackages(packages, latestTag)
 
-        if (hasChanges) {
-          return {
-            path: relativePath,
-            name: pkg.package.name,
-            version: pkg.package.version,
-            pkg,
-          }
-        }
-      })
-    )
-
-    if (!pkgs.length) {
+    if (!changedPackages.length) {
       console.warn('No packages have changed since last release.\n')
       process.exit()
     }
 
-    const publicPackages = packages
-      .filter(
-        (pkg) =>
-          pkg.package.private !== true &&
-          // filter packages with no changes
-          Array.isArray(pkg.logs) &&
-          pkg.logs.length !== 0
-      )
-      .map((pkg) => pkg.package.name)
+    const publicPackages = changedPackages.map((pkg) => pkg.name)
 
     process.stdout.write(
       `${colorize.bgMagenta(
@@ -174,8 +148,47 @@ async function bump() {
 /**
  * @param {string} stdout
  */
-export function formatStdout(stdout) {
+function formatStdout(stdout) {
   return stdout.trim().replace('\n', '')
+}
+
+/**
+ * @param {import('@bscotch/workspaces').ManifestGitInfo[]} packages
+ * @param {string} latestTag
+ */
+async function getChangedPackages(packages, latestTag) {
+  const pkgs = await Promise.all(
+    packages.map(async (pkg) => {
+      if (!pkg) return
+      const relativePath = dirname(pkg.relativePath)
+      const { stdout: hasChanges } =
+        await execa`git diff ${latestTag} -- ${join(
+          relativePath,
+          'src'
+        )} ${join(relativePath, 'package.json')}`
+
+      if (!pkg.package.private && hasChanges) {
+        return {
+          path: relativePath,
+          name: pkg.package.name,
+          version: pkg.package.version,
+          pkg,
+        }
+      }
+    })
+  )
+
+  return pkgs.filter(isNotNullOrUndefined)
+}
+
+/**
+ * @function
+ * @template T
+ * @param {null | undefined | T} input
+ * @returns {input is T}
+ */
+function isNotNullOrUndefined(input) {
+  return input != null
 }
 
 bump().catch((err) => {
