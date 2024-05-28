@@ -16,16 +16,17 @@
   "license": "MIT",
   "type": "module",
   "scripts": {
-    "clean": "rm -rf dist src/.vitepress/cache",
-    "dev": "vitepress dev src",
-    "build": "vitepress build src",
-    "preview": "vitepress preview src"
+    "clean": "rm -rf dist .vitepress/cache",
+    "dev": "vitepress dev",
+    "build": "vitepress build",
+    "preview": "vitepress preview"
   },
   "devDependencies": {
     "@types/node": "^20.12.12",
     "terser": "^5.31.0",
     "vite": "^5.2.11",
     "vitepress": "^1.2.2",
+    "vitepress-markdown-it-stepper": "^0.1.0",
     "vue": "^3.4.27"
   },
   "publishConfig": {

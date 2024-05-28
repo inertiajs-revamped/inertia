@@ -1,23 +1,17 @@
 {
   "$schema": "https://json.schemastore.org/tsconfig",
   "display": "Node 18.12.0 Docs",
+  "extends": "../tsconfig.json",
   "compilerOptions": {
-    "module": "ESNext",
-    "target": "ES2020",
-    "lib": ["ES2020"],
-    "moduleResolution": "Bundler",
-    "strict": true,
-    "skipLibCheck": true,
-    "esModuleInterop": true,
-    "exactOptionalPropertyTypes": true,
-    "noUnusedLocals": true,
-    "noUncheckedIndexedAccess": true,
-    "resolveJsonModule": true,
-    "verbatimModuleSyntax": true,
+    "lib": ["DOM", "DOM.Iterable", "ES2020"],
+    "jsx": "preserve",
     "skipDefaultLibCheck": true,
     "removeComments": true,
-    "types": ["vite/client", "vitepress"]
+    "types": ["node", "vite/client"],
+    "paths": {
+      "@/*": ["./.vitepress/*"]
+    }
   },
-  "include": ["./src/*.ts", "./src/.vitepress/**/*.ts"],
-  "exclude": ["**/dist", "**/node_modules"]
+  "include": ["src/**/*", ".vitepress/**/*"],
+  "exclude": ["**/dist", "**/node_modules", "**/_parts"]
 }

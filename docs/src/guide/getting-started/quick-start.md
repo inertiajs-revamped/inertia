@@ -5,11 +5,6 @@ The recommended way of scaffolding a new Inertia.js-Revamped project is via auto
 > [!IMPORTANT]
 > Inertia.js-Revamped is currently in `alpha` status and not ready for production use yet.
 
----
-
-> [!TIP] Prefer to install Inertia.js-Revamped manually?
-> Read our step-by-step manual [installation guide](/guide/integrations/laravel/installation) instead.
-
 ## Prerequisites
 
 When using automatic setup, Inertia.js-Revamped has a few requirements:
@@ -168,7 +163,6 @@ php artisan inertia:start-ssr
 
 ## What's next?
 
-* To learn about our [project structure](/guide/basics/project-structure) convention, read the basics.
 * To learn more about our starter kits, read [Preset CLI](/api/preset-cli).
 
 ::: tip
@@ -177,8 +171,4 @@ php artisan inertia:start-ssr
 
 :::
 
-### Community
-
-If you have a question or need additional help, please consider to join our [Discord](https://discord.gg/Hn5bDDvTKX) or start a discussion at [GitHub](https://github.com/inertiajs-revamped/inertia/discussions).
-
-Please use the GitHub [issue tracker](https://github.com/inertiajs-revamped/inertia/issues) to submit bug reports and feature requests.
+<!--@include: ../../_templates/parts/community.md-->
