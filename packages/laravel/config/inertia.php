@@ -37,7 +37,7 @@ return [
     'testing' => [
         'ensure_pages_exist' => true,
         'page_paths' => [
-            resource_path('views/pages'),
+            resource_path('pages'),
         ],
         'page_extensions' => [
             'js',
