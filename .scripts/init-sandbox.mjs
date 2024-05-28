@@ -49,7 +49,7 @@ async function init() {
     if (ui !== 'preact') {
       template = await selectPrompt({
         question: `${colorize.bold('Choose your template:')} `,
-        options: ['default', 'breeze'],
+        options: ['default', 'breeze', 'pingcrm'],
         pointer: symbols.pointer,
       })
 

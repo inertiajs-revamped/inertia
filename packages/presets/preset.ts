@@ -1,5 +1,5 @@
 const packageManager = ['NPM', 'PNPM', 'Yarn', 'Bun'] as const
-const templates = ['default', 'breeze']
+const templates = ['default', 'breeze', 'pingcrm']
 const ui = ['Preact', 'React', 'Vue'] as const
 
 export interface Options {
@@ -92,7 +92,7 @@ export default definePreset<Options>({
 
     if (!opts.template) {
       throw new Error(
-        'You must specify a template (e.g. "default", or "breeze").'
+        'You must specify a template (e.g. "default", "breeze", or "pingcrm").'
       )
     }
 
@@ -110,6 +110,8 @@ export default definePreset<Options>({
 
     if (opts.template === 'breeze') {
       await installBreeze(opts)
+    } else if (opts.template === 'pingcrm') {
+      await installPingCRM(opts)
     } else {
       await installInertiaRevamped(opts)
     }
@@ -155,6 +157,7 @@ async function initialPrompts({
       choices: [
         { title: 'default', value: 'default' },
         { title: 'breeze', value: 'breeze' },
+        { title: 'pingcrm', value: 'pingcrm' },
       ],
       initial: 0,
     })
@@ -278,71 +281,7 @@ async function installBreeze({
         packages: ['laravel/sanctum:^4.0'],
       })
 
-      await executeCommand({
-        title: 'Publishing Inertia.js-Revamped Middleware',
-        command: 'php',
-        arguments: ['artisan', 'inertia:middleware'],
-      })
-
-      await executeCommand({
-        title: 'Publishing Inertia.js-Revamped Configuration',
-        command: 'php',
-        arguments: [
-          'artisan',
-          'vendor:publish',
-          '--provider=Inertia\\ServiceProvider',
-        ],
-      })
-
-      await editFiles({
-        title: 'Registering Inertia.js-Revamped Middleware',
-        files: 'bootstrap/app.php',
-        operations: [
-          {
-            skipIf: (content) =>
-              content.includes(
-                'use App\\Http\\Middleware\\HandleInertiaRequests;'
-              ),
-            type: 'add-line',
-            position: 'after',
-            match: /use Illuminate\\Foundation\\Application;/,
-            lines: 'use App\\Http\\Middleware\\HandleInertiaRequests;',
-          },
-          {
-            skipIf: (content) =>
-              content.includes(
-                'use Illuminate\\Http\\Middleware\\AddLinkHeadersForPreloadedAssets;'
-              ),
-            type: 'add-line',
-            position: 'after',
-            match: /use Illuminate\\Foundation\\Configuration\\Middleware;/,
-            lines:
-              'use Illuminate\\Http\\Middleware\\AddLinkHeadersForPreloadedAssets;',
-          },
-          {
-            skipIf: (content) =>
-              content.includes('HandleInertiaRequests::class,'),
-            type: 'remove-line',
-            match: /->withMiddleware\(function \(Middleware \$middleware\) {/,
-            count: 1,
-            start: 1,
-          },
-          {
-            skipIf: (content) =>
-              content.includes('HandleInertiaRequests::class,'),
-            type: 'add-line',
-            position: 'after',
-            match: /->withMiddleware\(function \(Middleware \$middleware\) {/,
-            indent: '        ',
-            lines: [
-              '$middleware->web(append: [',
-              '    HandleInertiaRequests::class,',
-              '    AddLinkHeadersForPreloadedAssets::class,',
-              ']);',
-            ],
-          },
-        ],
-      })
+      await executeArtisanCommands()
 
       await extractTemplates({
         title: 'Extracting Breeze/base Templates',
@@ -358,6 +297,166 @@ async function installBreeze({
           ? 'templates/breeze'
           : 'packages/presets/templates/breeze',
         from: typescript ? `${ui}-ts` : ui,
+      })
+
+      await cleanUp({ ui, typescript, ssr, sandbox })
+
+      await installNodeDependencies({
+        packageManager,
+        template,
+        ui,
+        typescript,
+        ssr,
+        sandbox,
+      })
+    },
+  })
+}
+
+async function executeArtisanCommands() {
+  await executeCommand({
+    title: 'Publishing Inertia.js-Revamped Middleware',
+    command: 'php',
+    arguments: ['artisan', 'inertia:middleware'],
+  })
+
+  await executeCommand({
+    title: 'Publishing Inertia.js-Revamped Configuration',
+    command: 'php',
+    arguments: [
+      'artisan',
+      'vendor:publish',
+      '--provider=Inertia\\ServiceProvider',
+    ],
+  })
+
+  await editFiles({
+    title: 'Registering Inertia.js-Revamped Middleware',
+    files: 'bootstrap/app.php',
+    operations: [
+      {
+        skipIf: (content) =>
+          content.includes('use App\\Http\\Middleware\\HandleInertiaRequests;'),
+        type: 'add-line',
+        position: 'after',
+        match: /use Illuminate\\Foundation\\Application;/,
+        lines: 'use App\\Http\\Middleware\\HandleInertiaRequests;',
+      },
+      {
+        skipIf: (content) =>
+          content.includes(
+            'use Illuminate\\Http\\Middleware\\AddLinkHeadersForPreloadedAssets;'
+          ),
+        type: 'add-line',
+        position: 'after',
+        match: /use Illuminate\\Foundation\\Configuration\\Middleware;/,
+        lines:
+          'use Illuminate\\Http\\Middleware\\AddLinkHeadersForPreloadedAssets;',
+      },
+      {
+        skipIf: (content) => content.includes('HandleInertiaRequests::class,'),
+        type: 'remove-line',
+        match: /->withMiddleware\(function \(Middleware \$middleware\) {/,
+        count: 1,
+        start: 1,
+      },
+      {
+        skipIf: (content) => content.includes('HandleInertiaRequests::class,'),
+        type: 'add-line',
+        position: 'after',
+        match: /->withMiddleware\(function \(Middleware \$middleware\) {/,
+        indent: '        ',
+        lines: [
+          '$middleware->web(append: [',
+          '    HandleInertiaRequests::class,',
+          '    AddLinkHeadersForPreloadedAssets::class,',
+          ']);',
+        ],
+      },
+    ],
+  })
+}
+
+async function installPingCRM({
+  packageManager,
+  template,
+  ui,
+  typescript,
+  ssr,
+  sandbox,
+}: Options) {
+  await group({
+    title: 'Installing PingCRM Scaffolding',
+    handler: async () => {
+      await deletePaths({
+        title: 'Cleaning Up Default Files & Content',
+        paths: [
+          'database/database.sqlite',
+          'public/favicon.ico',
+          'resources',
+          'vite.config.js',
+        ],
+      })
+
+      await installPackages({
+        title: 'Installing PHP dependencies with Composer',
+        for: 'php',
+        packages: ['laravel/sanctum:^4.0', 'league/glide-symfony:^2.0'],
+      })
+
+      await executeArtisanCommands()
+
+      await extractTemplates({
+        title: 'Extracting PingCRM Templates',
+        templates: sandbox
+          ? 'templates/pingcrm'
+          : 'packages/presets/templates/pingcrm',
+        from: 'base',
+      })
+
+      await extractTemplates({
+        title: `Extracting PingCRM/${ui} Templates`,
+        templates: sandbox
+          ? 'templates/pingcrm'
+          : 'packages/presets/templates/pingcrm',
+        from: typescript ? `${ui}-ts` : ui,
+      })
+
+      await editFiles({
+        title: 'Updating Environment Configuration',
+        files: '.env',
+        operations: [
+          {
+            skipIf: (content) => content.includes('SESSION_DRIVER=file'),
+            type: 'update-content',
+            update: (r) =>
+              r.replace('SESSION_DRIVER=database', 'SESSION_DRIVER=file'),
+          },
+          {
+            skipIf: (content) => content.includes('CACHE_STORE=file'),
+            type: 'update-content',
+            update: (r) =>
+              r.replace('CACHE_STORE=database', 'CACHE_STORE=file'),
+          },
+        ],
+      })
+
+      await executeCommand({
+        title: 'Creating SQLite database',
+        command: 'touch',
+        arguments: ['database/database.sqlite'],
+      })
+
+      await executeCommand({
+        title: 'Migrating PingCRM database',
+        command: 'php',
+        arguments: ['artisan', 'migrate'],
+      })
+
+      await executeCommand({
+        title: 'Seeding PingCRM database',
+        command: 'php',
+        arguments: ['artisan', 'db:seed'],
       })
 
       await cleanUp({ ui, typescript, ssr, sandbox })
@@ -573,10 +672,11 @@ async function installNodeDependencies({
             : `@inertiajs-revamped/${ui}`,
           template === 'breeze' ? '@tailwindcss/forms' : '',
           typescript ? '@types/node' : '',
-          template === 'breeze' ? 'autoprefixer' : '',
+          template === 'breeze' || template === 'pingcrm' ? 'autoprefixer' : '',
           'laravel-vite-plugin',
           'postcss',
-          template === 'breeze' ? 'tailwindcss' : '',
+          template === 'pingcrm' ? 'postcss-import' : '',
+          template === 'breeze' || template === 'pingcrm' ? 'tailwindcss' : '',
           typescript ? 'typescript' : '',
           'vite',
           // preact
