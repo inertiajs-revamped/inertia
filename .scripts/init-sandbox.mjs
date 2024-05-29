@@ -37,7 +37,7 @@ async function init() {
     })
 
     process.stdout.write(
-      `\n${colorize.green(
+      `${colorize.green(
         symbols.success
       )} Selected UI framework: ${uiFramework} ...\n\n`
     )
@@ -54,25 +54,11 @@ async function init() {
       })
 
       process.stdout.write(
-        `\n${colorize.green(
+        `${colorize.green(
           symbols.success
         )} Selected template: ${template} ...\n\n`
       )
     }
-
-    const variant = await selectPrompt({
-      question: `${colorize.bold('Choose your variant:')} `,
-      options: ['TypeScript', 'JavaScript'],
-      pointer: symbols.pointer,
-    })
-
-    const typescript = variant === 'TypeScript'
-
-    process.stdout.write(
-      `\n${colorize.green(symbols.success)} Selected variant: ${
-        typescript ? 'TypeScript' : 'JavaScript'
-      } ...\n\n`
-    )
 
     await createFolder(`./sandboxes/${ui}`)
 
@@ -81,7 +67,7 @@ async function init() {
     })
 
     process.stdout.write(
-      `${notifications.info} Installing sandbox with @preset/cli ...\n\n`
+      `${notifications.info} Installing sandbox with @preset/cli ...\n`
     )
 
     execa(
@@ -96,7 +82,6 @@ async function init() {
         '--sandbox',
         `--ui=${ui}`,
         `--template=${template ?? 'breeze'}`,
-        `${!typescript ? '--no-typescript' : ''}`,
       ],
       { env: { FORCE_COLOR: 'true' } }
     ).stdout?.pipe(process.stdout)

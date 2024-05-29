@@ -1,5 +1,5 @@
 const packageManager = ['NPM', 'PNPM', 'Yarn', 'Bun'] as const
-const templates = ['default', 'breeze', 'pingcrm']
+const templates = ['default', 'breeze', 'pingcrm'] as const
 const ui = ['Preact', 'React', 'Vue'] as const
 
 export interface Options {
@@ -17,11 +17,6 @@ export interface Options {
    * Choose your prefered UI-Framework (default: `undefined`)
    */
   ui?: Lowercase<(typeof ui)[number]>
-
-  /**
-   * Choose whether to use TypeScript or JavaScript (default: `true`)
-   */
-  typescript?: boolean
 
   /**
    * Choose whether to enable/disable SSR (default: `true`)
@@ -53,7 +48,6 @@ export default definePreset<Options>({
         packageManager: options.packageManager || 'pnpm',
         template: options.template || 'breeze',
         ui: options.ui || 'react',
-        typescript: options.typescript ?? true,
         ssr: options.ssr || true,
         sandbox: true,
       }) satisfies Options
@@ -66,7 +60,6 @@ export default definePreset<Options>({
         packageManager: options.packageManager ?? prompts.packageManager,
         template: options.template || prompts.template,
         ui: options.ui || prompts.ui,
-        typescript: !!(options.typescript || prompts.variant === 'ts'),
         ssr: !!(options.ssr || prompts.ssr === 'enabled'),
         sandbox: false,
       }) satisfies Options
@@ -93,12 +86,6 @@ export default definePreset<Options>({
     if (!opts.template) {
       throw new Error(
         'You must specify a template (e.g. "default", "breeze", or "pingcrm").'
-      )
-    }
-
-    if (typeof opts.typescript === 'undefined') {
-      throw new Error(
-        'Please choose whether you want to use TypeScript or JavaScript.'
       )
     }
 
@@ -158,19 +145,6 @@ async function initialPrompts({
         { title: 'default', value: 'default' },
         { title: 'breeze', value: 'breeze' },
         { title: 'pingcrm', value: 'pingcrm' },
-      ],
-      initial: 0,
-    })
-  }
-
-  if (typeof options.typescript === 'undefined') {
-    await prompt({
-      title: 'Choose your variant',
-      name: 'variant',
-      text: '(Press <up> / <down> to select, <return> to confirm)',
-      choices: [
-        { title: 'TypeScript', value: 'ts' },
-        { title: 'JavaScript', value: 'js' },
       ],
       initial: 0,
     })
@@ -263,7 +237,6 @@ async function installBreeze({
   packageManager,
   template,
   ui,
-  typescript,
   sandbox,
   ssr,
 }: Options) {
@@ -292,20 +265,27 @@ async function installBreeze({
       })
 
       await extractTemplates({
+        title: `Extracting ${ui}/base Templates`,
+        templates: sandbox
+          ? 'templates/base'
+          : 'packages/presets/templates/base',
+        from: ui,
+      })
+
+      await extractTemplates({
         title: `Extracting Breeze/${ui} Templates`,
         templates: sandbox
           ? 'templates/breeze'
           : 'packages/presets/templates/breeze',
-        from: typescript ? `${ui}-ts` : ui,
+        from: ui,
       })
 
-      await cleanUp({ ui, typescript, ssr, sandbox })
+      await cleanUp({ ui, ssr, sandbox })
 
       await installNodeDependencies({
         packageManager,
         template,
         ui,
-        typescript,
         ssr,
         sandbox,
       })
@@ -381,7 +361,6 @@ async function installPingCRM({
   packageManager,
   template,
   ui,
-  typescript,
   ssr,
   sandbox,
 }: Options) {
@@ -416,11 +395,19 @@ async function installPingCRM({
       })
 
       await extractTemplates({
+        title: `Extracting ${ui}/base Templates`,
+        templates: sandbox
+          ? 'templates/base'
+          : 'packages/presets/templates/base',
+        from: ui,
+      })
+
+      await extractTemplates({
         title: `Extracting PingCRM/${ui} Templates`,
         templates: sandbox
           ? 'templates/pingcrm'
           : 'packages/presets/templates/pingcrm',
-        from: typescript ? `${ui}-ts` : ui,
+        from: ui,
       })
 
       await editFiles({
@@ -466,13 +453,12 @@ async function installPingCRM({
         arguments: ['artisan', 'db:seed'],
       })
 
-      await cleanUp({ ui, typescript, ssr, sandbox })
+      await cleanUp({ ui, ssr, sandbox })
 
       await installNodeDependencies({
         packageManager,
         template,
         ui,
-        typescript,
         ssr,
         sandbox,
       })
@@ -484,7 +470,6 @@ async function installInertiaRevamped({
   packageManager,
   template,
   ui,
-  typescript,
   ssr,
   sandbox,
 }: Options) {
@@ -501,7 +486,15 @@ async function installInertiaRevamped({
         templates: sandbox
           ? 'templates/default'
           : 'packages/presets/templates/default',
-        from: typescript ? `${ui}-ts` : ui,
+        from: ui,
+      })
+
+      await extractTemplates({
+        title: `Extracting ${ui}/base Templates`,
+        templates: sandbox
+          ? 'templates/base'
+          : 'packages/presets/templates/base',
+        from: ui,
       })
 
       await executeCommand({
@@ -615,13 +608,12 @@ async function installInertiaRevamped({
     },
   })
 
-  await cleanUp({ ui, typescript, ssr, sandbox })
+  await cleanUp({ ui, ssr, sandbox })
 
   await installNodeDependencies({
     packageManager,
     template,
     ui,
-    typescript,
     ssr,
     sandbox,
   })
@@ -631,7 +623,6 @@ async function installNodeDependencies({
   packageManager,
   template,
   ui,
-  typescript,
   ssr,
   sandbox,
 }: Options) {
@@ -678,14 +669,14 @@ async function installNodeDependencies({
             ? `@inertiajs-revamped/${ui}@workspace:*`
             : `@inertiajs-revamped/${ui}`,
           template === 'breeze' ? '@tailwindcss/forms' : '',
-          typescript ? '@types/node' : '',
+          '@types/node',
           template === 'breeze' || template === 'pingcrm' ? 'autoprefixer' : '',
           'laravel-vite-plugin',
           template === 'pingcrm' ? 'nanoid' : '',
           'postcss',
           template === 'pingcrm' ? 'postcss-import' : '',
           template === 'breeze' || template === 'pingcrm' ? 'tailwindcss' : '',
-          typescript ? 'typescript' : '',
+          'typescript',
           'vite',
           // preact
           ...(ui === 'preact'
@@ -700,8 +691,8 @@ async function installNodeDependencies({
           // react
           ...(ui === 'react'
             ? [
-                typescript ? '@types/react' : '',
-                typescript ? '@types/react-dom' : '',
+                '@types/react',
+                '@types/react-dom',
                 '@vitejs/plugin-react',
                 'react',
                 'react-dom',
@@ -725,7 +716,7 @@ async function installNodeDependencies({
   })
 }
 
-async function cleanUp({ ui, typescript, ssr, sandbox }: Options) {
+async function cleanUp({ ui, ssr, sandbox }: Options) {
   await group({
     title: 'Cleaning Up Files & Content',
     handler: async () => {
@@ -745,7 +736,7 @@ async function cleanUp({ ui, typescript, ssr, sandbox }: Options) {
 
         await editFiles({
           title: 'Cleaning Up Vite-Config',
-          files: typescript ? 'vite.config.ts' : 'vite.config.js',
+          files: 'vite.config.ts',
           operations: [
             {
               type: 'remove-line',
@@ -758,9 +749,7 @@ async function cleanUp({ ui, typescript, ssr, sandbox }: Options) {
 
         await editFiles({
           title: 'Cleaning Up SSR Templates',
-          files: typescript
-            ? 'resources/application/main.tsx'
-            : 'resources/application/main.jsx',
+          files: 'resources/application/main.tsx',
           operations: [
             {
               skipIf: (content) =>
@@ -794,38 +783,32 @@ async function cleanUp({ ui, typescript, ssr, sandbox }: Options) {
 
         await deletePaths({
           title: 'Cleaning Up SSR Files',
-          paths: [
-            typescript
-              ? 'resources/application/ssr.tsx'
-              : 'resources/application/ssr.jsx',
-          ],
+          paths: ['resources/application/ssr.tsx'],
         })
       }
 
-      if (typescript) {
-        await renamePaths({
-          title: 'Renaming tsconfig.json',
-          paths: '_tsconfig.json',
-          transformer: ({ base }) => `${base.slice(1)}`,
-        })
+      await renamePaths({
+        title: 'Renaming tsconfig.json',
+        paths: '_tsconfig.json',
+        transformer: ({ base }) => `${base.slice(1)}`,
+      })
 
-        await editFiles({
-          title: 'Cleaning Up TypeScript Files',
-          files: [
-            'resources/**/*.{ts,tsx}',
-            'tailwind.config.ts',
-            'vite.config.ts',
-          ],
-          operations: [
-            {
-              type: 'remove-line',
-              match: /^\/\/ \@ts-nocheck$/,
-              start: 0,
-              count: 1,
-            },
-          ],
-        })
-      }
+      await editFiles({
+        title: 'Cleaning Up TypeScript Files',
+        files: [
+          'resources/**/*.{ts,tsx}',
+          'tailwind.config.ts',
+          'vite.config.ts',
+        ],
+        operations: [
+          {
+            type: 'remove-line',
+            match: /^\/\/ \@ts-nocheck$/,
+            start: 0,
+            count: 1,
+          },
+        ],
+      })
 
       if (sandbox) {
         await editFiles({
@@ -844,9 +827,7 @@ async function cleanUp({ ui, typescript, ssr, sandbox }: Options) {
         if (ssr) {
           await editFiles({
             title: 'Adding Development Features',
-            files: typescript
-              ? 'resources/application/main.tsx'
-              : 'resources/application/main.jsx',
+            files: 'resources/application/main.tsx',
             operations: [
               {
                 skipIf: (content) =>

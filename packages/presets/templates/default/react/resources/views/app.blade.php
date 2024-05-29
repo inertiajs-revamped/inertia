@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" href="data:,">
     @viteReactRefresh
-    @vite('resources/application/main.jsx')
+    @vite('resources/application/main.tsx')
     @inertiaHead
   </head>
   <body>

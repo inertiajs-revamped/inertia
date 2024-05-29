@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import Counter from '@/components/counter.vue'
 import DefaultLayout from '@/layouts/default.vue'
 import { Head } from '@inertiajs-revamped/vue'

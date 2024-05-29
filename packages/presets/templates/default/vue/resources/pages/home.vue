@@ -1,8 +1,15 @@
-<script setup>
+<script setup lang="ts">
 import DefaultLayout from '@/layouts/default.vue'
 import { Head } from '@inertiajs-revamped/vue'
 
 defineOptions({ layout: DefaultLayout })
+
+defineProps<{
+  versions: {
+    laravel: string | number
+    php: string | number
+  }
+}>()
 </script>
 
 
