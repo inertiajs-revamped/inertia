@@ -23,7 +23,7 @@ composer create-project laravel/laravel <project-name>
 cd <project-name>
 ```
 
-Choose [laravel/breeze](https://github.com/laravel/breeze) (modified fork) or our `default` template as starter template.
+Choose [laravel/breeze](https://github.com/laravel/breeze), our `default` template or the [Ping CRM demo](/guide/getting-started/demo-application) as starter template.
 
 ::: code-group
 
