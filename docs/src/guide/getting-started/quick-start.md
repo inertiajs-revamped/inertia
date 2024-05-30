@@ -69,11 +69,11 @@ bunx @preset/cli apply inertiajs-revamped/inertia
   ✓  Executed action: Choose your starter template › breeze
   ✓  Executed action: Choose to enable/disable SSR › enabled
   ✓  Executed action: Installing PHP dependencies with Composer (php)
-  ✓  Executed action: Installing Breeze Scaffolding (14 actions)
+  ✓  Executed action: Installing Breeze Scaffolding (15 actions)
 
  Presets  1 applied
  Actions  21 executed
- Duration  24.32s
+Duration  21.55s
 
  NEXT STEPS
 
