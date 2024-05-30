@@ -6,7 +6,7 @@ This document will guide you through the setup of the [Preact](https://preactjs.
 
 ::: code-group
 
-```ts [main.tsx]
+```typescript [main.tsx]
 import {
   createInertiaApp,
   resolvePageComponent,
@@ -31,7 +31,7 @@ createInertiaApp({
 })
 ```
 
-```ts [ssr.tsx]
+```typescript [ssr.tsx]
 import {
   createInertiaApp,
   resolvePageComponent,
@@ -54,7 +54,7 @@ createServer((page) =>
 )
 ```
 
-```ts [vite.config.ts]
+```typescript [vite.config.ts]
 import preact from '@preact/preset-vite'
 import laravel from 'laravel-vite-plugin'
 import { defineConfig } from 'vite'

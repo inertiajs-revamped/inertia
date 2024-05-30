@@ -4,7 +4,7 @@
 
 Install the Inertia.js-Revamped server-side adapter using the [Composer](https://getcomposer.org/) package manager.
 
-```sh
+```shell
 composer require inertiajs-revamped/laravel
 ```
 
@@ -14,7 +14,7 @@ composer require inertiajs-revamped/laravel
 
 Next, install the middleware.
 
-```sh
+```shell
 php artisan inertia:middleware
 ```
 
@@ -36,7 +36,7 @@ use App\Http\Middleware\HandleInertiaRequests; // [!code ++]
 
 ### Publish Config
 
-```sh
+```shell
 php artisan vendor:publish --provider="Inertia\ServiceProvider"
 ```
 

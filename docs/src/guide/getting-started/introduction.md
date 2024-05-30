@@ -15,27 +15,33 @@ However, due to the lack of development, unanswered issues and rejected pull req
 
 ---
 
-### Current Roadmap
+### Integrations/Adapters
 
-Application related:
+| Package  | Integration | Status | Version |
+| -------- | ----------- | ------ | ------- |
+| [inertiajs-revamped/laravel](https://packagist.org/packages/inertiajs-revamped/laravel) | [Laravel](https://laravel.com/) | ![satus](https://img.shields.io/badge/maintained-42b883) | ![Packagist Version](https://img.shields.io/packagist/v/inertiajs-revamped/laravel) |
+| [@inertiajs-revamped/core](https://www.npmjs.com/package/@inertiajs-revamped/core) | -  | ![satus](https://img.shields.io/badge/maintained-42b883) | ![NPM Version](https://img.shields.io/npm/v/%40inertiajs-revamped%2Fcore) |
+| [@inertiajs-revamped/preact](https://www.npmjs.com/package/@inertiajs-revamped/preact)  | [Preact](https://preactjs.com/) | ![satus](https://img.shields.io/badge/maintained-42b883) | ![NPM Version](https://img.shields.io/npm/v/%40inertiajs-revamped%2Fpreact) |
+| [@inertiajs-revamped/react](https://www.npmjs.com/package/@inertiajs-revamped/react)    | [React](https://react.dev/) | ![satus](https://img.shields.io/badge/maintained-42b883) | ![NPM Version](https://img.shields.io/npm/v/%40inertiajs-revamped%2Freact)  |
+| [@inertiajs-revamped/vue](https://www.npmjs.com/package/@inertiajs-revamped/vue)        | [Vue](https://vuejs.org/) | ![satus](https://img.shields.io/badge/maintained-42b883) |  ![NPM Version](https://img.shields.io/npm/v/%40inertiajs-revamped%2Fvue)    |
+| @inertiajs-revamped/svelte | [Svelte](https://svelte.dev/) | ![satus](https://img.shields.io/badge/maintained-B94343) | - |
 
-* __Improve TypeScript support__ - Provide better type definitions for IDE and autocomplete
-* __Improve application performance__ - Optimize the application performance and reduce required dependencies
-* __Expand the test suites__ - Add test suites for better code control
+<!--@include: ../../_templates/parts/contributors.md-->
 
-Community related:
+### Roadmap
 
-* __Improve user & developer experience__ - Optimize the docs, examples, starter-kits, workspace- and user-tools continuously
-* __Collaborate with community members__ - Issue prioritization will be based on community feedback, please [share your thoughts](https://github.com/inertiajs-revamped/inertia/issues)
+**Application:**
 
-### Recent changes
+* <ins>Improve TypeScript support</ins> - Provide better type definitions for IDE and autocomplete.
+* <ins>Improve application performance</ins> - Optimize performance, reduce dependencies.
+* <ins>Expand the test suites</ins> - Add test suites for better code control.
 
-* See [migration guide](http://127.0.0.1:5173/guide/getting-started/migration) for the initial package changelogs from the forked/migrated packages.
-* See the `CHANGELOG.md` from the [packages](https://github.com/inertiajs-revamped/inertia/tree/main/packages) for a full list of changes.
+**Community:**
 
-## Community
+* <ins>Improve user & developer experience</ins> - Optimize the docs, examples, starter-kits, workspace- and user-tools continuously.
+* <ins>Collaborate with community members</ins> - Issue prioritization will be based on community feedback, please [share your thoughts](https://github.com/inertiajs-revamped/inertia/issues).
 
-If you have a question or need additional help, please consider to join our [Discord](https://discord.gg/Hn5bDDvTKX) or start a discussion at [GitHub](https://github.com/inertiajs-revamped/inertia/discussions).
+<!--@include: ../../_templates/parts/community.md-->
 
 ## Credits
 

@@ -12,7 +12,6 @@ export const navConfig = [
     link: '/integrations/',
     activeMatch: '/integrations/',
   },
-  { text: 'API', link: '/api/', activeMatch: '/api/' },
   {
     text: 'Resources',
     items: [

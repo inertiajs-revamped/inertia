@@ -52,7 +52,7 @@ Inertia::share('user', fn (Request $request) => $request->user()
 
 Once you have shared the data server-side, you will be able to access it within any of your pages or components. Here's an example of how to access shared data in a layout component.
 
-```ts
+```typescript
 import { usePage, type LayoutProps } from '@inertiajs-revamped/preact'
 
 export default function Layout({ children }: LayoutProps) {
@@ -93,7 +93,7 @@ class HandleInertiaRequests extends Middleware
 
 Next, display the flash message in a frontend component, such as the site layout.
 
-```ts
+```typescript
 import { usePage, type LayoutProps } from '@inertiajs-revamped/preact'
 
 export default function Layout({ children }: LayoutProps) {

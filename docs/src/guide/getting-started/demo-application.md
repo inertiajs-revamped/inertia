@@ -20,8 +20,4 @@ This is a modified port of the original Laravel/Vue [Ping CRM](https://github.co
 
 ---
 
-<div class="tip custom-block" style="padding-top: 8px">
-
-Want to try it out locally? Now included in our starter kits. Skip to the [Quick Start](/guide/getting-started/quick-start).
-
-</div>
+<!--@include: ../../_templates/parts/try-local.md-->

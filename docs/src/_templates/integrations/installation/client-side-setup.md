@@ -15,19 +15,19 @@ Install the Inertia.js-Revamped {{ capitalize(adapter.name) }} framework adapter
 
 ::: code-group
 
-```sh-vue [npm]
+```shell-vue [npm]
 npm install --save-dev @inertiajs-revamped/{{ adapter.name }}
 ```
 
-```sh-vue [pnpm]
+```shell-vue [pnpm]
 pnpm add -D @inertiajs-revamped/{{ adapter.name }}
 ```
 
-```sh-vue [yarn]
+```shell-vue [yarn]
 yarn add -D @inertiajs-revamped/{{ adapter.name }}
 ```
 
-```sh-vue [bun]
+```shell-vue [bun]
 bun add -D @inertiajs-revamped/{{ adapter.name }}
 ```
 

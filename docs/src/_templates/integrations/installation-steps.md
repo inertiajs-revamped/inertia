@@ -18,7 +18,7 @@ const adapter = integrations.filter((pkg) => pkg.name === urlParts[1])[0]
 - [Composer](https://getcomposer.org/) >= 2.4.4
 - [Laravel](https://laravel.com/) >= 9.x
 
-```sh [composer]
+```shell [composer]
 composer create-project laravel/laravel <project-name>
 cd <project-name>
 ```
@@ -26,27 +26,27 @@ cd <project-name>
 :::
 
 ::: stepper Install the Laravel & Preact Adapter in your Laravel project
-<Card name="laravel" version="0.0.4" />
+<Card name="laravel" description="The Laravel adapter for Inertia.js-Revamped" version="0.0.4" />
 
 <Card :name="adapter.name" :description="adapter.description" :version="adapter.version" />
 
-Choose [laravel/breeze](https://github.com/laravel/breeze) (modified fork) or our `default` template as starter template.
+Running the following command you'll be prompted to select your project configuration:
 
 ::: code-group
 
-```sh [npm]
+```shell [npm]
 npx @preset/cli apply inertiajs-revamped/inertia
 ```
 
-```sh [pnpm]
+```shell [pnpm]
 pnpm dlx @preset/cli apply inertiajs-revamped/inertia
 ```
 
-```sh [yarn]
+```shell [yarn]
 yarn add @preset/cli apply inertiajs-revamped/inertia
 ```
 
-```sh [bun]
+```shell [bun]
 bunx @preset/cli apply inertiajs-revamped/inertia
 ```
 
@@ -56,19 +56,19 @@ bunx @preset/cli apply inertiajs-revamped/inertia
 
 ::: code-group
 
-```sh [npm]
+```shell [npm]
 npm run dev
 ```
 
-```sh [pnpm]
+```shell [pnpm]
 pnpm run dev
 ```
 
-```sh [yarn]
+```shell [yarn]
 yarn run dev
 ```
 
-```sh [bun]
+```shell [bun]
 bun run dev
 ```
 

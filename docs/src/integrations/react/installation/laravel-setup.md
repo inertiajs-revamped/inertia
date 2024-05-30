@@ -15,3 +15,5 @@
   </body>
 </html>
 ```
+
+<!--@include: ../../../_templates/integrations/installation/laravel-setup-ssr.md-->

@@ -6,7 +6,7 @@
 
 `app.ts` -> `main.ts`
 
-```ts
+```typescript
 import { createInertiaApp } from '@inertiajs/vue' // [!code --]
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers' // [!code --]
 import { createInertiaApp, resolvePageComponent } from '@inertiajs-revamped/vue' // [!code ++]
@@ -23,7 +23,7 @@ progress: () => // [!code ++]
 
 `ssr.ts` <-> `ssr.ts`
 
-```ts
+```typescript
 import { createInertiaApp } from '@inertiajs/vue' // [!code --]
 import createServer from '@inertiajs/vue/server' // [!code --]
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers' // [!code --]
@@ -31,27 +31,27 @@ import { createInertiaApp, resolvePageComponent } from '@inertiajs-revamped/vue'
 import { createServer } from '@inertiajs-revamped/vue/server' // [!code ++]
 ```
 
-```ts
+```typescript
 import { usePage } from '@inertiajs/vue' // [!code --]
 import { usePage } from '@inertiajs-revamped/vue' // [!code ++]
 ```
 
-```ts
+```typescript
 import { useForm } from '@inertiajs/vue' // [!code --]
 import { useForm } from '@inertiajs-revamped/vue' // [!code ++]
 ```
 
-```ts
+```typescript
 import { useRemember } from '@inertiajs/vue' // [!code --]
 import { useRemember } from '@inertiajs-revamped/vue' // [!code ++]
 ```
 
-```ts
+```typescript
 import { Head } from '@inertiajs/vue' // [!code --]
 import { Head } from '@inertiajs-revamped/vue' // [!code ++]
 ```
 
-```ts
+```typescript
 import { Link } from '@inertiajs/vue' // [!code --]
 import { Link } from '@inertiajs-revamped/vue' // [!code ++]
 ```

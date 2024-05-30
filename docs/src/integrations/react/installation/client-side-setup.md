@@ -6,7 +6,7 @@ This document will guide you through the setup of the [React](https://react.dev/
 
 ::: code-group
 
-```ts [main.tsx]
+```typescript [main.tsx]
 import {
   createInertiaApp,
   resolvePageComponent,
@@ -37,7 +37,7 @@ createInertiaApp({
 })
 ```
 
-```ts [ssr.tsx]
+```typescript [ssr.tsx]
 import {
   createInertiaApp,
   resolvePageComponent,
@@ -60,7 +60,7 @@ createServer((page) =>
 )
 ```
 
-```ts [vite.config.ts]
+```typescript [vite.config.ts]
 import react from '@vitejs/plugin-react'
 import laravel from 'laravel-vite-plugin'
 import { defineConfig } from 'vite'

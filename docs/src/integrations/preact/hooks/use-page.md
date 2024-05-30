@@ -4,7 +4,7 @@ Use the `usePage()` hook to access shared data in a component.
 
 ## Declaration
 
-```ts
+```typescript
 function usePage<SharedProps extends PageProps = PageProps>(): Page<SharedProps>
 ```
 
@@ -12,7 +12,7 @@ function usePage<SharedProps extends PageProps = PageProps>(): Page<SharedProps>
 
 Returned by `usePage` and received as a prop on the `PageContext.Provider`.
 
-```ts
+```typescript
 interface PageProps extends DefaultPageProps {}
 
 /** @internal */
@@ -25,7 +25,7 @@ interface DefaultPageProps {
 
 Define shared `interfaces` with [module augmentation](https://www.typescriptlang.org/docs/handbook/declaration-merging.html#module-augmentation).
 
-```ts
+```typescript
 // inertia-preact.d.ts
 declare module '@inertiajs-revamped/preact' {
   // define defaults
@@ -56,7 +56,7 @@ declare module '@inertiajs-revamped/preact' {
 
 Use the `HomePageProps` interface with `props`.
 
-```ts
+```typescript
 // home-page.tsx
 import type { HomePageProps } from '@inertiajs-revamped/preact'
 
@@ -70,7 +70,7 @@ export function HomePage(props: HomePageProps) {
 
 Use the `usePage` hook in a component and pass the `HomePageProps` interface as [generic](https://www.typescriptlang.org/docs/handbook/2/generics.html).
 
-```ts
+```typescript
 // home-page.tsx
 import { usePage, type HomePageProps } from '@inertiajs-revamped/preact'
 

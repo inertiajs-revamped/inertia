@@ -9,11 +9,6 @@
 
 View the docs at [inertiajs-revamped.com](https://inertiajs-revamped.com) (currently in development).
 
-## Changelog
-
-- See [migration guide](https://inertiajs-revamped.com/guide/getting-started/migration) for the initial package changelogs from the forked/migrated packages.
-- See the `CHANGELOG.md` from the [packages](https://github.com/inertiajs-revamped/inertia/tree/main/packages) for a full list of changes.
-
 ## Contributing
 
 ### Contributing Guidelines

@@ -6,7 +6,7 @@ This document will guide you through the setup of the [Vue](https://vuejs.org/) 
 
 ::: code-group
 
-```ts [main.ts]
+```typescript [main.ts]
 import { createInertiaApp, resolvePageComponent } from '@inertiajs-revamped/vue'
 import { createProgress } from '@inertiajs-revamped/vue/progress'
 import { createApp, h } from 'vue'
@@ -30,7 +30,7 @@ createInertiaApp({
 })
 ```
 
-```ts [ssr.ts]
+```typescript [ssr.ts]
 import { createInertiaApp, resolvePageComponent } from '@inertiajs-revamped/vue'
 import { createServer } from '@inertiajs-revamped/vue/server'
 import { renderToString } from '@vue/server-renderer'
@@ -55,7 +55,7 @@ createServer((page) =>
 )
 ```
 
-```ts [vite.config.ts]
+```typescript [vite.config.ts]
 import vue from '@vitejs/plugin-vue'
 import laravel from 'laravel-vite-plugin'
 import { defineConfig } from 'vite'

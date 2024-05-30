@@ -1,13 +1,13 @@
 # Quick Start
 
-The recommended way of scaffolding a new Inertia.js-Revamped project is via automatic setup using our [@preset/cli](https://preset.dev) starter-kits.
+We recommend scaffolding Inertia.js-Revamped via automatic CLI installer [@preset/cli](https://preset.dev).
 
 > [!IMPORTANT]
 > Inertia.js-Revamped is currently in `alpha` status and not ready for production use yet.
 
 ## Prerequisites
 
-When using automatic setup, Inertia.js-Revamped has a few requirements:
+Ensure that your environment meets the minimum installation requirements:
 
 * [Node.js](https://nodejs.org/en/) >= 18.12.0
 * [PHP](https://www.php.net/manual/de/intro-whatis.php) >= 8.1
@@ -16,44 +16,57 @@ When using automatic setup, Inertia.js-Revamped has a few requirements:
 
 ## Scaffolding a new project
 
-To install Inertia.js-Revamped in a [fresh Laravel](https://laravel.com/docs/11.x/installation) application, run the commands:
+To install Inertia.js-Revamped in a [fresh Laravel](https://laravel.com/docs/11.x/installation) application, setup a new laravel project:
 
-```sh [composer]
+```shell [composer]
 composer create-project laravel/laravel <project-name>
 cd <project-name>
 ```
 
-Choose [laravel/breeze](https://github.com/laravel/breeze), our `default` template or the [Ping CRM demo](/guide/getting-started/demo-application) as starter template.
+Running the following command you'll be prompted to select your project configuration:
+
+::: details Click to expand available command line arguments
+
+* You can directly specify command line arguments.
+
+| Option | Description |
+| -      | -           |
+| `--packageManager`   | Package manager (default: `npm`) (`"npm" \| "pnpm" \| "yarn" \| "bun"`) |
+| `--ui`               | UI-Framework (default: `undefined`) (`"preact" \| "react" \| "vue"`) |
+| `--template`         | Template (default: `default`) (`"default" \| "breeze" \| "pingcrm"`) |
+| `--no-ssr`           | Disable SSR (default: `false`) (`boolean`) |
+| `--sandbox`          | For development [workspace](https://github.com/inertiajs-revamped/inertia) only (default: `false`) (`boolean`) |
+
+:::
 
 ::: code-group
 
-```sh [npm]
+```shell [npm]
 npx @preset/cli apply inertiajs-revamped/inertia
 ```
 
-```sh [pnpm]
+```shell [pnpm]
 pnpm dlx @preset/cli apply inertiajs-revamped/inertia
 ```
 
-```sh [yarn]
+```shell [yarn]
 yarn add @preset/cli apply inertiajs-revamped/inertia
 ```
 
-```sh [bun]
+```shell [bun]
 bunx @preset/cli apply inertiajs-revamped/inertia
 ```
 
 :::
 
-This command will install and execute Inertia.js-Revamped `@preset/cli`. You will be presented with prompts for several optional features such as TypeScript and SSR support.
+::: tip Example output:
 
-```sh
+```shell
  OK  Applied Inertia.js-Revamped.
 
   ✓  Executed action: Choose your package manager › pnpm
   ✓  Executed action: Choose your UI framework › react
   ✓  Executed action: Choose your starter template › breeze
-  ✓  Executed action: Choose your variant › ts
   ✓  Executed action: Choose to enable/disable SSR › enabled
   ✓  Executed action: Installing PHP dependencies with Composer (php)
   ✓  Executed action: Installing Breeze Scaffolding (14 actions)
@@ -69,18 +82,17 @@ This command will install and execute Inertia.js-Revamped `@preset/cli`. You wil
   ➜  Edit your pages in resources/pages
 ```
 
-> [!TIP]
-> You can also directly specify `options` as command line arguments. Learn more about the [API](/api/preset-cli#options).
+:::
 
 ## Usage
 
 ### Serving Laravel
 
-To learn more about how to serve your Laravel application, read Laravel [installation](https://laravel.com/docs/4.2/quick#installation).
+To learn more about how to serve your Laravel application, read Laravel [installation](https://laravel.com/docs/11.x/installation).
 
 > Typically, you may use a web server such as Apache or Nginx to serve your Laravel applications. If you ... would like to use PHP's built-in development server, you may use the serve Artisan command:
 
-```sh
+```shell
 php artisan serve
 ```
 
@@ -92,25 +104,25 @@ Run the [Vite dev server](https://vitejs.dev/config/server-options.html) with th
 
 ::: code-group
 
-```sh [npm]
+```shell [npm]
 npm run dev
 ```
 
-```sh [pnpm]
+```shell [pnpm]
 pnpm run dev
 ```
 
-```sh [yarn]
+```shell [yarn]
 yarn run dev
 ```
 
-```sh [bun]
+```shell [bun]
 bun run dev
 ```
 
 :::
 
-```sh
+```shell
 # outputs
 VITE v5.2.9  ready in 1487 ms
 
@@ -129,25 +141,25 @@ Build the app with production-ready assets with the command:
 
 ::: code-group
 
-```sh [npm]
+```shell [npm]
 npm run build:prod
 ```
 
-```sh [pnpm]
+```shell [pnpm]
 pnpm run build:prod
 ```
 
-```sh [yarn]
+```shell [yarn]
 yarn run build:prod
 ```
 
-```sh [bun]
+```shell [bun]
 bun run build:prod
 ```
 
 :::
 
-```sh
+```shell
 # outputs
 vite v5.2.9 building for production...
 ✓ 4 modules transformed.
@@ -157,18 +169,16 @@ vite v5.2.9 building for production...
 
 Server-side rendering uses [Node.js](https://nodejs.org/en/) to render your pages in a background process; therefore, Node must be available on your server for server-side rendering to function properly.
 
-```sh
+```shell
+# start the ssr server
 php artisan inertia:start-ssr
+
+# stop the ssr server
+php artisan inertia:stop-ssr
 ```
 
 ## What's next?
 
-* To learn more about our starter kits, read [Preset CLI](/api/preset-cli).
-
-::: tip
-
-<ins>Your contributions are welcome!</ins> Please read our [contributing guide](https://github.com/inertiajs-revamped/inertia/blob/main/CONTRIBUTING.md) for more information.
-
-:::
+<!--@include: ../../_templates/parts/contributors.md-->
 
 <!--@include: ../../_templates/parts/community.md-->

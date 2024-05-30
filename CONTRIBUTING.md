@@ -53,7 +53,7 @@ Follow the setup instructions at [Make changes to the code or docs](#make-change
 
 At the workspace `root`, run the following command:
 
-```bash
+```shell
 pnpm run dev:docs
 ```
 
@@ -71,7 +71,7 @@ Work in progress.
 
 It's often helpful to develop using a real application. You can set a sandbox environment for each of the adapters by running the following command at the workspace `root`:
 
-```sh
+```shell
 pnpm run sandbox
 
 # outputs

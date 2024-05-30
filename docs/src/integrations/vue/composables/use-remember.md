@@ -5,12 +5,12 @@
 
 ## Usage
 
-```ts
+```typescript
 // usage
 ```
 
 ## Example
 
-```ts
+```typescript
 // example
 ```
