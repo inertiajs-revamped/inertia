@@ -1,4 +1,5 @@
 ---
+title: Adapter
 aside: false
 ---
 
@@ -16,12 +17,14 @@ const laravelAdapter = useIntegration('laravel')
 
 > {{ adapter.description }}
 
-::: stepper Ensure that all requirements are met
+:::: stepper Ensure that all requirements are met
 
 - [Node.js](https://nodejs.org/en/) >= 18.12.0
 - [PHP](https://www.php.net/manual/de/intro-whatis.php) >= 8.1
 - [Composer](https://getcomposer.org/) >= 2.4.4
 - [Laravel](https://laravel.com/) >= 9.x
+
+::: code-group
 
 ```shell [composer]
 composer create-project laravel/laravel <project-name>
@@ -29,6 +32,8 @@ cd <project-name>
 ```
 
 :::
+
+::::
 
 ::: stepper Install the Laravel & Preact Adapter in your Laravel project
 

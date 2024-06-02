@@ -1,12 +1,16 @@
 <script setup lang="ts">
 import type { Integration } from '@/types'
 import { useLocalStorage } from '@vueuse/core'
+import { useRouter } from 'vitepress'
 
-const { name, description, title, version } = defineProps<Integration>()
+const { go } = useRouter()
+
+const { name, description, title, version, url, componentExt } =
+  defineProps<Integration>()
 
 const preferIntegration = useLocalStorage(
   'inertia-docs-prefer-integration',
-  { name, description, title, version },
+  { name, description, title, version, url, componentExt },
   { mergeDefaults: true }
 )
 
@@ -16,13 +20,14 @@ const toggleIntegration = (integration: Integration) => {
     integration.name !== 'laravel'
   ) {
     preferIntegration.value = integration
+    go(`/integrations/${integration.name}/`)
   }
 }
 </script>
 
 <template>
-  <a @click="toggleIntegration({ name, description, title, version, })"
-    :href="`${name === 'laravel' ? `/integrations/${name}/` : `/integrations/${name}/`}`" class="card" type="button">
+  <a v-on:click.prevent="toggleIntegration({ name, description, title, version, url, componentExt })"
+    :href="`/integrations/${name}/`" class="card" type="button">
     <BaseIcon :iconId="name" width="50" height="50" />
     <div class="card-meta">
       <span class="card-title">{{ title }} Adapter</span>
@@ -80,7 +85,7 @@ const toggleIntegration = (integration: Integration) => {
 
 @media only screen and (max-width: 768px) {
 
-  .stepper div[class*='language-'],
+  /* .stepper div[class*='language-'], */
   .stepper .card {
     width: calc(100% + 3rem);
     margin-left: -3rem;

@@ -9,16 +9,9 @@ const { go } = useRouter()
 
 const integrations = useIntegrations()
 
-const defaultOptions = {
-  name: '',
-  title: '',
-  description: '',
-  version: '',
-} satisfies Integration
-
 const preferIntegration = useLocalStorage(
   'inertia-docs-prefer-integration',
-  defaultOptions,
+  integrations[0],
   { mergeDefaults: true }
 )
 
@@ -26,7 +19,7 @@ const isOpen = ref(false)
 const main = ref<HTMLDivElement>()
 
 const toggleIntegration = (integration: Integration) => {
-  if (preferIntegration.value.name !== integration.name) {
+  if (preferIntegration.value?.name !== integration.name) {
     preferIntegration.value = integration
   }
   toggleOpen()
