@@ -1,9 +1,12 @@
-import { inject } from 'vue'
+import type { Integration } from '@/types'
+import { computed, inject } from 'vue'
 
-export interface Integration {
-  name: string
-  description: string
-  version: string
+export const useIntegrations = () => inject<Integration[]>('integrations')
+
+export const useIntegration = (name: string) => {
+  const integrations = useIntegrations()
+  const adapter = computed(
+    () => integrations?.filter((int) => int.name === name)[0]
+  )
+  return adapter
 }
-
-export const useIntegrations = () => inject('integrations') as Integration[]

@@ -4,6 +4,12 @@
     "source.organizeImports.biome": "explicit"
   },
   "files.insertFinalNewline": true,
+  "files.exclude": {
+    "docs/src/integrations/preact": true,
+    "docs/src/integrations/react": true,
+    "docs/src/integrations/vue": true
+  },
+  "search.followSymlinks": false,
   "[json]": {
     "editor.defaultFormatter": "biomejs.biome"
   },
@@ -29,6 +35,8 @@
     "editor.defaultFormatter": "DavidAnson.vscode-markdownlint"
   },
   "typescript.tsdk": "node_modules/typescript/lib",
+  "typescript.format.semicolons": "remove",
+  "javascript.format.semicolons": "remove",
   "php-cs-fixer.executablePath": "${workspaceFolder}/packages/laravel/vendor/bin/php-cs-fixer",
   "php-cs-fixer.config": "${workspaceFolder}/packages/laravel/.php-cs-fixer.php",
   "php-cs-fixer.formatHtml": false,
