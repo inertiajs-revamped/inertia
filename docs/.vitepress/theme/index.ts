@@ -8,6 +8,7 @@ import { integrations } from '@/data/integrations'
 
 import DropdownLayout from './layouts/DropdownLayout.vue'
 
+import AdapterWrapper from './components/AdapterWrapper.vue'
 import BaseIcon from './components/BaseIcon.vue'
 import Card from './components/Card.vue'
 
@@ -16,6 +17,7 @@ export default {
   Layout: DropdownLayout,
   enhanceApp({ app }) {
     app.provide('integrations', integrations)
+    app.component('AdapterWrapper', AdapterWrapper)
     app.component('BaseIcon', BaseIcon)
     app.component('Card', Card)
   },

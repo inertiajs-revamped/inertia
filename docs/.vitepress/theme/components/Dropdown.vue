@@ -1,27 +1,36 @@
 <script setup lang="ts">
-import {
-  type Integration,
-  useIntegrations,
-} from '@/theme/composables/useIntegrations'
-import { useLocalStorage } from '@/theme/composables/useLocalStorage'
-import { capitalize } from '@/utils'
-import { onContentUpdated } from 'vitepress'
+import { useIntegrations } from '@/theme/composables/useIntegrations'
+import type { Integration } from '@/types'
+import { useLocalStorage } from '@vueuse/core'
+import { onContentUpdated, useRouter } from 'vitepress'
 import { ref, watch } from 'vue'
 
+const { go } = useRouter()
+
 const integrations = useIntegrations()
-const preferIntegration = useLocalStorage<Integration | undefined>(
+
+const defaultOptions = {
+  name: '',
+  title: '',
+  description: '',
+  version: '',
+} satisfies Integration
+
+const preferIntegration = useLocalStorage(
   'inertia-docs-prefer-integration',
-  undefined
+  defaultOptions,
+  { mergeDefaults: true }
 )
 
 const isOpen = ref(false)
 const main = ref<HTMLDivElement>()
 
 const toggleIntegration = (integration: Integration) => {
-  if (preferIntegration.value !== integration) {
+  if (preferIntegration.value.name !== integration.name) {
     preferIntegration.value = integration
   }
   toggleOpen()
+  go(`/integrations/${integration.name}/`)
 }
 
 function closeOnClickOutside(e: Event) {
@@ -52,7 +61,7 @@ const toggleOpen = () => {
     <button @click="toggleOpen" class="dropdown-btn" aria-haspopup="true" aria-controls="dropdown-menu">
       <span v-if="preferIntegration" class="dropdown-active-item">
         <BaseIcon :iconId="preferIntegration.name" width="20" height="20" />
-        <span>{{ capitalize(preferIntegration.name) }}</span>
+        <span>{{ preferIntegration.title }}</span>
         <Badge type="info" class="small batch-align">v{{ preferIntegration.version }}</Badge>
       </span>
       <span v-else class="dropdown-default">
@@ -61,12 +70,14 @@ const toggleOpen = () => {
       </span>
     </button>
     <div v-if="isOpen" class="dropdown-menu" id="dropdown-menu" role="menu">
-      <a v-for="pkg in integrations" @click="toggleIntegration(pkg)" :href="`/integrations/${pkg.name}/`"
-        class="dropdown-item">
-        <BaseIcon :iconId="pkg.name" width="20" height="20" />
-        <span>{{ capitalize(pkg.name) }}</span>
-        <Badge type="info" class="small batch-align">v{{ pkg.version }}</Badge>
-      </a>
+      <template v-for="pkg in integrations">
+        <a v-if="pkg.name !== 'laravel'" @click="toggleIntegration(pkg)" class="dropdown-item">
+          <BaseIcon :iconId="pkg.name" width="20" height="20" />
+          <span>{{ pkg.title }}</span>
+          <Badge type="info" class="small batch-align">v{{ pkg.version }}</Badge>
+        </a>
+      </template>
+
     </div>
   </div>
 </template>

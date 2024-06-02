@@ -5,6 +5,7 @@
   "compilerOptions": {
     "lib": ["DOM", "DOM.Iterable", "ES2020"],
     "jsx": "preserve",
+    "jsxImportSource": "vue",
     "skipDefaultLibCheck": true,
     "removeComments": true,
     "types": ["node", "vite/client"],

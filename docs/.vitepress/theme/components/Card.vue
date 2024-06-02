@@ -1,44 +1,35 @@
 <script setup lang="ts">
-import type { Integration } from '@/theme/composables/useIntegrations'
-import { useLocalStorage } from '@/theme/composables/useLocalStorage'
-import { computed } from 'vue'
+import type { Integration } from '@/types'
+import { useLocalStorage } from '@vueuse/core'
 
-const props = defineProps<{
-  name: string
-  description: string
-  version: string
-}>()
+const { name, description, title, version } = defineProps<Integration>()
 
-const preferIntegration = useLocalStorage<Integration | undefined>(
+const preferIntegration = useLocalStorage(
   'inertia-docs-prefer-integration',
-  undefined
+  { name, description, title, version },
+  { mergeDefaults: true }
 )
 
 const toggleIntegration = (integration: Integration) => {
   if (
-    preferIntegration.value !== integration &&
+    preferIntegration.value.name !== integration.name &&
     integration.name !== 'laravel'
   ) {
     preferIntegration.value = integration
   }
 }
-
-const computedTitle = computed(() => {
-  return props.name[0]?.toUpperCase() + props.name.slice(1)
-})
 </script>
 
 <template>
-  <a @click="toggleIntegration(props)"
-    :href="`${props.name === 'laravel' ? `/integrations/${props.name}/` : `/integrations/${props.name}/`}`" class="card"
-    type="button">
-    <BaseIcon :iconId="props.name" width="50" height="50" />
+  <a @click="toggleIntegration({ name, description, title, version, })"
+    :href="`${name === 'laravel' ? `/integrations/${name}/` : `/integrations/${name}/`}`" class="card" type="button">
+    <BaseIcon :iconId="name" width="50" height="50" />
     <div class="card-meta">
-      <span class="card-title">{{ computedTitle }} Adapter</span>
+      <span class="card-title">{{ title }} Adapter</span>
       <span class="card-badge">
-        <Badge type="danger">v{{ props.version }}</Badge>
+        <Badge type="danger">v{{ version }}</Badge>
       </span>
-      <div class="card-desc">@inertiajs-revamped/{{ props.name }}</div>
+      <div class="card-desc">@inertiajs-revamped/{{ name }}</div>
     </div>
   </a>
 </template>

@@ -21,6 +21,9 @@ export default defineConfig({
   cleanUrls: true,
   srcExclude: ['**/_templates'],
   head: headConfig,
+  rewrites: {
+    'integrations/vue/hooks/:page*': 'integrations/vue/composables/:page*',
+  },
   themeConfig: {
     outline: {
       level: [2, 3],
@@ -69,6 +72,7 @@ export default defineConfig({
       chunkSizeWarningLimit: Infinity,
     },
     resolve: {
+      preserveSymlinks: true,
       alias: {
         '@': fileURLToPath(new URL('./', import.meta.url)),
       },
