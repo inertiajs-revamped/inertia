@@ -3,6 +3,6 @@ export interface Integration {
   title: string
   description: string
   version: string
-  url?: string | undefined
-  componentExt?: 'tsx' | 'vue'
+  url: string
+  componentExt: string
 }

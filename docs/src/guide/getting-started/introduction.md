@@ -17,14 +17,14 @@ However, due to the lack of development, unanswered issues and rejected pull req
 
 ### Integrations/Adapters
 
-| Package  | Integration | Status | Version |
-| -------- | ----------- | ------ | ------- |
-| [inertiajs-revamped/laravel](https://packagist.org/packages/inertiajs-revamped/laravel) | [Laravel](https://laravel.com/) | ![satus](https://img.shields.io/badge/maintained-42b883) | ![Packagist Version](https://img.shields.io/packagist/v/inertiajs-revamped/laravel) |
-| [@inertiajs-revamped/core](https://www.npmjs.com/package/@inertiajs-revamped/core) | -  | ![satus](https://img.shields.io/badge/maintained-42b883) | ![NPM Version](https://img.shields.io/npm/v/%40inertiajs-revamped%2Fcore) |
-| [@inertiajs-revamped/preact](https://www.npmjs.com/package/@inertiajs-revamped/preact)  | [Preact](https://preactjs.com/) | ![satus](https://img.shields.io/badge/maintained-42b883) | ![NPM Version](https://img.shields.io/npm/v/%40inertiajs-revamped%2Fpreact) |
-| [@inertiajs-revamped/react](https://www.npmjs.com/package/@inertiajs-revamped/react)    | [React](https://react.dev/) | ![satus](https://img.shields.io/badge/maintained-42b883) | ![NPM Version](https://img.shields.io/npm/v/%40inertiajs-revamped%2Freact)  |
-| [@inertiajs-revamped/vue](https://www.npmjs.com/package/@inertiajs-revamped/vue)        | [Vue](https://vuejs.org/) | ![satus](https://img.shields.io/badge/maintained-42b883) |  ![NPM Version](https://img.shields.io/npm/v/%40inertiajs-revamped%2Fvue)    |
-| @inertiajs-revamped/svelte | [Svelte](https://svelte.dev/) | ![satus](https://img.shields.io/badge/maintained-B94343) | - |
+| Package  | Integration | Status |
+| -------- | ----------- | ------ |
+| [inertiajs-revamped/laravel](https://packagist.org/packages/inertiajs-revamped/laravel) | [Laravel](https://laravel.com/) | ![satus](https://img.shields.io/badge/maintained-42b883) |
+| [@inertiajs-revamped/core](https://www.npmjs.com/package/@inertiajs-revamped/core) | [Node.js](https://nodejs.org)  | ![satus](https://img.shields.io/badge/maintained-42b883) |
+| [@inertiajs-revamped/preact](https://www.npmjs.com/package/@inertiajs-revamped/preact)  | [Preact](https://preactjs.com/) | ![satus](https://img.shields.io/badge/maintained-42b883) |
+| [@inertiajs-revamped/react](https://www.npmjs.com/package/@inertiajs-revamped/react)    | [React](https://react.dev/) | ![satus](https://img.shields.io/badge/maintained-42b883) |
+| [@inertiajs-revamped/vue](https://www.npmjs.com/package/@inertiajs-revamped/vue)        | [Vue](https://vuejs.org/) | ![satus](https://img.shields.io/badge/maintained-42b883) |
+| @inertiajs-revamped/svelte | [Svelte](https://svelte.dev/) | ![satus](https://img.shields.io/badge/unmaintained-B94343) |
 
 <!--@include: ../../_templates/parts/contributors.md-->
 

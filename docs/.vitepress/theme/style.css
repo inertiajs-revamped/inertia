@@ -41,3 +41,11 @@
   display: table;
   width: 100%;
 }
+
+@media only screen and (max-width: 768px) {
+
+  /* .stepper-content div[class*='language-'] {
+    width: calc(100% + 3rem);
+    margin-left: -3rem;
+  } */
+}
