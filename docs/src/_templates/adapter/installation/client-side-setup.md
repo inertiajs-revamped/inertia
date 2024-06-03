@@ -39,8 +39,8 @@ bun add -D @inertiajs-revamped/{{ adapter.name }}
 ### Initialize the Revamped app
 
 1. Delete the `resources/js` directory.
-2. Create `resources/application/main.{ts,tsx}` and initialize the main entry-point.
-3. (Optional): Create `resources/application/ssr.{ts,tsx}` and initialize the server entry-point.
+2. Create `resources/application/main.{{ adapter.name === 'vue' ? 'ts' : 'tsx' }}` and initialize the main entry-point.
+3. (Optional): Create `resources/application/ssr.{{ adapter.name === 'vue' ? 'ts' : 'tsx' }}` and initialize the server entry-point.
 4. Create a `vite.config.ts`, install, and configure [Vite](https://vitejs.dev/).
 5. (Optional): Create `tsconfig.json`, install, and configure [TypeScript](https://www.typescriptlang.org/).
 
