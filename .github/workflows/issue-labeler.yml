@@ -23,7 +23,7 @@ jobs:
         uses: actions/checkout@a5ac7e51b41094c92402da3b24376905380afc29 # v4.1.6
 
       - name: Parse issue form
-        uses: stefanbuck/github-issue-parser@44b9b37b3fbcc7948af192ff51e3db4d5c6103ca # v3.1.1
+        uses: stefanbuck/github-issue-parser@2d2ff50d4aae06ab58d26bf59468d98086605f11 # v3.2.1
         id: issue-parser
         with:
           template-path: .github/ISSUE_TEMPLATE/${{ matrix.template }}
