@@ -16,18 +16,13 @@ export const navConfig = [
     text: 'Resources',
     items: [
       {
-        text: 'Useful links',
-        items: [
-          {
-            text: 'Discord',
-            link: defaultConfig.discord,
-          },
-          {
-            text: 'Contributing',
-            link: `${defaultConfig.github.repo}/blob/main/CONTRIBUTING.md`,
-          },
-          { text: 'Repository', link: `${defaultConfig.github.repo}` },
-        ],
+        text: 'Discord',
+        link: defaultConfig.discord,
+      },
+      { text: 'Repository', link: `${defaultConfig.github.repo}` },
+      {
+        text: 'Contributing',
+        link: `${defaultConfig.github.repo}/blob/main/CONTRIBUTING.md`,
       },
     ],
   },

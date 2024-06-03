@@ -1,4 +1,5 @@
 import type { DefaultTheme } from 'vitepress'
+import { defaultConfig } from './constants'
 
 const defaultSidebar = [
   {
@@ -17,10 +18,33 @@ const defaultSidebar = [
   },
 ] satisfies DefaultTheme.Sidebar
 
+const extraSidebar = [
+  {
+    text: 'Resources',
+    collapsed: true,
+    items: [
+      {
+        text: 'Discord',
+        link: defaultConfig.discord,
+      },
+      { text: 'Repository', link: `${defaultConfig.github.repo}` },
+      {
+        text: 'Contributing',
+        link: `${defaultConfig.github.repo}/blob/main/CONTRIBUTING.md`,
+      },
+    ],
+  },
+] satisfies DefaultTheme.Sidebar
+
 const rawSidebar = {
   text: 'Integrations',
-  link: '/integrations/',
-  items: [],
+  collapsed: false,
+  items: [
+    {
+      text: 'Overview',
+      link: '/integrations/',
+    },
+  ],
 }
 
 const adapterSidebar = (adapter: string) =>
@@ -119,8 +143,8 @@ const adapterSidebar = (adapter: string) =>
   ] satisfies DefaultTheme.Sidebar
 
 export const sidebarConfig = {
-  '/guide/': [...defaultSidebar, rawSidebar],
-  '/integrations/': [...defaultSidebar, rawSidebar],
+  '/guide/': [...defaultSidebar, rawSidebar, ...extraSidebar],
+  '/integrations/': [...defaultSidebar, rawSidebar, ...extraSidebar],
   '/integrations/preact/': adapterSidebar('preact'),
   '/integrations/react/': adapterSidebar('react'),
   '/integrations/vue/': adapterSidebar('vue'),
