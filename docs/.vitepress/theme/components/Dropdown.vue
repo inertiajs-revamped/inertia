@@ -59,11 +59,12 @@ onContentUpdated(() => {
       </span>
     </button>
     <div v-if="isOpen" class="dropdown-menu" id="dropdown-menu" role="menu">
-      <template v-for="pkg in integrations">
-        <a v-if="pkg.name !== 'laravel'" @click="toggleIntegration(pkg)" class="dropdown-item">
-          <BaseIcon :iconId="pkg.name" width="20" height="20" />
-          <span>{{ pkg.title }}</span>
-          <Badge type="info" class="small batch-align">v{{ pkg.version }}</Badge>
+      <template v-for="integration in integrations">
+        <a v-if="integration.name !== 'laravel'" v-on:click.prevent="toggleIntegration(integration)"
+          :href="`/integrations/${integration.name}/`" class="dropdown-item">
+          <BaseIcon :iconId="integration.name" width="20" height="20" />
+          <span>{{ integration.title }}</span>
+          <Badge type="info" class="small batch-align">v{{ integration.version }}</Badge>
         </a>
       </template>
 
