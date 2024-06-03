@@ -35,7 +35,7 @@ cd <project-name>
 
 ::::
 
-::: stepper Install the Laravel & Preact Adapter in your Laravel project
+::: stepper Install the Laravel & {{ adapter.title }} Adapter in your Laravel project
 
 <Card v-bind="laravelAdapter" />
 
