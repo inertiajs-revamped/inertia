@@ -79,7 +79,7 @@
     "qs": "^6.12.1"
   },
   "devDependencies": {
-    "@types/node": "^20.12.12"
+    "@types/node": "^20.14.0"
   },
   "peerDependencies": {
     "axios": ">=1.7.2"
