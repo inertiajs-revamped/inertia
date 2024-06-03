@@ -42,6 +42,10 @@ import { createInertiaApp, resolvePageComponent } from '@inertiajs/{{ adapter.na
 import { createProgress } from '@inertiajs/{{ adapter.name }}/progress'
 ```
 
+### Ziggy
+
+Inertia.js-Revamped seamless supports [Ziggy](https://github.com/tighten/ziggy).
+
 ## Package Imports
 
 `app.{{ isVue }}` -> `main.{{ isVue }}`
