@@ -67,6 +67,10 @@ import { Link } from '@inertiajs-revamped/{{ adapter.name }}'
 <button type="button">Logout</button>
 ```
 
+::: warning
+Creating `POST`/`PUT`/`PATCH`/`DELETE` anchor `<a>` links is discouraged as it causes "Open Link in New Tab / Window" accessibility issues. Instead, consider using a more appropriate element, such as a `<button>`.
+:::
+
 ## `data`
 
 Type: `Record<string, FormDataConvertible>`
