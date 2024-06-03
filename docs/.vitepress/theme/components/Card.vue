@@ -1,27 +1,22 @@
 <script setup lang="ts">
+import { usePreferences } from '@/theme/composables/usePreferences'
 import type { Integration } from '@/types'
-import { useLocalStorage } from '@vueuse/core'
 import { useRouter } from 'vitepress'
-
-const { go } = useRouter()
 
 const { name, description, title, version, url, componentExt } =
   defineProps<Integration>()
 
-const preferIntegration = useLocalStorage(
-  'inertia-docs-prefer-integration',
-  { name, description, title, version, url, componentExt },
-  { mergeDefaults: true }
-)
+const router = useRouter()
+const storage = usePreferences()
 
 const toggleIntegration = (integration: Integration) => {
   if (
-    preferIntegration.value.name !== integration.name &&
+    storage.value?.name !== integration.name &&
     integration.name !== 'laravel'
   ) {
-    preferIntegration.value = integration
-    go(`/integrations/${integration.name}/`)
+    storage.value = integration
   }
+  router.go(`/integrations/${integration.name}/`)
 }
 </script>
 

@@ -1,29 +1,27 @@
 <script setup lang="ts">
 import { useIntegrations } from '@/theme/composables/useIntegrations'
+import { usePreferences } from '@/theme/composables/usePreferences'
 import type { Integration } from '@/types'
-import { useLocalStorage } from '@vueuse/core'
 import { onContentUpdated, useRouter } from 'vitepress'
-import { ref, watch } from 'vue'
+import { onMounted, ref, watch } from 'vue'
 
-const { go } = useRouter()
-
+const router = useRouter()
 const integrations = useIntegrations()
-
-const preferIntegration = useLocalStorage(
-  'inertia-docs-prefer-integration',
-  integrations[0],
-  { mergeDefaults: true }
-)
+const storage = usePreferences()
 
 const isOpen = ref(false)
 const main = ref<HTMLDivElement>()
 
+const toggleOpen = () => {
+  isOpen.value = !isOpen.value
+}
+
 const toggleIntegration = (integration: Integration) => {
-  if (preferIntegration.value?.name !== integration.name) {
-    preferIntegration.value = integration
-  }
   toggleOpen()
-  go(`/integrations/${integration.name}/`)
+  if (storage.value?.name !== integration.name) {
+    storage.value = integration
+    router.go(`/integrations/${integration.name}/`)
+  }
 }
 
 function closeOnClickOutside(e: Event) {
@@ -32,30 +30,28 @@ function closeOnClickOutside(e: Event) {
   }
 }
 
-watch(isOpen, (value) => {
-  if (value) {
-    document.addEventListener('click', closeOnClickOutside)
-    return
-  }
-  document.removeEventListener('click', closeOnClickOutside)
+onMounted(() => {
+  watch(isOpen, (value) => {
+    if (value) {
+      document.addEventListener('click', closeOnClickOutside)
+      return
+    }
+    document.removeEventListener('click', closeOnClickOutside)
+  })
 })
 
 onContentUpdated(() => {
   isOpen.value = false
 })
-
-const toggleOpen = () => {
-  isOpen.value = !isOpen.value
-}
 </script>
 
 <template>
   <div class="dropdown" ref="main">
     <button @click="toggleOpen" class="dropdown-btn" aria-haspopup="true" aria-controls="dropdown-menu">
-      <span v-if="preferIntegration" class="dropdown-active-item">
-        <BaseIcon :iconId="preferIntegration.name" width="20" height="20" />
-        <span>{{ preferIntegration.title }}</span>
-        <Badge type="info" class="small batch-align">v{{ preferIntegration.version }}</Badge>
+      <span v-if="storage" class="dropdown-active-item">
+        <BaseIcon :iconId="storage.name" width="20" height="20" />
+        <span>{{ storage.title }}</span>
+        <Badge type="info" class="small batch-align">v{{ storage.version }}</Badge>
       </span>
       <span v-else class="dropdown-default">
         Select Integration

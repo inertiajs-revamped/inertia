@@ -20,5 +20,10 @@ export default {
     app.component('AdapterWrapper', AdapterWrapper)
     app.component('BaseIcon', BaseIcon)
     app.component('Card', Card)
+    app.config.errorHandler = (_err, _instance, _info) => {
+      if (typeof window !== 'undefined') {
+        window.localStorage.clear()
+      }
+    }
   },
 } satisfies Theme

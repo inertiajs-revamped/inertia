@@ -9,11 +9,11 @@ const { Layout } = DefaultTheme
 <template>
   <Layout>
     <template #sidebar-nav-before>
-      <ClientOnly>
-        <Preferences>
+      <Preferences>
+        <ClientOnly>
           <Dropdown />
-        </Preferences>
-      </ClientOnly>
+        </ClientOnly>
+      </Preferences>
     </template>
   </Layout>
 </template>
