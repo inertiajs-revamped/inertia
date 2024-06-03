@@ -17,6 +17,31 @@ const isVue = adapter.componentExt === 'vue' ? 'ts' : 'tsx'
 >
 > Thank you for your patience!
 
+## Third Party Support
+
+### AdonisJS Inertia Starter kit
+
+Inertia.js-Revamped seamless supports [adonisjs](https://docs.adonisjs.com/guides/getting-started/installation#inertia-starter-kit).
+
+- Add luxon to `package.json` `devDependencies`, else adonisjs throwing an error.
+- Add PNPM [overrides](https://pnpm.io/package_json#pnpmoverrides) to `package.json`.
+
+```json-vue
+"pnpm": {
+  "overrides": {
+    "@inertiajs/core": "npm:@inertiajs-revamped/core@^0.0.5",
+    "@inertiajs/{{ adapter.name }}": "npm:@inertiajs-revamped/{{ adapter.name }}@^{{ adapter.version }}"
+  }
+}
+```
+
+- Follow the [Package Imports](#package-imports) guide below, but instead of replacing the module name, you still need to import from `'@inertiajs/{{ adapter.name }}'`.
+
+```tsx-vue
+import { createInertiaApp, resolvePageComponent } from '@inertiajs/{{ adapter.name }}'
+import { createProgress } from '@inertiajs/{{ adapter.name }}/progress'
+```
+
 ## Package Imports
 
 `app.{{ isVue }}` -> `main.{{ isVue }}`
