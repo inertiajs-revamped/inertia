@@ -50,7 +50,7 @@ const toggleIntegration = (integration: Integration) => {
 }
 
 .card:hover {
-  background-color: var(--vp-c-default-soft);
+  background-color: var(--vp-c-gray-3);
 }
 
 .card svg {
@@ -58,8 +58,6 @@ const toggleIntegration = (integration: Integration) => {
   justify-content: center;
   width: auto;
   padding-inline: 0.5rem;
-  /* width: 50px;
-  height: 50px; */
 }
 
 .card-meta {
