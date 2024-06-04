@@ -1,5 +1,11 @@
 # Changelog - @inertiajs-revamped/vue
 
+## 0.0.7 (2024-06-03)
+
+### Builds
+
+- update dependency @types/node to ^20.14.0 ([2340303](https://github.com/inertiajs-revamped/inertia/commit/2340303))
+
 ## 0.0.6 (2024-05-19)
 
 ### Features

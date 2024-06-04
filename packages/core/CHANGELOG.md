@@ -1,5 +1,17 @@
 # Changelog - @inertiajs-revamped/core
 
+## 0.0.6 (2024-06-03)
+
+### Bug Fixes
+
+- check for window fixes vue ssr error ([900d17d](https://github.com/inertiajs-revamped/inertia/commit/900d17d))
+
+### Builds
+
+- update dependency @types/node to ^20.14.0 ([2340303](https://github.com/inertiajs-revamped/inertia/commit/2340303))
+- update dependency axios to >=1.7.2 ([43d19ce](https://github.com/inertiajs-revamped/inertia/commit/43d19ce))
+- update dependency axios to >=1.7.0 ([6146edf](https://github.com/inertiajs-revamped/inertia/commit/6146edf))
+
 ## 0.0.5 (2024-05-19)
 
 ### Features
