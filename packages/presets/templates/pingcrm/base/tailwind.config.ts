@@ -3,7 +3,7 @@ import type { Config } from 'tailwindcss'
 import defaultTheme from 'tailwindcss/defaultTheme'
 
 export default {
-  content: ['./resources/**/*.{ts,vue,blade.php}'],
+  content: ['./resources/**/*.{ts,tsx,vue,blade.php}'],
   theme: {
     extend: {
       colors: {
