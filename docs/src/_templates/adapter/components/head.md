@@ -35,6 +35,7 @@ type InertiaHead = FunctionComponent<InertiaHeadProps>
 ::: info Related API's:
 
 - `titleCallback`
+
 :::
 
 ## `title`
@@ -131,8 +132,6 @@ defineProps({ title: String })
 
   </template>
 </AdapterWrapper>
-
-:::
 
 ### Multiple Head instances
 

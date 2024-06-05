@@ -59,8 +59,6 @@ composer require inertiajs-revamped/laravel
 
 <Card v-for="adapt in adapters" v-bind="adapt" />
 
-Running the following command using the Composer package manager:
-
 ::::
 
 ::: stepper Continue following the framework specific Laravel installation Guide
