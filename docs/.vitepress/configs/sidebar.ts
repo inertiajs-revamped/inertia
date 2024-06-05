@@ -1,5 +1,4 @@
 import type { DefaultTheme } from 'vitepress'
-import { defaultConfig } from './constants'
 
 const defaultSidebar = [
   {
@@ -24,13 +23,8 @@ const extraSidebar = [
     collapsed: true,
     items: [
       {
-        text: 'Discord',
-        link: defaultConfig.discord,
-      },
-      { text: 'Repository', link: `${defaultConfig.github.repo}` },
-      {
         text: 'Contributing',
-        link: `${defaultConfig.github.repo}/blob/main/CONTRIBUTING.md`,
+        link: '/guide/resources/contributing',
       },
     ],
   },
