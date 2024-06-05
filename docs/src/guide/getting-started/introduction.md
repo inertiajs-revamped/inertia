@@ -1,21 +1,14 @@
 # Introduction
 
-> [!IMPORTANT]
-> The documentation is currently in development.
-
-## Overview
-
 > Inertia.js-Revamped makes it possible to build server-side rendered, single-page applications using [Laravel](https://laravel.com/), [Vite](https://vitejs.dev/) and a UI framework of your choice. :rocket:
 
-### Why Inertia.js-Revamped?
+## Why Inertia.js-Revamped?
 
 The article [Server-side apps with client-side rendering](https://reinink.ca/articles/server-side-apps-with-client-side-rendering), which Jonathan Reinink published on his blog in 2019 looked very promising as an alternative to [spatie/laravel-server-side-rendering](https://github.com/spatie/laravel-server-side-rendering). When [Inertia.js](https://inertiajs.com/) was subsequently released, it looked like the next rising star.
 
 However, due to the lack of development, unanswered issues and rejected pull requests at [Inertia.js](https://github.com/inertiajs/inertia), we decided to continue developing a fork under the name `Inertia.js-Revamped`.
 
----
-
-### Integrations/Adapters
+## Integrations
 
 | Package  | Integration | Status |
 | -------- | ----------- | ------ |
@@ -28,7 +21,7 @@ However, due to the lack of development, unanswered issues and rejected pull req
 
 <!--@include: ../../_templates/parts/contributors.md-->
 
-### Roadmap
+## Roadmap
 
 **Application:**
 
