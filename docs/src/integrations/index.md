@@ -1,6 +1,6 @@
-# Adapter Integrations
+# Integrations
 
-Select your prefered framework Adapter.
+Choose your preferred UI framework.
 
 <Integration v-for="pkg in integrations" v-bind="pkg" />
 
