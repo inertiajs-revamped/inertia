@@ -11,5 +11,3 @@ A list of demo applications to illustrate how Inertia.js-Revamped works.
 ## Ping CRM
 
 <DemoContainer />
-
----
