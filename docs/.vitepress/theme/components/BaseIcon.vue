@@ -2,7 +2,7 @@
   <svg xmlns="http://www.w3.org/2000/svg" :width="props.width || 24" :height="props.height || 24" viewBox="0 0 24 24"
     focusable="false" :aria-labelledby="props.iconId" :fill="props.color || icons[props.iconId].color"
     role="presentation">
-    <title :id="props.iconId" lang="en">{{ props.iconId }}</title>
+    <title :id="props.iconId" lang="en">{{ capitalize(props.iconId) }}</title>
     <path :d="icons[props.iconId].path">
       <slot />
     </path>
@@ -10,12 +10,16 @@
 </template>
 
 <script setup lang="ts">
-const props = defineProps<{
+import { capitalize } from 'vue'
+
+export interface BaseIconProps {
   iconId: keyof typeof icons
   width?: string | number
   height?: string | number
   color?: string
-}>()
+}
+
+const props = defineProps<BaseIconProps>()
 
 const icons = {
   preact: {

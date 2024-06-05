@@ -6,9 +6,11 @@
   --vp-c-tip-lightest: #bcc0ff;
   --vp-c-warning-lightest: #ffe2a9;
   --vp-c-danger-lightest: #ff9aa7;
+  --vp-c-important-lightest: #d7c0ff;
   --vp-c-tip-dimm: rgba(100, 108, 255, 0.08);
   --vp-c-warning-dimm: rgba(234, 179, 8, 0.08);
   --vp-c-danger-dimm: rgba(244, 63, 94, 0.08);
+  --vp-c-important-dimm: rgba(159, 122, 234, 0.08);
  }
 
 /**
@@ -26,12 +28,17 @@
   --vp-custom-block-danger-border: var(--vp-c-red-2);
   --vp-custom-block-danger-text: var(--vp-c-red-2);
   --vp-custom-block-danger-bg: var(--vp-c-danger-dimm);
+
+  --vp-custom-block-important-border: var(--vp-c-purple-2);
+  --vp-custom-block-important-text: var(--vp-c-purple-2);
+  --vp-custom-block-important-bg: var(--vp-c-important-dimm);
  }
 
  .dark {
   --vp-custom-block-tip-text: var(--vp-c-tip-lightest);
   --vp-custom-block-warning-text: var(--vp-c-warning-lightest);
   --vp-custom-block-danger-text: var(--vp-c-danger-lightest);
+  --vp-custom-block-important-text: var(--vp-c-important-lightest);
  }
 
 /* Transition by color instead of opacity */

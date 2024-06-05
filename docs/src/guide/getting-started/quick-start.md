@@ -2,8 +2,7 @@
 
 We recommend scaffolding Inertia.js-Revamped via automatic CLI installer [@preset/cli](https://preset.dev).
 
-> [!IMPORTANT]
-> Inertia.js-Revamped is currently in `alpha` status and not ready for production use yet.
+<!--@include: ../../_templates/parts/alpha-status.md-->
 
 ## Prerequisites
 

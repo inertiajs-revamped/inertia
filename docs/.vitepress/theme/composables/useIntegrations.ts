@@ -7,7 +7,7 @@ export const useIntegrations = () =>
 export const useIntegration = (name: string) => {
   const integrations = useIntegrations()
   const adapter = computed(
-    () => integrations?.filter((int) => int.name === name)[0]
+    () => integrations.filter((int) => int.name === name)[0]
   )
   return adapter
 }

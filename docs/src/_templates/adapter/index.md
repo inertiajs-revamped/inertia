@@ -37,9 +37,9 @@ cd <project-name>
 
 ::: stepper Install the Laravel & {{ adapter.title }} Adapter in your Laravel project
 
-<Card v-bind="laravelAdapter" />
+<Integration v-bind="laravelAdapter" />
 
-<Card v-bind="adapter" />
+<Integration v-bind="adapter" />
 
 Running the following command you'll be prompted to select your project configuration:
 

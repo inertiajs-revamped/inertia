@@ -41,7 +41,7 @@ cd <project-name>
 
 :::: stepper Install the Laravel Adapter in your Laravel project
 
-<Card v-bind="adapter" />
+<Integration v-bind="adapter" />
 
 Running the following command using the Composer package manager:
 
@@ -57,7 +57,7 @@ composer require inertiajs-revamped/laravel
 
 :::: stepper Choose your preferred UI framework Adapter.
 
-<Card v-for="adapt in adapters" v-bind="adapt" />
+<Integration v-for="adapt in adapters" v-bind="adapt" />
 
 ::::
 
