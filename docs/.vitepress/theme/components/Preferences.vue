@@ -34,9 +34,9 @@ const restoreOutline = (e: Event) => {
   transition: border-color 0.5s, background-color 0.5s ease;
   margin-bottom: 20px;
   position: sticky;
-  top: -0.5px;
+  top: -2rem;
   background-color: var(--vp-sidebar-bg-color);
-  padding-top: 10px;
+  padding-top: 1rem;
   z-index: 10;
 }
 
