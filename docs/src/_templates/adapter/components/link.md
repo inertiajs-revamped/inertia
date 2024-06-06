@@ -13,13 +13,43 @@ Use the`<Link>` component to create an Inertia link.
 
 ::: details Type Signature & Types
 
-**Type Signature:**
+<AdapterWrapper :adapter="adapter.name">
+  <template #preact>
 
 ```typescript
-declare const Link: ForwardRefExoticComponent<InertiaLinkProps & RefAttributes<unknown>>
+interface BaseInertiaLinkProps {
+  as?: string
+  data?: Record<string, FormDataConvertible>
+  href: string
+  method?: Method
+  headers?: Record<string, string>
+  onClick?: (event: MouseEvent) => void
+  preserveScroll?: PreserveStateOption
+  preserveState?: PreserveStateOption
+  replace?: boolean
+  only?: string[]
+  except?: string[]
+  onCancelToken?: { ({ cancel }: { cancel: VoidFunction }): void }
+  onBefore?: () => void
+  onStart?: () => void
+  onProgress?: (progress: Progress) => void
+  onFinish?: () => void
+  onCancel?: () => void
+  onSuccess?: () => void
+  onError?: () => void
+  queryStringArrayFormat?: 'indices' | 'brackets'
+}
+
+type InertiaLinkProps = BaseInertiaLinkProps &
+  Omit<JSX.HTMLAttributes<HTMLElement>, keyof BaseInertiaLinkProps>
+
+declare const Link: FunctionalComponent<PropsWithoutRef<InertiaLinkProps> & {
+  ref?: Ref<unknown>
+}>
 ```
 
-**Types:**
+  </template>
+  <template #react>
 
 ```typescript
 interface BaseInertiaLinkProps {
@@ -48,7 +78,21 @@ interface BaseInertiaLinkProps {
 type InertiaLinkProps = BaseInertiaLinkProps &
   Omit<HTMLAttributes<HTMLElement>, keyof BaseInertiaLinkProps> &
   Omit<AllHTMLAttributes<HTMLElement>, keyof BaseInertiaLinkProps>
+
+declare const Link: ForwardRefExoticComponent<InertiaLinkProps & RefAttributes<unknown>>
 ```
+
+  </template>
+  <template #vue>
+
+```typescript
+type BaseInertiaLinkProps = InstanceType<typeof Link>['$props']
+
+declare const Link: DefineComponent
+```
+
+  </template>
+</AdapterWrapper>
 
 :::
 
@@ -113,12 +157,12 @@ import { Link } from '@inertiajs-revamped/vue'
 
 ## `href`
 
-Type: `string`
-Required: `true`
+- Type: `string`
+- Required: `true`
 
 ## `method`
 
-Type: `Method`
+- Type: `Method`
 
 You can specify the HTTP request method for an Inertia link request using the `method` attribute. The default method used by links is `GET`, but you can use the `method` attribute to make `POST`, `PUT`, `PATCH`, and `DELETE` requests via links.
 
@@ -130,7 +174,7 @@ import { Link } from '@inertiajs-revamped/{{ adapter.name }}'
 
 ## `headers`
 
-Type: `Record<string, string>`
+- Type: `Record<string, string>`
 
 The `headers` attribute allows you to add custom headers to an Inertia link. However, the headers Inertia uses internally to communicate its state to the server take priority and therefore cannot be overwritten.
 
@@ -170,11 +214,11 @@ import { Link } from '@inertiajs-revamped/vue'
 
 ## `onClick`
 
-Type: `(event: MouseEvent) => void`
+- Type: `(event: MouseEvent) => void`
 
 ## `preserveScroll`
 
-Type: `PreserveStateOption`
+- Type: `PreserveStateOption`
 
 You can use the `preserve-scroll` attribute to prevent Inertia from automatically resetting the scroll position when making a page visit.
 
@@ -218,7 +262,7 @@ For more information on managing scroll position, please consult the documentati
 
 ## `preserveState`
 
-Type: `PreserveStateOption`
+- Type: `PreserveStateOption`
 
 You can preserve a page component's local state using the `preserve-state` attribute. This will prevent a page component from fully re-rendering. The `preserve-state` attribute is especially helpful on pages that contain forms, since you can avoid manually repopulating input fields and can also maintain a focused input.
 
@@ -264,7 +308,7 @@ import { Link } from '@inertiajs-revamped/vue'
 
 ## `replace`
 
-Type: `boolean`
+- Type: `boolean`
 
 The replace attribute allows you to specify the browser's history behaviour. By default, page visits push (new) state (`window.history.pushState`) into the history; however, it's also possible to replace state (`window.history.replaceState`) by setting the `replace` attribute to true. This will cause the visit to replace the current history state instead of adding a new history state to the stack.
 
@@ -304,7 +348,7 @@ import { Link } from '@inertiajs-revamped/vue'
 
 ## `only`
 
-Type: `string[]`
+- Type: `string[]`
 
 The `only` attribute allows you to specify that only a subset of a page's props (data) should be retrieved from the server on subsequent visits to that page.
 
@@ -348,43 +392,43 @@ For more information on this topic, please consult the complete documentation on
 
 ## `except`
 
-Type: `string[]`
+- Type: `string[]`
 
 ## `onCancelToken`
 
-Type: `{ ({ cancel }: { cancel: VoidFunction }): void }`
+- Type: `{ ({ cancel }: { cancel: VoidFunction }): void }`
 
 ## `onBefore`
 
-Type: `() => void`
+- Type: `() => void`
 
 ## `onStart`
 
-Type: `() => void`
+- Type: `() => void`
 
 ## `onProgress`
 
-Type: `(progress: Progress) => void`
+- Type: `(progress: Progress) => void`
 
 ## `onFinish`
 
-Type: `() => void`
+- Type: `() => void`
 
 ## `onCancel`
 
-Type: `() => void`
+- Type: `() => void`
 
 ## `onSuccess`
 
-Type: `() => void`
+- Type: `() => void`
 
 ## `onError`
 
-Type: `() => void`
+- Type: `() => void`
 
 ## `queryStringArrayFormat`
 
-Type: `'indices' | 'brackets'`
+- Type: `'indices' | 'brackets'`
 
 ## Usage
 

@@ -9,6 +9,10 @@ const adapter = useIntegration(urlParts[1])
 
 # Laravel Server-side Setup
 
+> This guide assumes you've already read the [Project Structure Basics](../basics/project-structure).
+
+This document will guide you through the setup of the [Laravel](https://laravel.com/) adapter.
+
 ## Installation
 
 Install the Inertia.js-Revamped server-side adapter using the [Composer](https://getcomposer.org/) package manager.

@@ -123,11 +123,15 @@ bun run dev
 
 ```shell
 # outputs
-VITE v5.2.9  ready in 1487 ms
+VITE v5.2.12  ready in 148 ms
 
 ➜  Local:   http://localhost:5173/
 ➜  Network: use --host to expose
-➜  press h to show help
+➜  press h + enter to show help
+
+LARAVEL v11.9.1  plugin v1.0.4
+
+➜  APP_URL: http://localhost
 ```
 
 ### Deploy
@@ -160,8 +164,20 @@ bun run build:prod
 
 ```shell
 # outputs
-vite v5.2.9 building for production...
-✓ 4 modules transformed.
+vite v5.2.12 building for production...
+✓ 173 modules transformed.
+public/build/manifest.json                         6.77 kB │ gzip:  0.83 kB
+public/build/assets/main-COAaD1bI.css             18.35 kB │ gzip:  4.54 kB
+# ...
+public/build/assets/main-CkXGnkYC.js             252.00 kB │ gzip: 83.96 kB
+✓ built in 1.40s
+vite v5.2.12 building SSR bundle for production...
+✓ 29 modules transformed.
+bootstrap/ssr/ssr-manifest.json                    2.48 kB
+bootstrap/ssr/assets/index-VzRQPh_D.js             0.51 kB
+# ...
+bootstrap/ssr/assets/layout-C6sDMM8X.js           16.57 kB
+✓ built in 344ms
 ```
 
 ### Server-side Rendering (SSR)

@@ -13,22 +13,48 @@ Use the`<Head>` component to manage your head tags like `<title>` & `<meta>`.
 
 ::: details Type Signature & Types
 
-**Type Signature:**
+<AdapterWrapper :adapter="adapter.name">
+  <template #preact>
 
 ```typescript
-declare const Head: InertiaHead
-```
+import type { ComponentChildren, FunctionComponent } from 'preact'
 
-**Types:**
-
-```typescript
 type InertiaHeadProps = {
   title?: string
   children?: ComponentChildren
 }
 
 type InertiaHead = FunctionComponent<InertiaHeadProps>
+
+declare const Head: InertiaHead
 ```
+
+  </template>
+  <template #react>
+
+```typescript
+import type { FunctionComponent, PropsWithChildren } from 'react'
+
+type InertiaHeadProps = PropsWithChildren<{
+  title?: string
+}>
+
+type InertiaHead = FunctionComponent<InertiaHeadProps>
+
+declare const Head: InertiaHead
+```
+
+  </template>
+  <template #vue>
+
+```typescript
+type InertiaHeadProps = InstanceType<typeof Head>['$props'];
+
+declare const Head: DefineComponent
+```
+
+  </template>
+</AdapterWrapper>
 
 :::
 
@@ -40,13 +66,13 @@ type InertiaHead = FunctionComponent<InertiaHeadProps>
 
 ## `title`
 
-Type: `string`
+- Type: `string`
 
 If you only need to add a `<title>` to the document `<head>`, you may simply pass the title as a prop to the `<Head>` component.
 
 ## `children`
 
-Type: `ComponentChildren`
+- Type: `ComponentChildren`
 
 Within this component, you can include the `Elements` that you wish to add to the document `<head>`.
 
