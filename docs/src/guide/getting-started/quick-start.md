@@ -30,9 +30,9 @@ Running the following command you'll be prompted to select your project configur
 
 | Option | Description |
 | -      | -           |
-| `--packageManager`   | Package manager (default: `npm`) (`"npm" \| "pnpm" \| "yarn" \| "bun"`) |
-| `--ui`               | UI-Framework (default: `undefined`) (`"preact" \| "react" \| "vue"`) |
-| `--template`         | Template (default: `default`) (`"default" \| "breeze" \| "pingcrm"`) |
+| `--pm`               | Package manager (default: `npm`) (`"npm" \| "pnpm" \| "yarn" \| "bun"`) |
+| `--ui`               | UI-Framework (`"preact" \| "react" \| "vue"`) |
+| `--template`         | Template (`"default" \| "breeze" \| "pingcrm"`) |
 | `--no-ssr`           | Disable SSR (default: `false`) (`boolean`) |
 | `--sandbox`          | For development [workspace](https://github.com/inertiajs-revamped/inertia) only (default: `false`) (`boolean`) |
 

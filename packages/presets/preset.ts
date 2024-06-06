@@ -1,4 +1,4 @@
-const packageManager = ['NPM', 'PNPM', 'Yarn', 'Bun'] as const
+const pm = ['NPM', 'PNPM', 'Yarn', 'Bun'] as const
 const templates = ['default', 'breeze', 'pingcrm'] as const
 const ui = ['Preact', 'React', 'Vue'] as const
 
@@ -6,7 +6,7 @@ export interface Options {
   /**
    * Choose your package manager (default: `undefined`)
    */
-  packageManager?: Lowercase<(typeof packageManager)[number]>
+  pm?: Lowercase<(typeof pm)[number]>
 
   /**
    * Choose your template (default: `undefined`)
@@ -45,7 +45,7 @@ export default definePreset<Options>({
 
     if (options.sandbox) {
       Object.assign(opts, {
-        packageManager: options.packageManager || 'pnpm',
+        pm: options.pm || 'pnpm',
         template: options.template || 'breeze',
         ui: options.ui || 'react',
         ssr: options.ssr || true,
@@ -57,7 +57,7 @@ export default definePreset<Options>({
       await initialPrompts({ options, prompts })
 
       Object.assign(opts, {
-        packageManager: options.packageManager ?? prompts.packageManager,
+        pm: options.pm ?? prompts.pm,
         template: options.template || prompts.template,
         ui: options.ui || prompts.ui,
         ssr: !!(options.ssr || prompts.ssr === 'enabled'),
@@ -71,7 +71,7 @@ export default definePreset<Options>({
       })
     }
 
-    if (!opts.packageManager) {
+    if (!opts.pm) {
       throw new Error(
         'You must specify a package manager (e.g. "npm", "yarn", "pnpm", or "bun").'
       )
@@ -109,12 +109,12 @@ async function initialPrompts({
   options,
   prompts,
 }: { options: Options; prompts: Record<string, string | undefined> }) {
-  if (typeof options.packageManager === 'undefined') {
+  if (typeof options.pm === 'undefined') {
     await prompt({
       title: 'Choose your package manager',
-      name: 'packageManager',
+      name: 'pm',
       text: '(Press <up> / <down> to select, <return> to confirm)',
-      choices: packageManager.map((manager) => {
+      choices: pm.map((manager) => {
         return { title: manager, value: manager.toLowerCase() }
       }),
       initial: 0,
@@ -233,13 +233,7 @@ async function installSandbox() {
   })
 }
 
-async function installBreeze({
-  packageManager,
-  template,
-  ui,
-  sandbox,
-  ssr,
-}: Options) {
+async function installBreeze({ pm, template, ui, sandbox, ssr }: Options) {
   await group({
     title: 'Installing Breeze Scaffolding',
     handler: async () => {
@@ -283,7 +277,7 @@ async function installBreeze({
       await cleanUp({ ui, ssr, sandbox })
 
       await installNodeDependencies({
-        packageManager,
+        pm,
         template,
         ui,
         ssr,
@@ -357,13 +351,7 @@ async function executeArtisanCommands() {
   })
 }
 
-async function installPingCRM({
-  packageManager,
-  template,
-  ui,
-  ssr,
-  sandbox,
-}: Options) {
+async function installPingCRM({ pm, template, ui, ssr, sandbox }: Options) {
   await group({
     title: 'Installing PingCRM Scaffolding',
     handler: async () => {
@@ -456,7 +444,7 @@ async function installPingCRM({
       await cleanUp({ ui, ssr, sandbox })
 
       await installNodeDependencies({
-        packageManager,
+        pm,
         template,
         ui,
         ssr,
@@ -467,7 +455,7 @@ async function installPingCRM({
 }
 
 async function installInertiaRevamped({
-  packageManager,
+  pm,
   template,
   ui,
   ssr,
@@ -611,7 +599,7 @@ async function installInertiaRevamped({
   await cleanUp({ ui, ssr, sandbox })
 
   await installNodeDependencies({
-    packageManager,
+    pm,
     template,
     ui,
     ssr,
@@ -620,7 +608,7 @@ async function installInertiaRevamped({
 }
 
 async function installNodeDependencies({
-  packageManager,
+  pm,
   template,
   ui,
   ssr,
@@ -661,7 +649,7 @@ async function installNodeDependencies({
       await installPackages({
         title: 'Installing Node.js devDependencies',
         for: 'node',
-        ...(sandbox && { packageManager }),
+        ...(sandbox && { pm }),
         packages: [
           // default
           template === 'breeze' && ui === 'react' ? '@headlessui/react' : '',
@@ -709,7 +697,7 @@ async function installNodeDependencies({
       await installPackages({
         title: 'Installing Node.js Dependencies',
         for: 'node',
-        ...(sandbox && { packageManager }),
+        ...(sandbox && { pm }),
         install: ['axios'],
       })
     },
