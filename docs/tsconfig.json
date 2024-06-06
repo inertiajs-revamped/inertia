@@ -7,6 +7,7 @@
     "jsx": "preserve",
     "jsxImportSource": "vue",
     "skipDefaultLibCheck": true,
+    "exactOptionalPropertyTypes": false,
     "removeComments": true,
     "types": ["node", "vite/client"],
     "paths": {

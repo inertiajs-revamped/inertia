@@ -14,13 +14,19 @@ hero:
       link: https://github.com/inertiajs-revamped/inertia
 
 features:
-  - icon: 🚀
-    title: Made for performance
-    details: Build blazingly fast, seo-friendly, client-side rendered single-page applications.
-  - icon: 🤝
-    title: Build for community
-    details: Collaborate with community members, share your thoughts and improve the source code.
-  - icon: 🥳
-    title: Seamless user experience
-    details: Effortlessly migrate your existing application, following our user-friendly migration guide.
+  - icon:
+      src: '/assets/preact.svg'
+    title: preact
+    details: '@inertiajs-revamped/preact'
+    link: '/integrations/preact/'
+  - icon:
+      src: '/assets/react.svg'
+    title: react
+    details: '@inertiajs-revamped/react'
+    link: '/integrations/react/'
+  - icon:
+      src: '/assets/vue.svg'
+    title: vue
+    details: '@inertiajs-revamped/vue'
+    link: '/integrations/vue/'
 ---

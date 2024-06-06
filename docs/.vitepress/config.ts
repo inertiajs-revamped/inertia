@@ -73,9 +73,21 @@ export default defineConfig({
     },
     resolve: {
       preserveSymlinks: true,
-      alias: {
+      alias: [
+        {
+          find: '@',
+          replacement: fileURLToPath(new URL('./', import.meta.url)),
+        },
+        {
+          find: /^.*\/VPFeature\.vue$/,
+          replacement: fileURLToPath(
+            new URL('./theme/components/VPFeature.vue', import.meta.url)
+          ),
+        },
+      ] /* {
         '@': fileURLToPath(new URL('./', import.meta.url)),
-      },
+        
+      }, */,
     },
   },
   markdown: {

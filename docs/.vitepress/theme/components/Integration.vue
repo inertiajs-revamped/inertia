@@ -38,7 +38,7 @@ const toggleIntegration = (integration: Integration) => {
 .integration {
   border: 1px solid var(--vp-c-border);
   background-color: var(--vp-c-bg-soft);
-  border-radius: 8px;
+  border-radius: 12px;
   padding: 1rem;
   margin-top: 24px;
   display: flex;
