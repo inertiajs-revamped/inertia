@@ -35,8 +35,20 @@ export default defineConfig({
       { icon: 'github', link: defaultConfig.github.repo },
     ],
     editLink: {
-      pattern: `${defaultConfig.github.repo}/tree/main/docs/src/:path`,
       text: 'Edit this page on GitHub',
+      pattern: ({ filePath }) => {
+        if (
+          filePath.startsWith('integrations/') &&
+          !filePath.startsWith('integrations/laravel')
+        ) {
+          const regex = /^integrations\/(?:preact|react|vue)\/(?:(.*))/
+          const match = filePath.match(regex)
+
+          return `https://github.com/inertiajs-revamped/inertia/tree/main/docs/src/_templates/adapter/${match?.[1]}`
+        } else {
+          return `https://github.com/inertiajs-revamped/inertia/tree/main/docs/src/${filePath}`
+        }
+      },
     },
     footer: {
       message: `Released under the <a href="${defaultConfig.github.repo}/blob/main/LICENSE">MIT License</a>.`,
