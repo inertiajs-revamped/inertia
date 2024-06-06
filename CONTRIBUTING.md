@@ -5,13 +5,12 @@ When contributing to this repository, please make sure to read through these gui
 ## Table of Contents
 
 - [Submit a bug report or feature request](#submit-a-bug-report-or-feature-request)
+- [Prerequisites](#prerequisites)
 - [Make changes to the code or docs](#make-changes-to-the-code-or-docs)
 - [Develop the docs](#develop-the-docs)
 - [Develop packages](#develop-packages)
 - [Submit a Pull Request](#submit-a-pull-request)
 - [Commit message format](#commit-message-format)
-
----
 
 ## Submit a bug report or feature request
 
@@ -20,16 +19,18 @@ Please use the GitHub [issue tracker](https://github.com/inertiajs-revamped/iner
 ### Submission checklist
 
 1. Make sure you are using the [latest version](https://www.npmjs.com/org/inertiajs-revamped) of the library.
-2. Check the [open issues](./?q=is%3Aissue) to ensure you are reporting a new issue.
+2. Check the [open issues](https://github.com/inertiajs-revamped/inertia/issues/?q=is%3Aissue+is%3Aopen+) to ensure you are reporting a new issue.
+
+## Prerequisites
+
+Ensure that your environment meets the minimum installation requirements:
+
+- [Node.js](https://nodejs.org/en/) >= 18.12.0
+- [PHP](https://www.php.net/manual/de/intro-whatis.php) >= 8.1
+- [Composer](https://getcomposer.org/) >= 2.4.4
+- [Laravel](https://laravel.com/) >= 9.x
 
 ## Make changes to the code or docs
-
-### System requirements
-
-- [pnpm](https://pnpm.io) >= `8.x`
-- [PHP](https://www.php.net/manual/de/intro-whatis.php) `>= 8.x` (optional for sandbox)
-- [Composer](https://getcomposer.org/) `>= 2.4.4` (optional for sandbox)
-- [Node](https://nodejs.org/en/) `>= 18.12.0` (optional for sandbox)
 
 Your contributions are welcome. Here's our suggested workflow:
 
@@ -44,8 +45,6 @@ Your contributions are welcome. Here's our suggested workflow:
 > It is very important to separate new features or improvements into separate feature branches and to send a pull request for each branch. This allows us to review and pull in new features or improvements individually.
 
 Make sure you read and follow the instructions in the [pull request template](https://github.com/inertiajs-revamped/inertia/tree/main/.github/pull_request_template.md). Note that all participation in this project (including code submissions) is governed by our [Code of Conduct](https://github.com/inertiajs-revamped/inertia/tree/main/CODE_OF_CONDUCT.md).
-
----
 
 ## Develop the docs
 
