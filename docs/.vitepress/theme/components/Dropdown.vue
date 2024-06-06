@@ -47,7 +47,7 @@ onContentUpdated(() => {
 
 <template>
   <div class="dropdown" ref="main">
-    <button @click="toggleOpen" class="dropdown-btn" aria-haspopup="true" aria-controls="dropdown-menu">
+    <button @click="toggleOpen" id="preference-select" class="dropdown-btn" aria-haspopup="true">
       <span v-if="storage" class="dropdown-active-item">
         <BaseIcon :iconId="storage.name" width="20" height="20" />
         <span>{{ storage.title }}</span>
@@ -58,7 +58,7 @@ onContentUpdated(() => {
         <span :class="[isOpen ? 'vpi-chevron-up' : 'vpi-chevron-down', ' text-icon']" />
       </span>
     </button>
-    <div v-if="isOpen" class="dropdown-menu" id="dropdown-menu" role="menu">
+    <div v-if="isOpen" id="dropdown-menu" class="dropdown-menu" role="menu">
       <template v-for="integration in integrations">
         <a v-if="integration.name !== 'laravel'" v-on:click.prevent="toggleIntegration(integration)"
           :href="`/integrations/${integration.name}/`" class="dropdown-item">
@@ -67,7 +67,6 @@ onContentUpdated(() => {
           <Badge type="info" class="small batch-align">v{{ integration.version }}</Badge>
         </a>
       </template>
-
     </div>
   </div>
 </template>
