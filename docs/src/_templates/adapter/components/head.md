@@ -72,7 +72,7 @@ If you only need to add a `<title>` to the document `<head>`, you may simply pas
 
 ## `children`
 
-- Type: `ComponentChildren`
+- Type: `{{ adapter.name === 'preact' ? 'ComponentChildren' : '' }}{{ adapter.name === 'react' ? 'ReactNode' : 'DefineComponent' }}`
 
 Within this component, you can include the `Elements` that you wish to add to the document `<head>`.
 

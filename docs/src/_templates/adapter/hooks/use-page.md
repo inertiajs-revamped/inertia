@@ -1,33 +1,71 @@
-# `usePage` <Badge type="warning" text="hook" />
+---
+title: usePage
+---
+
+<script setup lang="ts">
+import { useRoute } from 'vitepress'
+import { useIntegration } from '@/theme/composables/useIntegrations'
+
+const route = useRoute()
+const urlParts = route.path.slice(1).split('/')
+const adapter = useIntegration(urlParts[1])
+</script>
+
+# `usePage` <Badge type="warning">{{ adapter.name === 'vue' ? 'composable' : 'hook' }}</Badge>
 
 Use the `usePage()` hook to access shared data in a component.
 
-## Declaration
+::: details Type Signature & Types
 
-```typescript
-function usePage<SharedProps extends PageProps = PageProps>(): Page<SharedProps>
-```
-
-## Interface
-
-Returned by `usePage` and received as a prop on the `PageContext.Provider`.
-
-```typescript
-interface PageProps extends DefaultPageProps {}
-
+```typescript-vue
 /** @internal */
 interface DefaultPageProps {
   errors: Errors & ErrorBag;
 }
+
+/**
+ * Returned by `usePage` and received as a prop on `Page<PageProps>`.
+ *
+ * Define shared interfaces with module augmentation.
+ *
+ * @see {@link https://www.typescriptlang.org/docs/handbook/declaration-merging.html#module-augmentation}
+ *
+ * @example
+ * ```typescript
+ * // resources/types/inertia-{{ adapter.name }}.d.ts
+ * declare module '@inertiajs-revamped/{{ adapter.name }}' {
+ *   interface PageProps {
+ *     auth: {
+ *       user: string
+ *     }
+ *     versions: {
+ *       php: string
+ *       laravel: string
+ *     }
+ *   }
+ *
+ *   interface DashboardPageProps extends PageProps {
+ *     organizations: {
+ *       data: App.Model.Organization[]
+ *     }
+ *   }
+ * }
+ * ```
+ */
+interface PageProps extends DefaultPageProps {}
+
+declare function usePage<SharedProps extends PageProps = PageProps>(): Page<SharedProps>
 ```
+
+:::
 
 ## Example
 
 Define shared `interfaces` with [module augmentation](https://www.typescriptlang.org/docs/handbook/declaration-merging.html#module-augmentation).
 
-```typescript
-// inertia-preact.d.ts
-declare module '@inertiajs-revamped/preact' {
+```typescript-vue
+// inertia-{{ adapter.name }}.d.ts
+declare module '@inertiajs-revamped/{{ adapter.name }}' {
   // define defaults
   interface PageProps {
     auth: {
@@ -39,8 +77,8 @@ declare module '@inertiajs-revamped/preact' {
     }
   }
 
-  interface HomePageProps extends PageProps {
-    blogPosts: BlogPost[]
+  interface BlogPageProps extends PageProps {
+    posts: BlogPost[]
   }
 
   type BlogPost = {
@@ -54,15 +92,15 @@ declare module '@inertiajs-revamped/preact' {
 
 ### Usage with `props`
 
-Use the `HomePageProps` interface with `props`.
+Use the `BlogPageProps` interface with `props`.
 
-```typescript
-// home-page.tsx
-import type { HomePageProps } from '@inertiajs-revamped/preact'
+```typescript-vue
+// blog-page.{{ adapter.componentExt }}
+import type { BlogPageProps } from '@inertiajs-revamped/{{ adapter.name }}'
 
-export function HomePage(props: HomePageProps) {
+export function BlogPage(props: BlogPageProps) {
   // will infer type `BlogPost[]`
-  console.log(props.blogPosts)
+  console.log(props.posts)
 }
 ```
 
@@ -70,17 +108,17 @@ export function HomePage(props: HomePageProps) {
 
 Use the `usePage` hook in a component and pass the `HomePageProps` interface as [generic](https://www.typescriptlang.org/docs/handbook/2/generics.html).
 
-```typescript
-// home-page.tsx
-import { usePage, type HomePageProps } from '@inertiajs-revamped/preact'
+```typescript-vue
+// blog-page.{{ adapter.componentExt }}
+import { usePage, type BlogPageProps } from '@inertiajs-revamped/{{ adapter.name }}'
 
 export function HomePage() {
   // will infer type `BlogPost[]`
-  const props = usePage<HomePageProps>().blogPosts
-  console.log(props.blogPosts)
+  const props = usePage<BlogPageProps>().props
+  console.log(props.posts)
 
   // or
-  const { blogPosts } = usePage<HomePageProps>()
-  console.log(blogPosts)
+  const { posts } = usePage<BlogPageProps>().props
+  console.log(posts)
 }
 ```

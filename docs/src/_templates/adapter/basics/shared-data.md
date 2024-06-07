@@ -39,7 +39,7 @@ class HandleInertiaRequests extends Middleware
 > [!TIP]
 > The HandleInertiaRequests middleware provides a "share" method where you can define the data that is automatically shared with each Inertia response.
 
-Alternatively, you can manually share data using the Inertia::share method.
+Alternatively, you can manually share data using the `Inertia::share` method.
 
 ```php
 use Inertia\Inertia;
