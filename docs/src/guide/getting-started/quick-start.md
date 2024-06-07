@@ -4,6 +4,10 @@ We recommend scaffolding Inertia.js-Revamped via automatic CLI installer [@prese
 
 <!--@include: ../../_templates/parts/alpha-status.md-->
 
+## Try it Online
+
+<!--@include: ../../_templates/parts/try-online.md-->
+
 ## Prerequisites
 
 Ensure that your environment meets the minimum installation requirements:
