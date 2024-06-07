@@ -114,6 +114,8 @@ export function useForm<TForm extends FormDataType>(
             : fieldOrFields
         )
       }
+      // https://github.com/inertiajs/inertia/pull/1781/files
+      form.isDirty = !deepEqual(form.data(), defaults)
 
       return this
     },
