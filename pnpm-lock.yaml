@@ -45,8 +45,8 @@ importers:
         specifier: ^7.6.2
         version: 7.6.2
       tsx:
-        specifier: ^4.11.2
-        version: 4.11.2
+        specifier: ^4.14.0
+        version: 4.14.0
       typescript:
         specifier: ^5.4.5
         version: 5.4.5
@@ -1939,8 +1939,8 @@ packages:
     resolution: {integrity: sha512-tk2G5R2KRwBd+ZN0zaEXpmzdKyOYksXwywulIX95MBODjSzMIuQnQ3m8JxgbhnL1LeVo7lqQKsYa1O3Htl7K5g==}
     engines: {node: '>=18'}
 
-  tsx@4.11.2:
-    resolution: {integrity: sha512-V5DL5v1BuItjsQ2FN9+4OjR7n5cr8hSgN+VGmm/fd2/0cgQdBIWHcQ3bFYm/5ZTmyxkTDBUIaRuW2divgfPe0A==}
+  tsx@4.14.0:
+    resolution: {integrity: sha512-DsDLlJlusAPyCnz07S4y0gqJoUl8GciBeYcXQd75/5DqkZ4gfjKpvAUFUzmZf62nEotkcqC7JCWrdL8d+PXSng==}
     engines: {node: '>=18.0.0'}
     hasBin: true
 
@@ -3886,7 +3886,7 @@ snapshots:
     dependencies:
       punycode: 2.3.1
 
-  tsx@4.11.2:
+  tsx@4.14.0:
     dependencies:
       esbuild: 0.20.2
       get-tsconfig: 4.7.5
