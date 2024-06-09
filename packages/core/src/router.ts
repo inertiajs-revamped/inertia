@@ -1,4 +1,4 @@
-import { default as Axios, type AxiosResponse } from 'axios'
+import { default as Axios, type AxiosResponse, isAxiosError } from 'axios'
 import deepmerge from 'deepmerge'
 import { debounce } from './debounce'
 import {
@@ -22,6 +22,7 @@ import type {
   LocationVisit,
   Page,
   PageHandler,
+  PageProps,
   PageResolver,
   PendingVisit,
   PreserveStateOption,
@@ -245,7 +246,7 @@ export class Router {
     })
   }
 
-  protected isLocationVisitResponse(response: AxiosResponse): boolean {
+  protected isLocationVisitResponse(response?: AxiosResponse): boolean {
     return !!(
       response &&
       response.status === 409 &&
@@ -253,7 +254,8 @@ export class Router {
     )
   }
 
-  protected isInertiaResponse(response: AxiosResponse): boolean {
+  protected isInertiaResponse(response?: AxiosResponse): boolean {
+    console.log('isInertiaResponse:', response)
     return !!response?.headers['x-inertia']
   }
 
@@ -411,57 +413,59 @@ export class Router {
 
     const isPartial = !!(only.length || except.length)
 
-    Axios({
-      method,
-      url: urlWithoutHash(url).href,
-      data: method === 'get' ? {} : data,
-      params: method === 'get' ? data : {},
-      signal: this.activeVisit.cancelToken.signal,
-      headers: {
-        ...headers,
-        Accept: 'text/html, application/xhtml+xml',
-        'X-Requested-With': 'XMLHttpRequest',
-        'X-Inertia': true,
-        ...(isPartial
-          ? {
-              'X-Inertia-Partial-Component': this.page.component,
+    Axios<Page<PageProps>, AxiosResponse<Page<PageProps>, any>, RequestPayload>(
+      {
+        method,
+        url: urlWithoutHash(url).href,
+        data: method === 'get' ? {} : data,
+        params: method === 'get' ? data : {},
+        signal: this.activeVisit.cancelToken.signal,
+        headers: {
+          ...headers,
+          Accept: 'text/html, application/xhtml+xml',
+          'X-Requested-With': 'XMLHttpRequest',
+          'X-Inertia': true,
+          ...(isPartial
+            ? {
+                'X-Inertia-Partial-Component': this.page.component,
+              }
+            : {}),
+          ...(only.length
+            ? {
+                'X-Inertia-Partial-Data': only.join(','),
+              }
+            : {}),
+          ...(except.length
+            ? {
+                'X-Inertia-Partial-Except': except.join(','),
+              }
+            : {}),
+          ...(errorBag?.length ? { 'X-Inertia-Error-Bag': errorBag } : {}),
+          ...(this.page.version
+            ? { 'X-Inertia-Version': this.page.version }
+            : {}),
+        },
+        onUploadProgress: (progress) => {
+          if (data instanceof FormData) {
+            const percentage = {
+              percentage: Math.round((progress.loaded / progress.total!) * 100),
             }
-          : {}),
-        ...(only.length
-          ? {
-              'X-Inertia-Partial-Data': only.join(','),
+            const progressPercentage: Progress = {
+              ...progress,
+              ...percentage,
             }
-          : {}),
-        ...(except.length
-          ? {
-              'X-Inertia-Partial-Except': except.join(','),
-            }
-          : {}),
-        ...(errorBag?.length ? { 'X-Inertia-Error-Bag': errorBag } : {}),
-        ...(this.page.version
-          ? { 'X-Inertia-Version': this.page.version }
-          : {}),
-      },
-      onUploadProgress: (progress) => {
-        if (data instanceof FormData) {
-          const percentage = {
-            percentage: Math.round((progress.loaded / progress.total!) * 100),
+            fireProgressEvent(progressPercentage)
+            onProgress(progressPercentage)
           }
-          const progressPercentage: Progress = {
-            ...progress,
-            ...percentage,
-          }
-          fireProgressEvent(progressPercentage)
-          onProgress(progressPercentage)
-        }
-      },
-    })
+        },
+      }
+    )
       .then((response) => {
         if (!this.isInertiaResponse(response)) {
           return Promise.reject({ response })
         }
 
-        const pageResponse: Page = response.data
+        const pageResponse = response.data
         if (isPartial && pageResponse.component === this.page.component) {
           pageResponse.props = deepmerge(this.page.props, pageResponse.props, {
             arrayMerge: (_target: any[], source: any[]) => source,
@@ -512,25 +516,29 @@ export class Router {
         fireSuccessEvent(this.page)
         return onSuccess(this.page)
       })
-      .catch((error) => {
-        if (this.isInertiaResponse(error.response)) {
-          return this.setPage(error.response.data, { visitId })
-        } else if (this.isLocationVisitResponse(error.response)) {
-          const locationUrl = hrefToUrl(
-            error.response.headers['x-inertia-location']
-          )
-          const requestUrl = url
-          if (
-            requestUrl.hash &&
-            !locationUrl.hash &&
-            urlWithoutHash(requestUrl).href === locationUrl.href
-          ) {
-            locationUrl.hash = requestUrl.hash
-          }
-          this.locationVisit(locationUrl, preserveScroll === true)
-        } else if (error.response) {
-          if (fireInvalidEvent(error.response)) {
-            modal.show(error.response.data)
+      .catch((error: Error) => {
+        if (isAxiosError(error)) {
+          if (this.isInertiaResponse(error.response)) {
+            return this.setPage(error.response?.data, { visitId })
+          } else if (this.isLocationVisitResponse(error.response)) {
+            const locationUrl = hrefToUrl(
+              error.response?.headers['x-inertia-location']
+            )
+            const requestUrl = url
+            if (
+              requestUrl.hash &&
+              !locationUrl.hash &&
+              urlWithoutHash(requestUrl).href === locationUrl.href
+            ) {
+              locationUrl.hash = requestUrl.hash
+            }
+            this.locationVisit(locationUrl, preserveScroll === true)
+          } else if (error.response) {
+            if (fireInvalidEvent(error.response)) {
+              modal.show(error.response.data)
+            }
+          } else {
+            return Promise.reject(error)
           }
         } else {
           return Promise.reject(error)

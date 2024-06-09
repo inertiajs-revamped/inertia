@@ -31,6 +31,9 @@
     "test": "NODE_OPTIONS=\"--no-deprecation\" vitest",
     "test:run": "NODE_OPTIONS=\"--no-deprecation\" vitest run",
     "sandbox": "pnpm build && node ./.scripts/init-sandbox.mjs",
+    "sandbox:build:preact": "pnpm --filter=sandbox-preact build:prod",
+    "sandbox:build:react": "pnpm --filter=sandbox-react build:prod",
+    "sandbox:build:vue": "pnpm --filter=sandbox-vue build:prod",
     "changelogs": "node ./.scripts/changelogs.mjs",
     "bump": "node --disable-warning=ExperimentalWarning ./.scripts/bump.mjs",
     "prepare": "husky"
