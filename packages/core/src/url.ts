@@ -1,5 +1,5 @@
-import deepmerge from 'deepmerge'
 import { parse, stringify } from 'qs'
+import { merge } from 'ts-deepmerge'
 import type { FormDataConvertible, Method } from './types'
 
 export function hrefToUrl(href: string | URL): URL {
@@ -27,7 +27,7 @@ export function mergeDataIntoQueryString(
 
   if (method === 'get' && Object.keys(data).length) {
     url.search = stringify(
-      deepmerge(parse(url.search, { ignoreQueryPrefix: true }), data),
+      merge(parse(url.search, { ignoreQueryPrefix: true }), data),
       {
         encodeValuesOnly: true,
         arrayFormat: qsArrayFormat,

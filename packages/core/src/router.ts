@@ -1,5 +1,5 @@
 import { default as Axios, type AxiosResponse, isAxiosError } from 'axios'
-import deepmerge from 'deepmerge'
+import { merge } from 'ts-deepmerge'
 import { debounce } from './debounce'
 import {
   fireBeforeEvent,
@@ -467,7 +467,7 @@ export class Router {
 
         const pageResponse = response.data
         if (isPartial && pageResponse.component === this.page.component) {
-          pageResponse.props = deepmerge(this.page.props, pageResponse.props, {
+          pageResponse.props = merge(this.page.props, pageResponse.props, {
             arrayMerge: (_target: any[], source: any[]) => source,
           })
         }

@@ -89,15 +89,15 @@ importers:
       axios:
         specifier: '>=1.7.2'
         version: 1.7.2
-      deepmerge:
-        specifier: ^4.3.1
-        version: 4.3.1
       nprogress:
         specifier: ^0.2.0
         version: 0.2.0
       qs:
         specifier: ^6.12.1
         version: 6.12.1
+      ts-deepmerge:
+        specifier: ^7.0.0
+        version: 7.0.0
     devDependencies:
       '@types/node':
         specifier: ^20.14.2
@@ -2081,6 +2081,10 @@ packages:
   tr46@5.0.0:
     resolution: {integrity: sha512-tk2G5R2KRwBd+ZN0zaEXpmzdKyOYksXwywulIX95MBODjSzMIuQnQ3m8JxgbhnL1LeVo7lqQKsYa1O3Htl7K5g==}
     engines: {node: '>=18'}
+
+  ts-deepmerge@7.0.0:
+    resolution: {integrity: sha512-WZ/iAJrKDhdINv1WG6KZIGHrZDar6VfhftG1QJFpVbOYZMYJLJOvZOo1amictRXVdBXZIgBHKswMTXzElngprA==}
+    engines: {node: '>=14.13.1'}
 
   tsx@4.15.1:
     resolution: {integrity: sha512-k/6h17jA1KfUR7SpcteOa880zGmF56s8gMIcSqUR5avyNFi9nlCEKpMiHLrzrqyARGr52A/JablmGey1DEWbCA==}
@@ -4123,6 +4127,8 @@ snapshots:
   tr46@5.0.0:
     dependencies:
       punycode: 2.3.1
+
+  ts-deepmerge@7.0.0: {}
 
   tsx@4.15.1:
     dependencies:
