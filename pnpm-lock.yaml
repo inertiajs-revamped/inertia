@@ -136,6 +136,9 @@ importers:
       '@inertiajs-revamped/core':
         specifier: workspace:*
         version: link:../core
+      '@inertiajs-revamped/vite':
+        specifier: workspace:*
+        version: link:../vite
       '@types/react':
         specifier: ^18.3.3
         version: 18.3.3
