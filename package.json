@@ -28,6 +28,7 @@
     "build:preact": "pnpm --filter=preact build",
     "build:react": "pnpm --filter=react build",
     "build:vue": "pnpm --filter=vue build",
+    "build:vite": "pnpm --filter=vite build",
     "test": "NODE_OPTIONS=\"--no-deprecation\" vitest",
     "test:run": "NODE_OPTIONS=\"--no-deprecation\" vitest run",
     "sandbox": "pnpm build && node ./.scripts/init-sandbox.mjs",

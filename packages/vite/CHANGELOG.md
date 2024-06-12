@@ -1,0 +1,1 @@
+# Changelog - @inertiajs-revamped/vite
