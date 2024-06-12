@@ -53,6 +53,16 @@
         "types": "./dist/server.d.mts",
         "default": "./dist/server.mjs"
       }
+    },
+    "./vite": {
+      "require": {
+        "types": "./dist/vite.d.cts",
+        "default": "./dist/vite.cjs"
+      },
+      "import": {
+        "types": "./dist/vite.d.mts",
+        "default": "./dist/vite.mjs"
+      }
     }
   },
   "main": "./dist/index.cjs",
@@ -61,7 +71,8 @@
   "typesVersions": {
     "*": {
       "progress": ["./dist/progress.d.mts"],
-      "server": ["./dist/server.d.mts"]
+      "server": ["./dist/server.d.mts"],
+      "vite": ["./dist/vite.d.mts"]
     }
   },
   "files": ["dist"],

@@ -20,7 +20,8 @@
       "@inertiajs-revamped/core/progress": ["./packages/core/src/progress.ts"],
       "@inertiajs-revamped/preact": ["./packages/preact/src/index.ts"],
       "@inertiajs-revamped/react": ["./packages/react/src/index.ts"],
-      "@inertiajs-revamped/vue": ["./packages/vue/src/index.ts"]
+      "@inertiajs-revamped/vue": ["./packages/vue/src/index.ts"],
+      "@inertiajs-revamped/vite": ["./packages/vite/src/index.ts"]
     }
   }
 }
