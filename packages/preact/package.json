@@ -71,6 +71,7 @@
   },
   "dependencies": {
     "@inertiajs-revamped/core": "workspace:*",
+    "@inertiajs-revamped/vite": "workspace:*",
     "fast-equals": "^5.0.1",
     "preact": "^10.22.0"
   },
