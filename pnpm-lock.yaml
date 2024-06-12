@@ -177,6 +177,9 @@ importers:
       '@inertiajs-revamped/core':
         specifier: workspace:*
         version: link:../core
+      '@inertiajs-revamped/vite':
+        specifier: workspace:*
+        version: link:../vite
       fast-equals:
         specifier: ^5.0.1
         version: 5.0.1
