@@ -1,5 +1,6 @@
-import { getStructuredClone, router } from '@inertiajs-revamped/core'
+import { router } from '@inertiajs-revamped/core'
 import { type Ref, isReactive, reactive, ref, watch } from 'vue'
+import { getStructuredClone } from './structuredClone'
 
 export function useRemember<T extends object>(
   data: T & {

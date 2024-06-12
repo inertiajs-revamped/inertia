@@ -4,11 +4,11 @@ import {
   type Method,
   type Progress,
   type VisitOptions,
-  getStructuredClone,
   router,
 } from '@inertiajs-revamped/core'
 import { deepEqual } from 'fast-equals'
 import { reactive, watch } from 'vue'
+import { getStructuredClone } from './structuredClone'
 
 export type FormDataType = object
 

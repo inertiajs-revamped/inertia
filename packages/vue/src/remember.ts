@@ -1,5 +1,6 @@
-import { getStructuredClone, router } from '@inertiajs-revamped/core'
+import { router } from '@inertiajs-revamped/core'
 import type { ComponentOptions } from 'vue'
+import { getStructuredClone } from './structuredClone'
 
 export const remember: ComponentOptions = {
   created() {
