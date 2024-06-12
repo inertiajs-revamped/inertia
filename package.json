@@ -19,7 +19,7 @@
     "reinstall": "pnpm clean:modules && pnpm install",
     "clean": "pnpm --stream -r clean",
     "clean:modules": "node ./.scripts/clean-modules.mjs",
-    "lint": "biome lint --apply .",
+    "lint": "biome lint --write .",
     "fmt": "biome format . --write",
     "dev:docs": "pnpm --filter=docs dev",
     "build": "pnpm build:core && pnpm --filter=preact --filter=react --filter=vue build",
@@ -60,7 +60,7 @@
     "pnpm": ">=9.3.0"
   },
   "nano-staged": {
-    "*.ts": "biome lint --apply .",
+    "*.ts": "biome lint --write .",
     "*": "biome format . --write"
   },
   "packageManager": "pnpm@9.3.0",
