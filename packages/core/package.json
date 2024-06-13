@@ -69,7 +69,7 @@
   "files": ["dist"],
   "scripts": {
     "clean": "rm -rf dist",
-    "build": "pkgroll --target=es2020 --minify"
+    "build": "pkgroll --clean-dist --target=es2020 --minify"
   },
   "dependencies": {
     "@types/nprogress": "^0.2.3",
