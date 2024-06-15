@@ -1,0 +1,31 @@
+{
+  "name": "@inertiajs-revamped/react-test",
+  "version": "0.0.0-dev",
+  "private": true,
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "clean": "rm -rf public bootstrap",
+    "dev": "tsx server.ts",
+    "build": "vite build",
+    "build:prod": "vite build && vite build --ssr",
+    "preview": "vite preview",
+    "test": "NODE_OPTIONS=\"--no-deprecation\" vitest"
+  },
+  "devDependencies": {
+    "@inertiajs-revamped/react": "workspace:*",
+    "@types/express": "^4.17.21",
+    "@types/node": "^20.14.2",
+    "@types/react": "^18.3.3",
+    "@types/react-dom": "^18.3.0",
+    "@vitejs/plugin-react": "^4.2.1",
+    "express": "^4.19.2",
+    "laravel-vite-plugin": "^1.0.4",
+    "pptr-testing-library": "^0.8.0",
+    "puppeteer": "^22.11.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "sirv": "^2.0.4",
+    "vite": "^5.2.13"
+  }
+}
