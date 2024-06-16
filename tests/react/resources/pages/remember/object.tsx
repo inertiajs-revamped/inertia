@@ -1,3 +1,80 @@
+import { Link, useRemember } from '@inertiajs-revamped/react'
+import { useState } from 'react'
+
 export default function () {
-  return <></>
+  const [formState, setFormState] = useRemember(
+    {
+      name: '',
+      remember: false,
+    },
+    'remember/object'
+  )
+
+  const [data, setData] = useState({
+    name: formState.name,
+    remember: formState.remember,
+    untracked: '',
+  })
+
+  return (
+    <>
+      <label>
+        Full Name
+        <input
+          type="text"
+          id="name"
+          name="name"
+          value={data.name}
+          onChange={(e) => {
+            setFormState({
+              ...formState,
+              name: e.target.value,
+            })
+            setData({
+              ...data,
+              name: e.target.value,
+            })
+          }}
+        />
+      </label>
+      <label>
+        Remember Me
+        <input
+          type="checkbox"
+          id="remember"
+          name="remember"
+          checked={data.remember}
+          onChange={(e) => {
+            setFormState({
+              ...formState,
+              remember: e.target.checked,
+            })
+            setData({
+              ...data,
+              remember: e.target.checked,
+            })
+          }}
+        />
+      </label>
+      <label>
+        Untracked
+        <input
+          type="text"
+          id="untracked"
+          name="untracked"
+          value={data.untracked}
+          onChange={(e) =>
+            setData({
+              ...data,
+              untracked: e.target.value,
+            })
+          }
+        />
+      </label>
+
+      <Link href="/dump/get" className="link">
+        Navigate away
+      </Link>
+    </>
+  )
 }

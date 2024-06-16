@@ -1,5 +1,5 @@
 import { type Browser, type Page, launch } from 'puppeteer'
-import { afterAll, beforeAll, describe, expect, it } from 'vitest'
+import { afterAll, afterEach, beforeAll, describe, expect, it } from 'vitest'
 
 describe('Inertia', () => {
   let page: Page
@@ -10,6 +10,13 @@ describe('Inertia', () => {
       args: ['--no-sandbox', '--disable-setuid-sandbox'],
     })
     page = await browser.newPage()
+  })
+
+  afterEach(async () => {
+    if (!page.isClosed) {
+      await page.close()
+      page = await browser.newPage()
+    }
   })
 
   afterAll(async () => {

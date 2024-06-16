@@ -2,12 +2,15 @@
 import { readFileSync } from 'node:fs'
 import { resolve } from 'node:path'
 import type { Page } from '@inertiajs-revamped/react'
+import bodyParser from 'body-parser'
 import express, { type Response, type Request } from 'express'
+import multer from 'multer'
 import { createServer as createViteServer } from 'vite'
 
 const port = process.env.PORT || 12345
 
 const app = express()
+const upload = multer()
 
 const vite = await createViteServer({
   server: { middlewareMode: true },
@@ -15,6 +18,12 @@ const vite = await createViteServer({
 })
 
 app.use(vite.middlewares)
+app.use(bodyParser.urlencoded({ extended: true }))
+app.use(bodyParser.json({ extended: true }))
+
+app.all('/non-inertia', (_req, res) =>
+  res.send('This is a page that does not have the Inertia app loaded.')
+)
 
 app.get('/', async (req, res) => {
   await inertia(req, res, {
@@ -38,7 +47,6 @@ app.get(
       },
     })
 )
-
 app.all(
   '/links/preserve-state-page-two',
   async (req, res) =>
@@ -47,7 +55,6 @@ app.all(
       props: { foo: req.query.foo },
     })
 )
-
 app.all(
   '/links/preserve-scroll-page-two',
   async (req, res) =>
@@ -56,7 +63,6 @@ app.all(
       props: { foo: req.query.foo },
     })
 )
-
 app.all(
   '/links/preserve-scroll-false-page-two',
   async (req, res) =>
@@ -65,7 +71,6 @@ app.all(
       props: { foo: req.query.foo },
     })
 )
-
 app.get(
   '/links/as-warning/:method',
   async (req, res) =>
@@ -74,7 +79,6 @@ app.get(
       props: { method: req.params.method },
     })
 )
-
 app.get(
   '/links/as-warning-false/:method',
   async (req, res) =>
@@ -83,7 +87,6 @@ app.get(
       props: { method: req.params.method },
     })
 )
-
 app.get(
   '/links/headers/version',
   async (req, res) =>
@@ -97,7 +100,7 @@ app.get(
   '/visits/partial-reloads',
   async (req, res) =>
     await inertia(req, res, {
-      component: 'Visits/PartialReloads',
+      component: 'visits/partial-reloads',
       props: {
         headers: req.headers,
         foo: Number.parseInt(req.query.foo || 0) + 1,
@@ -110,7 +113,7 @@ app.all(
   '/visits/preserve-state-page-two',
   async (req, res) =>
     await inertia(req, res, {
-      component: 'Visits/PreserveState',
+      component: 'visits/preserve-state',
       props: { foo: req.query.foo },
     })
 )
@@ -118,7 +121,7 @@ app.all(
   '/visits/preserve-scroll-page-two',
   async (req, res) =>
     await inertia(req, res, {
-      component: 'Visits/PreserveScroll',
+      component: 'visits/preserve-scroll',
       props: { foo: req.query.foo },
     })
 )
@@ -126,7 +129,7 @@ app.all(
   '/visits/preserve-scroll-false-page-two',
   async (req, res) =>
     await inertia(req, res, {
-      component: 'Visits/PreserveScrollFalse',
+      component: 'visits/preserve-scroll-false',
       props: { foo: req.query.foo },
     })
 )
@@ -134,7 +137,7 @@ app.post(
   '/visits/events-errors',
   async (req, res) =>
     await inertia(req, res, {
-      component: 'Visits/Events',
+      component: 'visits/events',
       props: { errors: { foo: 'bar' } },
     })
 )
@@ -142,7 +145,7 @@ app.get(
   '/visits/headers/version',
   async (req, res) =>
     await inertia(req, res, {
-      component: 'Visits/Headers',
+      component: 'visits/headers',
       version: 'example-version-header',
     })
 )
@@ -151,7 +154,7 @@ app.post(
   '/remember/form-helper/default',
   async (req, res) =>
     await inertia(req, res, {
-      component: 'Remember/FormHelper/Default',
+      component: 'remember/form-helper/default',
       props: {
         errors: { name: 'Some name error', handle: 'The Handle was invalid' },
       },
@@ -161,7 +164,7 @@ app.post(
   '/remember/form-helper/remember',
   async (req, res) =>
     await inertia(req, res, {
-      component: 'Remember/FormHelper/Remember',
+      component: 'remember/form-helper/remember',
       props: {
         errors: { name: 'Some name error', handle: 'The Handle was invalid' },
       },
@@ -172,7 +175,7 @@ app.post(
   '/form-helper/data',
   async (req, res) =>
     await inertia(req, res, {
-      component: 'FormHelper/Data',
+      component: 'form-helper/data',
       props: {
         errors: { name: 'Some name error', handle: 'The Handle was invalid' },
       },
@@ -182,7 +185,7 @@ app.post(
   '/form-helper/errors',
   async (req, res) =>
     await inertia(req, res, {
-      component: 'FormHelper/Errors',
+      component: 'form-helper/errors',
       props: {
         errors: { name: 'Some name error', handle: 'The Handle was invalid' },
       },
@@ -192,9 +195,85 @@ app.post(
   '/form-helper/events/errors',
   async (req, res) =>
     await inertia(req, res, {
-      component: 'FormHelper/Events',
+      component: 'form-helper/events',
       props: {
         errors: { name: 'Some name error', handle: 'The Handle was invalid' },
+      },
+    })
+)
+
+app.get(
+  '/dump/get',
+  upload.any(),
+  async (req, res) =>
+    await inertia(req, res, {
+      component: 'dump',
+      props: {
+        headers: req.headers,
+        method: 'get',
+        form: req.body,
+        query: req.query,
+        files: req.files,
+      },
+    })
+)
+app.post(
+  '/dump/post',
+  upload.any(),
+  async (req, res) =>
+    await inertia(req, res, {
+      component: 'dump',
+      props: {
+        headers: req.headers,
+        method: 'post',
+        form: req.body,
+        query: req.query,
+        files: req.files,
+      },
+    })
+)
+app.put(
+  '/dump/put',
+  upload.any(),
+  async (req, res) =>
+    await inertia(req, res, {
+      component: 'dump',
+      props: {
+        headers: req.headers,
+        method: 'put',
+        form: req.body,
+        query: req.query,
+        files: req.files,
+      },
+    })
+)
+app.patch(
+  '/dump/patch',
+  upload.any(),
+  async (req, res) =>
+    await inertia(req, res, {
+      component: 'dump',
+      props: {
+        headers: req.headers,
+        method: 'patch',
+        form: req.body,
+        query: req.query,
+        files: req.files,
+      },
+    })
+)
+app.delete(
+  '/dump/delete',
+  upload.any(),
+  async (req, res) =>
+    await inertia(req, res, {
+      component: 'dump',
+      props: {
+        headers: req.headers,
+        method: 'delete',
+        form: req.body,
+        query: req.query,
+        files: req.files,
       },
     })
 )
@@ -240,12 +319,19 @@ async function inertia(req: Request, res: Response, data?: Partial<Page>) {
     template = await vite.transformIndexHtml(url, template)
 
     const page = {
-      component: req.path.slice(1).split('/').join('/').split('-').join(''),
+      component: req.path
+        .slice(1)
+        .split('/')
+        .join(
+          '/'
+        ) /* req.path.slice(1).split('/').join('/').split('-').join('') */,
       props: {},
       url: req.path,
       version: null,
       ...data,
     }
+
+    console.log(req.path.slice(1).split('/').join('/'))
 
     const partialDataHeader = req.headers['x-inertia-partial-data'] || ''
     const partialExceptHeader = req.headers['x-inertia-partial-except'] || ''
