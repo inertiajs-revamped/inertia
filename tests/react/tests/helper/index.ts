@@ -1,11 +1,5 @@
 import type { Page } from 'puppeteer'
 
-export const clearInput = async function (this: Page, selector: string) {
-  await this.evaluate((selector) => {
-    document.querySelector<HTMLInputElement>(selector)!.value = ''
-  }, selector)
-}
-
 export const evalTextInput = async (page: Page, selector: string) => {
   const text = await page.evaluate((selector) => {
     return document.querySelector<HTMLInputElement>(selector)?.value

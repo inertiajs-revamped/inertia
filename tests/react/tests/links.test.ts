@@ -13,10 +13,8 @@ describe('Links', () => {
   })
 
   afterEach(async () => {
-    if (!page.isClosed) {
-      await page.close()
-      page = await browser.newPage()
-    }
+    await page.close()
+    page = await browser.newPage()
   })
 
   afterAll(async () => {

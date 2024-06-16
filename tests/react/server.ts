@@ -28,9 +28,7 @@ app.all('/non-inertia', (_req, res) =>
 app.get('/', async (req, res) => {
   await inertia(req, res, {
     component: 'home',
-    props: {
-      errors: {},
-    },
+    props: {},
   })
 })
 
@@ -356,6 +354,14 @@ async function inertia(req: Request, res: Response, data?: Partial<Page>) {
           (typeof partialExceptHeader === 'string' &&
             partialExceptHeader.split(',').indexOf(key) === -1)
       )
+      .reduce((carry, key) => {
+        carry[key] =
+          typeof data.props[key] === 'function'
+            ? data.props[key](data.props)
+            : data.props[key]
+
+        return carry
+      }, {})
 
     // xhr request
     if (req.get('X-Inertia')) {

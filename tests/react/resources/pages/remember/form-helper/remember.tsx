@@ -54,6 +54,7 @@ export default function () {
           type="checkbox"
           id="remember"
           name="remember"
+          defaultChecked={form.data.remember}
           checked={form.data.remember}
           onChange={(event) => form.setData('remember', event.target.checked)}
         />
@@ -64,12 +65,7 @@ export default function () {
 
       <label>
         Untracked
-        <input
-          type="text"
-          id="untracked"
-          name="untracked"
-          v-model="untracked"
-        />
+        <input type="text" id="untracked" name="untracked" />
       </label>
 
       <span onClick={submit} className="submit">

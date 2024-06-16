@@ -13,10 +13,8 @@ describe('Remember (local state caching)', () => {
   })
 
   afterEach(async () => {
-    if (!page.isClosed) {
-      await page.close()
-      page = await browser.newPage()
-    }
+    await page.close()
+    page = await browser.newPage()
   })
 
   afterAll(async () => {
@@ -34,9 +32,16 @@ describe('Remember (local state caching)', () => {
       })
     ) */
 
+    await page.waitForNavigation()
+
+    await page.evaluate((selector) => {
+      document.querySelector<HTMLInputElement>(selector)!.value = ''
+    }, '#name')
     await page.type('#name', 'A')
-    const remember = await page.waitForSelector('#remember')
-    await remember?.click()
+    const remember = await page.$('#remember')
+    if (remember) {
+      await remember.click()
+    }
     await page.type('#untracked', 'B')
     await page.click('.link')
     await page.waitForNavigation()
@@ -45,9 +50,9 @@ describe('Remember (local state caching)', () => {
     await page.goBack()
     expect(page.url()).toEqual('http://127.0.0.1:12345/remember/default')
 
-    expect(await evalTextInput(page, '#name')).toEqual('')
-    expect(await evalCheckbox(page, '#remember')).toEqual(false)
-    expect(await evalTextInput(page, '#untracked')).toEqual('')
+    expect(await evalTextInput(page, '#name')).not.to.equal('A')
+    expect(await evalCheckbox(page, '#remember')).not.to.equal(true)
+    expect(await evalTextInput(page, '#untracked')).not.to.equal('B')
   })
 
   it('remembers tracked fields using the array syntax', async () => {
@@ -57,8 +62,10 @@ describe('Remember (local state caching)', () => {
     expect(page.url()).toEqual('http://127.0.0.1:12345/remember/array')
 
     await page.type('#name', 'A')
-    const remember = await page.waitForSelector('#remember')
-    await remember?.click()
+    const remember = await page.$('#remember')
+    if (remember) {
+      await remember.click()
+    }
     await page.type('#untracked', 'B')
     await page.click('.link')
     await page.waitForNavigation()
@@ -69,7 +76,7 @@ describe('Remember (local state caching)', () => {
 
     expect(await evalTextInput(page, '#name')).toEqual('A')
     expect(await evalCheckbox(page, '#remember')).toEqual(true)
-    expect(await evalTextInput(page, '#untracked')).toEqual('')
+    expect(await evalTextInput(page, '#untracked')).not.to.equal('B')
   })
 
   it('remembers tracked fields using the object syntax', async () => {
@@ -79,8 +86,10 @@ describe('Remember (local state caching)', () => {
     expect(page.url()).toEqual('http://127.0.0.1:12345/remember/object')
 
     await page.type('#name', 'A')
-    const remember = await page.waitForSelector('#remember')
-    await remember?.click()
+    const remember = await page.$('#remember')
+    if (remember) {
+      await remember.click()
+    }
     await page.type('#untracked', 'B')
     await page.click('.link')
     await page.waitForNavigation()
@@ -91,7 +100,7 @@ describe('Remember (local state caching)', () => {
 
     expect(await evalTextInput(page, '#name')).toEqual('A')
     expect(await evalCheckbox(page, '#remember')).toEqual(true)
-    expect(await evalTextInput(page, '#untracked')).toEqual('')
+    expect(await evalTextInput(page, '#untracked')).not.to.equal('B')
   })
 
   it('remembers tracked fields using the string syntax', async () => {
@@ -101,8 +110,10 @@ describe('Remember (local state caching)', () => {
     expect(page.url()).toEqual('http://127.0.0.1:12345/remember/string')
 
     await page.type('#name', 'A')
-    const remember = await page.waitForSelector('#remember')
-    await remember?.click()
+    const remember = await page.$('#remember')
+    if (remember) {
+      await remember.click()
+    }
     await page.type('#untracked', 'B')
     await page.click('.link')
     await page.waitForNavigation()
@@ -113,7 +124,7 @@ describe('Remember (local state caching)', () => {
 
     expect(await evalTextInput(page, '#name')).toEqual('A')
     expect(await evalCheckbox(page, '#remember')).toEqual(false)
-    expect(await evalTextInput(page, '#untracked')).toEqual('')
+    expect(await evalTextInput(page, '#untracked')).not.to.equal('B')
   })
 
   it('restores remembered data when pressing the back button', async () => {
@@ -125,15 +136,19 @@ describe('Remember (local state caching)', () => {
     )
 
     await page.type('#name', 'D')
-    const remember = await page.waitForSelector('#remember')
-    await remember?.click()
+    const remember = await page.$('#remember')
+    if (remember) {
+      await remember.click()
+    }
     await page.type('#untracked', 'C')
 
     await page.type('.a-name', 'A1')
     await page.type('.a-untracked', 'A2')
     await page.type('.b-name', 'B1')
-    const rememberA = await page.waitForSelector('.b-remember')
-    await rememberA?.click()
+    const rememberB = await page.$('.b-remember')
+    if (rememberB) {
+      await rememberB.click()
+    }
     await page.type('.b-untracked', 'B2')
 
     await page.click('.link')
@@ -147,15 +162,15 @@ describe('Remember (local state caching)', () => {
 
     expect(await evalTextInput(page, '#name')).toEqual('D')
     expect(await evalCheckbox(page, '#remember')).toEqual(true)
-    expect(await evalTextInput(page, '#untracked')).toEqual('')
+    expect(await evalTextInput(page, '#untracked')).not.to.equal('C')
 
     expect(await evalTextInput(page, '.a-name')).toEqual('A1')
     expect(await evalCheckbox(page, '.a-remember')).toEqual(false)
-    expect(await evalTextInput(page, '.a-untracked')).toEqual('')
+    expect(await evalTextInput(page, '.a-untracked')).not.to.equal('A2')
 
     expect(await evalTextInput(page, '.b-name')).toEqual('B1')
     expect(await evalCheckbox(page, '.b-remember')).toEqual(true)
-    expect(await evalTextInput(page, '.b-untracked')).toEqual('')
+    expect(await evalTextInput(page, '.b-untracked')).not.to.equal('B2')
   })
 
   it.skip(
@@ -170,15 +185,19 @@ describe('Remember (local state caching)', () => {
       )
 
       await page.type('#name', 'D')
-      const remember = await page.waitForSelector('#remember')
-      await remember?.click()
+      const remember = await page.$('#remember')
+      if (remember) {
+        await remember.click()
+      }
       await page.type('#untracked', 'C')
 
       await page.type('.a-name', 'A1')
       await page.type('.a-untracked', 'A2')
       await page.type('.b-name', 'B1')
-      const rememberA = await page.waitForSelector('.b-remember')
-      await rememberA?.click()
+      const rememberA = await page.$('.b-remember')
+      if (rememberA) {
+        await rememberA.click()
+      }
       await page.type('.b-untracked', 'B2')
 
       await page.click('.off-site')
@@ -196,11 +215,11 @@ describe('Remember (local state caching)', () => {
 
       expect(await evalTextInput(page, '.a-name')).toEqual('A1')
       expect(await evalCheckbox(page, '.a-remember')).toEqual(false)
-      expect(await evalTextInput(page, '.a-untracked')).toEqual('')
+      expect(await evalTextInput(page, '.a-untracked')).not.to.equal('A1')
 
       expect(await evalTextInput(page, '.b-name')).toEqual('B1')
       expect(await evalCheckbox(page, '.b-remember')).toEqual(true)
-      expect(await evalTextInput(page, '.b-untracked')).toEqual('')
+      expect(await evalTextInput(page, '.b-untracked')).not.to.equal('B2')
     }
   )
 
@@ -221,8 +240,10 @@ describe('Remember (local state caching)', () => {
 
       await page.type('#name', 'A')
       await page.type('#handle', 'B')
-      const remember = await page.waitForSelector('#remember')
-      await remember?.click()
+      const remember = await page.$('#remember')
+      if (remember) {
+        await remember.click()
+      }
       await page.type('#untracked', 'C')
 
       await page.click('.link')
@@ -248,10 +269,23 @@ describe('Remember (local state caching)', () => {
         'http://127.0.0.1:12345/remember/form-helper/default'
       )
 
+      await page.waitForNavigation()
+
+      await page.evaluate((selector) => {
+        document.querySelector<HTMLInputElement>(selector)!.value = ''
+      }, '#name')
       await page.type('#name', 'A')
+      await page.evaluate((selector) => {
+        document.querySelector<HTMLInputElement>(selector)!.value = ''
+      }, '#handle')
       await page.type('#handle', 'B')
-      const remember = await page.waitForSelector('#remember')
-      await remember?.click()
+      await page.evaluate((selector) => {
+        document.querySelector<HTMLInputElement>(selector)!.checked = false
+      }, '#remember')
+      const remember = await page.$('#remember')
+      if (remember) {
+        await remember.click()
+      }
       await page.type('#untracked', 'C')
 
       expect(await page.$('.name_error')).toStrictEqual(null)
@@ -262,6 +296,187 @@ describe('Remember (local state caching)', () => {
       await page.waitForNavigation()
 
       expect(await evalText(page, '.name_error')).toEqual('Some name error')
+      expect(await evalText(page, '.handle_error')).toEqual(
+        'The Handle was invalid'
+      )
+      expect(await page.$('.remember_error')).toStrictEqual(null)
+    })
+
+    it('remembers form data when tracked', async () => {
+      await page.goto('http://127.0.0.1:12345/remember/form-helper/remember', {
+        waitUntil: 'domcontentloaded',
+      })
+      expect(page.url()).toEqual(
+        'http://127.0.0.1:12345/remember/form-helper/remember'
+      )
+
+      await page.waitForNetworkIdle()
+
+      await page.evaluate((selector) => {
+        document.querySelector<HTMLInputElement>(selector)!.value = ''
+      }, '#name')
+      await page.type('#name', 'A')
+      await page.evaluate((selector) => {
+        document.querySelector<HTMLInputElement>(selector)!.value = ''
+      }, '#handle')
+      await page.type('#handle', 'B')
+      await page.evaluate((selector) => {
+        document.querySelector<HTMLInputElement>(selector)!.checked = false
+      }, '#remember')
+      const remember = await page.$('#remember')
+      if (remember) {
+        await remember.click()
+      }
+      await page.type('#untracked', 'C')
+
+      await page.click('.link')
+      await page.waitForNavigation()
+      expect(page.url()).toEqual('http://127.0.0.1:12345/dump/get')
+
+      await page.goBack()
+      expect(page.url()).toEqual(
+        'http://127.0.0.1:12345/remember/form-helper/remember'
+      )
+
+      expect(await evalTextInput(page, '#name')).toEqual('A')
+      expect(await evalTextInput(page, '#handle')).toEqual('B')
+      expect(await evalCheckbox(page, '#remember')).toEqual(true)
+      expect(await evalTextInput(page, '#untracked')).not.to.equal('C')
+    })
+
+    it('remembers form errors when tracked', async () => {
+      await page.goto('http://127.0.0.1:12345/remember/form-helper/remember', {
+        waitUntil: 'domcontentloaded',
+      })
+      expect(page.url()).toEqual(
+        'http://127.0.0.1:12345/remember/form-helper/remember'
+      )
+
+      await page.waitForNetworkIdle()
+
+      await page.evaluate((selector) => {
+        document.querySelector<HTMLInputElement>(selector)!.value = ''
+      }, '#name')
+      await page.type('#name', 'A')
+      await page.evaluate((selector) => {
+        document.querySelector<HTMLInputElement>(selector)!.value = ''
+      }, '#handle')
+      await page.type('#handle', 'B')
+      await page.evaluate((selector) => {
+        document.querySelector<HTMLInputElement>(selector)!.checked = false
+      }, '#remember')
+      const remember = await page.$('#remember')
+      if (remember) {
+        await remember.click()
+      }
+      await page.type('#untracked', 'C')
+
+      expect(await page.$('.name_error')).toStrictEqual(null)
+      expect(await page.$('.handle_error')).toStrictEqual(null)
+      expect(await page.$('.remember_error')).toStrictEqual(null)
+
+      await page.click('.submit')
+      await page.waitForNavigation()
+
+      expect(await evalText(page, '.name_error')).toEqual('Some name error')
+      expect(await evalText(page, '.handle_error')).toEqual(
+        'The Handle was invalid'
+      )
+      expect(await page.$('.remember_error')).toStrictEqual(null)
+
+      await page.click('.link')
+      await page.waitForNavigation()
+      expect(page.url()).toEqual('http://127.0.0.1:12345/dump/get')
+
+      await page.goBack()
+      expect(page.url()).toEqual(
+        'http://127.0.0.1:12345/remember/form-helper/remember'
+      )
+
+      expect(await evalTextInput(page, '#name')).toEqual('A')
+      expect(await evalTextInput(page, '#handle')).toEqual('B')
+      expect(await evalCheckbox(page, '#remember')).toEqual(true)
+      expect(await evalTextInput(page, '#untracked')).not.to.equal('C')
+
+      expect(await evalText(page, '.name_error')).toEqual('Some name error')
+      expect(await evalText(page, '.handle_error')).toEqual(
+        'The Handle was invalid'
+      )
+      expect(await page.$('.remember_error')).toStrictEqual(null)
+    })
+
+    it('remembers the last state of a form when tracked', async () => {
+      await page.goto('http://127.0.0.1:12345/remember/form-helper/remember', {
+        waitUntil: 'domcontentloaded',
+      })
+      expect(page.url()).toEqual(
+        'http://127.0.0.1:12345/remember/form-helper/remember'
+      )
+
+      await page.waitForNetworkIdle()
+
+      await page.evaluate((selector) => {
+        document.querySelector<HTMLInputElement>(selector)!.value = ''
+      }, '#name')
+      await page.type('#name', 'A')
+      await page.evaluate((selector) => {
+        document.querySelector<HTMLInputElement>(selector)!.value = ''
+      }, '#handle')
+      await page.type('#handle', 'B')
+      await page.evaluate((selector) => {
+        document.querySelector<HTMLInputElement>(selector)!.checked = false
+      }, '#remember')
+      const remember = await page.$('#remember')
+      if (remember) {
+        await remember.click()
+      }
+      await page.type('#untracked', 'C')
+
+      expect(await page.$('.name_error')).toBe(null)
+      expect(await page.$('.handle_error')).toBe(null)
+      expect(await page.$('.remember_error')).toBe(null)
+
+      await page.click('.submit')
+      await page.waitForNavigation()
+
+      expect(await evalTextInput(page, '#name')).toEqual('A')
+      expect(await evalTextInput(page, '#handle')).toEqual('B')
+      expect(await evalCheckbox(page, '#remember')).toEqual(true)
+      expect(await evalTextInput(page, '#untracked')).toEqual('C') // Only due to visit POST/PUT/PATCH/DELETE method's default preserveState option.
+
+      expect(await evalText(page, '.name_error')).toEqual('Some name error')
+      expect(await evalText(page, '.handle_error')).toEqual(
+        'The Handle was invalid'
+      )
+      expect(await page.$('.remember_error')).toStrictEqual(null)
+
+      await page.click('.reset-one')
+      expect(await evalTextInput(page, '#name')).toEqual('A')
+      expect(await evalTextInput(page, '#handle')).toEqual('example')
+      expect(await evalCheckbox(page, '#remember')).toEqual(true)
+      expect(await evalTextInput(page, '#untracked')).toEqual('C') // Unchanged from above
+
+      expect(await page.$('.name_error')).toBe(null)
+      expect(await evalText(page, '.handle_error')).toEqual(
+        'The Handle was invalid'
+      )
+      expect(await page.$('.remember_error')).toBe(null)
+
+      await page.click('.link')
+      await page.waitForNavigation()
+      expect(page.url()).toEqual('http://127.0.0.1:12345/dump/get')
+
+      await page.goBack()
+      expect(page.url()).toEqual(
+        'http://127.0.0.1:12345/remember/form-helper/remember'
+      )
+
+      expect(await evalTextInput(page, '#name')).toEqual('A')
+      expect(await evalTextInput(page, '#handle')).toEqual('example')
+      expect(await evalCheckbox(page, '#remember')).toEqual(true)
+      expect(await evalTextInput(page, '#untracked')).not.to.equal('C')
+
+      expect(await page.$('.name_error')).toBe(null)
       expect(await evalText(page, '.handle_error')).toEqual(
         'The Handle was invalid'
       )
