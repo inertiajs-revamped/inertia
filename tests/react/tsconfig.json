@@ -6,7 +6,7 @@
     "jsx": "react-jsx",
     "lib": ["DOM", "DOM.Iterable", "ES2020"],
     "noEmit": true,
-    "types": ["node", "jsdom", "vite/client", "vitest/globals"]
+    "types": ["node", "vite/client", "vitest/globals"]
   },
   "include": ["resources/**/*", "tests/**/*", "server.ts", "vite.config.ts"],
   "exclude": ["**/node_modules"]

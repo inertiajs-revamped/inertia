@@ -9,8 +9,7 @@
     "dev": "tsx server.ts",
     "build": "vite build",
     "build:prod": "vite build && vite build --ssr",
-    "preview": "vite preview",
-    "test": "NODE_OPTIONS=\"--no-deprecation\" vitest"
+    "preview": "vite preview"
   },
   "devDependencies": {
     "@inertiajs-revamped/react": "workspace:*",

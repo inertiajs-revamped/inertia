@@ -1,6 +1,6 @@
 import { Browser, Page, launch } from 'puppeteer'
 
-export const BASE_URL = 'http://localhost:12345'
+export const BASE_URL = 'http://localhost:13714'
 
 export type App = {
   navigate(path: string): Promise<void>

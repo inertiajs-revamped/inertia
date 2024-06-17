@@ -7,7 +7,7 @@ import express, { type Response, type Request } from 'express'
 import multer from 'multer'
 import { createServer as createViteServer } from 'vite'
 
-const port = process.env.PORT || 12345
+const port = process.env.PORT || 13714
 
 const app = express()
 const upload = multer()
@@ -19,7 +19,7 @@ const vite = await createViteServer({
 
 app.use(vite.middlewares)
 app.use(bodyParser.urlencoded({ extended: true }))
-app.use(bodyParser.json({ extended: true }))
+app.use(bodyParser.json())
 
 app.all('/non-inertia', (_req, res) =>
   res.send('This is a page that does not have the Inertia app loaded.')
@@ -317,19 +317,12 @@ async function inertia(req: Request, res: Response, data?: Partial<Page>) {
     template = await vite.transformIndexHtml(url, template)
 
     const page = {
-      component: req.path
-        .slice(1)
-        .split('/')
-        .join(
-          '/'
-        ) /* req.path.slice(1).split('/').join('/').split('-').join('') */,
+      component: req.path.slice(1).split('/').join('/'),
       props: {},
       url: req.path,
       version: null,
       ...data,
     }
-
-    console.log(req.path.slice(1).split('/').join('/'))
 
     const partialDataHeader = req.headers['x-inertia-partial-data'] || ''
     const partialExceptHeader = req.headers['x-inertia-partial-except'] || ''
@@ -393,7 +386,6 @@ function location(res: Response, href: string) {
 
 if (import.meta.hot) {
   import.meta.hot.on('vite:beforeFullReload', async () => {
-    console.log('full reload')
     await vite.close()
   })
 }

@@ -54,7 +54,6 @@ export default function () {
           type="checkbox"
           id="remember"
           name="remember"
-          defaultChecked={form.data.remember}
           checked={form.data.remember}
           onChange={(event) => form.setData('remember', event.target.checked)}
         />
