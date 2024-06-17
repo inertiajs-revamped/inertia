@@ -1,36 +1,24 @@
-import { type Browser, type Page, launch } from 'puppeteer'
-import { afterAll, afterEach, beforeAll, describe, expect, it } from 'vitest'
+import { afterAll, beforeAll, describe, expect, it } from 'vitest'
+import { type App, start } from './helper'
 
 describe('Inertia', () => {
-  let page: Page
-  let browser: Browser
+  let app: App
 
   beforeAll(async () => {
-    browser = await launch({
-      args: ['--no-sandbox', '--disable-setuid-sandbox'],
-    })
-    page = await browser.newPage()
-  })
-
-  afterEach(async () => {
-    await page.close()
-    page = await browser.newPage()
+    app = await start()
   })
 
   afterAll(async () => {
-    await browser.close()
+    await app.stop()
   })
 
   it('mounts the initial page', async () => {
-    await page.goto('http://127.0.0.1:12345/', {
-      waitUntil: 'domcontentloaded',
-    })
+    await app.navigate('/')
+    const entryText = await app.page
+      .locator('span.text')
+      .map((el) => el.textContent)
+      .wait()
 
-    const textSelector = await page.waitForSelector(
-      'text/This is the Test App Entrypoint page'
-    )
-    const text = await textSelector?.evaluate((el) => el.textContent)
-
-    expect(text).toEqual('This is the Test App Entrypoint page')
+    expect(entryText).toEqual('This is the Test App Entrypoint page')
   })
 })

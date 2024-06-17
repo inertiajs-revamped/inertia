@@ -1,35 +1,29 @@
-import { type Browser, type Page, launch } from 'puppeteer'
-import { afterAll, afterEach, beforeAll, describe, expect, it } from 'vitest'
+import { afterAll, beforeAll, describe, expect, it } from 'vitest'
+import { type App, BASE_URL, start } from './helper'
 
 describe('Links', () => {
-  let page: Page
-  let browser: Browser
+  let app: App
 
   beforeAll(async () => {
-    browser = await launch({
-      args: ['--no-sandbox', '--disable-setuid-sandbox'],
-    })
-    page = await browser.newPage()
-  })
-
-  afterEach(async () => {
-    await page.close()
-    page = await browser.newPage()
+    app = await start()
   })
 
   afterAll(async () => {
-    await browser.close()
+    await app.stop()
   })
 
   it('visits a different page', async () => {
-    await page.goto('http://127.0.0.1:12345/', {
-      waitUntil: 'domcontentloaded',
-    })
+    app.page.once('load', () =>
+      app.page.on('window:load', () => {
+        throw 'A location/non-SPA visit was detected'
+      })
+    )
 
-    await Promise.all([page.click('button.links-method')])
+    await app.navigate('/')
+    await app.page.locator('button.links-method').click()
+    await app.page.waitForResponse(`${BASE_URL}/links/method`)
+    await app.page.waitForNavigation()
 
-    await page.waitForNavigation()
-
-    expect(page.url()).toEqual('http://127.0.0.1:12345/links/method')
+    expect(app.page.url()).toEqual(`${BASE_URL}/links/method`)
   })
 })

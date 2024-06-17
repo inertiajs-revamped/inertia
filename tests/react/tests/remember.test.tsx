@@ -1,486 +1,364 @@
-import { type Browser, type Page, launch } from 'puppeteer'
 import { afterAll, afterEach, beforeAll, describe, expect, it } from 'vitest'
-import { evalCheckbox, evalText, evalTextInput } from './helper'
+import {
+  type App,
+  BASE_URL,
+  evalCheckbox,
+  evalText,
+  evalTextInput,
+  start,
+} from './helper'
+
 describe('Remember (local state caching)', () => {
-  let page: Page
-  let browser: Browser
+  let app: App
 
   beforeAll(async () => {
-    browser = await launch({
-      args: ['--no-sandbox', '--disable-setuid-sandbox'],
-    })
-    page = await browser.newPage()
+    app = await start()
   })
 
   afterEach(async () => {
-    await page.close()
-    page = await browser.newPage()
+    await app.page.reload()
+    await app.page.waitForNetworkIdle()
   })
 
   afterAll(async () => {
-    await browser.close()
+    await app.stop()
   })
 
   it('does not remember anything as of default', async () => {
-    await page.goto('http://127.0.0.1:12345/remember/default', {
-      waitUntil: 'domcontentloaded',
-    })
-    expect(page.url()).toEqual('http://127.0.0.1:12345/remember/default')
-    /* page.once('load', () =>
-      page.on('window:load', () => {
-        throw 'A location/non-SPA visit was detected'
-      })
-    ) */
+    await app.navigate('/remember/default')
+    expect(app.page.url()).toEqual(`${BASE_URL}/remember/default`)
 
-    await page.waitForNavigation()
+    await app.page.locator('input#name').fill('A')
+    await app.page.locator('input#remember').click()
+    await app.page.locator('input#untracked').fill('B')
 
-    await page.evaluate((selector) => {
-      document.querySelector<HTMLInputElement>(selector)!.value = ''
-    }, '#name')
-    await page.type('#name', 'A')
-    const remember = await page.$('#remember')
-    if (remember) {
-      await remember.click()
-    }
-    await page.type('#untracked', 'B')
-    await page.click('.link')
-    await page.waitForNavigation()
-    expect(page.url()).toEqual('http://127.0.0.1:12345/dump/get')
+    await app.page.locator('.link').click()
+    await app.page.waitForResponse(`${BASE_URL}/dump/get`)
+    await app.page.waitForNavigation()
+    expect(app.page.url()).toEqual(`${BASE_URL}/dump/get`)
 
-    await page.goBack()
-    expect(page.url()).toEqual('http://127.0.0.1:12345/remember/default')
+    await app.page.goBack()
+    expect(app.page.url()).toEqual(`${BASE_URL}/remember/default`)
 
-    expect(await evalTextInput(page, '#name')).not.to.equal('A')
-    expect(await evalCheckbox(page, '#remember')).not.to.equal(true)
-    expect(await evalTextInput(page, '#untracked')).not.to.equal('B')
+    expect(await evalTextInput(app.page, '#name')).not.to.equal('A')
+    expect(await evalCheckbox(app.page, '#remember')).not.to.equal(true)
+    expect(await evalTextInput(app.page, '#untracked')).not.to.equal('B')
   })
 
   it('remembers tracked fields using the array syntax', async () => {
-    await page.goto('http://127.0.0.1:12345/remember/array', {
-      waitUntil: 'domcontentloaded',
-    })
-    expect(page.url()).toEqual('http://127.0.0.1:12345/remember/array')
+    await app.navigate('/remember/array')
+    expect(app.page.url()).toEqual(`${BASE_URL}/remember/array`)
 
-    await page.type('#name', 'A')
-    const remember = await page.$('#remember')
-    if (remember) {
-      await remember.click()
-    }
-    await page.type('#untracked', 'B')
-    await page.click('.link')
-    await page.waitForNavigation()
-    expect(page.url()).toEqual('http://127.0.0.1:12345/dump/get')
+    await app.page.locator('input#name').fill('A')
+    await app.page.locator('input#remember').click()
+    await app.page.locator('input#untracked').fill('B')
 
-    await page.goBack()
-    expect(page.url()).toEqual('http://127.0.0.1:12345/remember/array')
+    await app.page.locator('.link').click()
+    await app.page.waitForResponse(`${BASE_URL}/dump/get`)
+    await app.page.waitForNavigation()
+    expect(app.page.url()).toEqual(`${BASE_URL}/dump/get`)
 
-    expect(await evalTextInput(page, '#name')).toEqual('A')
-    expect(await evalCheckbox(page, '#remember')).toEqual(true)
-    expect(await evalTextInput(page, '#untracked')).not.to.equal('B')
+    await app.page.goBack()
+    expect(app.page.url()).toEqual(`${BASE_URL}/remember/array`)
+
+    expect(await evalTextInput(app.page, '#name')).toEqual('A')
+    expect(await evalCheckbox(app.page, '#remember')).toEqual(true)
+    expect(await evalTextInput(app.page, '#untracked')).not.to.equal('B')
   })
 
   it('remembers tracked fields using the object syntax', async () => {
-    await page.goto('http://127.0.0.1:12345/remember/object', {
-      waitUntil: 'domcontentloaded',
-    })
-    expect(page.url()).toEqual('http://127.0.0.1:12345/remember/object')
+    await app.navigate('/remember/object')
+    expect(app.page.url()).toEqual(`${BASE_URL}/remember/object`)
 
-    await page.type('#name', 'A')
-    const remember = await page.$('#remember')
-    if (remember) {
-      await remember.click()
-    }
-    await page.type('#untracked', 'B')
-    await page.click('.link')
-    await page.waitForNavigation()
-    expect(page.url()).toEqual('http://127.0.0.1:12345/dump/get')
+    await app.page.locator('input#name').fill('A')
+    await app.page.locator('input#remember').click()
+    await app.page.locator('input#untracked').fill('B')
 
-    await page.goBack()
-    expect(page.url()).toEqual('http://127.0.0.1:12345/remember/object')
+    await app.page.locator('.link').click()
+    await app.page.waitForResponse(`${BASE_URL}/dump/get`)
+    await app.page.waitForNavigation()
+    expect(app.page.url()).toEqual(`${BASE_URL}/dump/get`)
 
-    expect(await evalTextInput(page, '#name')).toEqual('A')
-    expect(await evalCheckbox(page, '#remember')).toEqual(true)
-    expect(await evalTextInput(page, '#untracked')).not.to.equal('B')
+    await app.page.goBack()
+    expect(app.page.url()).toEqual(`${BASE_URL}/remember/object`)
+
+    expect(await evalTextInput(app.page, '#name')).toEqual('A')
+    expect(await evalCheckbox(app.page, '#remember')).toEqual(true)
+    expect(await evalTextInput(app.page, '#untracked')).not.to.equal('B')
   })
 
   it('remembers tracked fields using the string syntax', async () => {
-    await page.goto('http://127.0.0.1:12345/remember/string', {
-      waitUntil: 'domcontentloaded',
-    })
-    expect(page.url()).toEqual('http://127.0.0.1:12345/remember/string')
+    await app.navigate('/remember/string')
+    expect(app.page.url()).toEqual(`${BASE_URL}/remember/string`)
 
-    await page.type('#name', 'A')
-    const remember = await page.$('#remember')
-    if (remember) {
-      await remember.click()
-    }
-    await page.type('#untracked', 'B')
-    await page.click('.link')
-    await page.waitForNavigation()
-    expect(page.url()).toEqual('http://127.0.0.1:12345/dump/get')
+    await app.page.locator('input#name').fill('A')
+    await app.page.locator('input#remember').click()
+    await app.page.locator('input#untracked').fill('B')
 
-    await page.goBack()
-    expect(page.url()).toEqual('http://127.0.0.1:12345/remember/string')
+    await app.page.locator('.link').click()
+    await app.page.waitForResponse(`${BASE_URL}/dump/get`)
+    await app.page.waitForNavigation()
+    expect(app.page.url()).toEqual(`${BASE_URL}/dump/get`)
 
-    expect(await evalTextInput(page, '#name')).toEqual('A')
-    expect(await evalCheckbox(page, '#remember')).toEqual(false)
-    expect(await evalTextInput(page, '#untracked')).not.to.equal('B')
+    await app.page.goBack()
+    expect(app.page.url()).toEqual(`${BASE_URL}/remember/string`)
+
+    expect(await evalTextInput(app.page, '#name')).toEqual('A')
+    expect(await evalCheckbox(app.page, '#remember')).toEqual(false)
+    expect(await evalTextInput(app.page, '#untracked')).not.to.equal('B')
   })
 
   it('restores remembered data when pressing the back button', async () => {
-    await page.goto('http://127.0.0.1:12345/remember/multiple-components', {
-      waitUntil: 'domcontentloaded',
-    })
-    expect(page.url()).toEqual(
-      'http://127.0.0.1:12345/remember/multiple-components'
-    )
+    await app.navigate('/remember/multiple-components')
+    expect(app.page.url()).toEqual(`${BASE_URL}/remember/multiple-components`)
 
-    await page.type('#name', 'D')
-    const remember = await page.$('#remember')
-    if (remember) {
-      await remember.click()
-    }
-    await page.type('#untracked', 'C')
+    await app.page.locator('input#name').fill('D')
+    await app.page.locator('input#remember').click()
+    await app.page.locator('input#untracked').fill('C')
 
-    await page.type('.a-name', 'A1')
-    await page.type('.a-untracked', 'A2')
-    await page.type('.b-name', 'B1')
-    const rememberB = await page.$('.b-remember')
-    if (rememberB) {
-      await rememberB.click()
-    }
-    await page.type('.b-untracked', 'B2')
+    await app.page.locator('input.a-name').fill('A1')
+    await app.page.locator('input.a-untracked').fill('A2')
+    await app.page.locator('input.b-name').fill('B1')
+    await app.page.locator('input.b-remember').click()
+    await app.page.locator('input.b-untracked').fill('B2')
 
-    await page.click('.link')
-    await page.waitForNavigation()
-    expect(page.url()).toEqual('http://127.0.0.1:12345/dump/get')
+    await app.page.locator('.link').click()
+    await app.page.waitForResponse(`${BASE_URL}/dump/get`)
+    await app.page.waitForNavigation()
+    expect(app.page.url()).toEqual(`${BASE_URL}/dump/get`)
 
-    await page.goBack()
-    expect(page.url()).toEqual(
-      'http://127.0.0.1:12345/remember/multiple-components'
-    )
+    await app.page.goBack()
+    expect(app.page.url()).toEqual(`${BASE_URL}/remember/multiple-components`)
 
-    expect(await evalTextInput(page, '#name')).toEqual('D')
-    expect(await evalCheckbox(page, '#remember')).toEqual(true)
-    expect(await evalTextInput(page, '#untracked')).not.to.equal('C')
+    expect(await evalTextInput(app.page, '#name')).toEqual('D')
+    expect(await evalCheckbox(app.page, '#remember')).toEqual(true)
+    expect(await evalTextInput(app.page, '#untracked')).not.to.equal('C')
 
-    expect(await evalTextInput(page, '.a-name')).toEqual('A1')
-    expect(await evalCheckbox(page, '.a-remember')).toEqual(false)
-    expect(await evalTextInput(page, '.a-untracked')).not.to.equal('A2')
+    expect(await evalTextInput(app.page, '.a-name')).toEqual('A1')
+    expect(await evalCheckbox(app.page, '.a-remember')).toEqual(false)
+    expect(await evalTextInput(app.page, '.a-untracked')).not.to.equal('A2')
 
-    expect(await evalTextInput(page, '.b-name')).toEqual('B1')
-    expect(await evalCheckbox(page, '.b-remember')).toEqual(true)
-    expect(await evalTextInput(page, '.b-untracked')).not.to.equal('B2')
+    expect(await evalTextInput(app.page, '.b-name')).toEqual('B1')
+    expect(await evalCheckbox(app.page, '.b-remember')).toEqual(true)
+    expect(await evalTextInput(app.page, '.b-untracked')).not.to.equal('B2')
   })
 
-  it.skip(
-    'restores remembered data when pressing the back button from another website',
-    { retry: 10 },
-    async () => {
-      await page.goto('http://127.0.0.1:12345/remember/multiple-components', {
-        waitUntil: 'domcontentloaded',
-      })
-      expect(page.url()).toEqual(
-        'http://127.0.0.1:12345/remember/multiple-components'
-      )
+  it('restores remembered data when pressing the back button from another website' /* { retry: 10 }, */, async () => {
+    await app.navigate('/remember/multiple-components')
+    expect(app.page.url()).toEqual(`${BASE_URL}/remember/multiple-components`)
 
-      await page.type('#name', 'D')
-      const remember = await page.$('#remember')
-      if (remember) {
-        await remember.click()
-      }
-      await page.type('#untracked', 'C')
+    await app.page.locator('input#name').fill('D')
+    await app.page.locator('input#remember').click()
+    await app.page.locator('input#untracked').fill('C')
 
-      await page.type('.a-name', 'A1')
-      await page.type('.a-untracked', 'A2')
-      await page.type('.b-name', 'B1')
-      const rememberA = await page.$('.b-remember')
-      if (rememberA) {
-        await rememberA.click()
-      }
-      await page.type('.b-untracked', 'B2')
+    await app.page.locator('input.a-name').fill('A1')
+    await app.page.locator('input.a-untracked').fill('A2')
+    await app.page.locator('input.b-name').fill('B1')
+    await app.page.locator('input.b-remember').click()
+    await app.page.locator('input.b-untracked').fill('B2')
 
-      await page.click('.off-site')
-      await page.waitForNavigation()
-      expect(page.url()).toEqual('http://127.0.0.1:12345/non-inertia')
+    await app.page.locator('.off-site').click()
+    await app.page.waitForNavigation()
+    expect(app.page.url()).toEqual(`${BASE_URL}/non-inertia`)
 
-      await page.goBack()
-      expect(page.url()).toEqual(
-        'http://127.0.0.1:12345/remember/multiple-components'
-      )
+    await app.page.goBack()
+    await app.page.waitForNavigation()
+    expect(app.page.url()).toEqual(`${BASE_URL}/remember/multiple-components`)
 
-      expect(await evalTextInput(page, '#name')).toEqual('D')
-      expect(await evalCheckbox(page, '#remember')).toEqual(true)
-      expect(await evalTextInput(page, '#untracked')).toEqual('')
+    expect(await evalTextInput(app.page, '#name')).toEqual('D')
+    expect(await evalCheckbox(app.page, '#remember')).toEqual(true)
+    expect(await evalTextInput(app.page, '#untracked')).toEqual('')
 
-      expect(await evalTextInput(page, '.a-name')).toEqual('A1')
-      expect(await evalCheckbox(page, '.a-remember')).toEqual(false)
-      expect(await evalTextInput(page, '.a-untracked')).not.to.equal('A1')
+    expect(await evalTextInput(app.page, '.a-name')).toEqual('A1')
+    expect(await evalCheckbox(app.page, '.a-remember')).toEqual(false)
+    expect(await evalTextInput(app.page, '.a-untracked')).not.to.equal('A1')
 
-      expect(await evalTextInput(page, '.b-name')).toEqual('B1')
-      expect(await evalCheckbox(page, '.b-remember')).toEqual(true)
-      expect(await evalTextInput(page, '.b-untracked')).not.to.equal('B2')
-    }
-  )
+    expect(await evalTextInput(app.page, '.b-name')).toEqual('B1')
+    expect(await evalCheckbox(app.page, '.b-remember')).toEqual(true)
+    expect(await evalTextInput(app.page, '.b-untracked')).not.to.equal('B2')
+  })
 
   describe('form helper', () => {
     it('does not remember form data as of default', async () => {
-      await page.goto('http://127.0.0.1:12345/remember/form-helper/default', {
-        waitUntil: 'domcontentloaded',
-      })
-      expect(page.url()).toEqual(
-        'http://127.0.0.1:12345/remember/form-helper/default'
-      )
+      await app.navigate('/remember/form-helper/default')
+      expect(app.page.url()).toEqual(`${BASE_URL}/remember/form-helper/default`)
 
-      /* await page.waitForNavigation()
+      await app.page.locator('input#name').fill('A')
+      await app.page.locator('input#handle').fill('B')
+      await app.page.locator('input#remember').click()
+      await app.page.locator('input#untracked').fill('C')
 
-      await page.evaluate((selector) => {
-        document.querySelector<HTMLInputElement>(selector)!.value = ''
-      }, '#name') */
+      await app.page.locator('.link').click()
+      await app.page.waitForResponse(`${BASE_URL}/dump/get`)
+      await app.page.waitForNavigation()
+      expect(app.page.url()).toEqual(`${BASE_URL}/dump/get`)
 
-      await page.type('#name', 'A')
-      await page.type('#handle', 'B')
-      const remember = await page.$('#remember')
-      if (remember) {
-        await remember.click()
-      }
-      await page.type('#untracked', 'C')
+      await app.page.goBack()
+      expect(app.page.url()).toEqual(`${BASE_URL}/remember/form-helper/default`)
 
-      await page.click('.link')
-      await page.waitForNavigation()
-      expect(page.url()).toEqual('http://127.0.0.1:12345/dump/get')
-
-      await page.goBack()
-      expect(page.url()).toEqual(
-        'http://127.0.0.1:12345/remember/form-helper/default'
-      )
-
-      expect(await evalTextInput(page, '#name')).not.to.equal('A')
-      expect(await evalTextInput(page, '#handle')).not.to.equal('B')
-      expect(await evalCheckbox(page, '#remember')).not.to.equal(true)
-      expect(await evalTextInput(page, '#untracked')).not.to.equal('C')
+      expect(await evalTextInput(app.page, '#name')).not.to.equal('A')
+      expect(await evalTextInput(app.page, '#handle')).not.to.equal('B')
+      expect(await evalCheckbox(app.page, '#remember')).not.to.equal(true)
+      expect(await evalTextInput(app.page, '#untracked')).not.to.equal('C')
     })
 
     it('does not remember form errors as of default', async () => {
-      await page.goto('http://127.0.0.1:12345/remember/form-helper/default', {
-        waitUntil: 'domcontentloaded',
-      })
-      expect(page.url()).toEqual(
-        'http://127.0.0.1:12345/remember/form-helper/default'
-      )
+      await app.navigate('/remember/form-helper/default')
+      expect(app.page.url()).toEqual(`${BASE_URL}/remember/form-helper/default`)
 
-      await page.waitForNavigation()
+      await app.page.locator('input#name').fill('A')
+      await app.page.locator('input#handle').fill('B')
+      await app.page.locator('input#remember').click()
+      await app.page.locator('input#untracked').fill('C')
 
-      await page.evaluate((selector) => {
-        document.querySelector<HTMLInputElement>(selector)!.value = ''
-      }, '#name')
-      await page.type('#name', 'A')
-      await page.evaluate((selector) => {
-        document.querySelector<HTMLInputElement>(selector)!.value = ''
-      }, '#handle')
-      await page.type('#handle', 'B')
-      await page.evaluate((selector) => {
-        document.querySelector<HTMLInputElement>(selector)!.checked = false
-      }, '#remember')
-      const remember = await page.$('#remember')
-      if (remember) {
-        await remember.click()
-      }
-      await page.type('#untracked', 'C')
+      expect(await app.page.$('.name_error')).toStrictEqual(null)
+      expect(await app.page.$('.handle_error')).toStrictEqual(null)
+      expect(await app.page.$('.remember_error')).toStrictEqual(null)
 
-      expect(await page.$('.name_error')).toStrictEqual(null)
-      expect(await page.$('.handle_error')).toStrictEqual(null)
-      expect(await page.$('.remember_error')).toStrictEqual(null)
+      await app.page.click('.submit')
+      await app.page.waitForNavigation()
 
-      await page.click('.submit')
-      await page.waitForNavigation()
-
-      expect(await evalText(page, '.name_error')).toEqual('Some name error')
-      expect(await evalText(page, '.handle_error')).toEqual(
+      expect(await evalText(app.page, '.name_error')).toEqual('Some name error')
+      expect(await evalText(app.page, '.handle_error')).toEqual(
         'The Handle was invalid'
       )
-      expect(await page.$('.remember_error')).toStrictEqual(null)
+      expect(await app.page.$('.remember_error')).toStrictEqual(null)
     })
 
     it('remembers form data when tracked', async () => {
-      await page.goto('http://127.0.0.1:12345/remember/form-helper/remember', {
-        waitUntil: 'domcontentloaded',
-      })
-      expect(page.url()).toEqual(
-        'http://127.0.0.1:12345/remember/form-helper/remember'
+      await app.navigate('/remember/form-helper/remember')
+      expect(app.page.url()).toEqual(
+        `${BASE_URL}/remember/form-helper/remember`
       )
 
-      await page.waitForNetworkIdle()
+      await app.page.locator('input#name').fill('A')
+      await app.page.locator('input#handle').fill('B')
+      await app.page.locator('input#remember').click()
+      await app.page.locator('input#untracked').fill('C')
 
-      await page.evaluate((selector) => {
-        document.querySelector<HTMLInputElement>(selector)!.value = ''
-      }, '#name')
-      await page.type('#name', 'A')
-      await page.evaluate((selector) => {
-        document.querySelector<HTMLInputElement>(selector)!.value = ''
-      }, '#handle')
-      await page.type('#handle', 'B')
-      await page.evaluate((selector) => {
-        document.querySelector<HTMLInputElement>(selector)!.checked = false
-      }, '#remember')
-      const remember = await page.$('#remember')
-      if (remember) {
-        await remember.click()
-      }
-      await page.type('#untracked', 'C')
+      await app.page.locator('.link').click()
+      await app.page.waitForResponse(`${BASE_URL}/dump/get`)
+      await app.page.waitForNavigation()
+      expect(app.page.url()).toEqual(`${BASE_URL}/dump/get`)
 
-      await page.click('.link')
-      await page.waitForNavigation()
-      expect(page.url()).toEqual('http://127.0.0.1:12345/dump/get')
-
-      await page.goBack()
-      expect(page.url()).toEqual(
-        'http://127.0.0.1:12345/remember/form-helper/remember'
+      await app.page.goBack()
+      expect(app.page.url()).toEqual(
+        `${BASE_URL}/remember/form-helper/remember`
       )
 
-      expect(await evalTextInput(page, '#name')).toEqual('A')
-      expect(await evalTextInput(page, '#handle')).toEqual('B')
-      expect(await evalCheckbox(page, '#remember')).toEqual(true)
-      expect(await evalTextInput(page, '#untracked')).not.to.equal('C')
+      expect(await evalTextInput(app.page, '#name')).toEqual('A')
+      expect(await evalTextInput(app.page, '#handle')).toEqual('B')
+      expect(await evalCheckbox(app.page, '#remember')).toEqual(true)
+      expect(await evalTextInput(app.page, '#untracked')).not.to.equal('C')
     })
 
     it('remembers form errors when tracked', async () => {
-      await page.goto('http://127.0.0.1:12345/remember/form-helper/remember', {
-        waitUntil: 'domcontentloaded',
-      })
-      expect(page.url()).toEqual(
-        'http://127.0.0.1:12345/remember/form-helper/remember'
+      await app.navigate('/remember/form-helper/remember')
+      expect(app.page.url()).toEqual(
+        `${BASE_URL}/remember/form-helper/remember`
       )
 
-      await page.waitForNetworkIdle()
+      await app.page.locator('input#name').fill('A')
+      await app.page.locator('input#handle').fill('B')
+      await app.page.locator('input#remember').click()
+      await app.page.locator('input#untracked').fill('C')
 
-      await page.evaluate((selector) => {
-        document.querySelector<HTMLInputElement>(selector)!.value = ''
-      }, '#name')
-      await page.type('#name', 'A')
-      await page.evaluate((selector) => {
-        document.querySelector<HTMLInputElement>(selector)!.value = ''
-      }, '#handle')
-      await page.type('#handle', 'B')
-      await page.evaluate((selector) => {
-        document.querySelector<HTMLInputElement>(selector)!.checked = false
-      }, '#remember')
-      const remember = await page.$('#remember')
-      if (remember) {
-        await remember.click()
-      }
-      await page.type('#untracked', 'C')
+      expect(await app.page.$('.name_error')).toStrictEqual(null)
+      expect(await app.page.$('.handle_error')).toStrictEqual(null)
+      expect(await app.page.$('.remember_error')).toStrictEqual(null)
 
-      expect(await page.$('.name_error')).toStrictEqual(null)
-      expect(await page.$('.handle_error')).toStrictEqual(null)
-      expect(await page.$('.remember_error')).toStrictEqual(null)
+      await app.page.click('.submit')
+      await app.page.waitForNavigation()
 
-      await page.click('.submit')
-      await page.waitForNavigation()
-
-      expect(await evalText(page, '.name_error')).toEqual('Some name error')
-      expect(await evalText(page, '.handle_error')).toEqual(
+      expect(await evalText(app.page, '.name_error')).toEqual('Some name error')
+      expect(await evalText(app.page, '.handle_error')).toEqual(
         'The Handle was invalid'
       )
-      expect(await page.$('.remember_error')).toStrictEqual(null)
+      expect(await app.page.$('.remember_error')).toStrictEqual(null)
 
-      await page.click('.link')
-      await page.waitForNavigation()
-      expect(page.url()).toEqual('http://127.0.0.1:12345/dump/get')
+      await app.page.locator('.link').click()
+      await app.page.waitForResponse(`${BASE_URL}/dump/get`)
+      await app.page.waitForNavigation()
+      expect(app.page.url()).toEqual(`${BASE_URL}/dump/get`)
 
-      await page.goBack()
-      expect(page.url()).toEqual(
-        'http://127.0.0.1:12345/remember/form-helper/remember'
+      await app.page.goBack()
+      expect(app.page.url()).toEqual(
+        `${BASE_URL}/remember/form-helper/remember`
       )
 
-      expect(await evalTextInput(page, '#name')).toEqual('A')
-      expect(await evalTextInput(page, '#handle')).toEqual('B')
-      expect(await evalCheckbox(page, '#remember')).toEqual(true)
-      expect(await evalTextInput(page, '#untracked')).not.to.equal('C')
+      expect(await evalTextInput(app.page, '#name')).toEqual('A')
+      expect(await evalTextInput(app.page, '#handle')).toEqual('B')
+      expect(await evalCheckbox(app.page, '#remember')).toEqual(true)
+      expect(await evalTextInput(app.page, '#untracked')).not.to.equal('C')
 
-      expect(await evalText(page, '.name_error')).toEqual('Some name error')
-      expect(await evalText(page, '.handle_error')).toEqual(
+      expect(await evalText(app.page, '.name_error')).toEqual('Some name error')
+      expect(await evalText(app.page, '.handle_error')).toEqual(
         'The Handle was invalid'
       )
-      expect(await page.$('.remember_error')).toStrictEqual(null)
+      expect(await app.page.$('.remember_error')).toStrictEqual(null)
     })
 
     it('remembers the last state of a form when tracked', async () => {
-      await page.goto('http://127.0.0.1:12345/remember/form-helper/remember', {
-        waitUntil: 'domcontentloaded',
-      })
-      expect(page.url()).toEqual(
-        'http://127.0.0.1:12345/remember/form-helper/remember'
+      await app.navigate('/remember/form-helper/remember')
+      expect(app.page.url()).toEqual(
+        `${BASE_URL}/remember/form-helper/remember`
       )
 
-      await page.waitForNetworkIdle()
+      await app.page.locator('input#name').fill('A')
+      await app.page.locator('input#handle').fill('B')
+      await app.page.locator('input#remember').click()
+      await app.page.locator('input#untracked').fill('C')
 
-      await page.evaluate((selector) => {
-        document.querySelector<HTMLInputElement>(selector)!.value = ''
-      }, '#name')
-      await page.type('#name', 'A')
-      await page.evaluate((selector) => {
-        document.querySelector<HTMLInputElement>(selector)!.value = ''
-      }, '#handle')
-      await page.type('#handle', 'B')
-      await page.evaluate((selector) => {
-        document.querySelector<HTMLInputElement>(selector)!.checked = false
-      }, '#remember')
-      const remember = await page.$('#remember')
-      if (remember) {
-        await remember.click()
-      }
-      await page.type('#untracked', 'C')
+      expect(await app.page.$('.name_error')).toBe(null)
+      expect(await app.page.$('.handle_error')).toBe(null)
+      expect(await app.page.$('.remember_error')).toBe(null)
 
-      expect(await page.$('.name_error')).toBe(null)
-      expect(await page.$('.handle_error')).toBe(null)
-      expect(await page.$('.remember_error')).toBe(null)
+      await app.page.click('.submit')
+      await app.page.waitForNavigation()
 
-      await page.click('.submit')
-      await page.waitForNavigation()
+      expect(await evalTextInput(app.page, '#name')).toEqual('A')
+      expect(await evalTextInput(app.page, '#handle')).toEqual('B')
+      expect(await evalCheckbox(app.page, '#remember')).toEqual(true)
+      expect(await evalTextInput(app.page, '#untracked')).toEqual('C') // Only due to visit POST/PUT/PATCH/DELETE method's default preserveState option.
 
-      expect(await evalTextInput(page, '#name')).toEqual('A')
-      expect(await evalTextInput(page, '#handle')).toEqual('B')
-      expect(await evalCheckbox(page, '#remember')).toEqual(true)
-      expect(await evalTextInput(page, '#untracked')).toEqual('C') // Only due to visit POST/PUT/PATCH/DELETE method's default preserveState option.
-
-      expect(await evalText(page, '.name_error')).toEqual('Some name error')
-      expect(await evalText(page, '.handle_error')).toEqual(
+      expect(await evalText(app.page, '.name_error')).toEqual('Some name error')
+      expect(await evalText(app.page, '.handle_error')).toEqual(
         'The Handle was invalid'
       )
-      expect(await page.$('.remember_error')).toStrictEqual(null)
+      expect(await app.page.$('.remember_error')).toStrictEqual(null)
 
-      await page.click('.reset-one')
-      expect(await evalTextInput(page, '#name')).toEqual('A')
-      expect(await evalTextInput(page, '#handle')).toEqual('example')
-      expect(await evalCheckbox(page, '#remember')).toEqual(true)
-      expect(await evalTextInput(page, '#untracked')).toEqual('C') // Unchanged from above
+      await app.page.click('.reset-one')
+      expect(await evalTextInput(app.page, '#name')).toEqual('A')
+      expect(await evalTextInput(app.page, '#handle')).toEqual('example')
+      expect(await evalCheckbox(app.page, '#remember')).toEqual(true)
+      expect(await evalTextInput(app.page, '#untracked')).toEqual('C') // Unchanged from above
 
-      expect(await page.$('.name_error')).toBe(null)
-      expect(await evalText(page, '.handle_error')).toEqual(
+      expect(await app.page.$('.name_error')).toBe(null)
+      expect(await evalText(app.page, '.handle_error')).toEqual(
         'The Handle was invalid'
       )
-      expect(await page.$('.remember_error')).toBe(null)
+      expect(await app.page.$('.remember_error')).toBe(null)
 
-      await page.click('.link')
-      await page.waitForNavigation()
-      expect(page.url()).toEqual('http://127.0.0.1:12345/dump/get')
+      await app.page.locator('.link').click()
+      await app.page.waitForResponse(`${BASE_URL}/dump/get`)
+      await app.page.waitForNavigation()
+      expect(app.page.url()).toEqual(`${BASE_URL}/dump/get`)
 
-      await page.goBack()
-      expect(page.url()).toEqual(
-        'http://127.0.0.1:12345/remember/form-helper/remember'
+      await app.page.goBack()
+      expect(app.page.url()).toEqual(
+        `${BASE_URL}/remember/form-helper/remember`
       )
 
-      expect(await evalTextInput(page, '#name')).toEqual('A')
-      expect(await evalTextInput(page, '#handle')).toEqual('example')
-      expect(await evalCheckbox(page, '#remember')).toEqual(true)
-      expect(await evalTextInput(page, '#untracked')).not.to.equal('C')
+      expect(await evalTextInput(app.page, '#name')).toEqual('A')
+      expect(await evalTextInput(app.page, '#handle')).toEqual('example')
+      expect(await evalCheckbox(app.page, '#remember')).toEqual(true)
+      expect(await evalTextInput(app.page, '#untracked')).not.to.equal('C')
 
-      expect(await page.$('.name_error')).toBe(null)
-      expect(await evalText(page, '.handle_error')).toEqual(
+      expect(await app.page.$('.name_error')).toBe(null)
+      expect(await evalText(app.page, '.handle_error')).toEqual(
         'The Handle was invalid'
       )
-      expect(await page.$('.remember_error')).toStrictEqual(null)
+      expect(await app.page.$('.remember_error')).toStrictEqual(null)
     })
   })
 })
