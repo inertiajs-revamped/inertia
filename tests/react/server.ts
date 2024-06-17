@@ -5,19 +5,19 @@ import type { Page } from '@inertiajs-revamped/react'
 import bodyParser from 'body-parser'
 import express, { type Response, type Request } from 'express'
 import multer from 'multer'
-/* import { createServer as createViteServer } from 'vite' */
+import { createServer as createViteServer } from 'vite'
 
 const port = process.env.PORT || 13714
 
 const app = express()
 const upload = multer()
 
-/* const vite = await createViteServer({
+const vite = await createViteServer({
   server: { middlewareMode: true },
   appType: 'custom',
 })
 
-app.use(vite.middlewares) */
+app.use(vite.middlewares)
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
 
@@ -384,8 +384,8 @@ function location(res: Response, href: string) {
   return res.status(409).header('X-Inertia-Location', href).send('')
 }
 
-/* if (import.meta.hot) {
+if (import.meta.hot) {
   import.meta.hot.on('vite:beforeFullReload', async () => {
     await vite.close()
   })
-} */
+}
