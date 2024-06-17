@@ -60,7 +60,7 @@ importers:
         specifier: ^20.14.2
         version: 20.14.2
       '@vueuse/core':
-        specifier: ^10.10.0
+        specifier: ^10.11.0
         version: 10.11.0(vue@3.4.27(typescript@5.4.5))
       terser:
         specifier: ^5.31.1

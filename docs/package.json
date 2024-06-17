@@ -23,7 +23,7 @@
   },
   "devDependencies": {
     "@types/node": "^20.14.2",
-    "@vueuse/core": "^10.10.0",
+    "@vueuse/core": "^10.11.0",
     "terser": "^5.31.1",
     "vite": "^5.2.13",
     "vitepress": "^1.2.3",
