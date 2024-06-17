@@ -83,5 +83,5 @@ jobs:
         run: pnpm run build
 
       - name: Run test
-        run: pnpm run test:run
+        run: LARAVEL_BYPASS_ENV_CHECK=1 pnpm run test
         if: always()

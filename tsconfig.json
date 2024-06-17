@@ -19,8 +19,18 @@
       "@inertiajs-revamped/core/server": ["./packages/core/src/server.ts"],
       "@inertiajs-revamped/core/progress": ["./packages/core/src/progress.ts"],
       "@inertiajs-revamped/preact": ["./packages/preact/src/index.ts"],
+      "@inertiajs-revamped/preact/server": ["./packages/preact/src/server.ts"],
+      "@inertiajs-revamped/preact/progress": [
+        "./packages/preact/src/progress.ts"
+      ],
       "@inertiajs-revamped/react": ["./packages/react/src/index.ts"],
+      "@inertiajs-revamped/react/server": ["./packages/react/src/server.ts"],
+      "@inertiajs-revamped/react/progress": [
+        "./packages/react/src/progress.ts"
+      ],
       "@inertiajs-revamped/vue": ["./packages/vue/src/index.ts"],
+      "@inertiajs-revamped/vue/server": ["./packages/vue/src/server.ts"],
+      "@inertiajs-revamped/vue/progress": ["./packages/vue/src/progress.ts"],
       "@inertiajs-revamped/vite": ["./packages/vite/src/index.ts"]
     }
   }

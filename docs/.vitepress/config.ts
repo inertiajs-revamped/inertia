@@ -103,10 +103,7 @@ export default defineConfig({
     },
   },
   markdown: {
-    // ...
     config: (md) => {
-      // https://github.com/vuejs/docs/blob/e276daba15586ca2f993661cc0d7fe9ce84954d7/.vitepress/config.ts#L745C7-L745C60
-      // @ts-expect-error - broken type output in vitepress
       md.use<MarkdownItStepperOptions>(markdownItStepper)
     },
   },
