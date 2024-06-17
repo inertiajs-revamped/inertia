@@ -47,6 +47,7 @@ describe('Remember (local state caching)', () => {
     expect(app.page.url()).toEqual(`${BASE_URL}/dump/get`)
 
     await app.page.goBack()
+    await app.page.waitForNavigation()
     expect(app.page.url()).toEqual(`${BASE_URL}/remember/array`)
 
     expect(await evalTextInput(app.page, '#name')).toEqual('A')
@@ -68,6 +69,7 @@ describe('Remember (local state caching)', () => {
     expect(app.page.url()).toEqual(`${BASE_URL}/dump/get`)
 
     await app.page.goBack()
+    await app.page.waitForNavigation()
     expect(app.page.url()).toEqual(`${BASE_URL}/remember/object`)
 
     expect(await evalTextInput(app.page, '#name')).toEqual('A')
@@ -89,6 +91,7 @@ describe('Remember (local state caching)', () => {
     expect(app.page.url()).toEqual(`${BASE_URL}/dump/get`)
 
     await app.page.goBack()
+    await app.page.waitForNavigation()
     expect(app.page.url()).toEqual(`${BASE_URL}/remember/string`)
 
     expect(await evalTextInput(app.page, '#name')).toEqual('A')

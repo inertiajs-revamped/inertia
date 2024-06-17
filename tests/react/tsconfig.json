@@ -8,6 +8,6 @@
     "noEmit": true,
     "types": ["node", "vite/client", "vitest/globals"]
   },
-  "include": ["resources/**/*", "tests/**/*", "server.ts", "vite.config.ts"],
+  "include": ["resources/**/*", "tests/**/*.ts", "server.ts", "vite.config.ts"],
   "exclude": ["**/node_modules"]
 }
