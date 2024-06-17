@@ -1,19 +1,15 @@
-interface DumpProps {
-  headers: any
-  method: string
-  form: any
-  files: string[]
-  query: any
-}
+import { type DumpProps, usePage } from '@inertiajs-revamped/react'
 
 export default function ({ headers, method, form, files, query }: DumpProps) {
+  const page = usePage()
+
   const dump = {
     headers,
     method,
     form,
-    files: files ? files : {},
-    query: query,
-    /* $page: $page, */
+    files: files ?? {},
+    query,
+    page,
   }
 
   return (
@@ -22,7 +18,9 @@ export default function ({ headers, method, form, files, query }: DumpProps) {
         This is Inertia page component containing a data dump of the request
       </div>
       <hr />
-      <pre className="dump">{JSON.stringify(dump)}</pre>
+      <pre className="dump" data-page={JSON.stringify(dump, null)}>
+        {JSON.stringify(dump, null, 2)}
+      </pre>
     </>
   )
 }

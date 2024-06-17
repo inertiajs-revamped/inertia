@@ -13,6 +13,15 @@ declare module '@inertiajs-revamped/react' {
   interface LayoutProps {
     // Define shared interface with module augmentation
   }
+
+  interface DumpProps extends PageProps {
+    headers: any
+    method: string
+    form: any
+    files: string[]
+    query: any
+    page: Page
+  }
 }
 
 export {}

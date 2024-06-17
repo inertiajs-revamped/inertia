@@ -14,6 +14,7 @@ describe('Inertia', () => {
 
   it('mounts the initial page', async () => {
     await app.navigate('/')
+
     const entryText = await app.page
       .locator('span.text')
       .map((el) => el.textContent)

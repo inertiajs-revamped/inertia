@@ -28,7 +28,9 @@ app.all('/non-inertia', (_req, res) =>
 app.get('/', async (req, res) => {
   await inertia(req, res, {
     component: 'home',
-    props: {},
+    props: {
+      example: 'FooBar',
+    },
   })
 })
 
@@ -291,7 +293,7 @@ app.post(
   '/events/errors',
   async (req, res) =>
     await inertia(req, res, {
-      component: 'Events',
+      component: 'events',
       props: { errors: { foo: 'bar' } },
     })
 )
@@ -349,9 +351,9 @@ async function inertia(req: Request, res: Response, data?: Partial<Page>) {
       )
       .reduce((carry, key) => {
         carry[key] =
-          typeof data.props[key] === 'function'
-            ? data.props[key](data.props)
-            : data.props[key]
+          typeof page.props[key] === 'function'
+            ? page.props[key](page.props)
+            : page.props[key]
 
         return carry
       }, {})

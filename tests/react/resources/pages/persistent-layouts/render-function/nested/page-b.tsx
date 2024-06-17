@@ -1,4 +1,4 @@
-import { Link, withLayout } from '@inertiajs-revamped/react'
+import { Link } from '@inertiajs-revamped/react'
 import NestedLayout from '../../../../layouts/nested-layout'
 import SiteLayout from '../../../../layouts/site-layout'
 
@@ -13,6 +13,6 @@ function PageB() {
   )
 }
 
-PageB.layout = [withLayout(SiteLayout), withLayout(NestedLayout)]
+PageB.layout = [SiteLayout, NestedLayout]
 
 export default PageB

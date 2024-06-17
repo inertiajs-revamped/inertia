@@ -19,7 +19,7 @@ export default function () {
   }
 
   const deleteForm = () => {
-    form.post('/dump/delete')
+    form.delete('/dump/delete')
   }
 
   return (

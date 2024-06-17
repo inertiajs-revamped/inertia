@@ -1,41 +1,27 @@
-/* import { type Browser, type Page, launch } from 'puppeteer'
-import { afterAll, beforeAll, describe, expect, it } from 'vitest'
+import { afterAll, beforeAll, beforeEach, describe, it } from 'vitest'
+import { type App, start } from './helper'
 
-describe('Error Modal', () => {
-  let page: Page
-  let browser: Browser
+describe('Inertia', () => {
+  let app: App
 
   beforeAll(async () => {
-    browser = await launch({
-      args: ['--no-sandbox', '--disable-setuid-sandbox'],
-    })
-    page = await browser.newPage()
+    app = await start()
+  })
+
+  beforeEach(async () => {
+    app.page.once('load', () =>
+      app.page.on('window:load', () => {
+        alert('A location/non-SPA visit was detected')
+      })
+    )
+    await app.navigate('/error-modal')
   })
 
   afterAll(async () => {
-    await browser.close()
+    await app.stop()
   })
 
   it('displays the modal containing the response as HTML when an invalid Inertia response comes back', async () => {
-    await page.goto('http://127.0.0.1:12345/error-modal', {
-      waitUntil: 'domcontentloaded',
-    })
-
-    await Promise.all([page.click('span.invalid-visit')])
-
-    const iframe = await page.waitForSelector('iframe')
-
-    console.log(iframe)
+    //await app.page.locator('span.invalid-visit').click()
   })
-})
- */
-
-import { expect, it } from 'vitest'
-
-function sum(a: number, b: number) {
-  return a + b
-}
-
-it('add 2 numbers', () => {
-  expect(sum(2, 3)).toEqual(5)
 })

@@ -200,9 +200,9 @@ describe('Remember (local state caching)', () => {
       await app.page.locator('input#remember').click()
       await app.page.locator('input#untracked').fill('C')
 
-      expect(await app.page.$('.name_error')).toStrictEqual(null)
-      expect(await app.page.$('.handle_error')).toStrictEqual(null)
-      expect(await app.page.$('.remember_error')).toStrictEqual(null)
+      expect(await app.page.$('.name_error')).toBeNull()
+      expect(await app.page.$('.handle_error')).toBeNull()
+      expect(await app.page.$('.remember_error')).toBeNull()
 
       await app.page.click('.submit')
       await app.page.waitForNavigation()
@@ -211,7 +211,7 @@ describe('Remember (local state caching)', () => {
       expect(await evalText(app.page, '.handle_error')).toEqual(
         'The Handle was invalid'
       )
-      expect(await app.page.$('.remember_error')).toStrictEqual(null)
+      expect(await app.page.$('.remember_error')).toBeNull()
     })
 
     it('remembers form data when tracked', async () => {
@@ -252,9 +252,9 @@ describe('Remember (local state caching)', () => {
       await app.page.locator('input#remember').click()
       await app.page.locator('input#untracked').fill('C')
 
-      expect(await app.page.$('.name_error')).toStrictEqual(null)
-      expect(await app.page.$('.handle_error')).toStrictEqual(null)
-      expect(await app.page.$('.remember_error')).toStrictEqual(null)
+      expect(await app.page.$('.name_error')).toBeNull()
+      expect(await app.page.$('.handle_error')).toBeNull()
+      expect(await app.page.$('.remember_error')).toBeNull()
 
       await app.page.click('.submit')
       await app.page.waitForNavigation()
@@ -263,7 +263,7 @@ describe('Remember (local state caching)', () => {
       expect(await evalText(app.page, '.handle_error')).toEqual(
         'The Handle was invalid'
       )
-      expect(await app.page.$('.remember_error')).toStrictEqual(null)
+      expect(await app.page.$('.remember_error')).toBeNull()
 
       await app.page.locator('.link').click()
       await app.page.waitForResponse(`${BASE_URL}/dump/get`)
@@ -284,7 +284,7 @@ describe('Remember (local state caching)', () => {
       expect(await evalText(app.page, '.handle_error')).toEqual(
         'The Handle was invalid'
       )
-      expect(await app.page.$('.remember_error')).toStrictEqual(null)
+      expect(await app.page.$('.remember_error')).toBeNull()
     })
 
     it('remembers the last state of a form when tracked', async () => {
@@ -314,7 +314,7 @@ describe('Remember (local state caching)', () => {
       expect(await evalText(app.page, '.handle_error')).toEqual(
         'The Handle was invalid'
       )
-      expect(await app.page.$('.remember_error')).toStrictEqual(null)
+      expect(await app.page.$('.remember_error')).toBeNull()
 
       await app.page.click('.reset-one')
       expect(await evalTextInput(app.page, '#name')).toEqual('A')
@@ -347,7 +347,7 @@ describe('Remember (local state caching)', () => {
       expect(await evalText(app.page, '.handle_error')).toEqual(
         'The Handle was invalid'
       )
-      expect(await app.page.$('.remember_error')).toStrictEqual(null)
+      expect(await app.page.$('.remember_error')).toBeNull()
     })
   })
 })

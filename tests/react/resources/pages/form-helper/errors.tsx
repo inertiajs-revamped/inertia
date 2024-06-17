@@ -23,7 +23,7 @@ export default function () {
     form.setError({
       name: 'Manually set Name error',
       handle: 'Manually set Handle error',
-      remember: 'Manually set remember error',
+      remember: '',
     })
   }
 
