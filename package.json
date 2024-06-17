@@ -30,7 +30,7 @@
     "build:vue": "pnpm --filter=vue build",
     "build:vite": "pnpm --filter=vite build",
     "test": "NODE_OPTIONS=\"--no-deprecation\" start-server-and-test server:run http:\\/\\/localhost\\:13714 test:run",
-    "test:run": "LARAVEL_BYPASS_ENV_CHECK=\"1\" vitest",
+    "test:run": "LARAVEL_BYPASS_ENV_CHECK=\"1\" vitest run",
     "server:run": "pnpm --filter=react-test dev",
     "sandbox": "pnpm build && node ./.scripts/init-sandbox.mjs",
     "sandbox:build:preact": "pnpm --filter=sandbox-preact build:prod",
