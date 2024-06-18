@@ -4,7 +4,7 @@ export default function () {
   return (
     <>
       <span className="text">
-        This is the links page that demonstrates Link methods
+        This is the links page that demonstrates inertia-link methods
       </span>
 
       <Link method={'get'} href="/dump/get" className="get">

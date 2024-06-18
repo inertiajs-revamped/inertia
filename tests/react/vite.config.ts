@@ -28,6 +28,7 @@ export default defineConfig({
   test: {
     name: '@inertiajs-revamped/react-test',
     isolate: false,
+    environment: 'jsdom',
     pool: 'threads',
     poolOptions: {
       threads: {

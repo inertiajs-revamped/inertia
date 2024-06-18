@@ -1,12 +1,16 @@
 import { Link, router, usePage } from '@inertiajs-revamped/react'
-import { useState } from 'react'
+
+export const tap = (value: any, callback: (value: any) => void) => {
+  callback(value)
+  return value
+}
 
 export default function () {
   const { url } = usePage()
 
-  const [payloadWithFile, setPayloadWithFile] = useState({
+  const payloadWithFile = {
     file: new File(['foobar'], 'example.bin'),
-  })
+  }
 
   const alert = (...args: any[]) => {
     args.forEach((arg) => alert(arg))
@@ -215,6 +219,7 @@ export default function () {
       {},
       {
         onCancelToken: (token) => token.cancel(),
+        // @ts-expect-error
         onCancel: (event) => {
           alert('onCancel')
           alert(event)
@@ -332,6 +337,7 @@ export default function () {
       '/non-inertia',
       {},
       {
+        // @ts-expect-error
         onInvalid: () => alert('This listener should not have been called.'),
       }
     )
@@ -353,6 +359,7 @@ export default function () {
         '/disconnect',
         {},
         {
+          // @ts-expect-error
           onException: () =>
             alert('This listener should not have been called.'),
         }
@@ -375,6 +382,7 @@ export default function () {
       '/',
       {},
       {
+        // @ts-expect-error
         onNavigate: () => alert('This listener should not have been called.'),
       }
     )
@@ -382,6 +390,7 @@ export default function () {
 
   const registerAllListeners = () => {
     router.on('before', () => alert('Inertia.on(before)'))
+    // @ts-expect-error
     router.on('cancelToken', () => alert('Inertia.on(cancelToken)'))
     router.on('cancel', () => alert('Inertia.on(cancel)'))
     router.on('start', () => alert('Inertia.on(start)'))
@@ -511,6 +520,7 @@ export default function () {
         href={url}
         method="post"
         /* onBefore={(visit) => alert('linkOnBefore', visit)} */
+        onBefore={() => alert('linkOnBefore')}
         onStart={() => alert('linkOnStart')}
         className="link-before"
       >
@@ -520,6 +530,7 @@ export default function () {
         href={url}
         method="post"
         /* onBefore="(visit) => tap(false, alert('linkOnBefore'))" */
+        onBefore={() => tap(false, () => alert('linkOnBefore'))}
         onStart={() => alert('This listener should not have been called.')}
         className="link-before-prevent-local"
       >
@@ -544,7 +555,7 @@ export default function () {
       <Link
         href={url}
         method="post"
-        /* cancelToken={(event) => alert('linkOnCancelToken', event)} */
+        onCancelToken={(event) => alert('linkOnCancelToken', event)}
         className="link-canceltoken"
       >
         Cancel Token Event Link
@@ -556,8 +567,9 @@ export default function () {
       <Link
         href={url}
         method="post"
-        /* cancelToken={(token) => token.cancel()}
-      onCancel={(event) => alert('linkOnCancel', event)} */
+        onCancelToken={(token) => token.cancel()}
+        /* onCancel={(event) => alert('linkOnCancel', event)} */
+        onCancel={() => alert('linkOnCancel')}
         className="link-cancel"
       >
         Cancel Event Link
@@ -568,7 +580,9 @@ export default function () {
       </span>
       <Link
         href={url}
-        method="post" /* onStart={(event) => alert('linkOnStart', event)} */
+        method="post"
+        /* onStart={(event) => alert('linkOnStart', event)} */
+        onStart={() => alert('linkOnStart')}
         className="link-start"
       >
         Start Event Link
@@ -608,7 +622,8 @@ export default function () {
       <Link
         href="/events/errors"
         method="post"
-        /*  error={(errors) => alert('linkOnError', errors)} */
+        /* error={(errors) => alert('linkOnError', errors)} */
+        onError={() => alert('linkOnError')}
         onSuccess={() => alert('This listener should not have been called')}
         className="link-error"
       >
@@ -636,6 +651,7 @@ export default function () {
         method="post"
         onError={() => alert('This listener should not have been called')}
         /* onSuccess={(event) => alert('linkOnSuccess', event)} */
+        onSuccess={() => alert('linkOnSuccess')}
         className="link-success"
       >
         Success Event Link
@@ -664,7 +680,9 @@ export default function () {
       </span>
       <Link
         href={url}
-        method="post" /* onFinish={(event) => alert('linkOnFinish', event)} */
+        method="post"
+        /* onFinish={(event) => alert('linkOnFinish', event)} */
+        onFinish={() => alert('linkOnFinish')}
         className="link-finish"
       >
         Finish Event Link

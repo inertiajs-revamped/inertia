@@ -22,11 +22,6 @@ describe('Form Helper', () => {
 
   describe('Methods', () => {
     beforeEach(async () => {
-      app.page.once('load', () =>
-        app.page.on('window:load', () => {
-          alert('A location/non-SPA visit was detected')
-        })
-      )
       await app.navigate('/form-helper/methods')
       expect(app.page.url()).toEqual(`${BASE_URL}/form-helper/methods`)
 
@@ -178,11 +173,6 @@ describe('Form Helper', () => {
 
   describe('Errors', () => {
     beforeEach(async () => {
-      app.page.once('load', () =>
-        app.page.on('window:load', () => {
-          alert('A location/non-SPA visit was detected')
-        })
-      )
       await app.navigate('/form-helper/errors')
       expect(app.page.url()).toEqual(`${BASE_URL}/form-helper/errors`)
 
@@ -351,11 +341,6 @@ describe('Form Helper', () => {
 
   describe('Data', () => {
     beforeEach(async () => {
-      app.page.once('load', () =>
-        app.page.on('window:load', () => {
-          alert('A location/non-SPA visit was detected')
-        })
-      )
       await app.navigate('/form-helper/data')
       expect(app.page.url()).toEqual(`${BASE_URL}/form-helper/data`)
     })
@@ -463,6 +448,125 @@ describe('Form Helper', () => {
         'The Handle was invalid'
       )
       expect(await app.page.$('.remember_error')).toBeNull()
+    })
+
+    describe('Update "reset" defaults', () => {
+      beforeEach(async () => {
+        await app.page.waitForNavigation()
+        expect(await evalTextInput(app.page, '#name')).toEqual('foo')
+        expect(await evalTextInput(app.page, '#handle')).toEqual('example')
+        expect(await evalCheckbox(app.page, '#remember')).toEqual(false)
+      })
+
+      it('can assign the current values as the new defaults', async () => {
+        await app.page.locator('input#name').fill('A')
+        await app.page.locator('input#handle').fill('B')
+        await app.page.locator('input#remember').click()
+
+        await app.page.locator('.reassign').click()
+
+        await app.page.locator('input#name').fill('foo')
+        await app.page.locator('input#handle').fill('example')
+        await app.page.locator('input#remember').click()
+
+        expect(await evalTextInput(app.page, '#name')).toEqual('foo')
+        expect(await evalTextInput(app.page, '#handle')).toEqual('example')
+        expect(await evalCheckbox(app.page, '#remember')).toEqual(false)
+
+        await app.page.locator('.reset').click()
+
+        expect(await evalTextInput(app.page, '#name')).toEqual('A')
+        expect(await evalTextInput(app.page, '#handle')).toEqual('B')
+        expect(await evalCheckbox(app.page, '#remember')).toEqual(true)
+      })
+
+      it('can assign new defaults for multiple fields', async () => {
+        await app.page.locator('.reassign-object').click()
+
+        expect(await evalTextInput(app.page, '#name')).toEqual('foo')
+        expect(await evalTextInput(app.page, '#handle')).toEqual('example')
+        expect(await evalCheckbox(app.page, '#remember')).toEqual(false)
+
+        await app.page.locator('.reset-one').click()
+
+        expect(await evalTextInput(app.page, '#name')).toEqual('foo')
+        expect(await evalTextInput(app.page, '#handle')).toEqual(
+          'updated handle'
+        )
+        expect(await evalCheckbox(app.page, '#remember')).toEqual(false)
+
+        await app.page.locator('.reset').click()
+
+        expect(await evalTextInput(app.page, '#name')).toEqual('foo')
+        expect(await evalTextInput(app.page, '#handle')).toEqual(
+          'updated handle'
+        )
+        expect(await evalCheckbox(app.page, '#remember')).toEqual(true)
+      })
+
+      it('can assign new default for a single field', async () => {
+        await app.page.locator('.reassign-single').click()
+
+        expect(await evalTextInput(app.page, '#name')).toEqual('foo')
+        expect(await evalTextInput(app.page, '#handle')).toEqual('example')
+        expect(await evalCheckbox(app.page, '#remember')).toEqual(false)
+
+        await app.page.locator('.reset').click()
+
+        expect(await evalTextInput(app.page, '#name')).toEqual('single value')
+        expect(await evalTextInput(app.page, '#handle')).toEqual('example')
+        expect(await evalCheckbox(app.page, '#remember')).toEqual(false)
+      })
+    })
+  })
+
+  // todo
+  describe('Events', () => {
+    beforeEach(async () => {})
+
+    describe('onBefore', () => {
+      it('fires when a request is about to be made', async () => {})
+
+      it('can prevent the visit from starting by returning false', async () => {})
+
+      it('will reset the successful and recently successful statuses immediately when the form gets (re)submitted', async () => {})
+    })
+
+    describe('onStart', () => {
+      it('fires when the request has started', async () => {})
+      it('marks the form as processing', async () => {})
+    })
+
+    describe('onProgress', () => {
+      it('fires when the form has files (and upload progression occurs)', async () => {})
+      it('does not fire when the form has no files', async () => {})
+      it('updates the progress property of the form', async () => {})
+    })
+
+    describe('onCancel', () => {
+      it('fires when the request was cancelled', async () => {})
+    })
+
+    describe('onSuccess', () => {
+      it('fires the request succeeds without validation errors', async () => {})
+      it('marks the form as no longer processing', async () => {})
+      it('resets the progress property back to null', async () => {})
+      it('can delay onFinish from firing by returning a promise', async () => {})
+      it('clears all existing errors and resets the hasErrors prop', async () => {})
+      it('will mark the form as being submitted successfully', async () => {})
+      it('will only mark the form as "recently successful" for two seconds', async () => {})
+    })
+
+    describe('onError', () => {
+      it('fires when the request finishes with validation errors', async () => {})
+      it('marks the form as no longer processing', async () => {})
+      it('resets the progress property back to null', async () => {})
+      it('sets form errors', async () => {})
+      it('can delay onFinish from firing by returning a promise', async () => {})
+    })
+
+    describe('onFinish', () => {
+      it('fires when the request is completed', async () => {})
     })
   })
 })
