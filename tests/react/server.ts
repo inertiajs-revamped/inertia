@@ -21,8 +21,10 @@ app.use(vite.middlewares)
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
 
-app.all('/non-inertia', (_req, res) =>
-  res.send('This is a page that does not have the Inertia app loaded.')
+app.all('/non-inertia', async (_req, res) =>
+  res
+    .status(500)
+    .send('This is a page that does not have the Inertia app loaded.')
 )
 
 app.get('/', async (req, res) => {
