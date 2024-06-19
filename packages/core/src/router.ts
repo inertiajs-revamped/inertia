@@ -1,4 +1,4 @@
-import { default as Axios, type AxiosResponse, isAxiosError } from 'axios'
+import { default as Axios, type AxiosResponse } from 'axios'
 import { debounce } from './debounce'
 import {
   fireBeforeEvent,
@@ -516,29 +516,25 @@ export class Router {
         fireSuccessEvent(this.page)
         return onSuccess(this.page)
       })
-      .catch((error: Error) => {
-        if (isAxiosError(error)) {
-          if (this.isInertiaResponse(error.response)) {
-            return this.setPage(error.response?.data, { visitId })
-          } else if (this.isLocationVisitResponse(error.response)) {
-            const locationUrl = hrefToUrl(
-              error.response?.headers['x-inertia-location']
-            )
-            const requestUrl = url
-            if (
-              requestUrl.hash &&
-              !locationUrl.hash &&
-              urlWithoutHash(requestUrl).href === locationUrl.href
-            ) {
-              locationUrl.hash = requestUrl.hash
-            }
-            this.locationVisit(locationUrl, preserveScroll === true)
-          } else if (error.response) {
-            if (fireInvalidEvent(error.response)) {
-              modal.show(error.response.data)
-            }
-          } else {
-            return Promise.reject(error)
+      .catch((error) => {
+        if (this.isInertiaResponse(error.response)) {
+          return this.setPage(error.response?.data, { visitId })
+        } else if (this.isLocationVisitResponse(error.response)) {
+          const locationUrl = hrefToUrl(
+            error.response?.headers['x-inertia-location']
+          )
+          const requestUrl = url
+          if (
+            requestUrl.hash &&
+            !locationUrl.hash &&
+            urlWithoutHash(requestUrl).href === locationUrl.href
+          ) {
+            locationUrl.hash = requestUrl.hash
+          }
+          this.locationVisit(locationUrl, preserveScroll === true)
+        } else if (error.response) {
+          if (fireInvalidEvent(error.response)) {
+            modal.show(error.response.data)
           }
         } else {
           return Promise.reject(error)
