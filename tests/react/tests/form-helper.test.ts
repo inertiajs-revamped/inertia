@@ -95,11 +95,6 @@ describe('Form Helper', () => {
 
   describe('Transform', () => {
     beforeEach(async () => {
-      app.page.once('load', () =>
-        app.page.on('window:load', () => {
-          alert('A location/non-SPA visit was detected')
-        })
-      )
       await app.navigate('/form-helper/transform')
       expect(app.page.url()).toEqual(`${BASE_URL}/form-helper/transform`)
 

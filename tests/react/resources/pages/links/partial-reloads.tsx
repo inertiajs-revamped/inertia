@@ -16,7 +16,9 @@ export default function ({ foo = 0, bar, baz, headers }: PartialReloadsProps) {
       <span className="foo-text">Foo is now {foo}</span>
       <span className="bar-text">Bar is now {bar}</span>
       <span className="baz-text">Baz is now {baz}</span>
-      <pre className="headers">{headers}</pre>
+      <pre className="headers" data-page={JSON.stringify(headers, null)}>
+        {JSON.stringify(headers, null, 2)}
+      </pre>
 
       <Link href="/links/partial-reloads" data={{ foo }} className="all">
         Update All

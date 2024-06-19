@@ -26,7 +26,7 @@ export async function start(): Promise<App> {
     navigate: async (path: string) => {
       let url = new URL(path, BASE_URL)
       await page.goto(url.toString(), {
-        waitUntil: 'domcontentloaded',
+        waitUntil: 'load',
       })
     },
     stop: async () => {
@@ -35,6 +35,21 @@ export async function start(): Promise<App> {
   }
 }
 
+export const getInputValue = async function (page: Page, selector: string) {
+  return await page
+    .locator(`input${selector}` as 'input')
+    .map((el) => el.value)
+    .wait()
+}
+
+export const getTextValue = async function (page: Page, selector: string) {
+  return await page
+    .locator(selector as 'span')
+    .map((el) => el.textContent)
+    .wait()
+}
+
+/** @deprecated */
 export const evalTextInput = async (page: Page, selector: string) => {
   const text = await page.evaluate((selector) => {
     return document.querySelector<HTMLInputElement>(selector)?.value

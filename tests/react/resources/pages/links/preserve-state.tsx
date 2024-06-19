@@ -22,35 +22,35 @@ export default function ({ foo = 'default' }) {
       </label>
 
       <Link
-        href="/links/preserve-state-page-two"
-        preserve-state
-        data={{ foo: 'bar' }}
         className="preserve"
+        href="/links/preserve-state-page-two"
+        data={{ foo: 'bar' }}
+        preserveState
       >
         [State] Preserve: true
       </Link>
       <Link
-        href="/links/preserve-state-page-two"
-        preserveState={false}
-        data={{ foo: 'baz' }}
         className="preserve-false"
+        href="/links/preserve-state-page-two"
+        data={{ foo: 'baz' }}
+        preserveState={false}
       >
         [State] Preserve: false
       </Link>
 
       <Link
-        href="/links/preserve-state-page-two"
-        preserveState={preserveCallback}
-        data={{ foo: 'callback-bar' }}
         className="preserve-callback"
+        href="/links/preserve-state-page-two"
+        data={{ foo: 'callback-bar' }}
+        preserveState={preserveCallback}
       >
         [State] Preserve Callback: true
       </Link>
       <Link
-        href="/links/preserve-state-page-two"
-        preserveState={preserveCallbackFalse}
-        data={{ foo: 'callback-baz' }}
         className="preserve-callback-false"
+        href="/links/preserve-state-page-two"
+        data={{ foo: 'callback-baz' }}
+        preserveState={preserveCallbackFalse}
       >
         [State] Preserve Callback: false
       </Link>
