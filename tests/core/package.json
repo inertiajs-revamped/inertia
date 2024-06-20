@@ -7,7 +7,7 @@
   "devDependencies": {
     "@inertiajs-revamped/core": "workspace:*",
     "@types/jsdom": "^21.1.7",
-    "@types/node": "^20.14.2",
+    "@types/node": "^20.14.6",
     "formdata-node": "^6.0.3",
     "jsdom": "^24.1.0"
   }

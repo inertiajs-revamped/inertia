@@ -87,7 +87,7 @@
     "vue": "^3.4.29"
   },
   "devDependencies": {
-    "@types/node": "^20.14.2",
+    "@types/node": "^20.14.6",
     "@vue/runtime-core": "^3.4.29"
   },
   "peerDependencies": {

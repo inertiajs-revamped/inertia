@@ -79,7 +79,7 @@
     "ts-deepmerge": "^7.0.0"
   },
   "devDependencies": {
-    "@types/node": "^20.14.2"
+    "@types/node": "^20.14.6"
   },
   "peerDependencies": {
     "axios": ">=1.7.2"
