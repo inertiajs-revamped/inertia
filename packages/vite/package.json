@@ -45,7 +45,7 @@
     "build": "pkgroll --clean-dist --target=es2020 --minify"
   },
   "devDependencies": {
-    "@types/node": "^20.14.6"
+    "@types/node": "^20.14.8"
   },
   "peerDependencies": {
     "laravel-vite-plugin": "1.0.4",
