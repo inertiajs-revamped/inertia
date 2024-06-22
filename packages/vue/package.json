@@ -84,14 +84,14 @@
     "@inertiajs-revamped/core": "workspace:*",
     "@inertiajs-revamped/vite": "workspace:*",
     "fast-equals": "^5.0.1",
-    "vue": "^3.4.29"
+    "vue": "^3.4.30"
   },
   "devDependencies": {
     "@types/node": "^20.14.8",
-    "@vue/runtime-core": "^3.4.29"
+    "@vue/runtime-core": "^3.4.30"
   },
   "peerDependencies": {
-    "vue": ">=3.4.29"
+    "vue": ">=3.4.30"
   },
   "engines": {
     "node": ">=18.12.0"
