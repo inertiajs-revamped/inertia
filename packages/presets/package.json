@@ -17,7 +17,7 @@
   "type": "module",
   "devDependencies": {
     "@preset/core": "^0.11.3",
-    "@types/node": "^20.14.8"
+    "@types/node": "^20.14.9"
   },
   "publishConfig": {
     "access": "restricted"

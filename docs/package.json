@@ -22,7 +22,7 @@
     "preview": "vitepress preview"
   },
   "devDependencies": {
-    "@types/node": "^20.14.8",
+    "@types/node": "^20.14.9",
     "@vueuse/core": "^10.11.0",
     "terser": "^5.31.1",
     "vite": "^5.3.1",
