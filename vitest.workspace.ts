@@ -1,3 +1,3 @@
 import { defineWorkspace } from 'vitest/config'
 
-export default defineWorkspace(['tests/*'])
+export default defineWorkspace(['integration/*'])
