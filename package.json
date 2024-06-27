@@ -64,5 +64,10 @@
     "*": "biome format . --write"
   },
   "packageManager": "pnpm@9.4.0",
+  "pnpm": {
+    "patchedDependencies": {
+      "pkgroll@2.1.1": ".github/patches/pkgroll@2.1.1.patch"
+    }
+  },
   "preset": "./packages/presets/preset.ts"
 }

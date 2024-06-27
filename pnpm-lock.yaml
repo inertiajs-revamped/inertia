@@ -4,6 +4,11 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
+patchedDependencies:
+  pkgroll@2.1.1:
+    hash: d5onzgqjjg5fjwjd7mvclpqdxq
+    path: .github/patches/pkgroll@2.1.1.patch
+
 importers:
 
   .:
@@ -40,7 +45,7 @@ importers:
         version: 0.8.0
       pkgroll:
         specifier: ^2.1.1
-        version: 2.1.1(typescript@5.5.2)
+        version: 2.1.1(patch_hash=d5onzgqjjg5fjwjd7mvclpqdxq)(typescript@5.5.2)
       semver:
         specifier: ^7.6.2
         version: 7.6.2
@@ -106,7 +111,7 @@ importers:
         version: 6.9.15
       axios:
         specifier: '>=1.7.2'
-        version: 1.7.2(debug@4.3.5)
+        version: 1.7.2
       nprogress:
         specifier: ^0.2.0
         version: 0.2.0
@@ -3163,15 +3168,6 @@ snapshots:
       proxy-from-env: 1.1.0
     transitivePeerDependencies:
       - debug
-    optional: true
-
-  axios@1.7.2(debug@4.3.5):
-    dependencies:
-      follow-redirects: 1.15.6(debug@4.3.5)
-      form-data: 4.0.0
-      proxy-from-env: 1.1.0
-    transitivePeerDependencies:
-      - debug
 
   balanced-match@1.0.2: {}
 
@@ -3467,12 +3463,7 @@ snapshots:
     dependencies:
       tabbable: 6.2.0
 
-  follow-redirects@1.15.6:
-    optional: true
-
-  follow-redirects@1.15.6(debug@4.3.5):
-    optionalDependencies:
-      debug: 4.3.5
+  follow-redirects@1.15.6: {}
 
   form-data-encoder@2.1.4: {}
 
@@ -3914,7 +3905,7 @@ snapshots:
       mlly: 1.7.1
       pathe: 1.1.2
 
-  pkgroll@2.1.1(typescript@5.5.2):
+  pkgroll@2.1.1(patch_hash=d5onzgqjjg5fjwjd7mvclpqdxq)(typescript@5.5.2):
     dependencies:
       '@rollup/plugin-alias': 5.1.0(rollup@4.18.0)
       '@rollup/plugin-commonjs': 25.0.8(rollup@4.18.0)
