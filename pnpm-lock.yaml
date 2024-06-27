@@ -14,7 +14,7 @@ importers:
   .:
     devDependencies:
       '@biomejs/biome':
-        specifier: ^1.8.2
+        specifier: ^1.8.3
         version: 1.8.3
       '@bscotch/workspaces':
         specifier: ^0.3.0
