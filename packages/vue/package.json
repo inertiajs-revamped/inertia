@@ -1,6 +1,6 @@
 {
   "name": "@inertiajs-revamped/vue",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "The Vue adapter for Inertia.js-Revamped",
   "keywords": [
     "inertia",
