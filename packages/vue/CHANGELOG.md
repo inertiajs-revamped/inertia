@@ -1,5 +1,29 @@
 # Changelog - @inertiajs-revamped/vue
 
+## 0.0.8 (2024-06-28)
+
+### Features
+
+- add vite-plugin ([da48d53](https://github.com/inertiajs-revamped/inertia/commit/da48d53))
+
+### Code Refactoring
+
+- replace `structuredClone` with @visulima/deep-clone ([1cedc4e](https://github.com/inertiajs-revamped/inertia/commit/1cedc4e))
+- move structured-clone to vue package ([e185cc9](https://github.com/inertiajs-revamped/inertia/commit/e185cc9))
+
+### Bug Fixes
+
+- revalidate `isDirty` when using `defaults` (based on [inertia/pull/1748](https://github.com/inertiajs/inertia/pull/1748)) ([378fa63](https://github.com/inertiajs-revamped/inertia/commit/378fa63))
+
+### Builds
+
+- update dependency @types/node to ^20.14.9 ([ec36814](https://github.com/inertiajs-revamped/inertia/commit/ec36814))
+- update vue monorepo to ^3.4.30 ([9a391c5](https://github.com/inertiajs-revamped/inertia/commit/9a391c5))
+- update dependency @types/node to ^20.14.8 ([aff9dc4](https://github.com/inertiajs-revamped/inertia/commit/aff9dc4))
+- update dependency @types/node to ^20.14.6 ([f4da004](https://github.com/inertiajs-revamped/inertia/commit/f4da004))
+- update vue monorepo to ^3.4.29 ([7c964d5](https://github.com/inertiajs-revamped/inertia/commit/7c964d5))
+- update dependency @types/node to ^20.14.2 ([bdc0617](https://github.com/inertiajs-revamped/inertia/commit/bdc0617))
+
 ## 0.0.7 (2024-06-03)
 
 ### Builds

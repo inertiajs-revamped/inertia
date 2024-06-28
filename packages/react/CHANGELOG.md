@@ -1,5 +1,18 @@
 # Changelog - @inertiajs-revamped/react
 
+## 0.0.7 (2024-06-27)
+
+### Features
+
+- add vite-plugin ([011f300](https://github.com/inertiajs-revamped/inertia/commit/011f300))
+
+### Builds
+
+- update dependency @types/node to ^20.14.9 ([ec36814](https://github.com/inertiajs-revamped/inertia/commit/ec36814))
+- update dependency @types/node to ^20.14.8 ([aff9dc4](https://github.com/inertiajs-revamped/inertia/commit/aff9dc4))
+- update dependency @types/node to ^20.14.6 ([f4da004](https://github.com/inertiajs-revamped/inertia/commit/f4da004))
+- update dependency @types/node to ^20.14.2 ([bdc0617](https://github.com/inertiajs-revamped/inertia/commit/bdc0617))
+
 ## 0.0.6 (2024-06-03)
 
 ### Builds

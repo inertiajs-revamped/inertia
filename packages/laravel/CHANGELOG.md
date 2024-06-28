@@ -1,5 +1,11 @@
 # Changelog - @inertiajs-revamped/laravel
 
+## 0.0.5 (2024-05-28)
+
+### Bug Fixes
+
+- fix `resource_path` to use new convention ([d9f284a](https://github.com/inertiajs-revamped/inertia/commit/d9f284a))
+
 ## 0.0.4 (2024-05-17)
 
 ### Features

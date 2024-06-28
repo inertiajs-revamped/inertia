@@ -1,5 +1,28 @@
 # Changelog - @inertiajs-revamped/core
 
+## 0.0.7 (2024-06-27)
+
+### Code Refactoring
+
+- move structured-clone to vue package ([e185cc9](https://github.com/inertiajs-revamped/inertia/commit/e185cc9))
+- replace deepmerge with ts-deepmerge ([36f92e1](https://github.com/inertiajs-revamped/inertia/commit/36f92e1))
+
+### Bug Fixes
+
+- improve axios response types ([260c13b](https://github.com/inertiajs-revamped/inertia/commit/260c13b))
+
+### Reverts
+
+- revert check for axios error ([9d5fdb5](https://github.com/inertiajs-revamped/inertia/commit/9d5fdb5))
+- fix deepmerge properties (based on [inertia/pull/1895](https://github.com/inertiajs/inertia/pull/1895)) ([c25e0f6](https://github.com/inertiajs-revamped/inertia/commit/c25e0f6))
+
+### Builds
+
+- update dependency @types/node to ^20.14.9 ([ec36814](https://github.com/inertiajs-revamped/inertia/commit/ec36814))
+- update dependency @types/node to ^20.14.8 ([aff9dc4](https://github.com/inertiajs-revamped/inertia/commit/aff9dc4))
+- update dependency @types/node to ^20.14.6 ([f4da004](https://github.com/inertiajs-revamped/inertia/commit/f4da004))
+- update dependency @types/node to ^20.14.2 ([bdc0617](https://github.com/inertiajs-revamped/inertia/commit/bdc0617))
+
 ## 0.0.6 (2024-06-03)
 
 ### Bug Fixes
