@@ -22,6 +22,7 @@
     "preview": "vitepress preview"
   },
   "devDependencies": {
+    "@lib/tsconfig": "workspace:*",
     "@types/node": "^20.14.9",
     "@vueuse/core": "^10.11.0",
     "@vueuse/shared": "^10.11.0",
@@ -33,5 +34,10 @@
   },
   "publishConfig": {
     "access": "restricted"
+  },
+  "devDependenciesMeta": {
+    "@lib/tsconfig": {
+      "optional": true
+    }
   }
 }

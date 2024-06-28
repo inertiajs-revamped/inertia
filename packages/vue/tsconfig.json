@@ -1,13 +1,6 @@
 {
   "$schema": "https://json.schemastore.org/tsconfig",
-  "display": "Node 18.12.0 Vue",
-  "extends": "../../tsconfig.json",
-  "compilerOptions": {
-    "jsx": "preserve",
-    "lib": ["DOM", "DOM.Iterable", "ES2020"],
-    "exactOptionalPropertyTypes": false,
-    "isolatedModules": true
-  },
+  "extends": "@lib/tsconfig/vue.json",
   "include": ["src"],
   "exclude": ["**/dist", "**/node_modules"]
 }

@@ -88,6 +88,7 @@
     "vue": "^3.4.30"
   },
   "devDependencies": {
+    "@lib/tsconfig": "workspace:*",
     "@types/node": "^20.14.9",
     "@vue/runtime-core": "^3.4.30"
   },
@@ -99,5 +100,10 @@
   },
   "publishConfig": {
     "access": "public"
+  },
+  "devDependenciesMeta": {
+    "@lib/tsconfig": {
+      "optional": true
+    }
   }
 }

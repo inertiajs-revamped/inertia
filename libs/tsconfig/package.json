@@ -1,0 +1,11 @@
+{
+  "name": "@lib/tsconfig",
+  "version": "0.0.0",
+  "private": true,
+  "license": "MIT",
+  "type": "module",
+  "files": ["base.json", "preact.json", "react.json", "vue.json"],
+  "publishConfig": {
+    "access": "restricted"
+  }
+}

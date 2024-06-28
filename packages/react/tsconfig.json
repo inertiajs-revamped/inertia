@@ -1,12 +1,6 @@
 {
   "$schema": "https://json.schemastore.org/tsconfig",
-  "display": "Node 18.12.0 React",
-  "extends": "../../tsconfig.json",
-  "compilerOptions": {
-    "jsx": "react-jsx",
-    "lib": ["DOM", "DOM.Iterable", "ES2020"],
-    "esModuleInterop": true
-  },
+  "extends": "@lib/tsconfig/react.json",
   "include": ["src"],
   "exclude": ["**/dist", "**/node_modules"]
 }

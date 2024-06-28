@@ -1,14 +1,23 @@
 {
   "name": "@inertiajs-revamped/core-test",
-  "version": "0.0.0-dev",
+  "version": "0.0.0",
   "private": true,
   "license": "MIT",
   "type": "module",
   "devDependencies": {
     "@inertiajs-revamped/core": "workspace:*",
+    "@lib/tsconfig": "workspace:*",
     "@types/jsdom": "^21.1.7",
     "@types/node": "^20.14.9",
     "formdata-node": "^6.0.3",
     "jsdom": "^24.1.0"
+  },
+  "publishConfig": {
+    "access": "restricted"
+  },
+  "devDependenciesMeta": {
+    "@lib/tsconfig": {
+      "optional": true
+    }
   }
 }

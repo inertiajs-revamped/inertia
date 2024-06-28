@@ -22,7 +22,7 @@
     "lint": "biome lint --write .",
     "fmt": "biome format . --write",
     "dev:docs": "pnpm --filter=docs dev",
-    "build": "pnpm \"--filter=./packages/*\" \"--filter=!laravel\" \"--filter=!presets\" --stream -r build",
+    "build": "pnpm \"--filter=./packages/*\" \"--filter=!presets\" --stream -r build",
     "build:docs": "pnpm --filter=docs build",
     "build:core": "pnpm --filter=core build",
     "build:preact": "pnpm --filter=preact build",

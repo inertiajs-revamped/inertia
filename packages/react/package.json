@@ -90,6 +90,7 @@
     "react-dom": "^18.3.1"
   },
   "devDependencies": {
+    "@lib/tsconfig": "workspace:*",
     "@types/node": "^20.14.9"
   },
   "peerDependencies": {
@@ -100,5 +101,10 @@
   },
   "publishConfig": {
     "access": "public"
+  },
+  "devDependenciesMeta": {
+    "@lib/tsconfig": {
+      "optional": true
+    }
   }
 }
