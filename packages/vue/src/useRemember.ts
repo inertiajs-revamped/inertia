@@ -1,6 +1,6 @@
 import { router } from '@inertiajs-revamped/core'
+import { deepClone } from '@visulima/deep-clone'
 import { type Ref, isReactive, reactive, ref, watch } from 'vue'
-import { getStructuredClone } from './structuredClone'
 
 export function useRemember<T extends object>(
   data: T & {
@@ -35,7 +35,7 @@ export function useRemember<T extends object>(
     remembered,
     (newValue) => {
       router.remember(
-        getStructuredClone(hasCallbacks ? data.__remember?.() : newValue),
+        deepClone(hasCallbacks ? data.__remember?.() : newValue),
         key
       )
     },

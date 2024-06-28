@@ -1,6 +1,6 @@
 import { router } from '@inertiajs-revamped/core'
+import { deepClone } from '@visulima/deep-clone'
 import type { ComponentOptions } from 'vue'
-import { getStructuredClone } from './structuredClone'
 
 export const remember: ComponentOptions = {
   created() {
@@ -66,7 +66,7 @@ export const remember: ComponentOptions = {
               // @ts-expect-error
               (data, key) => ({
                 ...data,
-                [key]: getStructuredClone(
+                [key]: deepClone(
                   hasCallbacks(key) ? this[key].__remember() : this[key]
                 ),
               }),
