@@ -1,8 +1,6 @@
 import { expect, test } from '@playwright/test'
 
-test.skip(() => process.env.UI !== 'react', 'react-only')
-
-test.describe('react-only data', () => {
+test.describe('data', () => {
   test.beforeEach(async ({ page }) => {
     await page.goto('/form-helper/data')
   })

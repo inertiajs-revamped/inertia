@@ -4,28 +4,28 @@
       Full Name
       <input type="text" id="name" name="name" v-model="form.name" />
     </label>
-    <span class="name_error" v-if="form.errors.name">{{ form.errors.name }}</span>
+    <span id="name_error" v-if="form.errors.name">{{ form.errors.name }}</span>
     <label>
       Handle
       <input type="text" id="handle" name="handle" v-model="form.handle" />
     </label>
-    <span class="handle_error" v-if="form.errors.handle">{{ form.errors.handle }}</span>
+    <span id="handle_error" v-if="form.errors.handle">{{ form.errors.handle }}</span>
     <label>
       Remember Me
       <input type="checkbox" id="remember" name="remember" v-model="form.remember" />
     </label>
-    <span class="remember_error" v-if="form.errors.remember">{{ form.errors.remember }}</span>
+    <span id="remember_error" v-if="form.errors.remember">{{ form.errors.remember }}</span>
 
-    <span @click="submit" class="submit">Submit form</span>
+    <span @click="submit" id="submit">Submit form</span>
 
-    <span @click="resetAll" class="reset">Reset all data</span>
-    <span @click="resetOne" class="reset-one">Reset one field</span>
+    <span @click="resetAll" id="reset">Reset all data</span>
+    <span @click="resetOne" id="reset-one">Reset one field</span>
 
-    <span @click="reassign" class="reassign">Reassign current as defaults</span>
-    <span @click="reassignObject" class="reassign-object">Reassign default values</span>
-    <span @click="reassignSingle" class="reassign-single">Reassign single default</span>
+    <span @click="reassign" id="reassign">Reassign current as defaults</span>
+    <span @click="reassignObject" id="reassign-object">Reassign default values</span>
+    <span @click="reassignSingle" id="reassign-single">Reassign single default</span>
 
-    <span class="errors-status">Form has {{ form.hasErrors ? '' : 'no ' }}errors</span>
+    <span id="errors-status">Form has {{ form.hasErrors ? '' : 'no ' }}errors</span>
   </div>
 </template>
 
