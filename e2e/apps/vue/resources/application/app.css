@@ -1,0 +1,23 @@
+body {
+  color: #F6F7F9;
+  background-color: #23272F;
+}
+
+a,
+a:visited,
+a:active {
+  color: #58C4DC;
+  text-decoration: none;
+}
+
+a:hover,
+a.is-active {
+  text-decoration: underline;
+}
+
+a,
+input,
+span {
+  display: block;
+  margin: 0.5rem 0;
+}

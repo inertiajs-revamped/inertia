@@ -28,6 +28,14 @@ cache/
 # Sandboxes directory
 sandboxes/
 
+# Playwright cache
+test-results/
+playwright-report/
+report-*/
+blob-report/
+playwright/.cache/
+
+
 # TypeScript cache
 *.tsbuildinfo
 

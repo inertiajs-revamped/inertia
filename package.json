@@ -30,6 +30,8 @@
     "build:vue": "pnpm --filter=vue build",
     "build:vite": "pnpm --filter=vite build",
     "test": "NODE_OPTIONS=\"--no-deprecation\" vitest run",
+    "test:react": "pnpm --filter=e2e test:react",
+    "test:vue": "pnpm --filter=e2e test:vue",
     "sandbox": "pnpm build && node ./.scripts/init-sandbox.mjs",
     "sandbox:build:preact": "pnpm --filter=sandbox-preact build:prod",
     "sandbox:build:react": "pnpm --filter=sandbox-react build:prod",
@@ -41,6 +43,7 @@
   "devDependencies": {
     "@biomejs/biome": "^1.8.3",
     "@bscotch/workspaces": "^0.3.0",
+    "@playwright/test": "^1.45.0",
     "@preset/cli": "^0.11.3",
     "@types/node": "^20.14.9",
     "@types/semver": "^7.5.8",

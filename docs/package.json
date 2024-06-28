@@ -30,7 +30,7 @@
     "vite": "^5.3.2",
     "vitepress": "^1.2.3",
     "vitepress-markdown-it-stepper": "^0.1.0",
-    "vue": "^3.4.30"
+    "vue": "^3.4.31"
   },
   "publishConfig": {
     "access": "restricted"

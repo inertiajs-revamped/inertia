@@ -1,0 +1,23 @@
+{
+  "name": "@inertiajs-revamped/e2e",
+  "version": "0.0.0",
+  "private": true,
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "test:react": "UI=react playwright test",
+    "test:react:ui": "UI=react playwright test --ui",
+    "test:react:repeat": "UI=react playwright test --repeat-each=5",
+    "test:vue": "UI=vue playwright test",
+    "test:vue:ui": "UI=vue playwright test --ui",
+    "test:vue:repeat": "UI=vue playwright test --repeat-each=5"
+  },
+  "devDependencies": {
+    "@lib/tsconfig": "workspace:*",
+    "@playwright/test": "^1.45.0",
+    "@types/node": "^20.14.9"
+  },
+  "publishConfig": {
+    "access": "restricted"
+  }
+}
