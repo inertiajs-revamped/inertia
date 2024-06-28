@@ -67,6 +67,9 @@ importers:
       '@vueuse/core':
         specifier: ^10.11.0
         version: 10.11.0(vue@3.4.30(typescript@5.5.2))
+      '@vueuse/shared':
+        specifier: ^10.11.0
+        version: 10.11.0(vue@3.4.30(typescript@5.5.2))
       terser:
         specifier: ^5.31.1
         version: 5.31.1
