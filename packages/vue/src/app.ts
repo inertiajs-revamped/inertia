@@ -20,7 +20,6 @@ import {
   ref,
   shallowRef,
 } from 'vue'
-import { remember } from './remember'
 import type { InertiaComponentType } from './types'
 import { useForm } from './useForm'
 
@@ -145,8 +144,6 @@ export const plugin: Plugin = {
     Object.defineProperty(app.config.globalProperties, '$headManager', {
       get: () => headManager,
     })
-
-    app.mixin(remember)
   },
 }
 
