@@ -81,13 +81,14 @@ jobs:
 
   react:
     needs: skip-check
-    if: needs.skip-check.outputs.should_skip != 'true' && needs.skip-check.outputs.paths_result.react.should_skip != 'true'
+    if: needs.skip-check.outputs.should_skip != 'true' && !needs.skip-check.outputs.paths_result.react.should_skip
     name: React Package CI
     runs-on: ubuntu-latest
     container:
       image: mcr.microsoft.com/playwright:v1.45.0-jammy
     env:
       CI: true
+      UI: react
       HOME: /root
     timeout-minutes: 30
 
@@ -116,13 +117,14 @@ jobs:
 
   vue:
     needs: skip-check
-    if: needs.skip-check.outputs.should_skip != 'true' && needs.skip-check.outputs.paths_result.vue.should_skip != 'true'
+    if: needs.skip-check.outputs.should_skip != 'true' && !needs.skip-check.outputs.paths_result.vue.should_skip
     name: Vue Package CI
     runs-on: ubuntu-latest
     container:
       image: mcr.microsoft.com/playwright:v1.45.0-jammy
     env:
       CI: true
+      UI: vue
       HOME: /root
     timeout-minutes: 30
 
