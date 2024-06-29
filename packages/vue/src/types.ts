@@ -1,5 +1,5 @@
 import { type HeadManager, type Page, router } from '@inertiajs-revamped/core'
-import type { DefineComponent } from 'vue'
+import { type DefineComponent } from 'vue'
 import { useForm } from './useForm'
 
 export type InertiaComponentType<P = {}> = DefineComponent<P, any, any, any>
@@ -20,8 +20,8 @@ declare module '@vue/runtime-core' {
 
   /** https://vuejs.org/api/utility-types.html#componentcustomoptions */
   export interface ComponentCustomOptions {
-    // needs work
-    layout?: any
+    // needs still work for array
+    layout?: VNode | ((h: Function, page: VNode) => VNode)
     remember?:
       | string
       | string[]
