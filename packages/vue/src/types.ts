@@ -22,13 +22,6 @@ declare module '@vue/runtime-core' {
   export interface ComponentCustomOptions {
     // needs still work for array
     layout?: VNode | ((h: Function, page: VNode) => VNode)
-    remember?:
-      | string
-      | string[]
-      | {
-          data: string | string[]
-          key?: string | (() => string)
-        }
   }
 
   /**
