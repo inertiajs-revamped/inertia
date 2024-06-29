@@ -38,8 +38,6 @@ jobs:
           paths_filter: |
             core:
               paths: '["packages/core/**", "integration/core/**"]'
-            preact:
-              paths: '["packages/preact/**", "e2e/apps/preact/**", "e2e/tests/**"]'
             react:
               paths: '["packages/react/**", "e2e/apps/react/**", "e2e/tests/**"]'
             vue:
@@ -80,15 +78,6 @@ jobs:
 
       - name: Run integration test
         run: pnpm run test
-
-  preact:
-    needs: skip-check
-    if: needs.skip-check.outputs.should_skip != 'true' && needs.skip-check.outputs.paths_result.preact.should_skip != 'true'
-    name: Preact Package CI
-    runs-on: ubuntu-latest
-    env:
-      CI: true
-    timeout-minutes: 30
 
   react:
     needs: skip-check
@@ -170,10 +159,9 @@ jobs:
       needs:
           - skip-check
           - core
-          - preact
           - react
           - vue
       steps:
           - name: Mark result as failed
-            if: needs.core.result != 'success' || needs.preact.result != 'success' || needs.react.result != 'success' || needs.vue.result != 'success'
+            if: needs.core.result != 'success' || needs.react.result != 'success' || needs.vue.result != 'success'
             run: exit 1
