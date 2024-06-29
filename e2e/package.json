@@ -5,10 +5,10 @@
   "license": "MIT",
   "type": "module",
   "scripts": {
-    "test:react": "UI=react playwright test",
+    "test:react": "UI=react npx playwright test",
     "test:react:ui": "UI=react playwright test --ui",
     "test:react:repeat": "UI=react playwright test --repeat-each=5",
-    "test:vue": "UI=vue playwright test",
+    "test:vue": "UI=vue npx playwright test",
     "test:vue:ui": "UI=vue playwright test --ui",
     "test:vue:repeat": "UI=vue playwright test --repeat-each=5"
   },
