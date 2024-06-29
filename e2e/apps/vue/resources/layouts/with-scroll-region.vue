@@ -1,3 +1,29 @@
+<script setup lang="ts">
+import { onBeforeUnmount, ref } from 'vue'
+
+// Data
+const documentScrollTop = ref(0)
+const documentScrollLeft = ref(0)
+const slotScrollTop = ref(0)
+const slotScrollLeft = ref(0)
+
+// Methods
+const handleScrollEvent = function () {
+  documentScrollTop.value = document.documentElement.scrollTop
+  documentScrollLeft.value = document.documentElement.scrollLeft
+  slotScrollTop.value = document.getElementById('slot')!.scrollTop
+  slotScrollLeft.value = document.getElementById('slot')!.scrollLeft
+}
+
+// Created
+document.addEventListener('scroll', handleScrollEvent)
+
+// BeforeDestroy
+onBeforeUnmount(() => {
+  document.removeEventListener('scroll', handleScrollEvent)
+})
+</script>
+
 <template>
   <div style="width: 200vw">
     <span id="layout-text">With scroll regions</span>
@@ -10,28 +36,3 @@
     </div>
   </div>
 </template>
-
-<script lang="ts">
-export default {
-  data: () => ({
-    documentScrollTop: 0,
-    documentScrollLeft: 0,
-    slotScrollTop: 0,
-    slotScrollLeft: 0,
-  }),
-  created() {
-    document.addEventListener('scroll', this.handleScrollEvent)
-  },
-  beforeDestroy() {
-    document.removeEventListener('scroll', this.handleScrollEvent)
-  },
-  methods: {
-    handleScrollEvent() {
-      this.documentScrollTop = document.documentElement.scrollTop
-      this.documentScrollLeft = document.documentElement.scrollLeft
-      this.slotScrollTop = document.getElementById('slot').scrollTop
-      this.slotScrollLeft = document.getElementById('slot').scrollLeft
-    },
-  },
-}
-</script>

@@ -1,10 +1,42 @@
+<script setup lang="ts">
+import type { Page } from '@inertiajs-revamped/vue'
+/* import { onMounted } from 'vue'; */
+
+// Props
+defineProps({
+  foo: {
+    type: String,
+    default: 'default',
+  },
+  fieldValue: String,
+})
+
+// Methods
+const preserveCallback = (page: Page) => {
+  alert(page)
+
+  return true
+}
+
+const preserveCallbackFalse = (page: Page) => {
+  alert(page)
+
+  return false
+}
+
+// !!! Mounted
+/* onMounted(() => {
+  window._inertia_page_key = this.$.vnode.key
+}) */
+</script>
+
 <template>
   <div>
     <span id="text">This is the links page that demonstrates preserve state on inertia-links</span>
     <span id="foo">Foo is now {{ foo }}</span>
     <label>
       Example Field
-      <input type="text" id="field" v-model="field" />
+      <input type="text" id="field" v-model="fieldValue" />
     </label>
 
     <inertia-link href="/links/preserve-state-page-two" preserve-state :data="{ foo: 'bar' }" id="preserve">[State]
@@ -18,43 +50,3 @@
       :data="{ foo: 'callback-baz' }" id="preserve-callback-false">[State] Preserve Callback: false</inertia-link>
   </div>
 </template>
-
-<script lang="ts">
-import { type Page } from '@inertiajs-revamped/vue'
-import { computed } from 'vue'
-
-export default {
-  props: {
-    foo: {
-      type: String,
-      default: 'default',
-    },
-    fieldValue: String,
-  },
-  setup(props, { emit }) {
-    const field = computed({
-      get: () => props.fieldValue,
-      set: (value) => emit('update:fieldValue', value),
-    })
-
-    return {
-      field,
-    }
-  },
-  mounted() {
-    window._inertia_page_key = this.$.vnode.key
-  },
-  methods: {
-    preserveCallback(page: Page) {
-      alert(JSON.stringify(page, null, 2))
-
-      return true
-    },
-    preserveCallbackFalse(page: Page) {
-      alert(JSON.stringify(page, null, 2))
-
-      return false
-    },
-  },
-}
-</script>

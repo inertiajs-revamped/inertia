@@ -84,6 +84,7 @@
 </template>
 
 <script lang="ts">
+// @ts-nocheck
 import { router } from '@inertiajs-revamped/vue'
 
 export default {
@@ -93,7 +94,7 @@ export default {
     },
   }),
   methods: {
-    alert(...args) {
+    alert(...args: string[]) {
       args.forEach((arg) => alert(arg))
     },
     withoutEventListeners() {

@@ -17,13 +17,12 @@
   </div>
 </template>
 
-<script lang="ts">
-export default {
-  remember: 'name',
-  data: () => ({
-    name: '',
-    remember: false,
-    untracked: '',
-  }),
-}
+<script setup lang="ts">
+import { useRemember } from '@inertiajs-revamped/vue'
+import { ref } from 'vue'
+
+const remember = ref(false)
+const untracked = ref('')
+
+const name = useRemember('')
 </script>

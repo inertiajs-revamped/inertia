@@ -1,3 +1,14 @@
+<script setup lang="ts">
+import { ref } from 'vue'
+
+// Data
+const createdAt = ref(0)
+
+// Created
+createdAt.value = Date.now()
+// !!! window._inertia_site_layout_props = this.$.vnode.props
+</script>
+
 <template>
   <div>
     <span>Site Layout</span>
@@ -7,15 +18,3 @@
     </div>
   </div>
 </template>
-
-<script lang="ts">
-export default {
-  data: () => ({
-    createdAt: null,
-  }),
-  created() {
-    this.createdAt = Date.now()
-    window._inertia_site_layout_props = this.$.vnode.props
-  },
-}
-</script>

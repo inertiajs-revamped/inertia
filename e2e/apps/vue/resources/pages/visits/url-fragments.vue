@@ -1,3 +1,50 @@
+<script setup lang="ts">
+import { router } from '@inertiajs-revamped/vue'
+import { onBeforeUnmount, ref } from 'vue'
+
+// Data
+const documentScrollTop = ref(0)
+const documentScrollLeft = ref(0)
+
+// Methods
+const handleScrollEvent = () => {
+  documentScrollTop.value = document.documentElement.scrollTop
+  documentScrollLeft.value = document.documentElement.scrollLeft
+}
+
+const basicVisit = () => {
+  router.visit('/visits/url-fragments#target')
+}
+
+const fragmentVisit = () => {
+  router.visit('#target')
+}
+
+const nonExistentFragmentVisit = () => {
+  router.visit('/visits/url-fragments#non-existent-fragment')
+}
+
+const basicGetVisit = () => {
+  router.get('/visits/url-fragments#target')
+}
+
+const fragmentGetVisit = () => {
+  router.get('#target')
+}
+
+const nonExistentFragmentGetVisit = () => {
+  router.get('/visits/url-fragments#non-existent-fragment')
+}
+
+// Created
+document.addEventListener('scroll', handleScrollEvent)
+
+// BeforeDestroy
+onBeforeUnmount(() => {
+  document.removeEventListener('scroll', handleScrollEvent)
+})
+</script>
+
 <template>
   <div>
     <span id="text">This is the page that demonstrates url fragment behaviour using manual visits</span>
@@ -16,42 +63,3 @@
     </div>
   </div>
 </template>
-
-<script lang="ts">
-export default {
-  data: () => ({
-    documentScrollTop: 0,
-    documentScrollLeft: 0,
-  }),
-  created() {
-    document.addEventListener('scroll', this.handleScrollEvent)
-  },
-  beforeDestroy() {
-    document.removeEventListener('scroll', this.handleScrollEvent)
-  },
-  methods: {
-    handleScrollEvent() {
-      this.documentScrollTop = document.documentElement.scrollTop
-      this.documentScrollLeft = document.documentElement.scrollLeft
-    },
-    basicVisit() {
-      this.$inertia.visit('/visits/url-fragments#target')
-    },
-    fragmentVisit() {
-      this.$inertia.visit('#target')
-    },
-    nonExistentFragmentVisit() {
-      this.$inertia.visit('/visits/url-fragments#non-existent-fragment')
-    },
-    basicGetVisit() {
-      this.$inertia.get('/visits/url-fragments#target')
-    },
-    fragmentGetVisit() {
-      this.$inertia.get('#target')
-    },
-    nonExistentFragmentGetVisit() {
-      this.$inertia.get('/visits/url-fragments#non-existent-fragment')
-    },
-  },
-}
-</script>

@@ -1,3 +1,39 @@
+<script setup lang="ts">
+import { useForm } from '@inertiajs-revamped/vue'
+
+// Data
+const form = useForm({
+  name: 'foo',
+  handle: 'example',
+  remember: false,
+})
+
+// Methods
+const submit = () => {
+  form.post('/form-helper/errors')
+}
+
+const clearErrors = () => {
+  form.clearErrors()
+}
+
+const clearError = () => {
+  form.clearErrors('handle')
+}
+
+const setErrors = () => {
+  form.setError({
+    name: 'Manually set Name error',
+    handle: 'Manually set Handle error',
+    remember: '',
+  })
+}
+
+const setError = () => {
+  form.setError('handle', 'Manually set Handle error')
+}
+</script>
+
 <template>
   <div>
     <label>
@@ -26,37 +62,3 @@
     <span id="errors-status">Form has {{ form.hasErrors ? '' : 'no ' }}errors</span>
   </div>
 </template>
-
-<script lang="ts">
-export default {
-  data() {
-    return {
-      form: this.$inertia.form({
-        name: 'foo',
-        handle: 'example',
-        remember: false,
-      }),
-    }
-  },
-  methods: {
-    submit() {
-      this.form.post('/form-helper/errors')
-    },
-    clearErrors() {
-      this.form.clearErrors()
-    },
-    clearError() {
-      this.form.clearErrors('handle')
-    },
-    setErrors() {
-      this.form.setError({
-        name: 'Manually set Name error',
-        handle: 'Manually set Handle error',
-      })
-    },
-    setError() {
-      this.form.setError('handle', 'Manually set Handle error')
-    },
-  },
-}
-</script>

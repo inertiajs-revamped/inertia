@@ -1,3 +1,44 @@
+<script setup lang="ts">
+import { useForm, usePage } from '@inertiajs-revamped/vue'
+
+// Data
+const { url } = usePage()
+
+const form = useForm({
+  name: 'foo',
+  handle: 'example',
+  remember: false,
+})
+
+// Methods
+const submit = () => {
+  form.post(url)
+}
+
+const resetAll = () => {
+  form.reset()
+}
+
+const resetOne = () => {
+  form.reset('handle')
+}
+
+const reassign = () => {
+  form.defaults()
+}
+
+const reassignObject = () => {
+  form.defaults({
+    handle: 'updated handle',
+    remember: true,
+  })
+}
+
+const reassignSingle = () => {
+  form.defaults('name', 'single value')
+}
+</script>
+
 <template>
   <div>
     <label>
@@ -28,40 +69,3 @@
     <span id="errors-status">Form has {{ form.hasErrors ? '' : 'no ' }}errors</span>
   </div>
 </template>
-
-<script lang="ts">
-export default {
-  data() {
-    return {
-      form: this.$inertia.form({
-        name: 'foo',
-        handle: 'example',
-        remember: false,
-      }),
-    }
-  },
-  methods: {
-    submit() {
-      this.form.post(this.$page.url)
-    },
-    resetAll() {
-      this.form.reset()
-    },
-    resetOne() {
-      this.form.reset('handle')
-    },
-    reassign() {
-      this.form.defaults()
-    },
-    reassignObject() {
-      this.form.defaults({
-        handle: 'updated handle',
-        remember: true,
-      })
-    },
-    reassignSingle() {
-      this.form.defaults('name', 'single value')
-    },
-  },
-}
-</script>

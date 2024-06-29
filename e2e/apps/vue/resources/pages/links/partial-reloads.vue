@@ -1,3 +1,19 @@
+<script setup lang="ts">
+// Props
+defineProps({
+  foo: {
+    type: Number,
+    default: 0,
+  },
+  bar: Number,
+  baz: Number,
+  headers: Object,
+})
+
+// Created
+// !!! window._inertia_props = this.$page.props
+</script>
+
 <template>
   <div>
     <span id="text">This is the links page that demonstrates partial reloads</span>
@@ -17,20 +33,3 @@
       baz</inertia-link>
   </div>
 </template>
-
-<script lang="ts">
-export default {
-  props: {
-    foo: {
-      type: Number,
-      default: 0,
-    },
-    bar: Number,
-    baz: Number,
-    headers: Object,
-  },
-  created() {
-    window._inertia_props = this.$page.props
-  },
-}
-</script>

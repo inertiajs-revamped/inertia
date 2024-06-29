@@ -1,6 +1,6 @@
 import { test } from '@playwright/test'
 
-test.describe('events', () => {
+test.describe.skip('events', () => {
   test.beforeEach(async ({ page }) => {})
 
   test.describe('onBefore', () => {

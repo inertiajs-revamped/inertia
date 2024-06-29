@@ -2,11 +2,11 @@
   <div>
     <label>
       Full Name
-      <input type="text" id="name" name="full_name" v-model="name" />
+      <input type="text" id="name" name="full_name" v-model="rememberable.name" />
     </label>
     <label>
       Remember Me
-      <input type="checkbox" id="remember" name="remember" v-model="remember" />
+      <input type="checkbox" id="remember" name="remember" v-model="rememberable.remember" />
     </label>
     <label>
       Untracked
@@ -17,15 +17,14 @@
   </div>
 </template>
 
-<script lang="ts">
-export default {
-  remember: {
-    data: ['name', 'remember'],
-  },
-  data: () => ({
-    name: '',
-    remember: false,
-    untracked: '',
-  }),
-}
+<script setup lang="ts">
+import { useRemember } from '@inertiajs-revamped/vue'
+import { ref } from 'vue'
+
+const untracked = ref('')
+
+const rememberable = useRemember({
+  name: '',
+  remember: false,
+})
 </script>

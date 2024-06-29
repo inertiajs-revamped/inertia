@@ -1,3 +1,38 @@
+<script setup lang="ts">
+import { router } from '@inertiajs-revamped/vue'
+
+// Methods
+const standardVisitMethod = function () {
+  router.visit('/dump/get')
+}
+
+const specificVisitMethod = function () {
+  router.visit('/dump/patch', {
+    method: 'patch',
+  })
+}
+
+const getMethod = function () {
+  router.get('/dump/get')
+}
+
+const postMethod = function () {
+  router.post('/dump/post')
+}
+
+const putMethod = function () {
+  router.put('/dump/put')
+}
+
+const patchMethod = function () {
+  router.patch('/dump/patch')
+}
+
+const deleteMethod = function () {
+  router.delete('/dump/delete')
+}
+</script>
+
 <template>
   <div>
     <span id="text">This is the page that demonstrates manual visit methods</span>
@@ -11,33 +46,3 @@
     <span @click="deleteMethod" id="delete">DELETE Link</span>
   </div>
 </template>
-
-<script lang="ts">
-export default {
-  methods: {
-    standardVisitMethod() {
-      this.$inertia.visit('/dump/get')
-    },
-    specificVisitMethod() {
-      this.$inertia.visit('/dump/patch', {
-        method: 'patch',
-      })
-    },
-    getMethod() {
-      this.$inertia.get('/dump/get')
-    },
-    postMethod() {
-      this.$inertia.post('/dump/post')
-    },
-    putMethod() {
-      this.$inertia.put('/dump/put')
-    },
-    patchMethod() {
-      this.$inertia.patch('/dump/patch')
-    },
-    deleteMethod() {
-      this.$inertia.delete('/dump/delete')
-    },
-  },
-}
-</script>

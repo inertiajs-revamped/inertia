@@ -1,8 +1,29 @@
+<script setup lang="ts">
+import { onBeforeUnmount, ref } from 'vue'
+
+// Data
+const documentScrollTop = ref(0)
+const documentScrollLeft = ref(0)
+
+// Methods
+const handleScrollEvent = function () {
+  documentScrollTop.value = document.documentElement.scrollTop
+  documentScrollLeft.value = document.documentElement.scrollLeft
+}
+
+// Created
+document.addEventListener('scroll', handleScrollEvent)
+
+// BeforeDestroy
+onBeforeUnmount(() => {
+  document.removeEventListener('scroll', handleScrollEvent)
+})
+</script>
+
 <template>
   <div>
     <span id="text">This is the links page that demonstrates url fragment behaviour</span>
     <div style="width: 200vw; height: 200vh; margin-top: 50vh">
-      <!-- prettier-ignore -->
       <div id="document-position">Document scroll position is {{ documentScrollLeft }} & {{ documentScrollTop }}
       </div>
       <inertia-link href="/links/url-fragments#target" id="basic">Basic link</inertia-link>
@@ -14,24 +35,3 @@
     </div>
   </div>
 </template>
-
-<script lang="ts">
-export default {
-  data: () => ({
-    documentScrollTop: 0,
-    documentScrollLeft: 0,
-  }),
-  created() {
-    document.addEventListener('scroll', this.handleScrollEvent)
-  },
-  beforeDestroy() {
-    document.removeEventListener('scroll', this.handleScrollEvent)
-  },
-  methods: {
-    handleScrollEvent() {
-      this.documentScrollTop = document.documentElement.scrollTop
-      this.documentScrollLeft = document.documentElement.scrollLeft
-    },
-  },
-}
-</script>

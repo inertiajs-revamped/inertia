@@ -1,3 +1,32 @@
+<script setup lang="ts">
+import { router } from '@inertiajs-revamped/vue'
+
+// Methods
+const defaultVisit = () => {
+  router.post('/dump/post')
+}
+
+const basicVisit = () => {
+  router.visit('/dump/post', {
+    method: 'post',
+    data: { foo: 'bar' },
+    errorBag: 'visitErrorBag',
+  })
+}
+
+const postVisit = () => {
+  router.post(
+    '/dump/post',
+    {
+      foo: 'baz',
+    },
+    {
+      errorBag: 'postErrorBag',
+    }
+  )
+}
+</script>
+
 <template>
   <div>
     <span id="text">This is the page that demonstrates error bags using manual visits</span>
@@ -6,31 +35,3 @@
     <span @click="postVisit" id="get">POST visit</span>
   </div>
 </template>
-
-<script lang="ts">
-export default {
-  methods: {
-    defaultVisit() {
-      this.$inertia.post('/dump/post')
-    },
-    basicVisit() {
-      this.$inertia.visit('/dump/post', {
-        method: 'post',
-        data: { foo: 'bar' },
-        errorBag: 'visitErrorBag',
-      })
-    },
-    postVisit() {
-      this.$inertia.post(
-        '/dump/post',
-        {
-          foo: 'baz',
-        },
-        {
-          errorBag: 'postErrorBag',
-        }
-      )
-    },
-  },
-}
-</script>

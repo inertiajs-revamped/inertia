@@ -26,22 +26,17 @@
   </div>
 </template>
 
-<script lang="ts">
-export default {
-  data() {
-    return {
-      untracked: '',
-      form: this.$inertia.form({
-        name: 'foo',
-        handle: 'example',
-        remember: false,
-      }),
-    }
-  },
-  methods: {
-    submit() {
-      this.form.post('/remember/form-helper/default')
-    },
-  },
-}
+<script setup lang="ts">
+import { useForm } from '@inertiajs-revamped/vue'
+import { ref } from 'vue'
+
+const untracked = ref('')
+
+const form = useForm({
+  name: 'foo',
+  handle: 'example',
+  remember: false,
+})
+
+const submit = () => form.post('/remember/form-helper/default')
 </script>

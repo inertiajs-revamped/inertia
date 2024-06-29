@@ -1,3 +1,31 @@
+<script setup lang="ts">
+import type { Page } from '@inertiajs-revamped/vue'
+import WithoutScrollRegion from '../../layouts/without-scroll-region.vue'
+
+defineOptions({ layout: WithoutScrollRegion })
+
+// Props
+defineProps({
+  foo: {
+    type: String,
+    default: 'default',
+  },
+})
+
+// Methods
+const preserveCallback = (page: Page) => {
+  alert(page)
+
+  return true
+}
+
+const preserveCallbackFalse = (page: Page) => {
+  alert(page)
+
+  return false
+}
+</script>
+
 <template>
   <div style="height: 800px; width: 600px">
     <span id="text">This is the links page that demonstrates scroll preservation without scroll regions</span>
@@ -16,29 +44,3 @@
     <a href="/non-inertia" id="off-site">Off-site link</a>
   </div>
 </template>
-
-<script lang="ts">
-import WithoutScrollRegion from '../../layouts/without-scroll-region.vue'
-
-export default {
-  layout: WithoutScrollRegion,
-  props: {
-    foo: {
-      type: String,
-      default: 'default',
-    },
-  },
-  methods: {
-    preserveCallback(page) {
-      alert(page)
-
-      return true
-    },
-    preserveCallbackFalse(page) {
-      alert(page)
-
-      return false
-    },
-  },
-}
-</script>

@@ -3,11 +3,11 @@
     <span>This component uses a string 'key' for the remember functionality.</span>
     <label>
       Full Name
-      <input type="text" id="a-name" name="name" v-model="name" />
+      <input type="text" id="a-name" name="full_name" v-model="rememberable.name" />
     </label>
     <label>
       Remember Me
-      <input type="checkbox" id="a-remember" name="remember" v-model="remember" />
+      <input type="checkbox" id="a-remember" name="remember" v-model="rememberable.remember" />
     </label>
     <label>
       Remember Me
@@ -16,16 +16,17 @@
   </div>
 </template>
 
-<script lang="ts">
-export default {
-  remember: {
-    data: ['name', 'remember'],
-    key: 'remember/component-a',
-  },
-  data: () => ({
+<script setup lang="ts">
+import { useRemember } from '@inertiajs-revamped/vue'
+import { ref } from 'vue'
+
+const untracked = ref('')
+
+const rememberable = useRemember(
+  {
     name: '',
     remember: false,
-    untracked: '',
-  }),
-}
+  },
+  'example/component-a'
+)
 </script>

@@ -1,3 +1,48 @@
+<script setup lang="ts">
+import { router } from '@inertiajs-revamped/vue'
+
+// Methods
+const visitMethod = () => {
+  const formData = new FormData()
+  formData.append('foo', 'visit')
+
+  router.visit('/dump/post', {
+    method: 'post',
+    data: formData,
+  })
+}
+
+const postMethod = () => {
+  const formData = new FormData()
+  formData.append('baz', 'post')
+
+  router.post('/dump/post', formData)
+}
+
+const putMethod = () => {
+  const formData = new FormData()
+  formData.append('foo', 'put')
+
+  router.put('/dump/put', formData)
+}
+
+const patchMethod = () => {
+  const formData = new FormData()
+  formData.append('bar', 'patch')
+
+  router.patch('/dump/patch', formData)
+}
+
+const deleteMethod = () => {
+  const formData = new FormData()
+  formData.append('baz', 'delete')
+
+  router.delete('/dump/delete', {
+    data: formData,
+  })
+}
+</script>
+
 <template>
   <div>
     <span id="text">This is the page that demonstrates manual visit data passing through FormData objects</span>
@@ -9,45 +54,3 @@
     <span @click="deleteMethod" id="delete">DELETE Link</span>
   </div>
 </template>
-
-<script lang="ts">
-export default {
-  methods: {
-    visitMethod() {
-      const formData = new FormData()
-      formData.append('foo', 'visit')
-
-      this.$inertia.visit('/dump/post', {
-        method: 'post',
-        data: formData,
-      })
-    },
-    postMethod() {
-      const formData = new FormData()
-      formData.append('baz', 'post')
-
-      this.$inertia.post('/dump/post', formData)
-    },
-    putMethod() {
-      const formData = new FormData()
-      formData.append('foo', 'put')
-
-      this.$inertia.put('/dump/put', formData)
-    },
-    patchMethod() {
-      const formData = new FormData()
-      formData.append('bar', 'patch')
-
-      this.$inertia.patch('/dump/patch', formData)
-    },
-    deleteMethod() {
-      const formData = new FormData()
-      formData.append('baz', 'delete')
-
-      this.$inertia.delete('/dump/delete', {
-        data: formData,
-      })
-    },
-  },
-}
-</script>

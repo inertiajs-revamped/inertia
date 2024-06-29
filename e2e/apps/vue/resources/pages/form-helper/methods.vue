@@ -1,3 +1,30 @@
+<script setup lang="ts">
+import { useForm } from '@inertiajs-revamped/vue'
+
+// Data
+const form = useForm({
+  name: 'foo',
+  remember: false,
+})
+
+// Methods
+const postForm = () => {
+  form.post('/dump/post')
+}
+
+const putForm = () => {
+  form.put('/dump/put')
+}
+
+const patchForm = () => {
+  form.patch('/dump/patch')
+}
+
+const deleteForm = () => {
+  form.delete('/dump/delete')
+}
+</script>
+
 <template>
   <div>
     <label>
@@ -15,30 +42,3 @@
     <span @click="deleteForm" id="delete">DELETE form</span>
   </div>
 </template>
-
-<script lang="ts">
-export default {
-  data() {
-    return {
-      form: this.$inertia.form({
-        name: 'foo',
-        remember: false,
-      }),
-    }
-  },
-  methods: {
-    postForm() {
-      this.form.post('/dump/post')
-    },
-    putForm() {
-      this.form.put('/dump/put')
-    },
-    patchForm() {
-      this.form.patch('/dump/patch')
-    },
-    deleteForm() {
-      this.form.delete('/dump/delete')
-    },
-  },
-}
-</script>

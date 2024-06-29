@@ -1,6 +1,6 @@
 import { expect, test } from '@playwright/test'
 
-test.describe('react-only remember', () => {
+test.describe('remember', () => {
   test.describe('use-remmember', () => {
     test('does not remember anything as of default', async ({ page }) => {
       await page.goto('/remember/default')
@@ -114,11 +114,11 @@ test.describe('react-only remember', () => {
       await expect(page.locator('#b-untracked')).toBeEmpty()
     })
 
-    test.skip(() => process.env.UI !== 'react', 'react-only')
-
     test('react-only restores remembered data when pressing the back button from another website', async ({
       page,
     }) => {
+      test.skip(process.env.UI !== 'react', 'Runs react-only')
+
       await page.goto('/remember/multiple-components')
 
       await page.locator('#name').fill('D')
@@ -153,6 +153,48 @@ test.describe('react-only remember', () => {
 
       await expect(page.locator('#b-name')).toHaveValue('B1')
       await expect(page.locator('#b-remember')).toBeChecked()
+      await expect(page.locator('#b-untracked')).toBeEmpty()
+    })
+
+    test('vue-only restores only remembered data for parent component when pressing the back button from another website', async ({
+      page,
+    }) => {
+      test.skip(process.env.UI !== 'vue', 'Runs vue-only')
+
+      await page.goto('/remember/multiple-components')
+
+      await page.locator('#name').fill('D')
+      await page.locator('#remember').check()
+      await page.locator('#untracked').fill('C')
+
+      await page.locator('#a-name').fill('A1')
+      await page.locator('#a-untracked').fill('A2')
+      await page.locator('#b-name').fill('B1')
+      await page.locator('#b-remember').check()
+      await page.locator('#b-untracked').fill('B2')
+
+      page.on('response', async (res) => {
+        if (res.url().endsWith('/non-inertia')) {
+          expect(res.status()).toEqual(500)
+        }
+      })
+
+      await page.locator('#off-site').click()
+      await page.waitForURL('**/non-inertia')
+
+      await page.goBack({ waitUntil: 'load' })
+      await expect(page).toHaveURL('/remember/multiple-components')
+
+      await expect(page.locator('#name')).toHaveValue('D')
+      await expect(page.locator('#remember')).toBeChecked()
+      await expect(page.locator('#untracked')).toBeEmpty()
+
+      await expect(page.locator('#a-name')).toBeEmpty()
+      await expect(page.locator('#a-remember')).not.toBeChecked()
+      await expect(page.locator('#a-untracked')).toBeEmpty()
+
+      await expect(page.locator('#b-name')).toBeEmpty()
+      await expect(page.locator('#b-remember')).not.toBeChecked()
       await expect(page.locator('#b-untracked')).toBeEmpty()
     })
   })

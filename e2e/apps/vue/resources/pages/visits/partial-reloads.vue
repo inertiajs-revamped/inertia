@@ -1,3 +1,110 @@
+<script setup lang="ts">
+import { router } from '@inertiajs-revamped/vue'
+
+// Props
+const props = defineProps({
+  foo: {
+    type: Number,
+    default: 0,
+  },
+  bar: Number,
+  baz: Number,
+  headers: Object,
+})
+
+// Methods
+const partialReloadVisit = function () {
+  router.visit('/visits/partial-reloads', {
+    data: { foo: props.foo },
+  })
+}
+
+const partialReloadVisitFooBar = function () {
+  router.visit('/visits/partial-reloads', {
+    data: { foo: props.foo },
+    only: ['headers', 'foo', 'bar'],
+  })
+}
+
+const partialReloadVisitBaz = function () {
+  router.visit('/visits/partial-reloads', {
+    data: { foo: props.foo },
+    only: ['headers', 'baz'],
+  })
+}
+
+const partialReloadVisitExceptFooBar = function () {
+  router.visit('/visits/partial-reloads', {
+    data: { foo: props.foo },
+    except: ['foo', 'bar'],
+  })
+}
+
+const partialReloadVisitExceptBaz = function () {
+  router.visit('/visits/partial-reloads', {
+    data: { foo: props.foo },
+    except: ['baz'],
+  })
+}
+
+const partialReloadGet = function () {
+  router.get('/visits/partial-reloads', {
+    foo: props.foo,
+  })
+}
+
+const partialReloadGetFooBar = function () {
+  router.get(
+    '/visits/partial-reloads',
+    {
+      foo: props.foo,
+    },
+    {
+      only: ['headers', 'foo', 'bar'],
+    }
+  )
+}
+
+const partialReloadGetBaz = function () {
+  router.get(
+    '/visits/partial-reloads',
+    {
+      foo: props.foo,
+    },
+    {
+      only: ['headers', 'baz'],
+    }
+  )
+}
+
+const partialReloadGetExceptFooBar = function () {
+  router.get(
+    '/visits/partial-reloads',
+    {
+      foo: props.foo,
+    },
+    {
+      except: ['foo', 'bar'],
+    }
+  )
+}
+
+const partialReloadGetExceptBaz = function () {
+  router.get(
+    '/visits/partial-reloads',
+    {
+      foo: props.foo,
+    },
+    {
+      except: ['baz'],
+    }
+  )
+}
+
+// Created
+// !!! window._inertia_props = this.$page.props
+</script>
+
 <template>
   <div>
     <span id="text">This is the page that demonstrates partial reloads using manual visits</span>
@@ -19,100 +126,3 @@
     <span @click="partialReloadGetExceptBaz" id="get-except-baz">'Except' baz (GET)</span>
   </div>
 </template>
-
-<script lang="ts">
-export default {
-  props: {
-    foo: {
-      type: Number,
-      default: 0,
-    },
-    bar: Number,
-    baz: Number,
-    headers: Object,
-  },
-  created() {
-    window._inertia_props = this.$page.props
-  },
-  methods: {
-    partialReloadVisit() {
-      this.$inertia.visit('/visits/partial-reloads', {
-        data: { foo: this.foo },
-      })
-    },
-    partialReloadVisitFooBar() {
-      this.$inertia.visit('/visits/partial-reloads', {
-        data: { foo: this.foo },
-        only: ['headers', 'foo', 'bar'],
-      })
-    },
-    partialReloadVisitBaz() {
-      this.$inertia.visit('/visits/partial-reloads', {
-        data: { foo: this.foo },
-        only: ['headers', 'baz'],
-      })
-    },
-    partialReloadVisitExceptFooBar() {
-      this.$inertia.visit('/visits/partial-reloads', {
-        data: { foo: this.foo },
-        except: ['foo', 'bar'],
-      })
-    },
-    partialReloadVisitExceptBaz() {
-      this.$inertia.visit('/visits/partial-reloads', {
-        data: { foo: this.foo },
-        except: ['baz'],
-      })
-    },
-    partialReloadGet() {
-      this.$inertia.get('/visits/partial-reloads', {
-        foo: this.foo,
-      })
-    },
-    partialReloadGetFooBar() {
-      this.$inertia.get(
-        '/visits/partial-reloads',
-        {
-          foo: this.foo,
-        },
-        {
-          only: ['headers', 'foo', 'bar'],
-        }
-      )
-    },
-    partialReloadGetBaz() {
-      this.$inertia.get(
-        '/visits/partial-reloads',
-        {
-          foo: this.foo,
-        },
-        {
-          only: ['headers', 'baz'],
-        }
-      )
-    },
-    partialReloadGetExceptFooBar() {
-      this.$inertia.get(
-        '/visits/partial-reloads',
-        {
-          foo: this.foo,
-        },
-        {
-          except: ['foo', 'bar'],
-        }
-      )
-    },
-    partialReloadGetExceptBaz() {
-      this.$inertia.get(
-        '/visits/partial-reloads',
-        {
-          foo: this.foo,
-        },
-        {
-          except: ['baz'],
-        }
-      )
-    },
-  },
-}
-</script>

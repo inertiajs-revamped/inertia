@@ -1,3 +1,23 @@
+<script setup lang="ts">
+import { router } from '@inertiajs-revamped/vue'
+
+const visitsMethod = () => {
+  router.visit('/visits/method')
+}
+
+const visitsReplace = () => {
+  router.get('/visits/replace')
+}
+
+const redirect = () => {
+  router.post('/redirect')
+}
+
+const redirectExternal = () => {
+  router.post('/redirect-external')
+}
+</script>
+
 <template>
   <div>
     <span id="text">This is the Test App Entrypoint page</span>
@@ -15,22 +35,3 @@
     <span @click="redirectExternal" id="visits-redirect-external">Manual External Redirect visit</span>
   </div>
 </template>
-
-<script lang="ts">
-export default {
-  methods: {
-    visitsMethod() {
-      this.$inertia.visit('/visits/method')
-    },
-    visitsReplace() {
-      this.$inertia.get('/visits/replace')
-    },
-    redirect() {
-      this.$inertia.post('/redirect')
-    },
-    redirectExternal() {
-      this.$inertia.post('/redirect-external')
-    },
-  },
-}
-</script>

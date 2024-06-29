@@ -1,3 +1,13 @@
+<script setup lang="ts">
+import { reactive } from 'vue'
+
+// Data
+const linkData = reactive({
+  file: new File([], 'example.jpg'),
+  foo: 'bar',
+})
+</script>
+
 <template>
   <div>
     <span id="text">This is the links page that demonstrates the automatic conversion of plain objects to
@@ -11,14 +21,3 @@
       Link</inertia-link>
   </div>
 </template>
-
-<script lang="ts">
-export default {
-  data: () => ({
-    linkData: {
-      file: new File([], 'example.jpg'),
-      foo: 'bar',
-    },
-  }),
-}
-</script>

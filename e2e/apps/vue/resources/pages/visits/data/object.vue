@@ -1,3 +1,64 @@
+<script setup lang="ts">
+import { router } from '@inertiajs-revamped/vue'
+
+// Methods
+const visitMethod = () => {
+  router.visit('/dump/get', {
+    data: { foo: 'visit' },
+  })
+}
+
+const getMethod = () => {
+  router.get('/dump/get', {
+    bar: 'get',
+  })
+}
+
+const postMethod = () => {
+  router.post('/dump/post', {
+    baz: 'post',
+  })
+}
+
+const putMethod = () => {
+  router.put('/dump/put', {
+    foo: 'put',
+  })
+}
+
+const patchMethod = () => {
+  router.patch('/dump/patch', {
+    bar: 'patch',
+  })
+}
+
+const deleteMethod = () => {
+  router.delete('/dump/delete', {
+    data: { baz: 'delete' },
+  })
+}
+
+const qsafDefault = () => {
+  router.visit('/dump/get', {
+    data: { a: ['b', 'c'] },
+  })
+}
+
+const qsafIndices = () => {
+  router.visit('/dump/get', {
+    data: { a: ['b', 'c'] },
+    queryStringArrayFormat: 'indices',
+  })
+}
+
+const qsafBrackets = () => {
+  router.visit('/dump/get', {
+    data: { a: ['b', 'c'] },
+    queryStringArrayFormat: 'brackets',
+  })
+}
+</script>
+
 <template>
   <div>
     <span id="text">This is the page that demonstrates manual visit data passing through plain objects</span>
@@ -14,57 +75,3 @@
     <span @click="qsafBrackets" id="qsaf-brackets">QSAF Brackets</span>
   </div>
 </template>
-
-<script lang="ts">
-export default {
-  methods: {
-    visitMethod() {
-      this.$inertia.visit('/dump/get', {
-        data: { foo: 'visit' },
-      })
-    },
-    getMethod() {
-      this.$inertia.get('/dump/get', {
-        bar: 'get',
-      })
-    },
-    postMethod() {
-      this.$inertia.post('/dump/post', {
-        baz: 'post',
-      })
-    },
-    putMethod() {
-      this.$inertia.put('/dump/put', {
-        foo: 'put',
-      })
-    },
-    patchMethod() {
-      this.$inertia.patch('/dump/patch', {
-        bar: 'patch',
-      })
-    },
-    deleteMethod() {
-      this.$inertia.delete('/dump/delete', {
-        data: { baz: 'delete' },
-      })
-    },
-    qsafDefault() {
-      this.$inertia.visit('/dump/get', {
-        data: { a: ['b', 'c'] },
-      })
-    },
-    qsafIndices() {
-      this.$inertia.visit('/dump/get', {
-        data: { a: ['b', 'c'] },
-        queryStringArrayFormat: 'indices',
-      })
-    },
-    qsafBrackets() {
-      this.$inertia.visit('/dump/get', {
-        data: { a: ['b', 'c'] },
-        queryStringArrayFormat: 'brackets',
-      })
-    },
-  },
-}
-</script>

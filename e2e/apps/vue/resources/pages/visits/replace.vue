@@ -1,3 +1,40 @@
+<script setup lang="ts">
+import { router } from '@inertiajs-revamped/vue'
+
+// Methods
+const replace = () => {
+  router.visit('/dump/get', {
+    replace: true,
+  })
+}
+
+const replaceFalse = () => {
+  router.visit('/dump/get', {
+    replace: false,
+  })
+}
+
+const replaceGet = () => {
+  router.get(
+    '/dump/get',
+    {},
+    {
+      replace: true,
+    }
+  )
+}
+
+const replaceGetFalse = () => {
+  router.get(
+    '/dump/get',
+    {},
+    {
+      replace: false,
+    }
+  )
+}
+</script>
+
 <template>
   <div>
     <span id="text">This is the links page that demonstrates manual replace</span>
@@ -8,38 +45,3 @@
     <span @click="replaceGetFalse" id="replace-get-false">[State] Replace GET: false</span>
   </div>
 </template>
-
-<script lang="ts">
-export default {
-  methods: {
-    replace() {
-      this.$inertia.visit('/dump/get', {
-        replace: true,
-      })
-    },
-    replaceFalse() {
-      this.$inertia.visit('/dump/get', {
-        replace: false,
-      })
-    },
-    replaceGet() {
-      this.$inertia.get(
-        '/dump/get',
-        {},
-        {
-          replace: true,
-        }
-      )
-    },
-    replaceGetFalse() {
-      this.$inertia.get(
-        '/dump/get',
-        {},
-        {
-          replace: false,
-        }
-      )
-    },
-  },
-}
-</script>

@@ -5,13 +5,13 @@
   </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import NestedLayout from '../../../../layouts/nested-layout.vue'
 import SiteLayout from '../../../../layouts/site-layout.vue'
 
-export default {
+defineOptions({
   layout: (h, page) => {
     return h(SiteLayout, [h(NestedLayout, [page])])
   },
-}
+})
 </script>
