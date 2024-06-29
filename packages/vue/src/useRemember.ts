@@ -2,14 +2,15 @@ import { router } from '@inertiajs-revamped/core'
 import { deepClone } from '@visulima/deep-clone'
 import { type Ref, isReactive, reactive, ref, watch } from 'vue'
 
-export function useRemember<T extends object>(
-  data: T & {
-    __rememberable?: boolean
-    __remember?: Function
-    __restore?: Function
-  },
-  key?: string
-): Ref<T> | T {
+export type RememberDefaults = {
+  __rememberable?: boolean
+  __remember?: Function
+  __restore?: Function
+}
+
+export function useRemember<
+  T extends object | string = Record<string, unknown>,
+>(data: T & RememberDefaults, key?: string): Ref<T> | T {
   if (
     typeof data === 'object' &&
     data !== null &&
@@ -19,10 +20,13 @@ export function useRemember<T extends object>(
   }
 
   const restored = router.restore(key)
+
   const type = isReactive(data) ? reactive : ref
+
   const hasCallbacks =
     typeof data.__remember === 'function' &&
     typeof data.__restore === 'function'
+
   const remembered = type(
     restored === undefined
       ? data
