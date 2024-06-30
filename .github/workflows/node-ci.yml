@@ -17,6 +17,7 @@ concurrency:
   cancel-in-progress: true
 
 env:
+  CI: true
   NPM_VERSION: 21.7.2
 
 jobs:
@@ -30,7 +31,6 @@ jobs:
     permissions:
       actions: write
       contents: read
-
     steps:
       - id: skip_check
         uses: fkirc/skip-duplicate-actions@f75f66ce1886f00957d99748a42c724f4330bdcf # v5.3.1
@@ -58,14 +58,11 @@ jobs:
   core:
     name: Core Package CI
     needs: pre_job
-    if: ${{ needs.pre_job.outputs.should_skip != 'true' || fromJSON(needs.pre_job.outputs.paths_result).core.should_skip != 'true' }}
+    if: ${{ needs.pre_job.outputs.should_skip != 'true' && !fromJSON(needs.pre_job.outputs.paths_result).core.should_skip }}
     runs-on: ubuntu-latest
-    env:
-      CI: true
+    timeout-minutes: 30
     permissions:
       contents: write
-    timeout-minutes: 30
-
     steps:
       - name: Checkout code
         uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
@@ -92,17 +89,17 @@ jobs:
   react:
     name: React Adapter CI
     needs: pre_job
-    if: ${{ needs.pre_job.outputs.should_skip != 'true' || fromJSON(needs.pre_job.outputs.paths_result).react.should_skip != 'true' }}
+    if: ${{ needs.pre_job.outputs.should_skip != 'true' && !fromJSON(needs.pre_job.outputs.paths_result).react.should_skip }}
     runs-on: ubuntu-latest
-    container:
-      image: mcr.microsoft.com/playwright:v1.45.0-jammy
+    timeout-minutes: 30
+    permissions:
+      contents: write
     env:
-      CI: true
       UI: react
       HOME: /root
       LARAVEL_BYPASS_ENV_CHECK: 1
-    timeout-minutes: 30
-
+    container:
+      image: mcr.microsoft.com/playwright:v1.45.0-jammy
     steps:
       - name: Checkout code
         uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
@@ -131,15 +128,15 @@ jobs:
     needs: pre_job
     if: ${{ needs.pre_job.outputs.should_skip != 'true' || fromJSON(needs.pre_job.outputs.paths_result).vue.should_skip != 'true' }}
     runs-on: ubuntu-latest
-    container:
-      image: mcr.microsoft.com/playwright:v1.45.0-jammy
+    timeout-minutes: 30
+    permissions:
+      contents: write
     env:
-      CI: true
       UI: vue
       HOME: /root
       LARAVEL_BYPASS_ENV_CHECK: 1
-    timeout-minutes: 30
-
+    container:
+      image: mcr.microsoft.com/playwright:v1.45.0-jammy
     steps:
       - name: Checkout code
         uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
@@ -163,19 +160,24 @@ jobs:
       - name: Run e2e test
         run: 'pnpm run test:vue'
 
-  # `build-result` is a workaround to skipped matrix jobs in `build` not being considered "successful",
-  # which can block PR merges if matrix jobs are required status checks.
-  # More info: https://github.com/fkirc/skip-check#how-to-use-skip-check-with-required-matrix-jobs
+  # This job is the final job that runs after all other jobs and is used for branch protection status checks.
+  # See: https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/collaborating-on-repositories-with-code-quality-features/about-status-checks
+  # https://github.com/orgs/community/discussions/26822#discussioncomment-5122101
   build-result:
-      name: Build Result
-      if: needs.pre_job.outputs.should_skip != 'true' && always()
-      runs-on: ubuntu-latest
-      needs:
-          - pre_job
-          - core
-          - react
-          - vue
-      steps:
-          - name: Mark result as failed
-            if: needs.core.result != 'success' || needs.react.result != 'success' || needs.vue.result != 'success'
-            run: exit 1
+    name: Build Result
+    needs: [pre_job, core, react, vue]
+    if: ${{ always() }}
+    runs-on: ubuntu-latest
+    permissions:
+      actions: read
+    steps:
+      - name: Debug build result
+        run: |
+          echo "pre_job_result: ${{ needs.pre_job.outputs.should_skip }}"
+          echo "core_job_result: ${{ needs.core.result }}"
+          echo "react_job_result: ${{ needs.react.result }}"
+          echo "vue_job_result: ${{ needs.vue.result }}"
+          
+      - name: Check status of all precursor jobs
+        if: ${{ contains(needs.*.result, 'failure') || contains(needs.*.result, 'cancelled') }}
+        run: exit 1
