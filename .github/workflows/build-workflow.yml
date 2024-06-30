@@ -4,13 +4,14 @@ on:
   workflow_dispatch:
 
   push:
-    branches: [main]
+    branches:
+      - main
+    tags-ignore:
+      - "**"
 
   pull_request:
-    branches: [main]
-
-  merge_group:
-    branches: [main]
+    branches:
+      - "**"
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.number || github.ref }}
@@ -52,6 +53,9 @@ jobs:
                 - 'packages/vue/**'
                 - 'e2e/apps/vue/**'
                 - 'e2e/tests/**'
+            laravel:
+              paths:
+                - 'packages/laravel/**'
           skip_after_successful_duplicate: false
           # We want to skip only concurrent runs. Subsequent runs/retries should be allowed.
 
@@ -159,13 +163,88 @@ jobs:
 
       - name: Run e2e test
         run: 'pnpm run test:vue'
+  
+  laravel:
+    name: Laravel Adapter CI
+    needs: pre_job
+    if: ${{ needs.pre_job.outputs.should_skip != 'true' && !fromJSON(needs.pre_job.outputs.paths_result).laravel.should_skip }}
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 45
+    strategy:
+      fail-fast: true
+      matrix:
+        os: [ubuntu-latest]
+        php: ['8.1', '8.2', '8.3']
+        laravel: [9.*, 10.*, 11.*]
+        stability: ['prefer-stable']
+        include:
+          - laravel: 9.*
+            testbench: ^7.0
+          - laravel: 10.*
+            testbench: ^8.0
+          - laravel: 11.*
+            testbench: ^9.0
+        exclude:
+          - laravel: 10.*
+            php: 8.0
+          - laravel: 11.*
+            php: 8.1
+    permissions:
+      contents: write
+    steps:
+      - if: ${{ needs.pre_job.outputs.should_skip != 'true' && !fromJSON(needs.pre_job.outputs.paths_result).laravel.should_skip }}
+        name: Checkout code
+        uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
+
+      - if: ${{ needs.pre_job.outputs.should_skip != 'true' && !fromJSON(needs.pre_job.outputs.paths_result).laravel.should_skip }}
+        name: Setup PHP
+        uses: shivammathur/setup-php@c665c7a15b5295c2488ac8a87af9cb806cd72198 # 20.30.4
+        with:
+          php-version: ${{ matrix.php }}
+          extensions: dom, curl, libxml, mbstring, zip
+          ini-values: error_reporting=E_ALL
+          tools: composer:v2
+          coverage: none
+
+      - if: ${{ needs.pre_job.outputs.should_skip != 'true' && !fromJSON(needs.pre_job.outputs.paths_result).laravel.should_skip }}
+        name: Composer-cache
+        working-directory: 'packages/laravel'
+        id: composer-cache
+        run: echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
+
+      - if: ${{ needs.pre_job.outputs.should_skip != 'true' && !fromJSON(needs.pre_job.outputs.paths_result).laravel.should_skip }}
+        name: Cache dependencies
+        uses: actions/cache@0c45773b623bea8c8e75f6c82b208c3cf94ea4f9 # v4.0.2
+        with:
+          path: ${{ steps.composer-cache.outputs.dir }}
+          key: ${{ runner.os }}-composer-${{ matrix.stability }}-${{ hashFiles('**/composer.lock') }}
+          restore-keys: ${{ runner.os }}-composer-${{ matrix.stability }}-
+
+      - if: ${{ needs.pre_job.outputs.should_skip != 'true' && !fromJSON(needs.pre_job.outputs.paths_result).laravel.should_skip }}
+        name: Setup problem matchers
+        working-directory: 'packages/laravel'
+        run: |
+          echo "::add-matcher::${{ runner.tool_cache }}/php.json"
+          echo "::add-matcher::${{ runner.tool_cache }}/phpunit.json"
+
+      - if: ${{ needs.pre_job.outputs.should_skip != 'true' && !fromJSON(needs.pre_job.outputs.paths_result).laravel.should_skip }}
+        name: Install dependencies
+        working-directory: 'packages/laravel'
+        run: |
+          composer require "laravel/framework:${{ matrix.laravel }}" "orchestra/testbench:${{ matrix.testbench }}" --no-interaction --no-update
+          composer update --${{ matrix.stability }} --prefer-dist --no-interaction
+
+      - if: ${{ needs.pre_job.outputs.should_skip != 'true' && !fromJSON(needs.pre_job.outputs.paths_result).laravel.should_skip }}
+        name: Run test
+        working-directory: 'packages/laravel'
+        run: vendor/bin/phpunit
 
   # This job is the final job that runs after all other jobs and is used for branch protection status checks.
   # See: https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/collaborating-on-repositories-with-code-quality-features/about-status-checks
   # https://github.com/orgs/community/discussions/26822#discussioncomment-5122101
   build-result:
     name: Build Result
-    needs: [pre_job, core, react, vue]
+    needs: [pre_job, core, react, vue, laravel]
     if: ${{ always() }}
     runs-on: ubuntu-latest
     permissions:
@@ -177,7 +256,8 @@ jobs:
           echo "core_job_result: ${{ needs.core.result }}"
           echo "react_job_result: ${{ needs.react.result }}"
           echo "vue_job_result: ${{ needs.vue.result }}"
-          
+          echo "laravel_job_result: ${{ needs.laravel.result }}"
+
       - name: Check status of all precursor jobs
         if: ${{ contains(needs.*.result, 'failure') || contains(needs.*.result, 'cancelled') }}
         run: exit 1
