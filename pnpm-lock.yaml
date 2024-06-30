@@ -327,7 +327,7 @@ importers:
         specifier: 1.0.4
         version: 1.0.4(vite@5.3.2(@types/node@20.14.9)(terser@5.31.1))
       vite:
-        specifier: ^5.3.1
+        specifier: ^5.3.2
         version: 5.3.2(@types/node@20.14.9)(terser@5.31.1)
     devDependencies:
       '@lib/tsconfig':
