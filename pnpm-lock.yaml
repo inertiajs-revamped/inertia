@@ -268,7 +268,7 @@ importers:
         specifier: ^5.0.1
         version: 5.0.1
       preact:
-        specifier: ^10.22.0
+        specifier: ^10.22.1
         version: 10.22.1
     devDependencies:
       '@lib/tsconfig':
