@@ -299,9 +299,13 @@ import { Link } from '@inertiajs-revamped/vue'
 <template>
   <input v-model="query" type="text" />
 
-  <Link href="/search" :data="{ query }" preserve-state>Search</Link>
+  <Link href="/search" :data="{ query }" :preserve-state="true">Search</Link>
 </template>
 ```
+
+::: danger Vue Only!
+Since Vue 3 [Syntax changed](https://v3-migration.vuejs.org/breaking-changes/attribute-coercion#_3-x-syntax), a value `true` or `false` must be provided to `preserve-state`.
+:::
 
   </template>
 </AdapterWrapper>
