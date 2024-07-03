@@ -1,6 +1,8 @@
 import { expect, test } from '@playwright/test'
 
-test.describe.skip('Preserve state', () => {
+// https://v3-migration.vuejs.org/breaking-changes/attribute-coercion#_3-x-syntax
+
+test.describe('preserve-state', () => {
   test.beforeEach(async ({ page }) => {
     await page.goto('/links/preserve-state')
   })

@@ -4,7 +4,11 @@ import {
   type PageProps,
   router,
 } from '@inertiajs-revamped/vue'
-import type { ComponentPublicInstance } from 'vue'
+import type {
+  ComponentOptions,
+  ComponentPublicInstance,
+  ComputedRef,
+} from 'vue'
 
 declare global {
   var testing: Partial<{
@@ -22,5 +26,7 @@ declare global {
   }>
   var _inertia_props: PageProps
   var _inertia_page_key: PropertyKey | null
+  var _inertia_page_props: (Data & ComponentOptions) | undefined
+  var _inertia_site_layout_props: any
   var _inertia_nested_layout_props: any
 }

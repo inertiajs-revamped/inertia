@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { router } from '@inertiajs-revamped/vue'
-/* import { onMounted } from 'vue' */
 
 // Props
 defineProps({
@@ -33,7 +32,7 @@ const preserveCallback = () => {
     },
     {
       preserveState: (page) => {
-        alert(page)
+        alert(JSON.stringify(page, null, 2))
 
         return true
       },
@@ -49,7 +48,7 @@ const preserveCallbackFalse = () => {
     },
     {
       preserveState: (page) => {
-        alert(page)
+        alert(JSON.stringify(page, null, 2))
 
         return false
       },
@@ -80,11 +79,6 @@ const preserveGetFalse = () => {
     }
   )
 }
-
-// !!! Mounted
-/* onMounted(() => {
-  window._inertia_page_key = props.foo
-}) */
 </script>
 
 <template>

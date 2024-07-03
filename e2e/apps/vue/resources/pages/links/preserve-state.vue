@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import type { Page } from '@inertiajs-revamped/vue'
-/* import { onMounted } from 'vue'; */
 
 // Props
 defineProps({
@@ -8,26 +7,18 @@ defineProps({
     type: String,
     default: 'default',
   },
-  fieldValue: String,
 })
 
 // Methods
 const preserveCallback = (page: Page) => {
-  alert(page)
-
+  alert(JSON.stringify(page, null, 2))
   return true
 }
 
 const preserveCallbackFalse = (page: Page) => {
-  alert(page)
-
+  alert(JSON.stringify(page, null, 2))
   return false
 }
-
-// !!! Mounted
-/* onMounted(() => {
-  window._inertia_page_key = this.$.vnode.key
-}) */
 </script>
 
 <template>
@@ -36,11 +27,12 @@ const preserveCallbackFalse = (page: Page) => {
     <span id="foo">Foo is now {{ foo }}</span>
     <label>
       Example Field
-      <input type="text" id="field" v-model="fieldValue" />
+      <input type="text" name="example-field" id="field" />
     </label>
 
-    <inertia-link href="/links/preserve-state-page-two" preserve-state :data="{ foo: 'bar' }" id="preserve">[State]
-      Preserve: true</inertia-link>
+    <inertia-link href="/links/preserve-state-page-two" :preserve-state="true" :data="{ foo: 'bar' }"
+      id="preserve">[State]
+      preserve-state: true</inertia-link>
     <inertia-link href="/links/preserve-state-page-two" :preserve-state="false" :data="{ foo: 'baz' }"
       id="preserve-false">[State] Preserve: false</inertia-link>
 

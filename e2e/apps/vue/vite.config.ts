@@ -10,6 +10,13 @@ export default defineConfig({
       ssr: 'resources/application/ssr.ts',
       refresh: false,
     }),
-    vue(),
+    vue({
+      template: {
+        transformAssetUrls: {
+          base: null,
+          includeAbsolute: false,
+        },
+      },
+    }),
   ],
 })
