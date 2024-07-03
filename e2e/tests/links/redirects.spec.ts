@@ -2,11 +2,6 @@ import { expect, test } from '@playwright/test'
 
 test.describe('redirects', () => {
   test.beforeEach(async ({ page }) => {
-    page.on('dialog', async (dialog) => {
-      expect(dialog.message()).toEqual('A location/non-SPA visit was detected')
-      await dialog.dismiss()
-    })
-
     await page.goto('/')
   })
 

@@ -5,12 +5,12 @@
   "license": "MIT",
   "type": "module",
   "scripts": {
-    "test:react": "UI=react npx playwright test",
-    "test:react:ui": "UI=react playwright test --ui",
-    "test:react:repeat": "UI=react playwright test --repeat-each=5",
-    "test:vue": "UI=vue npx playwright test",
-    "test:vue:ui": "UI=vue playwright test --ui",
-    "test:vue:repeat": "UI=vue playwright test --repeat-each=5"
+    "test:react": "UI=react pnpm exec playwright test",
+    "test:react:ui": "UI=react pnpm exec playwright test --ui",
+    "test:react:repeat": "UI=react pnpm exec playwright test --repeat-each=5",
+    "test:vue": "UI=vue pnpm exec playwright test",
+    "test:vue:ui": "UI=vue pnpm exec playwright test --ui",
+    "test:vue:repeat": "UI=vue pnpm exec playwright test --repeat-each=5"
   },
   "devDependencies": {
     "@lib/tsconfig": "workspace:*",
