@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { getCurrentInstance } from 'vue'
 import NestedLayout from '../../../../layouts/nested-layout.vue'
 import SiteLayout from '../../../../layouts/site-layout.vue'
 
@@ -7,7 +8,7 @@ defineOptions({
 })
 
 // this.$.props for declared props
-// !!! window._inertia_page_props = this.$.attrs
+window._inertia_page_props = getCurrentInstance()?.attrs
 </script>
 
 <template>

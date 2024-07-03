@@ -9,7 +9,7 @@ export function render() {
   createServer((page) =>
     createInertiaApp({
       page,
-      title: (title) => `${title} - Starter kit`,
+      title: (title) => `${title} - React-E2E`,
       render: renderToString,
       resolve: (name) =>
         resolvePageComponent(

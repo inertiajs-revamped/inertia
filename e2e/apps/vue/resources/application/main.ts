@@ -27,9 +27,9 @@ createInertiaApp({
     props.initialComponent!.inheritAttrs = true
 
     window.testing.vue = createApp({ render: () => h(App, props) })
+      .component('InertiaLink', Link)
       // @ts-expect-error
       .use(withPlugin ? plugin : undefined)
-      .component('InertiaLink', Link)
       .mount(el!) /* createSSRApp(App, props)
       .component('InertiaLink', Link)
       .use(withPlugin ? plugin : undefined)

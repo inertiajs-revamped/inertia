@@ -8,7 +8,7 @@ import { createRoot } from 'react-dom/client'
 import './app.css'
 
 createInertiaApp({
-  title: (title) => `${title} - React E2E Test`,
+  title: (title) => `${title} - React-E2E`,
   resolve: (name) =>
     resolvePageComponent(
       `../pages/${name}.tsx`,

@@ -2,15 +2,6 @@ import { expect, test } from '@playwright/test'
 
 test.skip(() => process.env.UI !== 'vue', 'vue-only')
 
-declare global {
-  var testing: {
-    Inertia: any
-    vue: any
-  }
-  var initialPage: any
-  var initialComponent: any
-}
-
 // https://playwright.dev/docs/api/class-test#test-skip
 
 test.describe('vue-only plugin', () => {

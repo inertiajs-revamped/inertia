@@ -2,7 +2,8 @@
 import Layout from '../../../../layouts/site-layout.vue'
 
 defineOptions({
-  layout: (h, page) => h(Layout, [page]),
+  /* layout: (h, page) => h(Layout, [page]), */
+  layout: (h, page) => h(Layout, () => [page]),
 })
 </script>
 

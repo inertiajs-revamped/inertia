@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { getCurrentInstance } from 'vue'
 import Layout from '../../../../layouts/site-layout.vue'
 
 defineOptions({
@@ -6,7 +7,7 @@ defineOptions({
 })
 
 // this.$.props for declared props
-// !!! window._inertia_page_props = this.$.attrs
+window._inertia_page_props = getCurrentInstance()?.attrs
 </script>
 
 <template>
