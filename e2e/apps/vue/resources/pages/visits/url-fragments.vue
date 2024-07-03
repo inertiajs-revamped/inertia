@@ -1,16 +1,5 @@
 <script setup lang="ts">
 import { router } from '@inertiajs-revamped/vue'
-import { onBeforeUnmount, ref } from 'vue'
-
-// Data
-const documentScrollTop = ref(0)
-const documentScrollLeft = ref(0)
-
-// Methods
-const handleScrollEvent = () => {
-  documentScrollTop.value = document.documentElement.scrollTop
-  documentScrollLeft.value = document.documentElement.scrollLeft
-}
 
 const basicVisit = () => {
   router.visit('/visits/url-fragments#target')
@@ -35,14 +24,6 @@ const fragmentGetVisit = () => {
 const nonExistentFragmentGetVisit = () => {
   router.get('/visits/url-fragments#non-existent-fragment')
 }
-
-// Created
-document.addEventListener('scroll', handleScrollEvent)
-
-// BeforeDestroy
-onBeforeUnmount(() => {
-  document.removeEventListener('scroll', handleScrollEvent)
-})
 </script>
 
 <template>
@@ -58,8 +39,6 @@ onBeforeUnmount(() => {
       <span @click="nonExistentFragmentGetVisit" id="non-existent-fragment-get-link">Non-existent fragment visit</span>
 
       <div id="target">This is the element with id 'target'</div>
-
-      <div id="document-position">Document scroll position is {{ documentScrollLeft }} & {{ documentScrollTop }}</div>
     </div>
   </div>
 </template>

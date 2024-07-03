@@ -3,8 +3,6 @@ import { router } from '@inertiajs-revamped/react'
 export default function () {
   const basicVisit = () => {
     router.visit('/visits/url-fragments#target')
-    console.log(document.documentElement.scrollTop)
-    console.log(document.documentElement.scrollLeft)
   }
 
   const fragmentVisit = () => {

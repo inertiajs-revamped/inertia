@@ -1,11 +1,7 @@
 import type { ElementHandle, Page } from '@playwright/test'
 
 export const getWindowScrollTop = (page: Page) => {
-  return page.evaluate(() => window.scrollY)
-}
-
-export const getWindowScrollLeft = (page: Page) => {
-  return page.evaluate(() => window.scrollX)
+  return page.evaluate(() => window.document.documentElement.scrollTop)
 }
 
 export const scrollTo = (
