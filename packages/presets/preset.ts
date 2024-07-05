@@ -1,6 +1,6 @@
-const pm = ['NPM', 'PNPM', 'Yarn', 'Bun'] as const
-const templates = ['default', 'breeze', 'pingcrm'] as const
-const ui = ['Preact', 'React', 'Vue'] as const
+const pm: string[] = ['NPM', 'PNPM', 'Yarn', 'Bun'] as const
+const templates: string[] = ['default', 'breeze', 'pingcrm'] as const
+const ui: string[] = ['Preact', 'React', 'Vue'] as const
 
 export interface Options {
   /**
@@ -33,6 +33,7 @@ export interface Options {
 export default definePreset<Options>({
   name: 'Inertia.js-Revamped',
   options: {
+    ssr: true,
     sandbox: false,
   },
   postInstall: ({ hl }) => [
@@ -46,8 +47,8 @@ export default definePreset<Options>({
     if (options.sandbox) {
       Object.assign(opts, {
         pm: options.pm || 'pnpm',
-        template: options.template || 'breeze',
         ui: options.ui || 'react',
+        template: options.template || 'breeze',
         ssr: options.ssr || true,
         sandbox: true,
       }) satisfies Options
@@ -58,8 +59,8 @@ export default definePreset<Options>({
 
       Object.assign(opts, {
         pm: options.pm ?? prompts.pm,
-        template: options.template || prompts.template,
-        ui: options.ui || prompts.ui,
+        ui: options.ui ?? prompts.ui,
+        template: options.template ?? prompts.template,
         ssr: !!(options.ssr || prompts.ssr === 'enabled'),
         sandbox: false,
       }) satisfies Options
