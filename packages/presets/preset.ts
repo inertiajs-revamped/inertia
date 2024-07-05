@@ -33,6 +33,9 @@ export interface Options {
 export default definePreset<Options>({
   name: 'Inertia.js-Revamped',
   options: {
+    pm: undefined,
+    ui: undefined,
+    template: undefined,
     ssr: true,
     sandbox: false,
   },
