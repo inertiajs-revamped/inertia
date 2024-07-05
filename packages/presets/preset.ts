@@ -1,6 +1,6 @@
-const pm: string[] = ['NPM', 'PNPM', 'Yarn', 'Bun'] as const
-const templates: string[] = ['default', 'breeze', 'pingcrm'] as const
-const ui: string[] = ['Preact', 'React', 'Vue'] as const
+const pm = ['NPM', 'PNPM', 'Yarn', 'Bun'] as const
+const templates = ['default', 'breeze', 'pingcrm'] as const
+const ui = ['Preact', 'React', 'Vue'] as const
 
 export interface Options {
   /**
@@ -33,9 +33,9 @@ export interface Options {
 export default definePreset<Options>({
   name: 'Inertia.js-Revamped',
   options: {
-    pm: undefined,
-    ui: undefined,
-    template: undefined,
+    pm: 'pnpm',
+    ui: 'react',
+    template: 'breeze',
     ssr: true,
     sandbox: false,
   },
@@ -111,7 +111,6 @@ export default definePreset<Options>({
 
 async function initialPrompts({
   options,
-  prompts,
 }: { options: Options; prompts: Record<string, string | undefined> }) {
   if (typeof options.pm === 'undefined') {
     await prompt({
@@ -137,19 +136,14 @@ async function initialPrompts({
     })
   }
 
-  if (
-    typeof options.template === 'undefined' ||
-    (options.ui !== 'preact' && prompts.ui !== 'preact')
-  ) {
+  if (typeof options.template === 'undefined') {
     await prompt({
       title: 'Choose your starter template',
       name: 'template',
       text: '(Press <up> / <down> to select, <return> to confirm)',
-      choices: [
-        { title: 'default', value: 'default' },
-        { title: 'breeze', value: 'breeze' },
-        { title: 'pingcrm', value: 'pingcrm' },
-      ],
+      choices: ui.map((template) => {
+        return { title: template, value: template.toLowerCase() }
+      }),
       initial: 0,
     })
   }
