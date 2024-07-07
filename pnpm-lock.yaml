@@ -20,7 +20,7 @@ importers:
         specifier: ^0.3.0
         version: 0.3.0
       '@playwright/test':
-        specifier: ^1.45.0
+        specifier: ^1.45.1
         version: 1.45.1
       '@preset/cli':
         specifier: ^0.11.3
@@ -98,7 +98,7 @@ importers:
         specifier: workspace:*
         version: link:../libs/tsconfig
       '@playwright/test':
-        specifier: ^1.45.0
+        specifier: ^1.45.1
         version: 1.45.1
       '@types/node':
         specifier: ^20.14.9
