@@ -28,6 +28,6 @@
     "laravel-vite-plugin": "^1.0.4",
     "multer": "1.4.5-lts.1",
     "tsx": "^4.16.2",
-    "vite": "^5.3.2"
+    "vite": "^5.3.3"
   }
 }
