@@ -83,12 +83,12 @@
   "dependencies": {
     "@inertiajs-revamped/core": "workspace:*",
     "@inertiajs-revamped/vite": "workspace:*",
-    "fast-equals": "^5.0.1",
-    "preact": "^10.22.1"
+    "fast-equals": "^5.0.1"
   },
   "devDependencies": {
     "@lib/tsconfig": "workspace:*",
-    "@types/node": "^20.14.10"
+    "@types/node": "^20.14.10",
+    "preact": "^10.22.1"
   },
   "peerDependencies": {
     "preact": ">=10.22.1"

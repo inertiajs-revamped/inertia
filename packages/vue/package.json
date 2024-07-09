@@ -84,13 +84,13 @@
     "@inertiajs-revamped/core": "workspace:*",
     "@inertiajs-revamped/vite": "workspace:*",
     "@visulima/deep-clone": "^2.1.3",
-    "fast-equals": "^5.0.1",
-    "vue": "^3.4.31"
+    "fast-equals": "^5.0.1"
   },
   "devDependencies": {
     "@lib/tsconfig": "workspace:*",
     "@types/node": "^20.14.10",
-    "@vue/runtime-core": "^3.4.31"
+    "@vue/runtime-core": "^3.4.31",
+    "vue": "^3.4.31"
   },
   "peerDependencies": {
     "vue": ">=3.4.31"
