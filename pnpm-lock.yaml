@@ -202,7 +202,7 @@ importers:
         specifier: ^5.3.3
         version: 5.3.3(@types/node@20.14.10)(terser@5.31.1)
       vue-tsc:
-        specifier: ^2.0.24
+        specifier: ^2.0.26
         version: 2.0.26(typescript@5.5.3)
 
   integration/core:
