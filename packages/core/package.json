@@ -75,7 +75,7 @@
     "@types/nprogress": "^0.2.3",
     "@types/qs": "^6.9.15",
     "nprogress": "^0.2.0",
-    "qs": "^6.12.2",
+    "qs": "^6.12.3",
     "ts-deepmerge": "^7.0.0"
   },
   "devDependencies": {

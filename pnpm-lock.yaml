@@ -243,7 +243,7 @@ importers:
         specifier: ^0.2.0
         version: 0.2.0
       qs:
-        specifier: ^6.12.2
+        specifier: ^6.12.3
         version: 6.12.3
       ts-deepmerge:
         specifier: ^7.0.0
