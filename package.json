@@ -60,13 +60,13 @@
   },
   "engines": {
     "node": ">=21.7.2",
-    "pnpm": ">=9.4.0"
+    "pnpm": ">=9.5.0"
   },
   "nano-staged": {
     "*.ts": "biome lint --write .",
     "*": "biome format . --write"
   },
-  "packageManager": "pnpm@9.4.0",
+  "packageManager": "pnpm@9.5.0",
   "pnpm": {
     "patchedDependencies": {
       "pkgroll@2.1.1": ".github/patches/pkgroll@2.1.1.patch"
