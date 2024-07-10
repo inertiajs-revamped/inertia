@@ -26,7 +26,7 @@
     "@types/node": "^20.14.10",
     "@vueuse/core": "^10.11.0",
     "@vueuse/shared": "^10.11.0",
-    "terser": "^5.31.1",
+    "terser": "^5.31.2",
     "vite": "^5.3.3",
     "vitepress": "^1.2.3",
     "vitepress-markdown-it-stepper": "^0.1.0",
