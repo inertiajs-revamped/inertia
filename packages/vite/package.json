@@ -49,7 +49,7 @@
     "@types/node": "^20.14.10"
   },
   "peerDependencies": {
-    "laravel-vite-plugin": "1.0.4",
+    "laravel-vite-plugin": "1.0.5",
     "vite": "^5.3.3"
   },
   "engines": {
