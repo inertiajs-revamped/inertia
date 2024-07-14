@@ -83,8 +83,8 @@ importers:
         specifier: ^5.3.3
         version: 5.3.3(@types/node@20.14.10)(terser@5.31.2)
       vitepress:
-        specifier: ^1.3.0
-        version: 1.3.0(@algolia/client-search@4.24.0)(@types/node@20.14.10)(@types/react@18.3.3)(axios@1.7.2)(nprogress@0.2.0)(postcss@8.4.39)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(search-insights@2.15.0)(terser@5.31.2)(typescript@5.5.3)
+        specifier: ^1.3.1
+        version: 1.3.1(@algolia/client-search@4.24.0)(@types/node@20.14.10)(@types/react@18.3.3)(axios@1.7.2)(nprogress@0.2.0)(postcss@8.4.39)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(search-insights@2.15.0)(terser@5.31.2)(typescript@5.5.3)
       vitepress-markdown-it-stepper:
         specifier: ^0.1.0
         version: 0.1.0
@@ -2234,8 +2234,8 @@ packages:
   minimist@1.2.8:
     resolution: {integrity: sha512-2yyAR8qBkN3YuheJanUpWC5U3bb5osDywNB8RzDVlDwDHbocAJveqqj1u8+SVD7jkWT4yvsHCpWqqWqAxb0zCA==}
 
-  minisearch@6.3.0:
-    resolution: {integrity: sha512-ihFnidEeU8iXzcVHy74dhkxh/dn8Dc08ERl0xwoMMGqp4+LvRSCgicb+zGqWthVokQKvCSxITlh3P08OzdTYCQ==}
+  minisearch@7.0.0:
+    resolution: {integrity: sha512-0OIJ3hUE+YBJNruDCqbTMFmk/IoB1CpZzuGfl11khFIel66ew9UoLF/+gfq3bdyrneqr3P7BTjFZApUbmk+9Dg==}
 
   mitt@3.0.1:
     resolution: {integrity: sha512-vKivATfr97l2/QBCYAkXYDbrIWPM2IIKEl7YPhjCvKlG3kE2gm+uBo6nEXK3M5/Ffh/FLpKExzOQ3JJoJGFKBw==}
@@ -2861,8 +2861,8 @@ packages:
       markdown-it:
         optional: true
 
-  vitepress@1.3.0:
-    resolution: {integrity: sha512-Cbm2AgXcCrukUeV+/24g1ZDSvw8blamh/1uf2pz3ApFpaYb9T7mo4imWDZ6APn2uPo4bJ6sgOzvsJ4aH+oLbBA==}
+  vitepress@1.3.1:
+    resolution: {integrity: sha512-soZDpg2rRVJNIM/IYMNDPPr+zTHDA5RbLDHAxacRu+Q9iZ2GwSR0QSUlLs+aEZTkG0SOX1dc8RmUYwyuxK8dfQ==}
     hasBin: true
     peerDependencies:
       markdown-it-mathjax3: ^4
@@ -4883,7 +4883,7 @@ snapshots:
 
   minimist@1.2.8: {}
 
-  minisearch@6.3.0: {}
+  minisearch@7.0.0: {}
 
   mitt@3.0.1: {}
 
@@ -5484,7 +5484,7 @@ snapshots:
       '@types/markdown-it-container': 2.0.10
       markdown-it-container: 4.0.0
 
-  vitepress@1.3.0(@algolia/client-search@4.24.0)(@types/node@20.14.10)(@types/react@18.3.3)(axios@1.7.2)(nprogress@0.2.0)(postcss@8.4.39)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(search-insights@2.15.0)(terser@5.31.2)(typescript@5.5.3):
+  vitepress@1.3.1(@algolia/client-search@4.24.0)(@types/node@20.14.10)(@types/react@18.3.3)(axios@1.7.2)(nprogress@0.2.0)(postcss@8.4.39)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(search-insights@2.15.0)(terser@5.31.2)(typescript@5.5.3):
     dependencies:
       '@docsearch/css': 3.6.0
       '@docsearch/js': 3.6.0(@algolia/client-search@4.24.0)(@types/react@18.3.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(search-insights@2.15.0)
@@ -5498,7 +5498,7 @@ snapshots:
       '@vueuse/integrations': 10.11.0(axios@1.7.2)(focus-trap@7.5.4)(nprogress@0.2.0)(vue@3.4.31(typescript@5.5.3))
       focus-trap: 7.5.4
       mark.js: 8.11.1
-      minisearch: 6.3.0
+      minisearch: 7.0.0
       shiki: 1.10.3
       vite: 5.3.3(@types/node@20.14.10)(terser@5.31.2)
       vue: 3.4.31(typescript@5.5.3)
