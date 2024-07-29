@@ -43,7 +43,7 @@
   "devDependencies": {
     "@biomejs/biome": "^1.8.3",
     "@bscotch/workspaces": "^0.3.0",
-    "@playwright/test": "^1.45.1",
+    "@playwright/test": "^1.45.3",
     "@preset/cli": "^0.11.3",
     "@types/node": "^20.14.10",
     "@types/semver": "^7.5.8",
