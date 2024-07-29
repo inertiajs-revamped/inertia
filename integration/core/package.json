@@ -8,7 +8,7 @@
     "@inertiajs-revamped/core": "workspace:*",
     "@lib/tsconfig": "workspace:*",
     "@types/jsdom": "^21.1.7",
-    "@types/node": "^20.14.10",
+    "@types/node": "^20.14.13",
     "formdata-node": "^6.0.3",
     "jsdom": "^24.1.0"
   },
