@@ -50,8 +50,8 @@ importers:
         specifier: ^2.1.1
         version: 2.1.1(patch_hash=d5onzgqjjg5fjwjd7mvclpqdxq)(typescript@5.5.3)
       semver:
-        specifier: ^7.6.2
-        version: 7.6.2
+        specifier: ^7.6.3
+        version: 7.6.3
       tsx:
         specifier: ^4.16.2
         version: 4.16.2
@@ -2475,6 +2475,11 @@ packages:
     engines: {node: '>=10'}
     hasBin: true
 
+  semver@7.6.3:
+    resolution: {integrity: sha512-oVekP1cKtI+CTDvHWYFUcMtsK/00wmAEfyqKfNdARm8u1wNVhSgaX7A8d4UuIlUI5e84iEwOhs7ZPYRmzU9U6A==}
+    engines: {node: '>=10'}
+    hasBin: true
+
   send@0.18.0:
     resolution: {integrity: sha512-qqWzuOjSFOuqPjFe4NOsMLafToQQwBSOEpS+FwEt3A2V3vKubTquT3vmLTQpFgMXp8AlFWFuP1qKaJZOtPpVXg==}
     engines: {node: '>= 0.8.0'}
@@ -3229,7 +3234,7 @@ snapshots:
     dependencies:
       dependency-graph: 0.11.0
       globby: 13.2.2
-      semver: 7.6.2
+      semver: 7.6.3
       simple-git: 3.25.0
     transitivePeerDependencies:
       - supports-color
@@ -3466,7 +3471,7 @@ snapshots:
       debug: 4.3.5
       fs-extra: 11.2.0
       log-update: 6.0.0
-      semver: 7.6.2
+      semver: 7.6.3
       sisteransi: 1.0.5
       update-notifier: 7.1.0
     transitivePeerDependencies:
@@ -4812,7 +4817,7 @@ snapshots:
       ky: 1.4.0
       registry-auth-token: 5.0.2
       registry-url: 6.0.1
-      semver: 7.6.2
+      semver: 7.6.3
 
   parse-ms@4.0.0: {}
 
@@ -5023,11 +5028,13 @@ snapshots:
 
   semver-diff@4.0.0:
     dependencies:
-      semver: 7.6.2
+      semver: 7.6.3
 
   semver@6.3.1: {}
 
   semver@7.6.2: {}
+
+  semver@7.6.3: {}
 
   send@0.18.0:
     dependencies:
@@ -5279,7 +5286,7 @@ snapshots:
       is-npm: 6.0.0
       latest-version: 9.0.0
       pupa: 3.1.0
-      semver: 7.6.2
+      semver: 7.6.3
       semver-diff: 4.0.0
       xdg-basedir: 5.1.0
 
