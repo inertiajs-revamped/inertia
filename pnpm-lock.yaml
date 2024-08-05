@@ -26,8 +26,8 @@ importers:
         specifier: ^0.11.3
         version: 0.11.3
       '@types/node':
-        specifier: ^20.14.13
-        version: 20.14.13
+        specifier: ^20.14.14
+        version: 20.14.14
       '@types/semver':
         specifier: ^7.5.8
         version: 7.5.8
@@ -60,7 +60,7 @@ importers:
         version: 5.5.3
       vitest:
         specifier: ^2.0.2
-        version: 2.0.2(@types/node@20.14.13)(jsdom@24.1.0)(terser@5.31.2)
+        version: 2.0.2(@types/node@20.14.14)(jsdom@24.1.0)(terser@5.31.2)
 
   docs:
     devDependencies:
@@ -68,8 +68,8 @@ importers:
         specifier: workspace:*
         version: link:../libs/tsconfig
       '@types/node':
-        specifier: ^20.14.13
-        version: 20.14.13
+        specifier: ^20.14.14
+        version: 20.14.14
       '@vueuse/core':
         specifier: ^10.11.0
         version: 10.11.0(vue@3.4.31(typescript@5.5.3))
@@ -81,10 +81,10 @@ importers:
         version: 5.31.2
       vite:
         specifier: ^5.3.3
-        version: 5.3.3(@types/node@20.14.13)(terser@5.31.2)
+        version: 5.3.3(@types/node@20.14.14)(terser@5.31.2)
       vitepress:
         specifier: ^1.3.1
-        version: 1.3.1(@algolia/client-search@4.24.0)(@types/node@20.14.13)(@types/react@18.3.3)(axios@1.7.2)(nprogress@0.2.0)(postcss@8.4.39)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(search-insights@2.15.0)(terser@5.31.2)(typescript@5.5.3)
+        version: 1.3.1(@algolia/client-search@4.24.0)(@types/node@20.14.14)(@types/react@18.3.3)(axios@1.7.2)(nprogress@0.2.0)(postcss@8.4.39)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(search-insights@2.15.0)(terser@5.31.2)(typescript@5.5.3)
       vitepress-markdown-it-stepper:
         specifier: ^0.1.0
         version: 0.1.0
@@ -101,8 +101,8 @@ importers:
         specifier: ^1.45.3
         version: 1.45.3
       '@types/node':
-        specifier: ^20.14.13
-        version: 20.14.13
+        specifier: ^20.14.14
+        version: 20.14.14
 
   e2e/apps/react:
     dependencies:
@@ -126,8 +126,8 @@ importers:
         specifier: ^1.4.11
         version: 1.4.11
       '@types/node':
-        specifier: ^20.14.13
-        version: 20.14.13
+        specifier: ^20.14.14
+        version: 20.14.14
       '@types/react':
         specifier: ^18.3.3
         version: 18.3.3
@@ -136,7 +136,7 @@ importers:
         version: 18.3.0
       '@vitejs/plugin-react':
         specifier: ^4.3.1
-        version: 4.3.1(vite@5.3.3(@types/node@20.14.13)(terser@5.31.2))
+        version: 4.3.1(vite@5.3.3(@types/node@20.14.14)(terser@5.31.2))
       body-parser:
         specifier: ^1.20.2
         version: 1.20.2
@@ -145,7 +145,7 @@ importers:
         version: 4.19.2
       laravel-vite-plugin:
         specifier: ^1.0.5
-        version: 1.0.5(vite@5.3.3(@types/node@20.14.13)(terser@5.31.2))
+        version: 1.0.5(vite@5.3.3(@types/node@20.14.14)(terser@5.31.2))
       multer:
         specifier: 1.4.5-lts.1
         version: 1.4.5-lts.1
@@ -154,7 +154,7 @@ importers:
         version: 4.16.2
       vite:
         specifier: ^5.3.3
-        version: 5.3.3(@types/node@20.14.13)(terser@5.31.2)
+        version: 5.3.3(@types/node@20.14.14)(terser@5.31.2)
 
   e2e/apps/vue:
     dependencies:
@@ -175,11 +175,11 @@ importers:
         specifier: ^1.4.11
         version: 1.4.11
       '@types/node':
-        specifier: ^20.14.13
-        version: 20.14.13
+        specifier: ^20.14.14
+        version: 20.14.14
       '@vitejs/plugin-vue':
         specifier: ^5.0.5
-        version: 5.0.5(vite@5.3.3(@types/node@20.14.13)(terser@5.31.2))(vue@3.4.31(typescript@5.5.3))
+        version: 5.0.5(vite@5.3.3(@types/node@20.14.14)(terser@5.31.2))(vue@3.4.31(typescript@5.5.3))
       '@vue/server-renderer':
         specifier: ^3.4.31
         version: 3.4.31(vue@3.4.31(typescript@5.5.3))
@@ -191,7 +191,7 @@ importers:
         version: 4.19.2
       laravel-vite-plugin:
         specifier: ^1.0.5
-        version: 1.0.5(vite@5.3.3(@types/node@20.14.13)(terser@5.31.2))
+        version: 1.0.5(vite@5.3.3(@types/node@20.14.14)(terser@5.31.2))
       multer:
         specifier: 1.4.5-lts.1
         version: 1.4.5-lts.1
@@ -200,7 +200,7 @@ importers:
         version: 4.16.2
       vite:
         specifier: ^5.3.3
-        version: 5.3.3(@types/node@20.14.13)(terser@5.31.2)
+        version: 5.3.3(@types/node@20.14.14)(terser@5.31.2)
       vue-tsc:
         specifier: ^2.0.26
         version: 2.0.26(typescript@5.5.3)
@@ -217,8 +217,8 @@ importers:
         specifier: ^21.1.7
         version: 21.1.7
       '@types/node':
-        specifier: ^20.14.13
-        version: 20.14.13
+        specifier: ^20.14.14
+        version: 20.14.14
       formdata-node:
         specifier: ^6.0.3
         version: 6.0.3
@@ -253,8 +253,8 @@ importers:
         specifier: workspace:*
         version: link:../../libs/tsconfig
       '@types/node':
-        specifier: ^20.14.13
-        version: 20.14.13
+        specifier: ^20.14.14
+        version: 20.14.14
 
   packages/preact:
     dependencies:
@@ -272,8 +272,8 @@ importers:
         specifier: workspace:*
         version: link:../../libs/tsconfig
       '@types/node':
-        specifier: ^20.14.13
-        version: 20.14.13
+        specifier: ^20.14.14
+        version: 20.14.14
       preact:
         specifier: ^10.22.1
         version: 10.22.1
@@ -287,8 +287,8 @@ importers:
         specifier: ^0.11.3
         version: 0.11.3
       '@types/node':
-        specifier: ^20.14.13
-        version: 20.14.13
+        specifier: ^20.14.14
+        version: 20.14.14
 
   packages/react:
     dependencies:
@@ -306,8 +306,8 @@ importers:
         specifier: workspace:*
         version: link:../../libs/tsconfig
       '@types/node':
-        specifier: ^20.14.13
-        version: 20.14.13
+        specifier: ^20.14.14
+        version: 20.14.14
       '@types/react':
         specifier: ^18.3.3
         version: 18.3.3
@@ -325,17 +325,17 @@ importers:
     dependencies:
       laravel-vite-plugin:
         specifier: 1.0.5
-        version: 1.0.5(vite@5.3.3(@types/node@20.14.13)(terser@5.31.2))
+        version: 1.0.5(vite@5.3.3(@types/node@20.14.14)(terser@5.31.2))
       vite:
         specifier: ^5.3.3
-        version: 5.3.3(@types/node@20.14.13)(terser@5.31.2)
+        version: 5.3.3(@types/node@20.14.14)(terser@5.31.2)
     devDependencies:
       '@lib/tsconfig':
         specifier: workspace:*
         version: link:../../libs/tsconfig
       '@types/node':
-        specifier: ^20.14.13
-        version: 20.14.13
+        specifier: ^20.14.14
+        version: 20.14.14
 
   packages/vue:
     dependencies:
@@ -356,8 +356,8 @@ importers:
         specifier: workspace:*
         version: link:../../libs/tsconfig
       '@types/node':
-        specifier: ^20.14.13
-        version: 20.14.13
+        specifier: ^20.14.14
+        version: 20.14.14
       '@vue/runtime-core':
         specifier: ^3.4.31
         version: 3.4.31
@@ -1176,8 +1176,8 @@ packages:
   '@types/multer@1.4.11':
     resolution: {integrity: sha512-svK240gr6LVWvv3YGyhLlA+6LRRWA4mnGIU7RcNmgjBYFl6665wcXrRfxGp5tEPVHUNm5FMcmq7too9bxCwX/w==}
 
-  '@types/node@20.14.13':
-    resolution: {integrity: sha512-+bHoGiZb8UiQ0+WEtmph2IWQCjIqg8MDZMAV+ppRRhUZnquF5mQkP/9vpSwJClEiSM/C7fZZExPzfU0vJTyp8w==}
+  '@types/node@20.14.14':
+    resolution: {integrity: sha512-d64f00982fS9YoOgJkAMolK7MN8Iq3TDdVjchbYHdEmjth/DHowx82GnoA+tVUAN+7vxfYUgAzi+JXbKNd2SDQ==}
 
   '@types/nprogress@0.2.3':
     resolution: {integrity: sha512-k7kRA033QNtC+gLc4VPlfnue58CM1iQLgn1IMAU8VPHGOj7oIHPp9UlhedEnD/Gl8evoCjwkZjlBORtZ3JByUA==}
@@ -3629,11 +3629,11 @@ snapshots:
   '@types/body-parser@1.19.5':
     dependencies:
       '@types/connect': 3.4.38
-      '@types/node': 20.14.13
+      '@types/node': 20.14.14
 
   '@types/connect@3.4.38':
     dependencies:
-      '@types/node': 20.14.13
+      '@types/node': 20.14.14
 
   '@types/debug@4.1.12':
     dependencies:
@@ -3643,7 +3643,7 @@ snapshots:
 
   '@types/express-serve-static-core@4.19.5':
     dependencies:
-      '@types/node': 20.14.13
+      '@types/node': 20.14.14
       '@types/qs': 6.9.15
       '@types/range-parser': 1.2.7
       '@types/send': 0.17.4
@@ -3663,7 +3663,7 @@ snapshots:
 
   '@types/jsdom@21.1.7':
     dependencies:
-      '@types/node': 20.14.13
+      '@types/node': 20.14.14
       '@types/tough-cookie': 4.0.5
       parse5: 7.1.2
 
@@ -3688,7 +3688,7 @@ snapshots:
     dependencies:
       '@types/express': 4.17.21
 
-  '@types/node@20.14.13':
+  '@types/node@20.14.14':
     dependencies:
       undici-types: 5.26.5
 
@@ -3716,12 +3716,12 @@ snapshots:
   '@types/send@0.17.4':
     dependencies:
       '@types/mime': 1.3.5
-      '@types/node': 20.14.13
+      '@types/node': 20.14.14
 
   '@types/serve-static@1.15.7':
     dependencies:
       '@types/http-errors': 2.0.4
-      '@types/node': 20.14.13
+      '@types/node': 20.14.14
       '@types/send': 0.17.4
 
   '@types/tough-cookie@4.0.5': {}
@@ -3732,20 +3732,20 @@ snapshots:
 
   '@visulima/deep-clone@2.1.3': {}
 
-  '@vitejs/plugin-react@4.3.1(vite@5.3.3(@types/node@20.14.13)(terser@5.31.2))':
+  '@vitejs/plugin-react@4.3.1(vite@5.3.3(@types/node@20.14.14)(terser@5.31.2))':
     dependencies:
       '@babel/core': 7.24.8
       '@babel/plugin-transform-react-jsx-self': 7.24.7(@babel/core@7.24.8)
       '@babel/plugin-transform-react-jsx-source': 7.24.7(@babel/core@7.24.8)
       '@types/babel__core': 7.20.5
       react-refresh: 0.14.2
-      vite: 5.3.3(@types/node@20.14.13)(terser@5.31.2)
+      vite: 5.3.3(@types/node@20.14.14)(terser@5.31.2)
     transitivePeerDependencies:
       - supports-color
 
-  '@vitejs/plugin-vue@5.0.5(vite@5.3.3(@types/node@20.14.13)(terser@5.31.2))(vue@3.4.31(typescript@5.5.3))':
+  '@vitejs/plugin-vue@5.0.5(vite@5.3.3(@types/node@20.14.14)(terser@5.31.2))(vue@3.4.31(typescript@5.5.3))':
     dependencies:
-      vite: 5.3.3(@types/node@20.14.13)(terser@5.31.2)
+      vite: 5.3.3(@types/node@20.14.14)(terser@5.31.2)
       vue: 3.4.31(typescript@5.5.3)
 
   '@vitest/expect@2.0.2':
@@ -4668,10 +4668,10 @@ snapshots:
 
   ky@1.4.0: {}
 
-  laravel-vite-plugin@1.0.5(vite@5.3.3(@types/node@20.14.13)(terser@5.31.2)):
+  laravel-vite-plugin@1.0.5(vite@5.3.3(@types/node@20.14.14)(terser@5.31.2)):
     dependencies:
       picocolors: 1.0.1
-      vite: 5.3.3(@types/node@20.14.13)(terser@5.31.2)
+      vite: 5.3.3(@types/node@20.14.14)(terser@5.31.2)
       vite-plugin-full-reload: 1.2.0
 
   latest-version@9.0.0:
@@ -5294,13 +5294,13 @@ snapshots:
 
   vary@1.1.2: {}
 
-  vite-node@2.0.2(@types/node@20.14.13)(terser@5.31.2):
+  vite-node@2.0.2(@types/node@20.14.14)(terser@5.31.2):
     dependencies:
       cac: 6.7.14
       debug: 4.3.5
       pathe: 1.1.2
       tinyrainbow: 1.2.0
-      vite: 5.3.3(@types/node@20.14.13)(terser@5.31.2)
+      vite: 5.3.3(@types/node@20.14.14)(terser@5.31.2)
     transitivePeerDependencies:
       - '@types/node'
       - less
@@ -5316,13 +5316,13 @@ snapshots:
       picocolors: 1.0.1
       picomatch: 2.3.1
 
-  vite@5.3.3(@types/node@20.14.13)(terser@5.31.2):
+  vite@5.3.3(@types/node@20.14.14)(terser@5.31.2):
     dependencies:
       esbuild: 0.21.5
       postcss: 8.4.39
       rollup: 4.18.1
     optionalDependencies:
-      '@types/node': 20.14.13
+      '@types/node': 20.14.14
       fsevents: 2.3.3
       terser: 5.31.2
 
@@ -5332,14 +5332,14 @@ snapshots:
       '@types/markdown-it-container': 2.0.10
       markdown-it-container: 4.0.0
 
-  vitepress@1.3.1(@algolia/client-search@4.24.0)(@types/node@20.14.13)(@types/react@18.3.3)(axios@1.7.2)(nprogress@0.2.0)(postcss@8.4.39)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(search-insights@2.15.0)(terser@5.31.2)(typescript@5.5.3):
+  vitepress@1.3.1(@algolia/client-search@4.24.0)(@types/node@20.14.14)(@types/react@18.3.3)(axios@1.7.2)(nprogress@0.2.0)(postcss@8.4.39)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(search-insights@2.15.0)(terser@5.31.2)(typescript@5.5.3):
     dependencies:
       '@docsearch/css': 3.6.0
       '@docsearch/js': 3.6.0(@algolia/client-search@4.24.0)(@types/react@18.3.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(search-insights@2.15.0)
       '@shikijs/core': 1.10.3
       '@shikijs/transformers': 1.10.3
       '@types/markdown-it': 14.1.1
-      '@vitejs/plugin-vue': 5.0.5(vite@5.3.3(@types/node@20.14.13)(terser@5.31.2))(vue@3.4.31(typescript@5.5.3))
+      '@vitejs/plugin-vue': 5.0.5(vite@5.3.3(@types/node@20.14.14)(terser@5.31.2))(vue@3.4.31(typescript@5.5.3))
       '@vue/devtools-api': 7.3.6
       '@vue/shared': 3.4.31
       '@vueuse/core': 10.11.0(vue@3.4.31(typescript@5.5.3))
@@ -5348,7 +5348,7 @@ snapshots:
       mark.js: 8.11.1
       minisearch: 7.0.0
       shiki: 1.10.3
-      vite: 5.3.3(@types/node@20.14.13)(terser@5.31.2)
+      vite: 5.3.3(@types/node@20.14.14)(terser@5.31.2)
       vue: 3.4.31(typescript@5.5.3)
     optionalDependencies:
       postcss: 8.4.39
@@ -5379,7 +5379,7 @@ snapshots:
       - typescript
       - universal-cookie
 
-  vitest@2.0.2(@types/node@20.14.13)(jsdom@24.1.0)(terser@5.31.2):
+  vitest@2.0.2(@types/node@20.14.14)(jsdom@24.1.0)(terser@5.31.2):
     dependencies:
       '@ampproject/remapping': 2.3.0
       '@vitest/expect': 2.0.2
@@ -5397,11 +5397,11 @@ snapshots:
       tinybench: 2.8.0
       tinypool: 1.0.0
       tinyrainbow: 1.2.0
-      vite: 5.3.3(@types/node@20.14.13)(terser@5.31.2)
-      vite-node: 2.0.2(@types/node@20.14.13)(terser@5.31.2)
+      vite: 5.3.3(@types/node@20.14.14)(terser@5.31.2)
+      vite-node: 2.0.2(@types/node@20.14.14)(terser@5.31.2)
       why-is-node-running: 2.3.0
     optionalDependencies:
-      '@types/node': 20.14.13
+      '@types/node': 20.14.14
       jsdom: 24.1.0
     transitivePeerDependencies:
       - less
