@@ -10,7 +10,7 @@
     "@types/jsdom": "^21.1.7",
     "@types/node": "^20.14.14",
     "formdata-node": "^6.0.3",
-    "jsdom": "^24.1.0"
+    "jsdom": "^24.1.1"
   },
   "publishConfig": {
     "access": "restricted"
