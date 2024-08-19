@@ -74,8 +74,8 @@ importers:
         specifier: ^10.11.1
         version: 10.11.1(vue@3.4.31(typescript@5.5.3))
       '@vueuse/shared':
-        specifier: ^10.11.0
-        version: 10.11.0(vue@3.4.31(typescript@5.5.3))
+        specifier: ^10.11.1
+        version: 10.11.1(vue@3.4.31(typescript@5.5.3))
       terser:
         specifier: ^5.31.2
         version: 5.31.2
