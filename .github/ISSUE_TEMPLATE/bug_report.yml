@@ -155,6 +155,7 @@ body:
       label: Node Version
       description: Output of `node -v`
       options:
+        - 22.8.0
         - 22.7.0
         - 22.6.0
         - 22.5.1
