@@ -43,34 +43,29 @@
   "devDependencies": {
     "@biomejs/biome": "^1.8.3",
     "@bscotch/workspaces": "^0.3.0",
-    "@playwright/test": "^1.45.3",
+    "@playwright/test": "^1.47.0",
     "@preset/cli": "^0.11.3",
-    "@types/node": "^20.16.3",
+    "@types/node": "^22.5.4",
     "@types/semver": "^7.5.8",
     "colorize-node": "^1.0.0",
     "execa": "^9.3.1",
-    "husky": "^9.0.11",
+    "husky": "^9.1.5",
     "is-command": "^2.0.2",
     "nano-staged": "^0.8.0",
-    "pkgroll": "^2.1.1",
+    "pkgroll": "^2.4.2",
     "semver": "^7.6.3",
-    "tsx": "^4.16.2",
-    "typescript": "^5.5.3",
-    "vitest": "^2.0.2"
+    "tsx": "^4.19.0",
+    "typescript": "^5.5.4",
+    "vitest": "^2.0.5"
   },
   "engines": {
     "node": ">=21.7.2",
-    "pnpm": ">=9.5.0"
+    "pnpm": ">=9.9.0"
   },
   "nano-staged": {
     "*.ts": "biome lint --write .",
     "*": "biome format . --write"
   },
-  "packageManager": "pnpm@9.5.0",
-  "pnpm": {
-    "patchedDependencies": {
-      "pkgroll@2.1.1": ".github/patches/pkgroll@2.1.1.patch"
-    }
-  },
+  "packageManager": "pnpm@9.9.0",
   "preset": "./packages/presets/preset.ts"
 }

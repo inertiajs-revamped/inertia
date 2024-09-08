@@ -46,7 +46,7 @@
   },
   "devDependencies": {
     "@lib/tsconfig": "workspace:*",
-    "@types/node": "^20.16.3"
+    "@types/node": "^22.5.4"
   },
   "peerDependencies": {
     "laravel-vite-plugin": "1.0.5",

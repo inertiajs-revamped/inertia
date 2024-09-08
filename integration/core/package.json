@@ -8,9 +8,9 @@
     "@inertiajs-revamped/core": "workspace:*",
     "@lib/tsconfig": "workspace:*",
     "@types/jsdom": "^21.1.7",
-    "@types/node": "^20.16.3",
+    "@types/node": "^22.5.4",
     "formdata-node": "^6.0.3",
-    "jsdom": "^24.1.1"
+    "jsdom": "^25.0.0"
   },
   "publishConfig": {
     "access": "restricted"
