@@ -83,7 +83,7 @@
     "@types/node": "^22.5.4"
   },
   "peerDependencies": {
-    "axios": ">=1.7.4"
+    "axios": ">=1.7.7"
   },
   "engines": {
     "node": ">=18.12.0"
