@@ -3,9 +3,9 @@
 namespace Inertia;
 
 use Closure;
-use Inertia\Support\Header;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
+use Inertia\Support\Header;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\App;
@@ -23,7 +23,6 @@ class Response implements Responsable
 
     protected $component;
     protected $props;
-    protected $persisted;
     protected $rootView;
     protected $version;
     protected $viewData = [];
@@ -31,11 +30,10 @@ class Response implements Responsable
     /**
      * @param array|Arrayable $props
      */
-    public function __construct(string $component, array $props, string $rootView = 'app', string $version = '', array $persisted = [])
+    public function __construct(string $component, array $props, string $rootView = 'app', string $version = '')
     {
         $this->component = $component;
         $this->props = $props instanceof Arrayable ? $props->toArray() : $props;
-        $this->persisted = $persisted;
         $this->rootView = $rootView;
         $this->version = $version;
     }
@@ -88,20 +86,14 @@ class Response implements Responsable
      */
     public function toResponse($request)
     {
-        $only = array_filter(explode(',', $request->header('X-Inertia-Partial-Data', '')));
-
-        $props = ($only && $request->header('X-Inertia-Partial-Component') === $this->component)
-            ? Arr::only($this->props, $only)
-            : array_filter($this->props, static function ($prop) {
-                return ! ($prop instanceof LazyProp);
-            });
-
-        $props = $this->resolveProperties($request, $this->props);
+        $props = $this->resolvePartialProps($request, $this->props);
+        $props = $this->resolveAlwaysProps($props);
+        $props = $this->evaluateProps($props, $request);
 
         $page = [
             'component' => $this->component,
             'props' => $props,
-            'url' => $this->url($request),
+            'url' => Str::start(Str::after($request->fullUrl(), $request->getSchemeAndHttpHost()), '/'),
             'version' => $this->version,
         ];
 
@@ -113,41 +105,75 @@ class Response implements Responsable
     }
 
     /**
-     * Resolve the properites for the response.
+     * Resolve the `only` and `except` partial request props.
      */
-    public function resolveProperties(Request $request, array $props): array
+    public function resolvePartialProps(Request $request, array $props): array
     {
         $isPartial = $request->header(Header::PARTIAL_COMPONENT) === $this->component;
 
-        if(!$isPartial) {
-            $props = array_filter($this->props, static function ($prop) {
+        if (! $isPartial) {
+            return array_filter($props, static function ($prop) {
                 return ! ($prop instanceof LazyProp);
             });
         }
 
-        $props = $this->resolveArrayableProperties($props, $request);
+        $only = array_filter(explode(',', $request->header(Header::PARTIAL_ONLY, '')));
+        $except = array_filter(explode(',', $request->header(Header::PARTIAL_EXCEPT, '')));
 
-        if($isPartial && $request->hasHeader(Header::PARTIAL_ONLY)) {
-            $props = $this->resolveOnly($request, $props);
+        $props = $only ? Arr::only($props, $only) : $props;
+
+        if ($except) {
+            Arr::forget($props, $except);
         }
-
-        $props = $this->resolvePropertyInstances($props, $request);
 
         return $props;
     }
 
     /**
-     * Resolve all arrayables properties into an array.
+     * Resolve `always` properties that should always be included on all visits,
+     * regardless of "only" or "except" requests.
      */
-    public function resolveArrayableProperties(array $props, Request $request, bool $unpackDotProps = true): array
+    public function resolveAlwaysProps(array $props): array
+    {
+        $always = array_filter($this->props, static function ($prop) {
+            return $prop instanceof AlwaysProp;
+        });
+
+        return array_merge($always, $props);
+    }
+
+    /**
+     * Resolve all necessary class instances in the given props.
+     */
+    public function evaluateProps(array $props, Request $request, bool $unpackDotProps = true): array
     {
         foreach ($props as $key => $value) {
+            if ($value instanceof Closure) {
+                $value = App::call($value);
+            }
+
+            if ($value instanceof LazyProp) {
+                $value = App::call($value);
+            }
+
+            if ($value instanceof AlwaysProp) {
+                $value = App::call($value);
+            }
+
+            if ($value instanceof PromiseInterface) {
+                $value = $value->wait();
+            }
+
+            if ($value instanceof ResourceResponse || $value instanceof JsonResource) {
+                $value = $value->toResponse($request)->getData(true);
+            }
+
             if ($value instanceof Arrayable) {
                 $value = $value->toArray();
             }
 
             if (is_array($value)) {
-                $value = $this->resolveArrayableProperties($value, $request, false);
+                $value = $this->evaluateProps($value, $request, false);
             }
 
             if ($unpackDotProps && str_contains($key, '.')) {
@@ -159,75 +185,5 @@ class Response implements Responsable
         }
 
         return $props;
-    }
-
-    /**
-     * Resolve the `only` partial request props.
-     */
-    public function resolveOnly(Request $request, array $props): array
-    {
-        $only = array_merge(
-            array_filter(explode(',', $request->header(Header::PARTIAL_ONLY, ''))),
-            $this->persisted
-        );
-
-        $value = [];
-
-        foreach($only as $key) {
-            Arr::set($value, $key, data_get($props, $key));
-        }
-
-        return $value;
-    }
-
-    /**
-     * Resolve all necessary class instances in the given props.
-     */
-    public function resolvePropertyInstances(array $props, Request $request): array
-    {
-        foreach ($props as $key => $value) {
-            if ($value instanceof Closure) {
-                $value = App::call($value);
-            }
-
-            if ($value instanceof LazyProp) {
-                $value = App::call($value);
-            }
-
-            if ($value instanceof PromiseInterface) {
-                $value = $value->wait();
-            }
-
-            if ($value instanceof ResourceResponse || $value instanceof JsonResource) {
-                $value = tap($value, static function ($value) {
-                    $value->withoutWrapping();
-                })->toResponse($request)->getData(true);
-            }
-
-            if ($value instanceof Arrayable) {
-                $value = $value->toArray();
-            }
-
-            if (is_array($value)) {
-                $value = $this->resolvePropertyInstances($value, $request);
-            }
-
-            $props[$key] = $value;
-        }
-
-        return $props;
-    }
-
-    protected function url(Request $request): string
-    {
-        $url = Str::after($request->url(), $request->getSchemeAndHttpHost());
-        $url = Str::start($url, '/');
-
-        $queryString = $request->getQueryString();
-        if ($queryString === null) {
-            return $url;
-        }
-
-        return $url.'?'.urldecode($queryString);
     }
 }

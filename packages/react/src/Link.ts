@@ -1,37 +1,29 @@
 import {
-  type FormDataConvertible,
-  type Method,
-  type PreserveStateOption,
-  type Progress,
+  FormDataConvertible,
   mergeDataIntoQueryString,
+  Method,
+  PreserveStateOption,
+  Progress,
   router,
   shouldIntercept,
-} from '@inertiajs-revamped/core'
-import {
-  type AllHTMLAttributes,
-  type ForwardRefExoticComponent,
-  type HTMLAttributes,
-  type RefAttributes,
-  createElement,
-  forwardRef,
-  useCallback,
-} from 'react'
+} from '@inertiajs/core'
+import { createElement, forwardRef, useCallback } from 'react'
 
 const noop = () => undefined
 
-export interface BaseInertiaLinkProps {
+interface BaseInertiaLinkProps {
   as?: string
   data?: Record<string, FormDataConvertible>
   href: string
   method?: Method
   headers?: Record<string, string>
-  onClick?: (event: MouseEvent) => void
+  onClick?: (event: React.MouseEvent<Element>) => void
   preserveScroll?: PreserveStateOption
   preserveState?: PreserveStateOption
   replace?: boolean
   only?: string[]
   except?: string[]
-  onCancelToken?: { ({ cancel }: { cancel: VoidFunction }): void }
+  onCancelToken?: (cancelToken: import('axios').CancelTokenSource) => void
   onBefore?: () => void
   onStart?: () => void
   onProgress?: (progress: Progress) => void
@@ -43,12 +35,10 @@ export interface BaseInertiaLinkProps {
 }
 
 export type InertiaLinkProps = BaseInertiaLinkProps &
-  Omit<HTMLAttributes<HTMLElement>, keyof BaseInertiaLinkProps> &
-  Omit<AllHTMLAttributes<HTMLElement>, keyof BaseInertiaLinkProps>
+  Omit<React.HTMLAttributes<HTMLElement>, keyof BaseInertiaLinkProps> &
+  Omit<React.AllHTMLAttributes<HTMLElement>, keyof BaseInertiaLinkProps>
 
-const Link: ForwardRefExoticComponent<
-  InertiaLinkProps & RefAttributes<unknown>
-> = forwardRef<unknown, InertiaLinkProps>(
+const Link = forwardRef<unknown, InertiaLinkProps>(
   (
     {
       children,
@@ -77,10 +67,10 @@ const Link: ForwardRefExoticComponent<
     ref
   ) => {
     const visit = useCallback(
-      (event: MouseEvent) => {
+      (event: React.MouseEvent) => {
         onClick(event)
 
-        if (shouldIntercept(event)) {
+        if (shouldIntercept(event.nativeEvent)) {
           event.preventDefault()
 
           router.visit(href, {
@@ -125,7 +115,7 @@ const Link: ForwardRefExoticComponent<
       ]
     )
 
-    as = typeof as === 'string' ? as.toLowerCase() : as
+    as = as.toLowerCase()
     method = method.toLowerCase() as Method
     const [_href, _data] = mergeDataIntoQueryString(
       method,
@@ -138,7 +128,7 @@ const Link: ForwardRefExoticComponent<
 
     if (as === 'a' && method !== 'get') {
       console.warn(
-        `Creating POST/PUT/PATCH/DELETE <a> links is discouraged as it causes "Open Link in New Tab/Window" accessibility issues. Please specify a more appropriate element using the "as" attribute. For example: <Link href="${href}" method="${method}" as="button">...</Link>`
+        `Creating POST/PUT/PATCH/DELETE <a> links is discouraged as it causes "Open Link in New Tab/Window" accessibility issues.\n\nPlease specify a more appropriate element using the "as" attribute. For example:\n\n<Link href="${href}" method="${method}" as="button">...</Link>`
       )
     }
 
@@ -146,7 +136,7 @@ const Link: ForwardRefExoticComponent<
       as,
       {
         ...props,
-        ...(as === 'a' ? { href } : { role: 'link' }),
+        ...(as === 'a' ? { href } : {}),
         ref,
         onClick: visit,
       },
@@ -154,7 +144,6 @@ const Link: ForwardRefExoticComponent<
     )
   }
 )
-
 Link.displayName = 'InertiaLink'
 
-export { Link }
+export default Link

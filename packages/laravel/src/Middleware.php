@@ -13,23 +13,16 @@ class Middleware
     /**
      * The root template that's loaded on the first page visit.
      *
-     * @see https://inertiajs-revamped.com/guide/integrations/laravel/installation#create-app-blade-php
+     * @see https://inertiajs.com/server-side-setup#root-template
      *
      * @var string
      */
     protected $rootView = 'app';
 
     /**
-     * The properties that should always be included on Inertia responses, regardless of "only" or "except" requests.
-     *
-     * @var array
-     */
-    protected $persisted = [];
-
-    /**
      * Determines the current asset version.
      *
-     * @see https://inertiajs-revamped.com/guide/integrations/laravel/asset-versioning
+     * @see https://inertiajs.com/asset-versioning
      *
      * @return string|null
      */
@@ -53,23 +46,21 @@ class Middleware
     /**
      * Defines the props that are shared by default.
      *
-     * @see https://inertiajs-revamped.com/guide/integrations/laravel/shared-data
+     * @see https://inertiajs.com/shared-data
      *
      * @return array
      */
     public function share(Request $request)
     {
         return [
-            'errors' => function () use ($request) {
-                return $this->resolveValidationErrors($request);
-            },
+            'errors' => Inertia::always($this->resolveValidationErrors($request)),
         ];
     }
 
     /**
      * Sets the root template that's loaded on the first page visit.
      *
-     * @see https://inertiajs-revamped.com/guide/integrations/laravel/installation#create-app-blade-php
+     * @see https://inertiajs.com/server-side-setup#root-template
      *
      * @return string
      */
@@ -90,7 +81,6 @@ class Middleware
         });
 
         Inertia::share($this->share($request));
-        Inertia::persist($this->persisted);
         Inertia::setRootView($this->rootView($request));
 
         $response = $next($request);

@@ -3,8 +3,8 @@
 namespace Inertia;
 
 use Closure;
-use Inertia\Support\Header;
 use Illuminate\Support\Arr;
+use Inertia\Support\Header;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Redirect;
@@ -23,9 +23,6 @@ class ResponseFactory
 
     /** @var array */
     protected $sharedProps = [];
-
-    /** @var array */
-    protected $persisted = [];
 
     /** @var Closure|string|null */
     protected $version;
@@ -49,7 +46,7 @@ class ResponseFactory
         }
     }
 
-    public function getShared(?string $key = null, $default = null)
+    public function getShared(string $key = null, $default = null)
     {
         if ($key) {
             return Arr::get($this->sharedProps, $key, $default);
@@ -61,30 +58,6 @@ class ResponseFactory
     public function flushShared(): void
     {
         $this->sharedProps = [];
-    }
-
-    /**
-     * @param string|array|Arrayable $props
-     */
-    public function persist($props): void
-    {
-        if (is_array($props)) {
-            $this->persisted = array_merge($this->persisted, $props);
-        } elseif ($props instanceof Arrayable) {
-            $this->persisted = array_merge($this->persisted, $props->toArray());
-        } else {
-            $this->persisted[] = $props;
-        }
-    }
-
-    public function getPersisted(): array
-    {
-        return $this->persisted;
-    }
-
-    public function flushPersisted(): void
-    {
-        $this->persisted = [];
     }
 
     /**
@@ -109,6 +82,11 @@ class ResponseFactory
         return new LazyProp($callback);
     }
 
+    public function always($value): AlwaysProp
+    {
+        return new AlwaysProp($value);
+    }
+
     /**
      * @param array|Arrayable $props
      */
@@ -122,8 +100,7 @@ class ResponseFactory
             $component,
             array_merge($this->sharedProps, $props),
             $this->rootView,
-            $this->getVersion(),
-            $this->persisted
+            $this->getVersion()
         );
     }
 

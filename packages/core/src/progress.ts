@@ -1,65 +1,46 @@
 import NProgress from 'nprogress'
-import type { GlobalEvent, ProgressOptions } from './types'
+import { GlobalEvent } from './types'
 
-export function createProgress(options?: Partial<ProgressOptions>) {
-  const opts: ProgressOptions = {
-    delay: 250,
-    color: '#29d',
-    includeCSS: true,
-    showSpinner: false,
-    ...options,
-  }
+let timeout: NodeJS.Timeout | null = null
 
-  let timeout: ReturnType<typeof setTimeout> | null = null
+function addEventListeners(delay: number): void {
+  document.addEventListener('inertia:start', start.bind(null, delay))
+  document.addEventListener('inertia:progress', progress)
+  document.addEventListener('inertia:finish', finish)
+}
 
-  function startProgress(delay: number): void {
-    timeout = setTimeout(() => NProgress.start(), delay)
-  }
+function start(delay: number): void {
+  timeout = setTimeout(() => NProgress.start(), delay)
+}
 
-  function finishProgress(event: GlobalEvent<'finish'>) {
-    clearTimeout(timeout!)
-    if (!NProgress.isStarted()) {
-      return
-    } else if (event.detail.visit.completed) {
-      NProgress.done()
-    } else if (event.detail.visit.interrupted) {
-      NProgress.set(0)
-    } else if (event.detail.visit.cancelled) {
-      NProgress.done()
-      NProgress.remove()
-    }
-  }
-
-  function progress(event: GlobalEvent<'progress'>) {
-    if (NProgress.isStarted() && event.detail.progress?.percentage) {
-      NProgress.set(
-        Math.max(
-          NProgress.status!,
-          (event.detail.progress.percentage / 100) * 0.9
-        )
+function progress(event: GlobalEvent<'progress'>) {
+  if (NProgress.isStarted() && event.detail.progress?.percentage) {
+    NProgress.set(
+      Math.max(
+        NProgress.status!,
+        (event.detail.progress.percentage / 100) * 0.9
       )
-    }
-  }
-
-  document.addEventListener(
-    'inertia:start',
-    startProgress.bind(null, opts.delay),
-    {
-      passive: true,
-    }
-  )
-  document.addEventListener('inertia:progress', progress, { passive: true })
-  document.addEventListener('inertia:finish', finishProgress, { passive: true })
-
-  NProgress.configure({ showSpinner: opts.showSpinner })
-
-  if (opts.includeCSS) {
-    injectCSS(opts.color)
+    )
   }
 }
 
-function injectCSS(color: string) {
+function finish(event: GlobalEvent<'finish'>) {
+  clearTimeout(timeout!)
+  if (!NProgress.isStarted()) {
+    return
+  } else if (event.detail.visit.completed) {
+    NProgress.done()
+  } else if (event.detail.visit.interrupted) {
+    NProgress.set(0)
+  } else if (event.detail.visit.cancelled) {
+    NProgress.done()
+    NProgress.remove()
+  }
+}
+
+function injectCSS(color: string): void {
   const element = document.createElement('style')
+  element.type = 'text/css'
   element.textContent = `
     #nprogress {
       pointer-events: none;
@@ -133,4 +114,17 @@ function injectCSS(color: string) {
     }
   `
   document.head.appendChild(element)
+}
+
+export default function setupProgress({
+  delay = 250,
+  color = '#29d',
+  includeCSS = true,
+  showSpinner = false,
+} = {}): void {
+  addEventListeners(delay)
+  NProgress.configure({ showSpinner })
+  if (includeCSS) {
+    injectCSS(color)
+  }
 }

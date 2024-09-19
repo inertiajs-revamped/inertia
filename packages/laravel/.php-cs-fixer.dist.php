@@ -2,15 +2,6 @@
 
 // Reference: http://cs.sensiolabs.org/
 
-$finder = PhpCsFixer\Finder::create()
-    ->in(__DIR__)
-    ->exclude(['bootstrap', 'storage', 'vendor'])
-    ->name('*.php')
-    ->name('_ide_helpers')
-    ->notName('*.blade.php')
-    ->ignoreDotFiles(true)
-    ->ignoreVCS(true);
-
 return (new PhpCsFixer\Config())
     ->setUsingCache(false)
     ->setRiskyAllowed(true)

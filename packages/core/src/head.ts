@@ -1,12 +1,6 @@
-import { debounce } from './debounce'
-import type {
-  HeadManager,
-  HeadManagerOnUpdate,
-  HeadManagerTitleCallback,
-  Renderer as _Renderer,
-} from './types'
+import debounce from './debounce'
 
-const Renderer: _Renderer = {
+const Renderer = {
   buildDOMElement(tag: string): ChildNode {
     const template = document.createElement('template')
     template.innerHTML = tag
@@ -71,11 +65,17 @@ const Renderer: _Renderer = {
   }, 1),
 }
 
-export function createHeadManager(
+export default function createHeadManager(
   isServer: boolean,
-  titleCallback: HeadManagerTitleCallback,
-  onUpdate: HeadManagerOnUpdate
-): HeadManager {
+  titleCallback: (title: string) => string,
+  onUpdate: (elements: string[]) => void
+): {
+  forceUpdate: () => void
+  createProvider: () => {
+    update: (elements: string[]) => void
+    disconnect: () => void
+  }
+} {
   const states: Record<string, Array<string>> = {}
   let lastProviderId = 0
 
@@ -119,8 +119,7 @@ export function createHeadManager(
         if (element.indexOf('<title ') === 0) {
           const title = element.match(/(<title [^>]+>)(.*?)(<\/title>)/)
           carry.title = title
-            ? // @ts-expect-error
-              `${title[1]}${titleCallback(title[2])}${title[3]}`
+            ? `${title[1]}${titleCallback(title[2])}${title[3]}`
             : element
           return carry
         }

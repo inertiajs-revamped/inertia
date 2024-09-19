@@ -73,14 +73,14 @@
   },
   "dependencies": {
     "@types/nprogress": "^0.2.3",
-    "@types/qs": "^6.9.15",
+    "@types/qs": "^6.9.16",
     "nprogress": "^0.2.0",
     "qs": "^6.13.0",
     "ts-deepmerge": "^7.0.1"
   },
   "devDependencies": {
     "@lib/tsconfig": "workspace:*",
-    "@types/node": "^22.5.4"
+    "@types/node": "^22.5.5"
   },
   "peerDependencies": {
     "axios": ">=1.7.4"

@@ -9,9 +9,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 class ExampleMiddleware extends Middleware
 {
-    /**
-     * @var mixed
-     */
     protected $version;
 
     /**
@@ -19,22 +16,16 @@ class ExampleMiddleware extends Middleware
      */
     protected $shared = [];
 
-    /**
-    * @var array
-    */
-    protected $persisted = [];
-
-    public function __construct($version = null, $shared = [], $persisted = [])
+    public function __construct($version = null, $shared = [])
     {
         $this->version = $version;
         $this->shared = $shared;
-        $this->persisted = $persisted;
     }
 
     /**
      * Determines the current asset version.
      *
-     * @see https://inertiajs-revamped.com/guide/integrations/laravel/asset-versioning
+     * @see https://inertiajs.com/asset-versioning
      */
     public function version(Request $request): ?string
     {
@@ -44,7 +35,7 @@ class ExampleMiddleware extends Middleware
     /**
      * Defines the props that are shared by default.
      *
-     * @see https://inertiajs-revamped.com/guide/integrations/laravel/shared-data
+     * @see https://inertiajs.com/shared-data
      */
     public function share(Request $request): array
     {
