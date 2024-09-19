@@ -229,8 +229,8 @@ importers:
         specifier: ^0.2.3
         version: 0.2.3
       '@types/qs':
-        specifier: ^6.9.15
-        version: 6.9.15
+        specifier: ^6.9.16
+        version: 6.9.16
       axios:
         specifier: '>=1.7.4'
         version: 1.7.7
@@ -1430,6 +1430,9 @@ packages:
 
   '@types/qs@6.9.15':
     resolution: {integrity: sha512-uXHQKES6DQKKCLh441Xv/dwxOq1TVS3JPUMlEqoEglvlhR6Mxnlew/Xq/LRVHpLyk7iK3zODe1qYHIMltO7XGg==}
+
+  '@types/qs@6.9.16':
+    resolution: {integrity: sha512-7i+zxXdPD0T4cKDuxCUXJ4wHcsJLwENa6Z3dCu8cfCK743OGy5Nu1RmAGqDPsoTDINVEcdXKRvR/zre+P2Ku1A==}
 
   '@types/range-parser@1.2.7':
     resolution: {integrity: sha512-hKormJbkJqzQGhziax5PItDUTMAM9uE2XXQmM37dyd4hVM+5aVl7oVxMVUiVQn2oCQFN/LKCZdvSM0pFRqbSmQ==}
@@ -4138,6 +4141,8 @@ snapshots:
   '@types/prop-types@15.7.13': {}
 
   '@types/qs@6.9.15': {}
+
+  '@types/qs@6.9.16': {}
 
   '@types/range-parser@1.2.7': {}
 
