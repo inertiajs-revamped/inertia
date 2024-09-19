@@ -1,6 +1,6 @@
 body {
-  color: #F6F7F9;
-  background-color: #23272F;
+  color: #f6f7f9;
+  background-color: #23272f;
   padding: 0;
   margin: 0;
 }
@@ -8,7 +8,7 @@ body {
 a,
 a:visited,
 a:active {
-  color: #58C4DC;
+  color: #58c4dc;
   text-decoration: none;
 }
 
