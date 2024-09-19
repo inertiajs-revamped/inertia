@@ -73,6 +73,7 @@ body:
       label: Laravel Version
       description: Output of `php artisan --version`
       options:
+        - v11.2.0
         - v11.1.5
         - v11.1.4
         - v11.1.3
@@ -155,6 +156,7 @@ body:
       label: Node Version
       description: Output of `node -v`
       options:
+        - 22.9.0
         - 22.8.0
         - 22.7.0
         - 22.6.0
