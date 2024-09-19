@@ -87,7 +87,7 @@
   },
   "devDependencies": {
     "@lib/tsconfig": "workspace:*",
-    "@types/node": "^22.5.4",
+    "@types/node": "^22.5.5",
     "@types/react": "^18.3.7",
     "@types/react-dom": "^18.3.0",
     "react": "^18.3.1",
