@@ -1,32 +1,10 @@
-import type { AxiosProgressEvent, AxiosResponse } from 'axios'
+import { AxiosProgressEvent, AxiosResponse } from 'axios'
 
-export type Expand<T> = T extends infer O ? { [K in keyof O]: O[K] } : never
-
-export interface Renderer {
-  buildDOMElement(tag: string): ChildNode
-  isInertiaManagedElement(element: Element): boolean
-  findMatchingElementIndex(element: Element, elements: ChildNode[]): number
-  update: (this: Renderer, elements: string[]) => void
-}
-
-export interface Modal {
-  modal: HTMLDivElement | null
-  listener: ((event: KeyboardEvent) => void) | null
-  show(html: Record<string, unknown> | string): void
-  hideOnEscape(event: KeyboardEvent): void
-  hide(): void
-}
-
-export type HeadManager = {
-  forceUpdate: () => void
-  createProvider: () => {
-    update: HeadManagerOnUpdate
-    disconnect: () => void
+declare module 'axios' {
+  export interface AxiosProgressEvent {
+    percentage: number | undefined
   }
 }
-
-export type HeadManagerOnUpdate = (elements: string[]) => void
-export type HeadManagerTitleCallback = (title: string) => string
 
 export type Errors = Record<string, string>
 export type ErrorBag = Record<string, Errors>
@@ -46,43 +24,16 @@ export type Method = 'get' | 'post' | 'put' | 'patch' | 'delete'
 
 export type RequestPayload = Record<string, FormDataConvertible> | FormData
 
-export interface DefaultPageProps {
-  errors: Errors & ErrorBag
+export interface PageProps {
+  [key: string]: unknown
 }
-
-/**
- * Define shared interfaces with module augmentation (React example).
- *
- * @see {@link https://www.typescriptlang.org/docs/handbook/declaration-merging.html#module-augmentation}
- *
- * @example
- * ```typescript
- * // inertia-react.d.ts
- * declare module '@inertiajs-revamped/react' {
- *   // Returned by `usePage` and received as a prop on the `PageContext.Provider` React Context (`Page<PageProps>`).
- *   interface PageProps {
- *     auth: {
- *       user: string
- *     }
- *     versions: {
- *       php: string
- *       laravel: string
- *     }
- *   }
- *
- *   interface HomePageProps extends PageProps {
- *     someProp: {
- *       availableForHomePage: string
- *     }
- *   }
- * }
- * ```
- */
-export interface PageProps extends DefaultPageProps {}
 
 export interface Page<SharedProps extends PageProps = PageProps> {
   component: string
-  props: SharedProps
+  props: PageProps &
+    SharedProps & {
+      errors: Errors & ErrorBag
+    }
   url: string
   version: string | null
 
@@ -92,13 +43,7 @@ export interface Page<SharedProps extends PageProps = PageProps> {
   rememberedState: Record<string, unknown>
 }
 
-/* export type PageResolver = (name: string) => Component */
-
-export type PageResolver<ModuleExportType extends Component = Component> = (
-  name: string
-) =>
-  | Promise<{ default: ModuleExportType } | ModuleExportType>
-  | ({ default: ModuleExportType } | ModuleExportType)
+export type PageResolver = (name: string) => Component
 
 export type PageHandler = ({
   component,
@@ -106,28 +51,13 @@ export type PageHandler = ({
   preserveState,
 }: {
   component: Component
-  page: Page<any>
+  page: Page
   preserveState: PreserveStateOption
 }) => Promise<unknown>
 
-export type Component = unknown
+export type PreserveStateOption = boolean | 'errors' | ((page: Page) => boolean)
 
-export type PreserveStateOption = boolean | string | ((page: Page) => boolean)
-
-export type Progress =
-  | (AxiosProgressEvent & {
-      percentage: number | undefined
-    })
-  | undefined
-
-export type ProgressOptions = {
-  delay: number
-  color: string
-  includeCSS: boolean
-  showSpinner: boolean
-}
-
-export type ProgressCallback = (options?: Partial<ProgressOptions>) => void
+export type Progress = AxiosProgressEvent
 
 export type LocationVisit = {
   preserveScroll: boolean
@@ -267,6 +197,7 @@ export type ActiveVisit = PendingVisit &
   }
 
 export type VisitId = unknown
+export type Component = unknown
 
 export type InertiaAppResponse = Promise<{
   head: string[]

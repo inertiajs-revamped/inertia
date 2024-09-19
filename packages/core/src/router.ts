@@ -1,5 +1,5 @@
-import { default as Axios, type AxiosResponse } from 'axios'
-import { debounce } from './debounce'
+import { default as Axios, AxiosResponse } from 'axios'
+import debounce from './debounce'
 import {
   fireBeforeEvent,
   fireErrorEvent,
@@ -11,9 +11,10 @@ import {
   fireStartEvent,
   fireSuccessEvent,
 } from './events'
-import { hasFiles, objectToFormData } from './form-data'
-import { modal } from './modal'
-import type {
+import { hasFiles } from './files'
+import { objectToFormData } from './formData'
+import modal from './modal'
+import {
   ActiveVisit,
   GlobalEvent,
   GlobalEventNames,
@@ -21,11 +22,9 @@ import type {
   LocationVisit,
   Page,
   PageHandler,
-  PageProps,
   PageResolver,
   PendingVisit,
   PreserveStateOption,
-  Progress,
   RequestPayload,
   VisitId,
   VisitOptions,
@@ -33,6 +32,7 @@ import type {
 import { hrefToUrl, mergeDataIntoQueryString, urlWithoutHash } from './url'
 
 const isServer = typeof window === 'undefined'
+const cloneSerializable = <T>(obj: T): T => JSON.parse(JSON.stringify(obj))
 
 export class Router {
   protected page!: Page
@@ -93,9 +93,9 @@ export class Router {
   protected handleInitialPageVisit(page: Page): void {
     const hash = window.location.hash
     if (!this.page.url.includes(hash)) {
-      this.page.url += window.location.hash
+      this.page.url += hash
     }
-    this.setPage(page, { preserveState: true }).then(() =>
+    this.setPage(page, { preserveScroll: true, preserveState: true }).then(() =>
       fireNavigateEvent(page)
     )
   }
@@ -175,22 +175,8 @@ export class Router {
   }
 
   protected handleBackForwardVisit(page: Page): void {
-    let currentState: Page
-
-    /**
-     * This ensures we give precedence to a fresh state.
-     * 'page' here holds the props from the latest backend request.
-     * This prevents user A logging out and user B seeing sensitive data
-     * from user A by going back in the history (shared computer)
-     */
-    if (page.props) {
-      currentState = page
-    } else {
-      window.history.state.version = page.version
-      currentState = window.history.state
-    }
-
-    this.setPage(currentState, {
+    window.history.state.version = page.version
+    this.setPage(window.history.state, {
       preserveScroll: true,
       preserveState: true,
     }).then(() => {
@@ -245,7 +231,7 @@ export class Router {
     })
   }
 
-  protected isLocationVisitResponse(response?: AxiosResponse): boolean {
+  protected isLocationVisitResponse(response: AxiosResponse): boolean {
     return !!(
       response &&
       response.status === 409 &&
@@ -253,8 +239,7 @@ export class Router {
     )
   }
 
-  protected isInertiaResponse(response?: AxiosResponse): boolean {
-    console.log('isInertiaResponse:', response)
+  protected isInertiaResponse(response: AxiosResponse): boolean {
     return !!response?.headers['x-inertia']
   }
 
@@ -299,7 +284,7 @@ export class Router {
   protected resolvePreserveOption(
     value: PreserveStateOption,
     page: Page
-  ): boolean | string {
+  ): boolean {
     if (typeof value === 'function') {
       return value(page)
     } else if (value === 'errors') {
@@ -412,63 +397,56 @@ export class Router {
 
     const isPartial = !!(only.length || except.length)
 
-    Axios<Page<PageProps>, AxiosResponse<Page<PageProps>, any>, RequestPayload>(
-      {
-        method,
-        url: urlWithoutHash(url).href,
-        data: method === 'get' ? {} : data,
-        params: method === 'get' ? data : {},
-        signal: this.activeVisit.cancelToken.signal,
-        headers: {
-          ...headers,
-          Accept: 'text/html, application/xhtml+xml',
-          'X-Requested-With': 'XMLHttpRequest',
-          'X-Inertia': true,
-          ...(isPartial
-            ? {
-                'X-Inertia-Partial-Component': this.page.component,
-              }
-            : {}),
-          ...(only.length
-            ? {
-                'X-Inertia-Partial-Data': only.join(','),
-              }
-            : {}),
-          ...(except.length
-            ? {
-                'X-Inertia-Partial-Except': except.join(','),
-              }
-            : {}),
-          ...(errorBag?.length ? { 'X-Inertia-Error-Bag': errorBag } : {}),
-          ...(this.page.version
-            ? { 'X-Inertia-Version': this.page.version }
-            : {}),
-        },
-        onUploadProgress: (progress) => {
-          if (data instanceof FormData) {
-            const percentage = {
-              percentage: Math.round((progress.loaded / progress.total!) * 100),
+    Axios({
+      method,
+      url: urlWithoutHash(url).href,
+      data: method === 'get' ? {} : data,
+      params: method === 'get' ? data : {},
+      signal: this.activeVisit.cancelToken.signal,
+      headers: {
+        ...headers,
+        Accept: 'text/html, application/xhtml+xml',
+        'X-Requested-With': 'XMLHttpRequest',
+        'X-Inertia': true,
+        ...(isPartial
+          ? {
+              'X-Inertia-Partial-Component': this.page.component,
             }
-            const progressPercentage: Progress = {
-              ...progress,
-              ...percentage,
+          : {}),
+        ...(only.length
+          ? {
+              'X-Inertia-Partial-Data': only.join(','),
             }
-            fireProgressEvent(progressPercentage)
-            onProgress(progressPercentage)
-          }
-        },
-      }
-    )
+          : {}),
+        ...(except.length
+          ? {
+              'X-Inertia-Partial-Except': except.join(','),
+            }
+          : {}),
+        ...(errorBag && errorBag.length
+          ? { 'X-Inertia-Error-Bag': errorBag }
+          : {}),
+        ...(this.page.version
+          ? { 'X-Inertia-Version': this.page.version }
+          : {}),
+      },
+      onUploadProgress: (progress) => {
+        if (data instanceof FormData) {
+          progress.percentage = progress.progress
+            ? Math.round(progress.progress * 100)
+            : 0
+          fireProgressEvent(progress)
+          onProgress(progress)
+        }
+      },
+    })
       .then((response) => {
         if (!this.isInertiaResponse(response)) {
           return Promise.reject({ response })
         }
 
-        const pageResponse = response.data
+        const pageResponse: Page = response.data
         if (isPartial && pageResponse.component === this.page.component) {
-          /* pageResponse.props = merge(this.page.props, pageResponse.props, {
-            arrayMerge: (_target: any[], source: any[]) => source,
-          }) */
           pageResponse.props = { ...this.page.props, ...pageResponse.props }
         }
         preserveScroll = this.resolvePreserveOption(
@@ -508,20 +486,18 @@ export class Router {
               ? errors[errorBag]
               : {}
             : errors
-          if (scopedErrors) {
-            fireErrorEvent(scopedErrors)
-            return onError(scopedErrors)
-          }
+          fireErrorEvent(scopedErrors)
+          return onError(scopedErrors)
         }
         fireSuccessEvent(this.page)
         return onSuccess(this.page)
       })
       .catch((error) => {
         if (this.isInertiaResponse(error.response)) {
-          return this.setPage(error.response?.data, { visitId })
+          return this.setPage(error.response.data, { visitId })
         } else if (this.isLocationVisitResponse(error.response)) {
           const locationUrl = hrefToUrl(
-            error.response?.headers['x-inertia-location']
+            error.response.headers['x-inertia-location']
           )
           const requestUrl = url
           if (
@@ -580,9 +556,10 @@ export class Router {
           replace = replace || hrefToUrl(page.url).href === window.location.href
           replace ? this.replaceState(page) : this.pushState(page)
           this.swapComponent({ component, page, preserveState }).then(() => {
-            if (!preserveScroll) {
-              this.resetScrollPositions()
-            }
+            preserveScroll
+              ? this.restoreScrollPositions()
+              : this.resetScrollPositions()
+
             if (!replace) {
               fireNavigateEvent(page)
             }
@@ -594,12 +571,12 @@ export class Router {
 
   protected pushState(page: Page): void {
     this.page = page
-    window.history.pushState(page, '', page.url)
+    window.history.pushState(cloneSerializable(page), '', page.url)
   }
 
   protected replaceState(page: Page): void {
     this.page = page
-    window.history.replaceState(page, '', page.url)
+    window.history.replaceState(cloneSerializable(page), '', page.url)
   }
 
   protected handlePopstateEvent(event: PopStateEvent): void {
@@ -733,10 +710,6 @@ export class Router {
     type: TEventName,
     callback: (event: GlobalEvent<TEventName>) => GlobalEventResult<TEventName>
   ): VoidFunction {
-    if (isServer) {
-      return () => {}
-    }
-
     const listener = ((event: GlobalEvent<TEventName>) => {
       const response = callback(event)
       if (event.cancelable && !event.defaultPrevented && response === false) {
