@@ -1,31 +1,23 @@
-import {
-  Children,
-  type FunctionComponent,
-  type PropsWithChildren,
-  cloneElement,
-  useContext,
-  useEffect,
-  useMemo,
-} from 'react'
-import { HeadContext } from './HeadContext'
+import React, { FunctionComponent, useContext, useEffect, useMemo } from 'react'
+import HeadContext from './HeadContext'
 
-export type InertiaHeadProps = PropsWithChildren<{
+type InertiaHeadProps = {
   title?: string
-}>
+  children?: React.ReactNode
+}
 
-export type InertiaHead = FunctionComponent<InertiaHeadProps>
+type InertiaHead = FunctionComponent<InertiaHeadProps>
 
-export const Head: InertiaHead = function ({ children, title }) {
+const Head: InertiaHead = function ({ children, title }) {
   const headManager = useContext(HeadContext)
-  const provider = useMemo(() => headManager?.createProvider(), [headManager])
+  const provider = useMemo(() => headManager.createProvider(), [headManager])
 
   useEffect(() => {
     return () => {
-      provider?.disconnect()
+      provider.disconnect()
     }
   }, [provider])
 
-  // @ts-expect-error
   function isUnaryTag(node) {
     return (
       [
@@ -48,7 +40,6 @@ export const Head: InertiaHead = function ({ children, title }) {
     )
   }
 
-  // @ts-expect-error
   function renderTagStart(node) {
     const attrs = Object.keys(node.props).reduce((carry, name) => {
       if (['head-key', 'children', 'dangerouslySetInnerHTML'].includes(name)) {
@@ -64,15 +55,12 @@ export const Head: InertiaHead = function ({ children, title }) {
     return `<${node.type}${attrs}>`
   }
 
-  // @ts-expect-error
   function renderTagChildren(node) {
     return typeof node.props.children === 'string'
       ? node.props.children
-      : // @ts-expect-error
-        node.props.children.reduce((html, child) => html + renderTag(child), '')
+      : node.props.children.reduce((html, child) => html + renderTag(child), '')
   }
 
-  // @ts-expect-error
   function renderTag(node) {
     let html = renderTagStart(node)
     if (node.props.children) {
@@ -87,22 +75,19 @@ export const Head: InertiaHead = function ({ children, title }) {
     return html
   }
 
-  // @ts-expect-error
   function ensureNodeHasInertiaProp(node) {
-    return cloneElement(node, {
+    return React.cloneElement(node, {
       inertia:
         node.props['head-key'] !== undefined ? node.props['head-key'] : '',
     })
   }
 
-  // @ts-expect-error
   function renderNode(node) {
     return renderTag(ensureNodeHasInertiaProp(node))
   }
 
-  // @ts-expect-error
   function renderNodes(nodes) {
-    const computed = Children.toArray(nodes)
+    const computed = React.Children.toArray(nodes)
       .filter((node) => node)
       .map((node) => renderNode(node))
     if (title && !computed.find((tag) => tag.startsWith('<title'))) {
@@ -111,7 +96,8 @@ export const Head: InertiaHead = function ({ children, title }) {
     return computed
   }
 
-  provider?.update(renderNodes(children))
+  provider.update(renderNodes(children))
 
   return null
 }
+export default Head

@@ -1,7 +1,6 @@
-import type { Page, PageProps } from '@inertiajs-revamped/core'
 import { createContext } from 'react'
 
-const PageContext = createContext<Page<PageProps> | null>(null)
-PageContext.displayName = 'InertiaPageContext'
+const pageContext = createContext(undefined)
+pageContext.displayName = 'InertiaPageContext'
 
-export { PageContext }
+export default pageContext
