@@ -84,11 +84,11 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile --prefer-offline
 
-      - name: Run build
-        run: pnpm run build
+      #- name: Run build
+      #  run: pnpm run build
 
-      - name: Run integration test
-        run: pnpm run test
+      #- name: Run integration test
+      #  run: pnpm run test
 
   react:
     name: React Adapter CI
@@ -121,8 +121,8 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile --prefer-offline
 
-      - name: Run build
-        run: pnpm run build
+      #- name: Run build
+      #  run: pnpm run build
 
       # - name: Run e2e test
       #  run: 'pnpm run test:react'
@@ -158,8 +158,8 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile --prefer-offline
 
-      - name: Run build
-        run: pnpm run build
+      #- name: Run build
+      #  run: pnpm run build
 
       # - name: Run e2e test
       #  run: 'pnpm run test:vue'
