@@ -103,7 +103,7 @@ jobs:
       HOME: /root
       LARAVEL_BYPASS_ENV_CHECK: 1
     container:
-      image: mcr.microsoft.com/playwright:v1.45.1-jammy
+      image: mcr.microsoft.com/playwright:v1.47.1-jammy
     steps:
       - name: Checkout code
         uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
@@ -140,7 +140,7 @@ jobs:
       HOME: /root
       LARAVEL_BYPASS_ENV_CHECK: 1
     container:
-      image: mcr.microsoft.com/playwright:v1.45.1-jammy
+      image: mcr.microsoft.com/playwright:v1.47.1-jammy
     steps:
       - name: Checkout code
         uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
