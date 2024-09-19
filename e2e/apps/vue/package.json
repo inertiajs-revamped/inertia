@@ -11,7 +11,7 @@
     "serve": "tsx server.ts"
   },
   "dependencies": {
-    "vue": "^3.5.3"
+    "vue": "^3.5.6"
   },
   "devDependencies": {
     "@inertiajs-revamped/vue": "workspace:*",
@@ -20,7 +20,7 @@
     "@types/multer": "^1.4.12",
     "@types/node": "^22.5.4",
     "@vitejs/plugin-vue": "^5.1.4",
-    "@vue/server-renderer": "^3.5.3",
+    "@vue/server-renderer": "^3.5.6",
     "body-parser": "^1.20.3",
     "express": "^4.21.0",
     "laravel-vite-plugin": "^1.0.5",
