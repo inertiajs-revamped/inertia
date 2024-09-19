@@ -354,8 +354,8 @@ importers:
         specifier: ^22.5.5
         version: 22.5.5
       '@vue/runtime-core':
-        specifier: ^3.5.3
-        version: 3.5.3
+        specifier: ^3.5.6
+        version: 3.5.6
       vue:
         specifier: ^3.5.6
         version: 3.5.6(typescript@5.6.2)
@@ -1477,14 +1477,8 @@ packages:
       typescript:
         optional: true
 
-  '@vue/reactivity@3.5.3':
-    resolution: {integrity: sha512-2w61UnRWTP7+rj1H/j6FH706gRBHdFVpIqEkSDAyIpafBXYH8xt4gttstbbCWdU3OlcSWO8/3mbKl/93/HSMpw==}
-
   '@vue/reactivity@3.5.6':
     resolution: {integrity: sha512-shZ+KtBoHna5GyUxWfoFVBCVd7k56m6lGhk5e+J9AKjheHF6yob5eukssHRI+rzvHBiU1sWs/1ZhNbLExc5oYQ==}
-
-  '@vue/runtime-core@3.5.3':
-    resolution: {integrity: sha512-5b2AQw5OZlmCzSsSBWYoZOsy75N4UdMWenTfDdI5bAzXnuVR7iR8Q4AOzQm2OGoA41xjk53VQKrqQhOz2ktWaw==}
 
   '@vue/runtime-core@3.5.6':
     resolution: {integrity: sha512-FpFULR6+c2lI+m1fIGONLDqPQO34jxV8g6A4wBOgne8eSRHP6PQL27+kWFIx5wNhhjkO7B4rgtsHAmWv7qKvbg==}
@@ -4132,18 +4126,9 @@ snapshots:
     optionalDependencies:
       typescript: 5.6.2
 
-  '@vue/reactivity@3.5.3':
-    dependencies:
-      '@vue/shared': 3.5.3
-
   '@vue/reactivity@3.5.6':
     dependencies:
       '@vue/shared': 3.5.6
-
-  '@vue/runtime-core@3.5.3':
-    dependencies:
-      '@vue/reactivity': 3.5.3
-      '@vue/shared': 3.5.3
 
   '@vue/runtime-core@3.5.6':
     dependencies:
