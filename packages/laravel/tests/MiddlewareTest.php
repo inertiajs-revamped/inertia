@@ -2,9 +2,9 @@
 
 namespace Inertia\Tests;
 
-use Closure;
 use LogicException;
 use Inertia\Inertia;
+use Inertia\AlwaysProp;
 use Inertia\Middleware;
 use Illuminate\Http\Request;
 use Illuminate\Support\MessageBag;
@@ -125,7 +125,7 @@ class MiddlewareTest extends TestCase
     public function test_validation_errors_are_registered_as_of_default(): void
     {
         Route::middleware([StartSession::class, ExampleMiddleware::class])->get('/', function () {
-            $this->assertInstanceOf(Closure::class, Inertia::getShared('errors'));
+            $this->assertInstanceOf(AlwaysProp::class, Inertia::getShared('errors'));
         });
 
         $this->withoutExceptionHandling()->get('/');
@@ -216,7 +216,7 @@ class MiddlewareTest extends TestCase
 
     public function test_middleware_can_change_the_root_view_via_a_property(): void
     {
-        $this->prepareMockEndpoint(null, [], new class () extends Middleware {
+        $this->prepareMockEndpoint(null, [], new class() extends Middleware {
             protected $rootView = 'welcome';
         });
 
@@ -227,7 +227,7 @@ class MiddlewareTest extends TestCase
 
     public function test_middleware_can_change_the_root_view_by_overriding_the_rootview_method(): void
     {
-        $this->prepareMockEndpoint(null, [], new class () extends Middleware {
+        $this->prepareMockEndpoint(null, [], new class() extends Middleware {
             public function rootView(Request $request): string
             {
                 return 'welcome';
@@ -239,39 +239,10 @@ class MiddlewareTest extends TestCase
         $response->assertViewIs('welcome');
     }
 
-    public function test_middleware_can_set_persisted_properties(): void
-    {
-        $shared = [
-            'shared' => [
-                'flash' => 'The user has been updated.'
-            ]
-        ];
-
-        $this->prepareMockEndpoint(null, $shared, null, ['shared']);
-
-        $response = $this->get('/', [
-            'X-Inertia' => 'true',
-            'X-Inertia-Partial-Component' => 'User/Edit',
-            'X-Inertia-Partial-Data' => 'user'
-        ]);
-
-        $response->assertOk();
-        $response->assertJson([
-            'props' => [
-                'shared' => [
-                    'flash' => 'The user has been updated.'
-                ],
-                'user' => [
-                    'name' => 'Jonathan',
-                ]
-            ]
-        ]);
-    }
-
-    private function prepareMockEndpoint($version = null, $shared = [], $middleware = null, $persisted = []): \Illuminate\Routing\Route
+    private function prepareMockEndpoint($version = null, $shared = [], $middleware = null): \Illuminate\Routing\Route
     {
         if (is_null($middleware)) {
-            $middleware = new ExampleMiddleware($version, $shared, $persisted);
+            $middleware = new ExampleMiddleware($version, $shared);
         }
 
         return Route::middleware(StartSession::class)->get('/', function (Request $request) use ($middleware) {

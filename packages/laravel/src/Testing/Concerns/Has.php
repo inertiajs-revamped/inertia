@@ -38,7 +38,7 @@ trait Has
     /**
      * @return $this
      */
-    public function has(string $key, $value = null, ?Closure $scope = null): self
+    public function has(string $key, $value = null, Closure $scope = null): self
     {
         PHPUnit::assertTrue(
             Arr::has($this->prop(), $key),
@@ -63,7 +63,6 @@ trait Has
         }
 
         if (is_callable($value)) {
-            /** @var \Closure $value */
             $this->scope($key, $value);
         } elseif (! is_null($value)) {
             $this->count($key, $value);
@@ -107,7 +106,7 @@ trait Has
         return $this->missing($key);
     }
 
-    abstract protected function prop(?string $key = null);
+    abstract protected function prop(string $key = null);
 
     abstract protected function dotPath(string $key): string;
 

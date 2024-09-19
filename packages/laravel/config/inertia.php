@@ -1,6 +1,7 @@
 <?php
 
 return [
+
     /*
     |--------------------------------------------------------------------------
     | Server Side Rendering
@@ -14,13 +15,18 @@ return [
     |
     | Do note that enabling these options will NOT automatically make SSR work,
     | as a separate rendering service needs to be available. To learn more,
-    | please visit https://inertiajs-revamped.com/guide/integrations/laravel/server-side-rendering
+    | please visit https://inertiajs.com/server-side-rendering
     |
     */
+
     'ssr' => [
-        'enabled' => (bool) env('INERTIA_SSR_ENABLED', true),
-        'url' => env('INERTIA_SSR_URL', 'http://127.0.0.1:13714'),
+
+        'enabled' => true,
+
+        'url' => 'http://127.0.0.1:13714',
+
         // 'bundle' => base_path('bootstrap/ssr/ssr.mjs'),
+
     ],
 
     /*
@@ -34,17 +40,28 @@ return [
     | paths AND with any of the extensions specified here.
     |
     */
+
     'testing' => [
+
         'ensure_pages_exist' => true,
+
         'page_paths' => [
-            resource_path('pages'),
+
+            resource_path('js/Pages'),
+
         ],
+
         'page_extensions' => [
+
             'js',
             'jsx',
+            'svelte',
             'ts',
             'tsx',
             'vue',
+
         ],
+
     ],
+
 ];
