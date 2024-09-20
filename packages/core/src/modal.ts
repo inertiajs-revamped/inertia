@@ -1,4 +1,6 @@
-export default {
+import type { Modal } from './types'
+
+export const modal: Modal = {
   modal: null,
   listener: null,
 
@@ -20,7 +22,7 @@ export default {
     this.modal.style.padding = '50px'
     this.modal.style.boxSizing = 'border-box'
     this.modal.style.backgroundColor = 'rgba(0, 0, 0, .6)'
-    this.modal.style.zIndex = 200000
+    this.modal.style.zIndex = '200000'
     this.modal.addEventListener('click', () => this.hide())
 
     const iframe = document.createElement('iframe')
@@ -44,14 +46,18 @@ export default {
   },
 
   hide(): void {
-    this.modal.outerHTML = ''
+    if (this.modal !== null) {
+      this.modal.outerHTML = ''
+    }
     this.modal = null
     document.body.style.overflow = 'visible'
-    document.removeEventListener('keydown', this.listener)
+    if (this.listener != null) {
+      document.removeEventListener('keydown', this.listener)
+    }
   },
 
   hideOnEscape(event: KeyboardEvent): void {
-    if (event.keyCode === 27) {
+    if (event.key === 'Escape') {
       this.hide()
     }
   },

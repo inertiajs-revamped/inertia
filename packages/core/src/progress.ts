@@ -1,5 +1,5 @@
 import NProgress from 'nprogress'
-import { GlobalEvent } from './types'
+import type { GlobalEvent } from './types'
 
 let timeout: NodeJS.Timeout | null = null
 

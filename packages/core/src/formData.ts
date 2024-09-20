@@ -1,4 +1,4 @@
-import { FormDataConvertible } from './types'
+import type { FormDataConvertible } from './types'
 
 export function objectToFormData(
   source: Record<string, FormDataConvertible>,

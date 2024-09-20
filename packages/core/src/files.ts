@@ -1,4 +1,4 @@
-import { FormDataConvertible, RequestPayload } from './types'
+import type { FormDataConvertible, RequestPayload } from './types'
 
 export function hasFiles(data: RequestPayload | FormDataConvertible): boolean {
   return (

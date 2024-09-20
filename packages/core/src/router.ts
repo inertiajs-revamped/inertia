@@ -1,4 +1,4 @@
-import { default as Axios, AxiosResponse } from 'axios'
+import { default as Axios, type AxiosResponse } from 'axios'
 import debounce from './debounce'
 import {
   fireBeforeEvent,
@@ -14,7 +14,7 @@ import {
 import { hasFiles } from './files'
 import { objectToFormData } from './formData'
 import modal from './modal'
-import {
+import type {
   ActiveVisit,
   GlobalEvent,
   GlobalEventNames,
@@ -33,6 +33,11 @@ import { hrefToUrl, mergeDataIntoQueryString, urlWithoutHash } from './url'
 
 const isServer = typeof window === 'undefined'
 const cloneSerializable = <T>(obj: T): T => JSON.parse(JSON.stringify(obj))
+const nextFrame = (callback: () => void) => {
+  requestAnimationFrame(() => {
+    requestAnimationFrame(callback)
+  })
+}
 
 export class Router {
   protected page!: Page
@@ -135,27 +140,27 @@ export class Router {
   }
 
   protected resetScrollPositions(): void {
-    window.scrollTo(0, 0)
-    this.scrollRegions().forEach((region) => {
-      if (typeof region.scrollTo === 'function') {
-        region.scrollTo(0, 0)
-      } else {
-        region.scrollTop = 0
-        region.scrollLeft = 0
+    nextFrame(() => {
+      window.scrollTo(0, 0)
+      this.scrollRegions().forEach((region) => {
+        if (typeof region.scrollTo === 'function') {
+          region.scrollTo(0, 0)
+        } else {
+          region.scrollTop = 0
+          region.scrollLeft = 0
+        }
+      })
+      this.saveScrollPositions()
+      if (window.location.hash) {
+        document.getElementById(window.location.hash.slice(1))?.scrollIntoView()
       }
     })
-    this.saveScrollPositions()
-    if (window.location.hash) {
-      // We're using a setTimeout() here as a workaround for a bug in the React adapter where the
-      // rendering isn't completing fast enough, causing the anchor link to not be scrolled to.
-      setTimeout(() =>
-        document.getElementById(window.location.hash.slice(1))?.scrollIntoView()
-      )
-    }
   }
 
   protected restoreScrollPositions(): void {
-    if (this.page.scrollRegions) {
+    nextFrame(() => {
+      if (!this.page.scrollRegions) return
+
       this.scrollRegions().forEach((region: Element, index: number) => {
         const scrollPosition = this.page.scrollRegions[index]
         if (!scrollPosition) {
@@ -167,7 +172,7 @@ export class Router {
           region.scrollLeft = scrollPosition.left
         }
       })
-    }
+    })
   }
 
   protected isBackForwardVisit(): boolean {
@@ -423,9 +428,7 @@ export class Router {
               'X-Inertia-Partial-Except': except.join(','),
             }
           : {}),
-        ...(errorBag && errorBag.length
-          ? { 'X-Inertia-Error-Bag': errorBag }
-          : {}),
+        ...(errorBag?.length ? { 'X-Inertia-Error-Bag': errorBag } : {}),
         ...(this.page.version
           ? { 'X-Inertia-Version': this.page.version }
           : {}),
@@ -551,7 +554,7 @@ export class Router {
     return Promise.resolve(this.resolveComponent(page.component)).then(
       (component) => {
         if (visitId === this.visitId) {
-          page.scrollRegions = page.scrollRegions || []
+          page.scrollRegions = this.page.scrollRegions || []
           page.rememberedState = page.rememberedState || {}
           replace = replace || hrefToUrl(page.url).href === window.location.href
           replace ? this.replaceState(page) : this.pushState(page)

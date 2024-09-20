@@ -37,7 +37,7 @@ const Renderer = {
     return -1
   },
 
-  update: debounce(function (elements: Array<string>) {
+  update: debounce(function (this: any, elements: Array<string>) {
     const sourceElements = elements.map((element) =>
       this.buildDOMElement(element)
     )
@@ -119,7 +119,7 @@ export default function createHeadManager(
         if (element.indexOf('<title ') === 0) {
           const title = element.match(/(<title [^>]+>)(.*?)(<\/title>)/)
           carry.title = title
-            ? `${title[1]}${titleCallback(title[2])}${title[3]}`
+            ? `${title[1]}${title[2] ? titleCallback(title[2]) : ''}${title[3]}`
             : element
           return carry
         }

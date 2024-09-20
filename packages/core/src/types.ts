@@ -1,9 +1,17 @@
-import { AxiosProgressEvent, AxiosResponse } from 'axios'
+import type { AxiosProgressEvent, AxiosResponse } from 'axios'
 
 declare module 'axios' {
   export interface AxiosProgressEvent {
     percentage: number | undefined
   }
+}
+
+export interface Modal {
+  modal: HTMLDivElement | null
+  listener: ((event: KeyboardEvent) => void) | null
+  show(html: Record<string, unknown> | string): void
+  hideOnEscape(event: KeyboardEvent): void
+  hide(): void
 }
 
 export type Errors = Record<string, string>

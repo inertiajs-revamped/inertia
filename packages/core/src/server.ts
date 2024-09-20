@@ -1,6 +1,9 @@
-import { createServer, IncomingMessage } from 'http'
-import * as process from 'process'
-import { InertiaAppResponse, Page } from './types'
+import {
+  type IncomingMessage,
+  createServer as createNodeServer,
+} from 'node:http'
+import { exit } from 'node:process'
+import type { InertiaAppResponse, Page } from './types'
 
 type AppCallback = (page: Page) => InertiaAppResponse
 type RouteHandler = (request: IncomingMessage) => Promise<unknown>
@@ -20,13 +23,13 @@ export default (render: AppCallback, port?: number): void => {
 
   const routes: Record<string, RouteHandler> = {
     '/health': async () => ({ status: 'OK', timestamp: Date.now() }),
-    '/shutdown': () => process.exit(),
+    '/shutdown': () => exit(),
     '/render': async (request) =>
       render(JSON.parse(await readableToString(request))),
     '/404': async () => ({ status: 'NOT_FOUND', timestamp: Date.now() }),
   }
 
-  createServer(async (request, response) => {
+  createNodeServer(async (request, response) => {
     const dispatchRoute = routes[<string>request.url] || routes['/404']
 
     try {
@@ -34,7 +37,7 @@ export default (render: AppCallback, port?: number): void => {
         'Content-Type': 'application/json',
         Server: 'Inertia.js SSR',
       })
-      response.write(JSON.stringify(await dispatchRoute(request)))
+      response.write(JSON.stringify(await dispatchRoute?.(request)))
     } catch (e) {
       console.error(e)
     }
