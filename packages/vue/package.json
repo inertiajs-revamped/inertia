@@ -89,11 +89,11 @@
   "devDependencies": {
     "@lib/tsconfig": "workspace:*",
     "@types/node": "^22.5.5",
-    "@vue/runtime-core": "^3.5.6",
-    "vue": "^3.5.6"
+    "@vue/runtime-core": "^3.5.7",
+    "vue": "^3.5.7"
   },
   "peerDependencies": {
-    "vue": ">=3.5.6"
+    "vue": ">=3.5.7"
   },
   "engines": {
     "node": ">=18.12.0"
