@@ -1,6 +1,7 @@
+import type { HeadManager } from '@inertiajs-revamped/core'
 import { createContext } from 'react'
 
-const headContext = createContext(undefined)
+const headContext = createContext<HeadManager | null>(null)
 headContext.displayName = 'InertiaHeadContext'
 
-export default headContext
+export { headContext as HeadContext }

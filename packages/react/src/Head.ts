@@ -1,24 +1,31 @@
-import React, { FunctionComponent, useContext, useEffect, useMemo } from 'react'
-import HeadContext from './HeadContext'
+import {
+  Children,
+  type FunctionComponent,
+  type PropsWithChildren,
+  cloneElement,
+  useContext,
+  useEffect,
+  useMemo,
+} from 'react'
+import { HeadContext } from './HeadContext'
 
-type InertiaHeadProps = {
+export type InertiaHeadProps = PropsWithChildren<{
   title?: string
-  children?: React.ReactNode
-}
+}>
 
-type InertiaHead = FunctionComponent<InertiaHeadProps>
+export type InertiaHead = FunctionComponent<InertiaHeadProps>
 
-const Head: InertiaHead = function ({ children, title }) {
+export const Head: InertiaHead = function ({ children, title }) {
   const headManager = useContext(HeadContext)
-  const provider = useMemo(() => headManager.createProvider(), [headManager])
+  const provider = useMemo(() => headManager?.createProvider(), [headManager])
 
   useEffect(() => {
     return () => {
-      provider.disconnect()
+      provider?.disconnect()
     }
   }, [provider])
 
-  function isUnaryTag(node) {
+  function isUnaryTag(node: any) {
     return (
       [
         'area',
@@ -40,7 +47,7 @@ const Head: InertiaHead = function ({ children, title }) {
     )
   }
 
-  function renderTagStart(node) {
+  function renderTagStart(node: any) {
     const attrs = Object.keys(node.props).reduce((carry, name) => {
       if (['head-key', 'children', 'dangerouslySetInnerHTML'].includes(name)) {
         return carry
@@ -55,13 +62,16 @@ const Head: InertiaHead = function ({ children, title }) {
     return `<${node.type}${attrs}>`
   }
 
-  function renderTagChildren(node) {
+  function renderTagChildren(node: any) {
     return typeof node.props.children === 'string'
       ? node.props.children
-      : node.props.children.reduce((html, child) => html + renderTag(child), '')
+      : node.props.children.reduce(
+          (html: any, child: any) => html + renderTag(child),
+          ''
+        )
   }
 
-  function renderTag(node) {
+  function renderTag(node: any) {
     let html = renderTagStart(node)
     if (node.props.children) {
       html += renderTagChildren(node)
@@ -75,19 +85,19 @@ const Head: InertiaHead = function ({ children, title }) {
     return html
   }
 
-  function ensureNodeHasInertiaProp(node) {
-    return React.cloneElement(node, {
+  function ensureNodeHasInertiaProp(node: any) {
+    return cloneElement(node, {
       inertia:
         node.props['head-key'] !== undefined ? node.props['head-key'] : '',
     })
   }
 
-  function renderNode(node) {
+  function renderNode(node: any) {
     return renderTag(ensureNodeHasInertiaProp(node))
   }
 
-  function renderNodes(nodes) {
-    const computed = React.Children.toArray(nodes)
+  function renderNodes(nodes: any) {
+    const computed = Children.toArray(nodes)
       .filter((node) => node)
       .map((node) => renderNode(node))
     if (title && !computed.find((tag) => tag.startsWith('<title'))) {
@@ -96,7 +106,7 @@ const Head: InertiaHead = function ({ children, title }) {
     return computed
   }
 
-  provider.update(renderNodes(children))
+  provider?.update(renderNodes(children))
 
   return null
 }

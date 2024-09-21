@@ -1,21 +1,23 @@
 import {
-  FormDataConvertible,
-  Method,
-  Progress,
+  type FormDataConvertible,
+  type Method,
+  type Progress,
+  type VisitOptions,
   router,
-  VisitOptions,
-} from '@inertiajs/core'
-import isEqual from 'lodash.isequal'
+} from '@inertiajs-revamped/core'
+import { deepEqual } from 'fast-equals'
 import { useCallback, useEffect, useRef, useState } from 'react'
-import useRemember from './useRemember'
+import { useRemember } from './useRemember'
 
-type setDataByObject<TForm> = (data: TForm) => void
-type setDataByMethod<TForm> = (data: (previousData: TForm) => TForm) => void
-type setDataByKeyValuePair<TForm> = <K extends keyof TForm>(
+export type setDataByObject<TForm> = (data: TForm) => void
+export type setDataByMethod<TForm> = (
+  data: (previousData: TForm) => TForm
+) => void
+export type setDataByKeyValuePair<TForm> = <K extends keyof TForm>(
   key: K,
   value: TForm[K]
 ) => void
-type FormDataType = object
+export type FormDataType = object
 
 export interface InertiaFormProps<TForm extends FormDataType> {
   data: TForm
@@ -45,18 +47,19 @@ export interface InertiaFormProps<TForm extends FormDataType> {
   delete: (url: string, options?: VisitOptions) => void
   cancel: () => void
 }
-export default function useForm<TForm extends FormDataType>(
+
+export function useForm<TForm extends FormDataType>(
   initialValues?: TForm
 ): InertiaFormProps<TForm>
-export default function useForm<TForm extends FormDataType>(
+export function useForm<TForm extends FormDataType>(
   rememberKey: string,
   initialValues?: TForm
 ): InertiaFormProps<TForm>
-export default function useForm<TForm extends FormDataType>(
+export function useForm<TForm extends FormDataType>(
   rememberKeyOrInitialValues?: string | TForm,
   maybeInitialValues?: TForm
 ): InertiaFormProps<TForm> {
-  const isMounted = useRef(null)
+  const isMounted = useRef(false)
   const rememberKey =
     typeof rememberKeyOrInitialValues === 'string'
       ? rememberKeyOrInitialValues
@@ -66,8 +69,8 @@ export default function useForm<TForm extends FormDataType>(
       ? maybeInitialValues
       : rememberKeyOrInitialValues) || ({} as TForm)
   )
-  const cancelToken = useRef(null)
-  const recentlySuccessfulTimeoutId = useRef(null)
+  const cancelToken = useRef<{ cancel: VoidFunction } | null>(null)
+  const recentlySuccessfulTimeoutId = useRef<ReturnType<typeof setTimeout>>()
   const [data, setData] = rememberKey
     ? useRemember(defaults, `${rememberKey}:data`)
     : useState(defaults)
@@ -79,10 +82,10 @@ export default function useForm<TForm extends FormDataType>(
     : useState({} as Partial<Record<keyof TForm, string>>)
   const [hasErrors, setHasErrors] = useState(false)
   const [processing, setProcessing] = useState(false)
-  const [progress, setProgress] = useState(null)
+  const [progress, setProgress] = useState<Progress | null>(null)
   const [wasSuccessful, setWasSuccessful] = useState(false)
   const [recentlySuccessful, setRecentlySuccessful] = useState(false)
-  const transform = useRef((data) => data)
+  const transform = useRef<(data: TForm) => Record<string, any>>((data) => data)
 
   useEffect(() => {
     isMounted.current = true
@@ -92,8 +95,8 @@ export default function useForm<TForm extends FormDataType>(
   }, [])
 
   const submit = useCallback(
-    (method, url, options = {}) => {
-      const _options = {
+    (method: Method, url: string, options: VisitOptions = {}) => {
+      const _options: VisitOptions = {
         ...options,
         onCancelToken: (token) => {
           cancelToken.current = token
@@ -148,6 +151,7 @@ export default function useForm<TForm extends FormDataType>(
           if (isMounted.current) {
             setProcessing(false)
             setProgress(null)
+            // @ts-expect-error
             setErrors(errors)
             setHasErrors(true)
           }
@@ -166,7 +170,7 @@ export default function useForm<TForm extends FormDataType>(
             return options.onCancel()
           }
         },
-        onFinish: () => {
+        onFinish: (visit) => {
           if (isMounted.current) {
             setProcessing(false)
             setProgress(null)
@@ -175,7 +179,7 @@ export default function useForm<TForm extends FormDataType>(
           cancelToken.current = null
 
           if (options.onFinish) {
-            return options.onFinish()
+            return options.onFinish(visit)
           }
         },
       }
@@ -225,7 +229,7 @@ export default function useForm<TForm extends FormDataType>(
   )
 
   const reset = useCallback(
-    (...fields) => {
+    (...fields: (keyof TForm)[]) => {
       if (fields.length === 0) {
         setData(defaults)
       } else {
@@ -265,7 +269,7 @@ export default function useForm<TForm extends FormDataType>(
   )
 
   const clearErrors = useCallback(
-    (...fields) => {
+    (...fields: (keyof TForm)[]) => {
       setErrors((errors) => {
         const newErrors = (Object.keys(errors) as Array<keyof TForm>).reduce(
           (carry, field) => ({
@@ -283,9 +287,10 @@ export default function useForm<TForm extends FormDataType>(
     [setErrors, setHasErrors]
   )
 
-  const createSubmitMethod = (method) => (url, options) => {
-    submit(method, url, options)
-  }
+  const createSubmitMethod =
+    (method: Method) => (url: string, options?: VisitOptions) => {
+      submit(method, url, options)
+    }
   const get = useCallback(createSubmitMethod('get'), [submit])
   const post = useCallback(createSubmitMethod('post'), [submit])
   const put = useCallback(createSubmitMethod('put'), [submit])
@@ -298,14 +303,17 @@ export default function useForm<TForm extends FormDataType>(
     }
   }, [])
 
-  const transformFunction = useCallback((callback) => {
-    transform.current = callback
-  }, [])
+  const transformFunction = useCallback(
+    (callback: (data: TForm) => Record<string, any>) => {
+      transform.current = callback
+    },
+    []
+  )
 
   return {
     data,
     setData: setDataFunction,
-    isDirty: !isEqual(data, defaults),
+    isDirty: !deepEqual(data, defaults),
     errors,
     hasErrors,
     processing,

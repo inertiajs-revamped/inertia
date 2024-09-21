@@ -1,20 +1,44 @@
-import { createHeadManager, router } from '@inertiajs/core'
-import { createElement, useEffect, useMemo, useState } from 'react'
-import HeadContext from './HeadContext'
-import PageContext from './PageContext'
+import {
+  type HeadManager,
+  type Page,
+  type PageProps,
+  createHeadManager,
+  router,
+} from '@inertiajs-revamped/core'
+import {
+  type FunctionComponentElement,
+  type Key,
+  type ProviderProps,
+  type ReactNode,
+  createElement,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react'
+import { HeadContext } from './HeadContext'
+import { PageContext } from './PageContext'
+import type { InertiaComponentType, SetupOptions } from './createInertiaApp'
 
-export default function App({
+export default function App<SharedProps extends PageProps>({
   children,
   initialPage,
   initialComponent,
   resolveComponent,
   titleCallback,
   onHeadUpdate,
-}) {
+}: {
+  children?: (props: {
+    Component: InertiaComponentType<any>
+    key: Key
+    props: Page<SharedProps>['props']
+  }) => ReactNode
+} & SetupOptions<SharedProps>['props']): FunctionComponentElement<
+  ProviderProps<HeadManager | null>
+> {
   const [current, setCurrent] = useState({
     component: initialComponent || null,
     page: initialPage,
-    key: null,
+    key: -1,
   })
 
   const headManager = useMemo(() => {
@@ -31,7 +55,7 @@ export default function App({
       resolveComponent,
       swapComponent: async ({ component, page, preserveState }) => {
         setCurrent((current) => ({
-          component,
+          component: component as InertiaComponentType<any>,
           page,
           key: preserveState ? current.key : Date.now(),
         }))
@@ -62,7 +86,7 @@ export default function App({
         return Component.layout
           .concat(child)
           .reverse()
-          .reduce((children, Layout) =>
+          .reduce((children: any, Layout: any) =>
             createElement(Layout, { children, ...props })
           )
       }
