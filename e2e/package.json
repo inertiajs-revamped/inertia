@@ -14,7 +14,7 @@
   },
   "devDependencies": {
     "@lib/tsconfig": "workspace:*",
-    "@playwright/test": "^1.47.1",
+    "@playwright/test": "^1.47.2",
     "@types/node": "^22.5.5"
   },
   "publishConfig": {
