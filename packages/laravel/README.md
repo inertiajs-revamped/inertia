@@ -2,6 +2,10 @@
 
 > The Laravel adapter for Inertia.js-Revamped
 
+## Documentation
+
+View the docs (currently in development) at [inertiajs-revamped.com](https://inertiajs-revamped.com).
+
 ## Contributing
 
 > ⚠️ This repository is READ-ONLY. If you want to [report issues](https://github.com/inertiajs-revamped/inertia/issues) and/or send [pull requests](https://github.com/inertiajs-revamped/inertia/compare), please use the main [Inertia.js-Revamped repository](https://github.com/inertiajs-revamped/inertia).
