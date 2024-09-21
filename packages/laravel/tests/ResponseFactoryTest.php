@@ -109,7 +109,7 @@ class ResponseFactoryTest extends TestCase
             $this->assertSame('', Inertia::getVersion());
 
             Inertia::version(function () {
-                return md5('Inertia');
+                return hash('xxh128', 'Inertia');
             });
 
             return Inertia::render('User/Edit');
@@ -176,7 +176,7 @@ class ResponseFactoryTest extends TestCase
         Route::middleware([StartSession::class, ExampleMiddleware::class])->get('/', function () {
             Inertia::share('foo', 'bar');
 
-            return Inertia::render('User/Edit', new class() implements Arrayable {
+            return Inertia::render('User/Edit', new class () implements Arrayable {
                 public function toArray()
                 {
                     return [
