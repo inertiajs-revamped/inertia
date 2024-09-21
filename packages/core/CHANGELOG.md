@@ -1,5 +1,29 @@
 # Changelog - @inertiajs-revamped/core
 
+## 0.1.0 (2024-09-21)
+
+### Code Refactoring
+
+- apply multiple recent fixes ([bb148d1](https://github.com/inertiajs-revamped/inertia/commit/bb148d1))
+- apply recent fixes ([b0334ab](https://github.com/inertiajs-revamped/inertia/commit/b0334ab))
+- sync with original repo ([01c932b](https://github.com/inertiajs-revamped/inertia/commit/01c932b))
+
+### Builds
+
+- update dependency axios to >=1.7.7 ([7fe4c4b](https://github.com/inertiajs-revamped/inertia/commit/7fe4c4b))
+- update dependency @types/qs to ^6.9.16 ([f3050ce](https://github.com/inertiajs-revamped/inertia/commit/f3050ce))
+- update dependency @types/node to ^22.5.5 ([6e7a58c](https://github.com/inertiajs-revamped/inertia/commit/6e7a58c))
+- update dependencies ([53b9803](https://github.com/inertiajs-revamped/inertia/commit/53b9803))
+- update dependency @types/node to ^20.16.3 ([748b9a9](https://github.com/inertiajs-revamped/inertia/commit/748b9a9))
+- update dependency @types/node to ^20.16.2 ([65c3aa1](https://github.com/inertiajs-revamped/inertia/commit/65c3aa1))
+- update dependency axios to >=1.7.4 ([9ea5b4f](https://github.com/inertiajs-revamped/inertia/commit/9ea5b4f))
+- update dependency axios to >=1.7.3 ([884b363](https://github.com/inertiajs-revamped/inertia/commit/884b363))
+- update dependency @types/node to ^20.14.14 ([c84855e](https://github.com/inertiajs-revamped/inertia/commit/c84855e))
+- update dependency @types/node to ^20.14.13 ([3d9474c](https://github.com/inertiajs-revamped/inertia/commit/3d9474c))
+- update dependency qs to ^6.12.3 ([160a7db](https://github.com/inertiajs-revamped/inertia/commit/160a7db))
+- update dependency @types/node to ^20.14.10 ([ac8db8b](https://github.com/inertiajs-revamped/inertia/commit/ac8db8b))
+- update dependency qs to ^6.12.2 ([7c42673](https://github.com/inertiajs-revamped/inertia/commit/7c42673))
+
 ## 0.0.7 (2024-06-27)
 
 ### Code Refactoring

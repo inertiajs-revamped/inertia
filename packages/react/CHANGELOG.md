@@ -1,5 +1,30 @@
 # Changelog - @inertiajs-revamped/react
 
+## 0.1.0 (2024-09-21)
+
+### Code Refactoring
+
+- apply multiple recent fixes ([8a17fa4](https://github.com/inertiajs-revamped/inertia/commit/8a17fa4))
+- sync with original repo ([79c53f7](https://github.com/inertiajs-revamped/inertia/commit/79c53f7))
+
+### Bug Fixes
+
+- improve deps setup ([0138730](https://github.com/inertiajs-revamped/inertia/commit/0138730))
+
+### Builds
+
+- update dependency @types/react to >=18.3.7 ([f4050c3](https://github.com/inertiajs-revamped/inertia/commit/f4050c3))
+- update dependency @types/node to ^22.5.5 ([6e7a58c](https://github.com/inertiajs-revamped/inertia/commit/6e7a58c))
+- update dependency @types/react to v18.3.7 ([fc22704](https://github.com/inertiajs-revamped/inertia/commit/fc22704))
+- update dependencies ([53b9803](https://github.com/inertiajs-revamped/inertia/commit/53b9803))
+- update dependency @types/react to v18.3.5 ([c432a1f](https://github.com/inertiajs-revamped/inertia/commit/c432a1f))
+- update dependency @types/node to ^20.16.3 ([748b9a9](https://github.com/inertiajs-revamped/inertia/commit/748b9a9))
+- update dependency @types/node to ^20.16.2 ([65c3aa1](https://github.com/inertiajs-revamped/inertia/commit/65c3aa1))
+- update dependency @types/react to v18.3.4 ([8c4fb9c](https://github.com/inertiajs-revamped/inertia/commit/8c4fb9c))
+- update dependency @types/node to ^20.14.14 ([c84855e](https://github.com/inertiajs-revamped/inertia/commit/c84855e))
+- update dependency @types/node to ^20.14.13 ([3d9474c](https://github.com/inertiajs-revamped/inertia/commit/3d9474c))
+- update dependency @types/node to ^20.14.10 ([ac8db8b](https://github.com/inertiajs-revamped/inertia/commit/ac8db8b))
+
 ## 0.0.7 (2024-06-27)
 
 ### Features

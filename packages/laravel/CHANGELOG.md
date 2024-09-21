@@ -1,5 +1,18 @@
 # Changelog - @inertiajs-revamped/laravel
 
+## 0.1.0 (2024-09-21)
+
+### Code Refactoring
+
+- apply multiple recent fixes ([8fc27e6](https://github.com/inertiajs-revamped/inertia/commit/8fc27e6))
+- apply recent fixes ([c31375c](https://github.com/inertiajs-revamped/inertia/commit/c31375c))
+- sync with original repo ([3166ac7](https://github.com/inertiajs-revamped/inertia/commit/3166ac7))
+
+### Bug Fixes
+
+- replace md5 with xxhash ([c9a3eb7](https://github.com/inertiajs-revamped/inertia/commit/c9a3eb7))
+- remove ide helpers from package ([4b7ec28](https://github.com/inertiajs-revamped/inertia/commit/4b7ec28))
+
 ## 0.0.5 (2024-05-28)
 
 ### Bug Fixes
