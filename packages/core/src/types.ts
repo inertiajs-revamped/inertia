@@ -14,6 +14,17 @@ export interface Modal {
   hide(): void
 }
 
+export type HeadManager = {
+  forceUpdate: () => void
+  createProvider: () => {
+    update: HeadManagerOnUpdate
+    disconnect: () => void
+  }
+}
+
+export type HeadManagerOnUpdate = (elements: string[]) => void
+export type HeadManagerTitleCallback = (title: string) => string
+
 export type Errors = Record<string, string>
 export type ErrorBag = Record<string, Errors>
 
@@ -32,16 +43,19 @@ export type Method = 'get' | 'post' | 'put' | 'patch' | 'delete'
 
 export type RequestPayload = Record<string, FormDataConvertible> | FormData
 
-export interface PageProps {
-  [key: string]: unknown
+export type PageProps<
+  T extends Record<string, unknown> | unknown[] =
+    | Record<string, unknown>
+    | unknown[],
+> = T
+
+export type PagePropsBuiltIn = {
+  errors: Errors & ErrorBag
 }
 
 export interface Page<SharedProps extends PageProps = PageProps> {
   component: string
-  props: PageProps &
-    SharedProps & {
-      errors: Errors & ErrorBag
-    }
+  props: SharedProps & PagePropsBuiltIn
   url: string
   version: string | null
 
@@ -51,7 +65,11 @@ export interface Page<SharedProps extends PageProps = PageProps> {
   rememberedState: Record<string, unknown>
 }
 
-export type PageResolver = (name: string) => Component
+export type PageResolver<ModuleExportType extends Component = Component> = (
+  name: string
+) =>
+  | Promise<{ default: ModuleExportType } | ModuleExportType>
+  | ({ default: ModuleExportType } | ModuleExportType)
 
 export type PageHandler = ({
   component,
@@ -59,13 +77,26 @@ export type PageHandler = ({
   preserveState,
 }: {
   component: Component
-  page: Page
+  page: Page<any>
   preserveState: PreserveStateOption
 }) => Promise<unknown>
 
 export type PreserveStateOption = boolean | 'errors' | ((page: Page) => boolean)
 
-export type Progress = AxiosProgressEvent
+export type Progress =
+  | (AxiosProgressEvent & {
+      percentage: number | undefined
+    })
+  | undefined
+
+export type ProgressOptions = {
+  delay: number
+  color: string
+  includeCSS: boolean
+  showSpinner: boolean
+}
+
+export type ProgressCallback = (options?: Partial<ProgressOptions>) => void
 
 export type LocationVisit = {
   preserveScroll: boolean

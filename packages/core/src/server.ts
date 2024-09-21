@@ -18,7 +18,7 @@ const readableToString: (readable: IncomingMessage) => Promise<string> = (
     readable.on('error', (err) => reject(err))
   })
 
-export default (render: AppCallback, port?: number): void => {
+export const createServer = (render: AppCallback, port?: number): void => {
   const _port = port || 13714
 
   const routes: Record<string, RouteHandler> = {

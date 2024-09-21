@@ -1,10 +1,13 @@
 import { Router } from './router'
 
-export { default as createHeadManager } from './head'
-export { default as setupProgress } from './progress'
-export { default as shouldIntercept } from './shouldIntercept'
-export * from './types'
+export { createHeadManager } from './head'
+export { shouldIntercept } from './should-intercept'
 export { hrefToUrl, mergeDataIntoQueryString, urlWithoutHash } from './url'
-export { type Router }
+export { objectToFormData } from './form-data'
+export { hasFiles } from './files'
+export { resolvePageComponent } from './helper'
+
+export type { Router }
+export * from './types'
 
 export const router = new Router()
