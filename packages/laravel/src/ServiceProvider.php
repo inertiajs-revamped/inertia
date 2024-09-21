@@ -13,7 +13,6 @@ use Illuminate\View\FileViewFinder;
 use Illuminate\Testing\TestResponse;
 use Inertia\Testing\TestResponseMacros;
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
-use Illuminate\Foundation\Testing\TestResponse as LegacyTestResponse;
 
 class ServiceProvider extends BaseServiceProvider
 {
@@ -74,6 +73,7 @@ class ServiceProvider extends BaseServiceProvider
     protected function registerRequestMacro(): void
     {
         Request::macro('inertia', function () {
+            /** @var \Illuminate\Http\Request $this */
             return (bool) $this->header(Header::INERTIA);
         });
     }
@@ -81,6 +81,7 @@ class ServiceProvider extends BaseServiceProvider
     protected function registerRouterMacro(): void
     {
         Router::macro('inertia', function ($uri, $component, $props = []) {
+            /** @var \Illuminate\Routing\Router $this */
             return $this->match(['GET', 'HEAD'], $uri, '\\'.Controller::class)
                 ->defaults('component', $component)
                 ->defaults('props', $props);
@@ -94,13 +95,6 @@ class ServiceProvider extends BaseServiceProvider
     {
         if (class_exists(TestResponse::class)) {
             TestResponse::mixin(new TestResponseMacros());
-
-            return;
-        }
-
-        // Laravel <= 6.0
-        if (class_exists(LegacyTestResponse::class)) {
-            LegacyTestResponse::mixin(new TestResponseMacros());
 
             return;
         }
