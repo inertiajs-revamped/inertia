@@ -60,12 +60,12 @@
   },
   "engines": {
     "node": ">=21.7.2",
-    "pnpm": ">=9.10.0"
+    "pnpm": ">=9.11.0"
   },
   "nano-staged": {
     "*.ts": "biome lint --write .",
     "*": "biome format . --write"
   },
-  "packageManager": "pnpm@9.10.0",
+  "packageManager": "pnpm@9.11.0",
   "preset": "./packages/presets/preset.ts"
 }
