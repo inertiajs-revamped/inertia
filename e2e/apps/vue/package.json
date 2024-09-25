@@ -26,7 +26,7 @@
     "laravel-vite-plugin": "^1.0.5",
     "multer": "1.4.5-lts.1",
     "tsx": "^4.19.1",
-    "vite": "^5.4.7",
+    "vite": "^5.4.8",
     "vue-tsc": "^2.1.6"
   }
 }
