@@ -88,13 +88,13 @@
   "devDependencies": {
     "@lib/tsconfig": "workspace:*",
     "@types/node": "^22.7.4",
-    "@types/react": "^18.3.9",
+    "@types/react": "^18.3.10",
     "@types/react-dom": "^18.3.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1"
   },
   "peerDependencies": {
-    "@types/react": ">=18.3.9",
+    "@types/react": ">=18.3.10",
     "@types/react-dom": ">=18.3.0",
     "react": ">=18.3.1"
   },
