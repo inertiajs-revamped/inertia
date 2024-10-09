@@ -73,6 +73,7 @@ body:
       label: Laravel Version
       description: Output of `php artisan --version`
       options:
+        - v11.2.1
         - v11.2.0
         - v11.1.5
         - v11.1.4
@@ -181,6 +182,7 @@ body:
         - 21.2.0
         - 21.1.0
         - 21.0.0
+        - 20.18.0
         - 20.17.0
         - 20.16.0
         - 20.15.1
