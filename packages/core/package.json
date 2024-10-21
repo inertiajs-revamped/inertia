@@ -80,7 +80,7 @@
   },
   "devDependencies": {
     "@lib/tsconfig": "workspace:*",
-    "@types/node": "^22.7.5"
+    "@types/node": "^22.7.7"
   },
   "peerDependencies": {
     "axios": ">=1.7.7"
