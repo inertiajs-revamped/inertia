@@ -88,7 +88,7 @@
   },
   "devDependencies": {
     "@lib/tsconfig": "workspace:*",
-    "@types/node": "^22.7.5",
+    "@types/node": "^22.7.7",
     "@vue/runtime-core": "^3.5.8",
     "vue": "^3.5.8"
   },
