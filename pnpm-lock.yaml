@@ -130,8 +130,8 @@ importers:
         specifier: ^18.3.1
         version: 18.3.1
       '@vitejs/plugin-react':
-        specifier: ^4.3.1
-        version: 4.3.1(vite@5.4.8(@types/node@22.7.7)(terser@5.33.0))
+        specifier: ^4.3.3
+        version: 4.3.3(vite@5.4.8(@types/node@22.7.7)(terser@5.33.0))
       body-parser:
         specifier: ^1.20.3
         version: 1.20.3
@@ -1378,8 +1378,8 @@ packages:
     engines: {node: '>=18.* <=22.*'}
     os: [darwin, linux, win32]
 
-  '@vitejs/plugin-react@4.3.1':
-    resolution: {integrity: sha512-m/V2syj5CuVnaxcUJOQRel/Wr31FFXRFlnOoq1TVtkCxsY5veGMTEmpWHndrhB2U8ScHtCQB1e+4hWYExQc6Lg==}
+  '@vitejs/plugin-react@4.3.3':
+    resolution: {integrity: sha512-NooDe9GpHGqNns1i8XDERg0Vsg5SSYRhRxxyTGogUdkdNt47jal+fbuYi+Yfq6pzRCKXyoPcWisfxE6RIM3GKA==}
     engines: {node: ^14.18.0 || >=16.0.0}
     peerDependencies:
       vite: ^4.2.0 || ^5.0.0
@@ -4031,7 +4031,7 @@ snapshots:
 
   '@visulima/deep-clone@2.1.6': {}
 
-  '@vitejs/plugin-react@4.3.1(vite@5.4.8(@types/node@22.7.7)(terser@5.33.0))':
+  '@vitejs/plugin-react@4.3.3(vite@5.4.8(@types/node@22.7.7)(terser@5.33.0))':
     dependencies:
       '@babel/core': 7.25.2
       '@babel/plugin-transform-react-jsx-self': 7.24.7(@babel/core@7.25.2)
