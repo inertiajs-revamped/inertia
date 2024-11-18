@@ -88,10 +88,10 @@
   "devDependencies": {
     "@lib/tsconfig": "workspace:*",
     "@types/node": "^22.7.7",
-    "preact": "^10.24.1"
+    "preact": "^10.24.3"
   },
   "peerDependencies": {
-    "preact": ">=10.24.1"
+    "preact": ">=10.24.3"
   },
   "engines": {
     "node": ">=18.12.0"
