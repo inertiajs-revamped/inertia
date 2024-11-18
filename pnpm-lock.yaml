@@ -139,8 +139,8 @@ importers:
         specifier: ^4.21.1
         version: 4.21.1
       laravel-vite-plugin:
-        specifier: ^1.0.5
-        version: 1.0.5(vite@5.4.8(@types/node@22.7.7)(terser@5.33.0))
+        specifier: ^1.0.6
+        version: 1.0.6(vite@5.4.8(@types/node@22.7.7)(terser@5.33.0))
       multer:
         specifier: 1.4.5-lts.1
         version: 1.4.5-lts.1
@@ -185,8 +185,8 @@ importers:
         specifier: ^4.21.1
         version: 4.21.1
       laravel-vite-plugin:
-        specifier: ^1.0.5
-        version: 1.0.5(vite@5.4.8(@types/node@22.7.7)(terser@5.33.0))
+        specifier: ^1.0.6
+        version: 1.0.6(vite@5.4.8(@types/node@22.7.7)(terser@5.33.0))
       multer:
         specifier: 1.4.5-lts.1
         version: 1.4.5-lts.1
@@ -319,8 +319,8 @@ importers:
   packages/vite:
     dependencies:
       laravel-vite-plugin:
-        specifier: 1.0.5
-        version: 1.0.5(vite@5.4.8(@types/node@22.7.7)(terser@5.33.0))
+        specifier: 1.0.6
+        version: 1.0.6(vite@5.4.8(@types/node@22.7.7)(terser@5.33.0))
       vite:
         specifier: ^5.4.8
         version: 5.4.8(@types/node@22.7.7)(terser@5.33.0)
@@ -2270,8 +2270,8 @@ packages:
     resolution: {integrity: sha512-OzIvbHKKDpi60TnF9t7UUVAF1B4mcqc02z5PIvrm08Wyb+yOcz63GRvEuVxNT18a9E1SrNouhB4W2NNLeD7Ykg==}
     engines: {node: '>=18'}
 
-  laravel-vite-plugin@1.0.5:
-    resolution: {integrity: sha512-Zv+to82YLBknDCZ6g3iwOv9wZ7f6EWStb9pjSm7MGe9Mfoy5ynT2ssZbGsMr1udU6rDg9HOoYEVGw5Qf+p9zbw==}
+  laravel-vite-plugin@1.0.6:
+    resolution: {integrity: sha512-B34OqmZc/rV1KvSjst8SsUm/LKHsuDusw8jiZCIhlnTHXbXnK89JUM9pTJuk6E/Vc/1DT2gX7qNfhipak1WS8w==}
     engines: {node: ^18.0.0 || >=20.0.0}
     hasBin: true
     peerDependencies:
@@ -5034,7 +5034,7 @@ snapshots:
 
   ky@1.7.2: {}
 
-  laravel-vite-plugin@1.0.5(vite@5.4.8(@types/node@22.7.7)(terser@5.33.0)):
+  laravel-vite-plugin@1.0.6(vite@5.4.8(@types/node@22.7.7)(terser@5.33.0)):
     dependencies:
       picocolors: 1.1.0
       vite: 5.4.8(@types/node@22.7.7)(terser@5.33.0)
