@@ -238,8 +238,8 @@ importers:
         specifier: ^0.2.0
         version: 0.2.0
       qs:
-        specifier: ^6.13.0
-        version: 6.13.0
+        specifier: ^6.13.1
+        version: 6.13.1
       ts-deepmerge:
         specifier: ^7.0.1
         version: 7.0.1
@@ -2558,6 +2558,10 @@ packages:
 
   qs@6.13.0:
     resolution: {integrity: sha512-+38qI9SOr8tfZ4QmJNplMUxqjbe7LKvvZgWdExBOmd+egZTtjLB67Gu0HRX3u/XOq7UU2Nx6nsjvS16Z9uwfpg==}
+    engines: {node: '>=0.6'}
+
+  qs@6.13.1:
+    resolution: {integrity: sha512-EJPeIn0CYrGu+hli1xilKAPXODtJ12T0sP63Ijx2/khC2JtuaN3JyNIpvmnkmaEtha9ocbG4A4cMcr+TvqvwQg==}
     engines: {node: '>=0.6'}
 
   queue-microtask@1.2.3:
@@ -5292,6 +5296,10 @@ snapshots:
       escape-goat: 4.0.0
 
   qs@6.13.0:
+    dependencies:
+      side-channel: 1.0.6
+
+  qs@6.13.1:
     dependencies:
       side-channel: 1.0.6
 
