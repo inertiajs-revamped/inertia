@@ -27,8 +27,8 @@ importers:
         specifier: ^7.5.8
         version: 7.5.8
       colorize-node:
-        specifier: ^1.0.0
-        version: 1.0.0
+        specifier: ^1.0.1
+        version: 1.0.1
       execa:
         specifier: ^9.4.0
         version: 9.4.0
@@ -1687,8 +1687,8 @@ packages:
   color-name@1.1.4:
     resolution: {integrity: sha512-dOy+3AuW3a2wNbZHIuMZpTcgjGuLU/uBL/ubcZF9OXbDo8ff4O8yVp5Bf0efS8uEoYo5q4Fx7dY9OgQGXgAsQA==}
 
-  colorize-node@1.0.0:
-    resolution: {integrity: sha512-pY/I4w8insHsUbzu3++GxNE3e4ybhCfk+y2lRw95u6cB596p8NDbrhItMBmIxU3K1KZcztyz8AQ0fqd53nIZyw==}
+  colorize-node@1.0.1:
+    resolution: {integrity: sha512-OepkWAX7v7NHbsGoyeffKmQFzTetIhC0jehKotGzMPNXRPXoTIy8KJk59LiOI6h8TDlff5ibXena7CLBY43jdA==}
     engines: {node: '>=18.12.0'}
 
   combined-stream@1.0.8:
@@ -4382,7 +4382,7 @@ snapshots:
 
   color-name@1.1.4: {}
 
-  colorize-node@1.0.0: {}
+  colorize-node@1.0.1: {}
 
   combined-stream@1.0.8:
     dependencies:
