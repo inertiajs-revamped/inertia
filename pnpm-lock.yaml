@@ -341,8 +341,8 @@ importers:
         specifier: workspace:*
         version: link:../vite
       '@visulima/deep-clone':
-        specifier: ^2.1.6
-        version: 2.1.6
+        specifier: ^2.1.7
+        version: 2.1.7
       fast-equals:
         specifier: ^5.0.1
         version: 5.0.1
@@ -1385,9 +1385,9 @@ packages:
   '@ungap/structured-clone@1.2.0':
     resolution: {integrity: sha512-zuVdFrMJiuCDQUMCzQaD6KL28MjnqqN8XnAqiEq9PNm/hCPTSGfrXCOfwj1ow4LFb/tNymJPwsNbVePc1xFqrQ==}
 
-  '@visulima/deep-clone@2.1.6':
-    resolution: {integrity: sha512-NHshGmK7LkyPTH6LEMiL3al3KVGTpB30PMgPgIRc1xIX6PF8KgqFdZQYQBhkWCwEBAufruMc/PkjcYjP7/HenQ==}
-    engines: {node: '>=18.* <=22.*'}
+  '@visulima/deep-clone@2.1.7':
+    resolution: {integrity: sha512-Y+rvZD+1iNkM1eu38yZh4IxpAQ3P/cN6V9V6vK7Jw9NnHNuj8dWpFELbOmWRgNru8YD4OPgrlRdrb74utQv0og==}
+    engines: {node: '>=18.* <=23.*'}
     os: [darwin, linux, win32]
 
   '@vitejs/plugin-react@4.3.4':
@@ -4021,7 +4021,7 @@ snapshots:
 
   '@ungap/structured-clone@1.2.0': {}
 
-  '@visulima/deep-clone@2.1.6': {}
+  '@visulima/deep-clone@2.1.7': {}
 
   '@vitejs/plugin-react@4.3.4(vite@5.4.8(@types/node@22.7.7)(terser@5.33.0))':
     dependencies:
