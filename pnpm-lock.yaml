@@ -241,8 +241,8 @@ importers:
         specifier: ^6.13.1
         version: 6.13.1
       ts-deepmerge:
-        specifier: ^7.0.1
-        version: 7.0.1
+        specifier: ^7.0.2
+        version: 7.0.2
     devDependencies:
       '@lib/tsconfig':
         specifier: workspace:*
@@ -2837,8 +2837,8 @@ packages:
   trim-lines@3.0.1:
     resolution: {integrity: sha512-kRj8B+YHZCc9kQYdWfJB2/oUl9rA99qbowYYBtr4ui4mZyAQ2JpvVBd/6U2YloATfqBhBTSMhTpgBHtU0Mf3Rg==}
 
-  ts-deepmerge@7.0.1:
-    resolution: {integrity: sha512-JBFCmNenZdUCc+TRNCtXVM6N8y/nDQHAcpj5BlwXG/gnogjam1NunulB9ia68mnqYI446giMfpqeBFFkOleh+g==}
+  ts-deepmerge@7.0.2:
+    resolution: {integrity: sha512-akcpDTPuez4xzULo5NwuoKwYRtjQJ9eoNfBACiBMaXwNAx7B1PKfe5wqUFJuW5uKzQ68YjDFwPaWHDG1KnFGsA==}
     engines: {node: '>=14.13.1'}
 
   tsx@4.19.1:
@@ -5575,7 +5575,7 @@ snapshots:
 
   trim-lines@3.0.1: {}
 
-  ts-deepmerge@7.0.1: {}
+  ts-deepmerge@7.0.2: {}
 
   tsx@4.19.1:
     dependencies:
