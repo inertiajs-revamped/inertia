@@ -56,7 +56,7 @@
     "semver": "^7.6.3",
     "tsx": "^4.19.2",
     "typescript": "^5.6.2",
-    "vitest": "^2.1.1"
+    "vitest": "^2.1.8"
   },
   "engines": {
     "node": ">=21.7.2",
