@@ -83,7 +83,7 @@
   "dependencies": {
     "@inertiajs-revamped/core": "workspace:*",
     "@inertiajs-revamped/vite": "workspace:*",
-    "@visulima/deep-clone": "^2.1.7",
+    "@visulima/deep-clone": "^2.1.8",
     "fast-equals": "^5.0.1"
   },
   "devDependencies": {
