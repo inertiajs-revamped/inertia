@@ -32,7 +32,7 @@ jobs:
           private_key: ${{ secrets.APP_PRIVATE_KEY }}
 
       - name: Update contributors list
-        uses: wow-actions/contributors-list@242b53835016268d20e79eeff6f42193c02be8c8 # v1.2.0
+        uses: wow-actions/contributors-list@7422dfe4e4e265fd00b097a40cfc8403bf6b345b # v1.2.1
         with:
           GITHUB_TOKEN: ${{ steps.generate-token.outputs.token }}
           svgPath: .github/assets/CONTRIBUTORS.svg
