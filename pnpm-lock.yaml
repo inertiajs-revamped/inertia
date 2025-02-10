@@ -54,7 +54,7 @@ importers:
         specifier: ^5.6.2
         version: 5.6.2
       vitest:
-        specifier: ^2.1.8
+        specifier: ^2.1.9
         version: 2.1.9(@types/node@22.7.7)(jsdom@25.0.1)(terser@5.33.0)
 
   docs:
@@ -3815,7 +3815,7 @@ snapshots:
 
   '@kwsites/file-exists@1.1.1':
     dependencies:
-      debug: 4.3.7
+      debug: 4.4.0
     transitivePeerDependencies:
       - supports-color
 
@@ -4428,7 +4428,7 @@ snapshots:
 
   agent-base@7.1.1:
     dependencies:
-      debug: 4.3.7
+      debug: 4.4.0
     transitivePeerDependencies:
       - supports-color
 
