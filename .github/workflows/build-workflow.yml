@@ -214,7 +214,7 @@ jobs:
 
       - if: ${{ needs.pre_job.outputs.should_skip != 'true' && !fromJSON(needs.pre_job.outputs.paths_result).laravel.should_skip }}
         name: Cache dependencies
-        uses: actions/cache@0c907a75c2c80ebcb7f088228285e798b750cf8f # v4.2.1
+        uses: actions/cache@d4323d4df104b026a6aa633fdb11d772146be0bf # v4.2.2
         with:
           path: ${{ steps.composer-cache.outputs.dir }}
           key: ${{ runner.os }}-composer-${{ matrix.stability }}-${{ hashFiles('**/composer.lock') }}
