@@ -15,7 +15,7 @@
   "devDependencies": {
     "@lib/tsconfig": "workspace:*",
     "@playwright/test": "^1.50.1",
-    "@types/node": "^22.13.5"
+    "@types/node": "^22.13.8"
   },
   "publishConfig": {
     "access": "restricted"
