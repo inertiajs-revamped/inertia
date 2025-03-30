@@ -87,7 +87,7 @@
   },
   "devDependencies": {
     "@lib/tsconfig": "workspace:*",
-    "@types/node": "^22.13.11",
+    "@types/node": "^22.13.14",
     "preact": "^10.24.3"
   },
   "peerDependencies": {
