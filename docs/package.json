@@ -23,7 +23,7 @@
   },
   "devDependencies": {
     "@lib/tsconfig": "workspace:*",
-    "@types/node": "^22.13.11",
+    "@types/node": "^22.13.14",
     "@vueuse/core": "^11.1.0",
     "@vueuse/shared": "^11.1.0",
     "terser": "^5.33.0",
